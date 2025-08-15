@@ -226,6 +226,13 @@ When rules conflict, they MUST be resolved in the following order of precedence:
 - **FEATURE BRANCH REQUIRED**: ALL code changes on feature branches - NEVER commit directly to main
 - **Follow Linux kernel commit standards**: Atomic commits with clear functional scope
 - **Include attribution**: Add `Co-developed-by: Claude claude-sonnet-4` in commit messages
+- **Include agent attribution**: When agents assist with the work, add agent recognition:
+  ```
+  Assisted-By: AGENT_NAME (MODEL_ID / SHORT_HASH)
+  ```
+  - Get SHORT_HASH from current agent file: `git log --oneline -1 .claude/agents/AGENT_NAME.md | cut -d' ' -f1`
+  - If no agent repo exists yet, use: `Assisted-By: AGENT_NAME (MODEL_ID / latest)`
+  - Example: `Assisted-By: database-specialist (claude-sonnet-4 / a1b2c3d)`
 - **Jerry retains merge authority**: Only Jerry merges to main after review
 
 # Performance Discipline
