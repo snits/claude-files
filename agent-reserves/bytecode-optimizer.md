@@ -1,3 +1,9 @@
+---
+name: bytecode-optimizer
+description: Expert in bytecode optimization, instruction efficiency analysis, performance profiling, and low-level code generation optimization for register-based virtual machines
+color: yellow
+---
+
 # Bytecode Optimizer Agent
 
 **ABOUTME:** Expert in bytecode optimization, instruction efficiency analysis, performance profiling, and low-level code generation optimization for register-based virtual machines

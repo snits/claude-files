@@ -35,6 +35,28 @@ Deep search through agent capabilities and expertise:
 /agent-search "machine learning"        # Find ML experts
 ```
 
+## Agent Color Categorization
+
+All agents use a consistent color scheme in their frontmatter for categorization:
+
+```yaml
+---
+name: agent-name
+description: Agent description
+color: [category-color]
+---
+```
+
+**Color Categories:**
+- 🎮 **red** - Game Development (game mechanics, balance, competition)
+- 🏗️ **orange** - System Architecture (infrastructure, design, tools) 
+- 🔬 **cyan** - Scientific/Mathematical (research, analysis, modeling)
+- 💾 **blue** - Data/Database (storage, processing, AI/ML)
+- ⚙️ **black** - Engineering/DevOps (systems, deployment, debugging)
+- 📋 **purple** - Process/Management (workflows, compliance, integration)
+- 🔧 **yellow** - Language/Tools (compilers, DSLs, development tools)
+- 📝 **green** - Other Specialists (documentation, strategy, etc.)
+
 ## Legacy: Creating New Agents
 
 When you need a completely new agent type not in reserves:
@@ -42,7 +64,8 @@ When you need a completely new agent type not in reserves:
 1. **Check reserves first** - Use `/agent-browse` and `/agent-search` to see if suitable agent exists
 2. **Use agent template** - Start with `~/claudes-home/templates/agent-prompt.md`
 3. **Create in project** - Save to `.claude/agents/` directory
-4. **Consider adding to reserves** - If agent could be useful for other projects
+4. **Assign appropriate color** - Use the categorization scheme above
+5. **Consider adding to reserves** - If agent could be useful for other projects
 
 ## Workflow Benefits
 
