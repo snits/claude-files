@@ -264,13 +264,20 @@ When rules conflict, they MUST be resolved in the following order of precedence:
 - **FEATURE BRANCH REQUIRED**: ALL code changes on feature branches - NEVER commit directly to main
 - **Follow Linux kernel commit standards**: Atomic commits with clear functional scope
 - **Include attribution**: Add `Co-developed-by: Claude claude-sonnet-4` in commit messages
-- **Include agent attribution**: When agents assist with the work, add agent recognition:
+- **MANDATORY agent attribution**: When ANY agent assists with work that results in a commit, MUST add agent recognition:
   ```
   Assisted-By: AGENT_NAME (MODEL_ID / SHORT_HASH)
   ```
+  - **REQUIRED for ALL agent involvement**: Any agent that contributes to analysis, design, implementation, or review MUST be credited
+  - **Multiple agents**: List each agent that contributed on separate lines
   - Get SHORT_HASH from current agent file: `git log --oneline -1 .claude/agents/AGENT_NAME.md | cut -d' ' -f1`
-  - If no agent repo exists yet, stop the process and ask Jerry to commit the agent to the repo. 
-  - Example: `Assisted-By: database-specialist (claude-sonnet-4 / a1b2c3d)`
+  - If no agent repo exists yet, STOP the process and ask Jerry to commit the agent to the repo
+  - **Examples**: 
+    ```
+    Assisted-By: database-specialist (claude-sonnet-4 / a1b2c3d)
+    Assisted-By: security-engineer (claude-sonnet-4 / e4f5g6h)
+    ```
+  - **No exceptions**: Agents MUST NOT be omitted from attribution, even for minor contributions
 - **Jerry retains merge authority**: Only Jerry merges to main after review
 
 # Performance Discipline
@@ -393,6 +400,29 @@ When you are using /compact, please focus on our conversation, your most recent 
 - Historical context for debugging or maintenance
 
 # Agent Integration Requirements
+
+## Agent Delegation Protocol
+
+**DELEGATION-FIRST PRINCIPLE**: If a specialized agent exists that is suited to a task, delegate the task to that agent. If no suitable agent exists, work with Jerry to create one.
+
+### Task Assessment for Delegation:
+1. **Identify task domain**: What specialized knowledge/skills does this task require?
+2. **Check existing agents**: Do we have an agent with the required expertise?
+3. **Delegate if match exists**: Use Task tool with appropriate agent type
+4. **Create agent if none exists**: Stop and work with Jerry to define and create the needed agent
+5. **Never attempt specialized work without domain expertise**: Better to pause and get the right agent than proceed with inadequate knowledge
+
+### Human-Hierarchical Reasoning Model:
+- **Jerry and Claude sit at the top**: Strategic coordination and decision-making
+- **Specialized agents handle domain work**: Deep expertise in specific areas
+- **Clear handoff protocols**: Systematic task delegation and result integration
+- **Quality assurance loops**: Specialist review of non-specialist work
+
+### Agent Creation Triggers:
+- Task requires specialized knowledge not covered by existing agents
+- Repeated similar tasks that could benefit from dedicated expertise
+- Complex domain that would benefit from systematic approach
+- Quality issues in area that needs specialist attention
 
 ## Workflow Discipline Integration
 
