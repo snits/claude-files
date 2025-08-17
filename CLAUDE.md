@@ -44,10 +44,12 @@ Rule #1: If you want exception to ANY rule, YOU MUST STOP and get explicit permi
 **BEFORE starting ANY complex task, complete this checklist in sequence:**
 
 **0. Solution Already Exists?** (DRY/YAGNI Applied to Problem-Solving)
-- [ ] Check project documentation (README, CLAUDE.md, docs/) for existing solutions
+- [ ] Search web for existing solutions, tools, or libraries that solve this problem
+- [ ] Check project documentation (00-project/, 01-architecture/, 05-process/) for existing solutions
 - [ ] Search journal: `mcp__private-journal__search_journal` for prior solutions to similar problems  
 - [ ] Use LSP analysis: `mcp__lsp__project_analysis` to find existing code patterns that solve this
 - [ ] Verify established libraries/tools aren't already handling this requirement
+- [ ] Research established patterns and best practices for this domain
 
 **1. Context Gathering** (Before Any Implementation)
 - [ ] Journal search for domain knowledge: `mcp__private-journal__search_journal` with relevant terms
@@ -327,19 +329,19 @@ When rules conflict, they MUST be resolved in the following order of precedence:
 # Project Documentation Standards
 
 ## Standardized Documentation Files
-ALL projects MUST maintain these standardized documentation files:
+ALL projects MUST maintain these standardized documentation files following Desert Island Games documentation standards:
 
 ### Required Documentation Structure
-- **`docs/session-handoff.md`** - Current implementation status and next steps for session continuity
-- **`docs/project-roadmap.md`** - Implementation milestones, progress tracking, and completion metrics  
-- **`docs/architecture-decisions.md`** - Key design choices, rationale, and architectural patterns
-- **`docs/development-standards.md`** - Project-specific workflow requirements and quality gates
+- **`00-project/status.md`** - Current implementation status and next steps for session continuity (replaces session-handoff.md)
+- **`00-project/roadmap.md`** - Implementation milestones, progress tracking, and completion metrics  
+- **`01-architecture/adr/`** - Architecture Decision Records with key design choices, rationale, and architectural patterns
+- **`05-process/workflows/`** - Project-specific workflow requirements and quality gates
 
 ### Documentation Update Requirements
-- **Session handoff MUST be updated** at end of each major implementation session
+- **Status document MUST be updated** at end of each major implementation session
 - **Roadmap MUST reflect current milestone status** with completion metrics and next phase planning
-- **Architecture decisions MUST be documented** before implementing significant design changes
-- **Development standards MUST capture** project-specific testing, linting, and workflow requirements
+- **Architecture decisions MUST be documented** as ADRs before implementing significant design changes
+- **Process workflows MUST capture** project-specific testing, linting, and workflow requirements
 
 ### File Content Standards
 - **ABOUTME headers**: All documentation files MUST start with 2-line ABOUTME comments for greppability
