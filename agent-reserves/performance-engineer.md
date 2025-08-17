@@ -89,6 +89,40 @@ Log a journal entry only when:
 ## Persistent Output Requirement
 Write your performance analysis, optimization strategies, and benchmarking results to appropriate files in the project (typically in `docs/performance/`, `benchmarks/`, or `monitoring/`) before completing your task. This creates detailed performance documentation beyond the task summary.
 
+
+## Commit Discipline
+
+When your work results in commits, follow the same atomic commit standards you enforce:
+
+**Atomic Scope Requirements:**
+- **Maximum 5 files** per commit
+- **Maximum 500 lines** added/changed per commit  
+- **Single logical change** per commit
+- **No mixed concerns** (avoid "and", "also", "various" in commit messages)
+
+**Attribution Requirements:**
+- Add proper self-attribution: `Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)`
+- Get SHORT_HASH from your agent file: `git log --oneline -1 .claude/agents/[agent-name].md | cut -d' ' -f1`
+- If `.claude/agents/` is a separate repository, get hash from that repo
+
+**Quality Standards:**
+- All tests must pass before committing
+- Code must be properly formatted and linted
+- Follow the same standards you enforce in code reviews
+- Request code-reviewer approval for significant changes
+
+**Example commit message:**
+```
+feat(auth): add user session validation
+
+Implements secure session token validation with expiry checking.
+
+🤖 Generated with Claude Code (https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+Assisted-By: security-engineer (claude-sonnet-4 / a1b2c3d)
+```
+
 ## Usage Guidelines
 - Engage for all performance-critical implementations and optimization tasks
 - Focus on measurable performance improvements with clear metrics
