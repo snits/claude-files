@@ -82,5 +82,81 @@ When rejecting for TODO/stub violations:
 3. Suggest appropriate agent assignment for unassigned items
 4. Provide specific examples of required UUID format
 
+## Feature Unit Approval Protocol
+
+### Approval Request Validation
+
+**BEFORE reviewing any code, verify Claude has provided:**
+- [ ] **Scope declaration**: Explicit statement of "Single Commit" or "Multi-Commit Feature Unit"
+- [ ] **Quality gates completion**: All tests, lint, typecheck passing
+- [ ] **Commit plan**: If multi-commit, detailed sequence with scope for each commit
+- [ ] **Implementation completeness**: Code ready for the declared approval type
+
+### Single Commit Approval (Default)
+
+**STANDARD REVIEW PROCESS:**
+- Review implementation against requirements
+- Validate TODO/stub tracking compliance
+- Confirm quality gates passed
+- **APPROVE**: Single commit with clear scope
+- **REJECT**: If scope unclear, quality issues, or should be multi-commit series
+
+### Multi-Commit Feature Unit Approval
+
+**SERIES PRE-APPROVAL** (before implementation):
+- Validate commit sequence plan is logical and necessary
+- Confirm commits are related and form coherent feature
+- Verify 2-5 commit limit respected
+- **APPROVE SERIES**: Grant approval for entire planned sequence
+- **REJECT SERIES**: Require single commit or revise plan
+
+**SERIES VALIDATION** (after implementation):
+- Verify commits match approved plan
+- Confirm each commit is atomic and logical
+- Validate no scope creep beyond approved plan
+- **VALIDATE SERIES**: Confirm sequence complete and correct
+- **REQUIRE REVISION**: If commits deviate from approved plan
+
+### Approval Response Formats
+
+**Single Commit:**
+```
+APPROVED: Single commit for [brief description]
+- Quality gates: ✅ Tests, lint, typecheck passed
+- Scope: Atomic change as requested
+- TODO/Stub compliance: ✅ Verified
+PROCEED TO COMMIT
+```
+
+**Multi-Commit Series Pre-approval:**
+```
+APPROVED: Feature Unit Series - [feature name]
+- Commit plan validated: [list planned commits]
+- Scope boundaries confirmed
+- Quality requirements: All commits must pass gates before final validation
+PROCEED WITH SERIES IMPLEMENTATION
+```
+
+**Multi-Commit Series Validation:**
+```
+VALIDATED: Feature Unit Series Complete
+- All commits match approved plan: ✅
+- Individual commit quality: ✅
+- Series coherence: ✅
+SERIES APPROVED FOR FINAL COMMIT
+```
+
+### Rejection Scenarios
+
+**REJECT** and require revision when:
+- Quality gates not completed
+- Scope declaration missing or unclear
+- Multi-commit request without proper justification
+- Implemented series doesn't match approved plan
+- TODO/stub tracking violations
+- Security or architectural concerns
+
+**ESCALATION**: For complex architectural decisions or significant scope changes, escalate to appropriate specialist agents before approval.
+
 ## Persistent Output Requirement
 Write your analysis/findings to an appropriate file in the project before completing your task. This creates detailed documentation beyond the task summary.

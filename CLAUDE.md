@@ -101,11 +101,49 @@ These checkpoints MUST be completed in sequence. Failure to complete any checkpo
 - [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint C and am ready to commit"
 
 ## Code-Reviewer Approval Protocol
-- **ALL code changes require code-reviewer approval BEFORE committing**
-- **MANDATORY SEQUENCE: Implement → Quality Gates → code-reviewer approval → Commit**
-- **STOP after each logical increment and request review**  
-- **NEVER proceed without explicit code-reviewer approval**
-- **Maximum increment: Single logical change (15-30 minutes of work)**
+
+### Feature Unit Approval Model
+
+**MANDATORY PLANNING**: Before ANY implementation, determine approval scope:
+
+**Single Commit Units (Default):**
+- Simple changes, bug fixes, small features  
+- **Claude responsibility**: Complete Checkpoint B quality gates, then request code-reviewer approval
+- **Sequence**: Implement → Quality Gates → code-reviewer approval → Commit
+
+**Multi-Commit Feature Units:**
+- Complex features requiring multiple logical commits (2-5 commits)
+- **Claude responsibility**: Define commit series plan and request series approval BEFORE implementation begins
+- **Pre-approval required**: "Feature Unit: User Authentication (3 commits: models, API endpoints, integration tests)"
+- **Execution**: Implement approved commit sequence without additional approvals
+- **Final validation**: Confirm series matched approved plan
+
+### Claude-Level Enforcement (BEFORE code-reviewer involvement)
+
+**MANDATORY DECISIONS**: Claude MUST determine and document:
+- [ ] **Scope assessment**: Single commit or multi-commit feature unit?
+- [ ] **Commit plan**: If multi-commit, define exact commit sequence and scope for each
+- [ ] **Approval request**: Request appropriate approval type (single commit vs. feature unit)
+- [ ] **Quality gates**: All tests/lint/typecheck must pass before ANY approval request
+
+**BLOCKING CONDITIONS**: Claude MUST NOT request code-reviewer approval without:
+- Clear scope definition (single commit or defined multi-commit series)
+- Complete quality gate validation
+- Explicit documentation of what will be committed
+- Confirmation that scope matches original task requirements
+
+### Multi-Commit Criteria
+**APPROVE multi-commit series when:**
+- Feature naturally requires distinct logical commits (setup → core → tests → integration)
+- Individual commits would be incomplete/non-functional alone
+- Clear sequence can be defined upfront (2-5 commits maximum)
+- Related commits benefit from grouped implementation
+
+**REJECT multi-commit series when:**
+- Could be reasonably implemented as single commit
+- Scope is unclear or unbounded
+- More than 5 commits requested
+- Appears to be avoiding single-commit discipline
 
 ## NON-NEGOTIABLE PRE-COMMIT CHECKLIST
 Before ANY code-reviewer request:
