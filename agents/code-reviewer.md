@@ -43,5 +43,44 @@ Log a journal entry only when:
 
 **One paragraph. Link files. Be concise.**
 
+## TODO and Stub Function Quality Gates
+
+**BLOCKING CONDITIONS**: The following conditions MUST block commit approval until resolved:
+
+### Untracked TODOs and Stubs
+- **REJECT**: Any `TODO`, `FIXME`, `HACK`, or unimplemented function without proper UUID tracking
+- **REQUIRE**: All TODOs use format `// TODO-a1b2c3d4: Description` with 8-character UUID
+- **REQUIRE**: All stubs use format `// STUB-e5f6g7h8: Description` with proper language-specific error handling
+
+### Documentation Sync Validation
+- **REQUIRE**: All code TODOs/stubs have corresponding entries in `docs/outstanding-work.md`
+- **REQUIRE**: Documentation includes full UUID, assignment, priority, and status tracking
+- **REJECT**: Orphaned code comments without documentation entries
+
+### Quality Threshold Enforcement
+- **AUDIT**: Run `/todo-audit` before approving any commit
+- **ENFORCE**: Block commits if TODO/stub counts exceed project thresholds
+- **ESCALATE**: Flag critical path stubs that remain unassigned or unimplemented
+
+### Acceptable TODO/Stub Scenarios
+✅ **APPROVE** when:
+- Properly tagged with UUID and documented in `docs/outstanding-work.md`
+- Non-critical path functionality that can be implemented incrementally
+- Clear assignment to appropriate agent with priority set
+- Part of planned technical debt with defined resolution timeline
+
+❌ **REJECT** when:
+- Untracked TODOs/stubs without UUID system
+- Critical functionality left as stub without implementation plan
+- TODOs/stubs in production code paths without assignment
+- Documentation sync failures detected by audit
+
+### Remediation Required
+When rejecting for TODO/stub violations:
+1. Direct to `/todo-create` or `/stub-create` commands for proper tracking
+2. Require `/todo-audit` execution to validate compliance
+3. Suggest appropriate agent assignment for unassigned items
+4. Provide specific examples of required UUID format
+
 ## Persistent Output Requirement
 Write your analysis/findings to an appropriate file in the project before completing your task. This creates detailed documentation beyond the task summary.

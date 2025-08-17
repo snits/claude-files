@@ -231,7 +231,7 @@ When rules conflict, they MUST be resolved in the following order of precedence:
   Assisted-By: AGENT_NAME (MODEL_ID / SHORT_HASH)
   ```
   - Get SHORT_HASH from current agent file: `git log --oneline -1 .claude/agents/AGENT_NAME.md | cut -d' ' -f1`
-  - If no agent repo exists yet, use: `Assisted-By: AGENT_NAME (MODEL_ID / latest)`
+  - If no agent repo exists yet, stop the process and ask Jerry to commit the agent to the repo. 
   - Example: `Assisted-By: database-specialist (claude-sonnet-4 / a1b2c3d)`
 - **Jerry retains merge authority**: Only Jerry merges to main after review
 
