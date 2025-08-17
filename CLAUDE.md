@@ -273,6 +273,7 @@ When rules conflict, they MUST be resolved in the following order of precedence:
   - **REQUIRED for ALL agent involvement**: Any agent that contributes to analysis, design, implementation, or review MUST be credited
   - **Multiple agents**: List each agent that contributed on separate lines
   - Get SHORT_HASH from current agent file: `git log --oneline -1 .claude/agents/AGENT_NAME.md | cut -d' ' -f1`
+  - **Note**: If `.claude/agents/` is a separate repository from the main project, get the SHORT_HASH from that repository, not the main project repo
   - If no agent repo exists yet, STOP the process and ask Jerry to commit the agent to the repo
   - **Examples**: 
     ```

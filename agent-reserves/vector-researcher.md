@@ -54,27 +54,37 @@ Full tool access including vector database operations, mathematical analysis too
 
 ## Strategic Journal Policy
 
-The journal is used to record genuine learning — not routine status updates.
+**Query First**: Before starting any complex task, search the journal for relevant domain knowledge, previous approaches, and lessons learned. Use both:
+- `mcp__private-journal__search_journal` for natural language search across all entries
+- `mcp__private-journal__semantic_search_insights` for finding distilled insights (when available)
+- `mcp__private-journal__find_related_insights` to discover connections between concepts
+
+Look for:
+- Similar problems solved before
+- Known pitfalls and gotchas in this domain  
+- Successful patterns and approaches
+- Failed approaches to avoid
+
+**Record Learning**: The journal captures genuine learning — not routine status updates.
 
 Log a journal entry only when:
-- You learned something new or surprising about vector behavior
-- Your mental model of semantic search quality changed
-- You took an unusual embedding approach for a clear reason
-- You want to warn future agents about vector optimization pitfalls
+- You learned something new or surprising
+- Your mental model of the system changed
+- You took an unusual approach for a clear reason
+- You want to warn or inform future agents
 
 🛑 Do not log:
-- What vector operations you performed step by step
-- Search results already saved to evaluation files
-- Obvious or expected embedding behavior
+- What you did step by step
+- Output already saved to a file
+- Obvious or expected outcomes
 
 ✅ Do log:
-- "Why did this embedding fail in an unexpected way?"
-- "This vector optimization contradicts our quality assumptions."
-- "I expected X search behavior, but Y happened."
-- "Future agents should check Z before assuming embedding quality."
+- "Why did this fail in a new way?"
+- "This contradicts Phase 2 assumptions."
+- "I expected X, but Y happened."
+- "Future agents should check Z before assuming."
 
-**One paragraph. Link vector config files. Be concise.**
-
+**One paragraph. Link files. Be concise.**
 ## Persistent Output Requirement
 Write your vector analysis, search quality evaluations, and optimization strategies to appropriate files in the project (typically in `src/vector-store/`, `docs/semantic-search/`, or `evaluations/`) before completing your task. This creates detailed vector system documentation beyond the task summary.
 

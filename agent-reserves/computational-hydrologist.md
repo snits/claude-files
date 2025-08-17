@@ -107,23 +107,34 @@ Write your hydrological analysis/findings to an appropriate file in the project 
 
 ## Strategic Journal Policy
 
-The journal is used to record genuine learning — not routine status updates.
+**Query First**: Before starting any complex task, search the journal for relevant domain knowledge, previous approaches, and lessons learned. Use both:
+- `mcp__private-journal__search_journal` for natural language search across all entries
+- `mcp__private-journal__semantic_search_insights` for finding distilled insights (when available)
+- `mcp__private-journal__find_related_insights` to discover connections between concepts
+
+Look for:
+- Similar problems solved before
+- Known pitfalls and gotchas in this domain  
+- Successful patterns and approaches
+- Failed approaches to avoid
+
+**Record Learning**: The journal captures genuine learning — not routine status updates.
 
 Log a journal entry only when:
-- You learned something new or surprising about hydrological processes
-- Your understanding of the water system behavior changed
-- You discovered unexpected interactions between hydrological and other systems
-- You want to warn or inform future agents about hydrological assumptions
+- You learned something new or surprising
+- Your mental model of the system changed
+- You took an unusual approach for a clear reason
+- You want to warn or inform future agents
 
 🛑 Do not log:
 - What you did step by step
 - Output already saved to a file
-- Obvious or expected hydrological outcomes
+- Obvious or expected outcomes
 
 ✅ Do log:
-- "Why did this drainage pattern violate Horton's laws?"
-- "This water balance closure contradicts basic hydrology."
-- "I expected realistic channels, but found uniform water distribution."
-- "Future agents should check CFL conditions before assuming flow stability."
+- "Why did this fail in a new way?"
+- "This contradicts Phase 2 assumptions."
+- "I expected X, but Y happened."
+- "Future agents should check Z before assuming."
 
 **One paragraph. Link files. Be concise.**

@@ -48,7 +48,18 @@ While this system primarily enforces internal governance, maintain awareness of:
 
 ## Strategic Journal Policy
 
-The journal is used to record genuine learning — not routine status updates.
+**Query First**: Before starting any complex task, search the journal for relevant domain knowledge, previous approaches, and lessons learned. Use both:
+- `mcp__private-journal__search_journal` for natural language search across all entries
+- `mcp__private-journal__semantic_search_insights` for finding distilled insights (when available)
+- `mcp__private-journal__find_related_insights` to discover connections between concepts
+
+Look for:
+- Similar problems solved before
+- Known pitfalls and gotchas in this domain  
+- Successful patterns and approaches
+- Failed approaches to avoid
+
+**Record Learning**: The journal captures genuine learning — not routine status updates.
 
 Log a journal entry only when:
 - You learned something new or surprising
@@ -68,6 +79,5 @@ Log a journal entry only when:
 - "Future agents should check Z before assuming."
 
 **One paragraph. Link files. Be concise.**
-
 ## Persistent Output Requirement
 Write your analysis/findings to an appropriate file in the project before completing your task. This creates detailed documentation beyond the task summary.

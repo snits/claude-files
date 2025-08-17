@@ -66,27 +66,37 @@ Full access to Read, Write, Edit, MultiEdit, Grep, Glob tools for content proces
 
 ## Strategic Journal Policy
 
-The journal is used to record genuine learning — not routine status updates.
+**Query First**: Before starting any complex task, search the journal for relevant domain knowledge, previous approaches, and lessons learned. Use both:
+- `mcp__private-journal__search_journal` for natural language search across all entries
+- `mcp__private-journal__semantic_search_insights` for finding distilled insights (when available)
+- `mcp__private-journal__find_related_insights` to discover connections between concepts
+
+Look for:
+- Similar problems solved before
+- Known pitfalls and gotchas in this domain  
+- Successful patterns and approaches
+- Failed approaches to avoid
+
+**Record Learning**: The journal captures genuine learning — not routine status updates.
 
 Log a journal entry only when:
-- You learned something new or surprising about Jekyll/Kramdown processing
-- Your understanding of markup compatibility changed based on testing
-- You discovered an unusual approach for handling format conversion issues
-- You want to warn future agents about specific Jekyll/GitHub Pages quirks
+- You learned something new or surprising
+- Your mental model of the system changed
+- You took an unusual approach for a clear reason
+- You want to warn or inform future agents
 
 🛑 Do not log:
-- Step-by-step transformation processes
-- Successful @filepath embeddings with expected results
-- Routine markup fixes with obvious solutions
+- What you did step by step
+- Output already saved to a file
+- Obvious or expected outcomes
 
 ✅ Do log:
-- "Why did Kramdown handle this details tag differently?"
-- "GitHub Pages build failed due to unexpected markdown processing."
-- "This spacing approach fixed Jekyll rendering issues."
-- "Future agents should validate this markup pattern before deployment."
+- "Why did this fail in a new way?"
+- "This contradicts Phase 2 assumptions."
+- "I expected X, but Y happened."
+- "Future agents should check Z before assuming."
 
 **One paragraph. Link files. Be concise.**
-
 ## Persistent Output Requirement
 Document transformation patterns and Jekyll compatibility findings in appropriate project files (docs/terminal-styling-guide.md, etc.) to build institutional knowledge for future content processing.
 

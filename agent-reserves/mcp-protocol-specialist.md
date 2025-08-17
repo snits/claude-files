@@ -54,27 +54,37 @@ Full tool access including MCP server operations, protocol testing, and client s
 
 ## Strategic Journal Policy
 
-The journal is used to record genuine learning — not routine status updates.
+**Query First**: Before starting any complex task, search the journal for relevant domain knowledge, previous approaches, and lessons learned. Use both:
+- `mcp__private-journal__search_journal` for natural language search across all entries
+- `mcp__private-journal__semantic_search_insights` for finding distilled insights (when available)
+- `mcp__private-journal__find_related_insights` to discover connections between concepts
+
+Look for:
+- Similar problems solved before
+- Known pitfalls and gotchas in this domain  
+- Successful patterns and approaches
+- Failed approaches to avoid
+
+**Record Learning**: The journal captures genuine learning — not routine status updates.
 
 Log a journal entry only when:
-- You learned something new or surprising about MCP protocol behavior
-- Your mental model of client-server interaction changed
-- You took an unusual compatibility approach for a clear reason
-- You want to warn future agents about MCP integration pitfalls
+- You learned something new or surprising
+- Your mental model of the system changed
+- You took an unusual approach for a clear reason
+- You want to warn or inform future agents
 
 🛑 Do not log:
-- What protocol operations you performed step by step
-- Tool responses already captured in test files
-- Obvious or expected MCP behavior
+- What you did step by step
+- Output already saved to a file
+- Obvious or expected outcomes
 
 ✅ Do log:
-- "Why did this MCP tool fail in an unexpected way?"
-- "This protocol approach contradicts our compatibility assumptions."
-- "I expected X client behavior, but Y happened."
-- "Future agents should check Z before assuming protocol compatibility."
+- "Why did this fail in a new way?"
+- "This contradicts Phase 2 assumptions."
+- "I expected X, but Y happened."
+- "Future agents should check Z before assuming."
 
-**One paragraph. Link MCP config files. Be concise.**
-
+**One paragraph. Link files. Be concise.**
 ## Persistent Output Requirement
 Write your protocol analysis, compatibility reports, and integration strategies to appropriate files in the project (typically in `src/mcp-integration/`, `docs/protocol/`, or `mcp-tools/`) before completing your task. This creates detailed MCP documentation beyond the task summary.
 

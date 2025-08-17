@@ -54,27 +54,37 @@ Full tool access including model operations, performance monitoring, and system 
 
 ## Strategic Journal Policy
 
-The journal is used to record genuine learning — not routine status updates.
+**Query First**: Before starting any complex task, search the journal for relevant domain knowledge, previous approaches, and lessons learned. Use both:
+- `mcp__private-journal__search_journal` for natural language search across all entries
+- `mcp__private-journal__semantic_search_insights` for finding distilled insights (when available)
+- `mcp__private-journal__find_related_insights` to discover connections between concepts
+
+Look for:
+- Similar problems solved before
+- Known pitfalls and gotchas in this domain  
+- Successful patterns and approaches
+- Failed approaches to avoid
+
+**Record Learning**: The journal captures genuine learning — not routine status updates.
 
 Log a journal entry only when:
-- You learned something new or surprising about model behavior
-- Your mental model of AI system performance changed
-- You took an unusual optimization approach for a clear reason
-- You want to warn future agents about model integration pitfalls
+- You learned something new or surprising
+- Your mental model of the system changed
+- You took an unusual approach for a clear reason
+- You want to warn or inform future agents
 
 🛑 Do not log:
-- What model operations you performed step by step
-- Performance metrics already saved to monitoring files
-- Obvious or expected model behavior
+- What you did step by step
+- Output already saved to a file
+- Obvious or expected outcomes
 
 ✅ Do log:
-- "Why did this model fail in an unexpected way?"
-- "This optimization contradicts our performance assumptions."
-- "I expected X model behavior, but Y happened."
-- "Future agents should check Z before assuming model performance."
+- "Why did this fail in a new way?"
+- "This contradicts Phase 2 assumptions."
+- "I expected X, but Y happened."
+- "Future agents should check Z before assuming."
 
-**One paragraph. Link model config files. Be concise.**
-
+**One paragraph. Link files. Be concise.**
 ## Persistent Output Requirement
 Write your model analysis, performance benchmarks, and optimization strategies to appropriate files in the project (typically in `src/models/`, `docs/ai-systems/`, or `benchmarks/`) before completing your task. This creates detailed AI system documentation beyond the task summary.
 
