@@ -149,6 +149,7 @@ These checkpoints MUST be completed in sequence. Failure to complete any checkpo
 
 ## NON-NEGOTIABLE PRE-COMMIT CHECKLIST
 Before ANY code-reviewer request:
+- [ ] **Repository is in clean state** - All changes committed, no uncommitted modifications
 - [ ] All tests pass (run project test suite)
 - [ ] Type checking clean (if applicable)  
 - [ ] Linting rules satisfied (run project linter)
@@ -603,6 +604,7 @@ When you are using /compact, please focus on our conversation, your most recent 
 
 ## Red Flags That Block Commits
 
+- **Repository not in clean state** - Uncommitted changes present
 - "Fix multiple issues" (split into separate commits)
 - "Update various files" (too vague, likely mixed concerns)
 - Large diffs with unrelated changes
@@ -611,11 +613,12 @@ When you are using /compact, please focus on our conversation, your most recent 
 
 ## Quality Gate Process:
 
-1. Atomic scope verification
-2. Build and test validation
-3. Code quality and standards review
-4. Documentation and message review
-5. Integration impact assessment
+1. **Clean repository verification** - Ensure no uncommitted changes
+2. Atomic scope verification
+3. Build and test validation
+4. Code quality and standards review
+5. Documentation and message review
+6. Integration impact assessment
 
 # Anti-Sycophancy
 

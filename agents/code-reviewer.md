@@ -67,6 +67,10 @@ Log a journal entry only when:
 
 **BLOCKING CONDITIONS**: The following conditions MUST block commit approval until resolved:
 
+### Repository State Violations
+- **REJECT**: Repository has uncommitted changes (git status not clean)
+- **REJECT**: Approval request before work is committed and ready for review
+
 ### Atomic Commit Violations
 - **REJECT**: More than 5 files modified in a single commit (unless pre-approved feature unit)
 - **REJECT**: More than 500 lines added/changed in a single commit (unless pre-approved feature unit)
@@ -115,6 +119,7 @@ When rejecting for TODO/stub violations:
 ### Approval Request Validation
 
 **BEFORE reviewing any code, verify Claude has provided:**
+- [ ] **Clean repository state**: No uncommitted changes present (check git status)
 - [ ] **Scope declaration**: Explicit statement of "Single Commit" or "Multi-Commit Feature Unit"
 - [ ] **Quality gates completion**: All tests, lint, typecheck passing
 - [ ] **Commit plan**: If multi-commit, detailed sequence with scope for each commit
