@@ -59,6 +59,131 @@ Log a journal entry only when:
 ## Persistent Output Requirement
 Write your analysis/findings to an appropriate file in the project before completing your task. This creates detailed documentation beyond the task summary.
 
+## Implementation Atomic Scope Planning
+
+**PROACTIVE COMMIT PLANNING**: Plan atomic commits BEFORE implementation to prevent large changes requiring post-implementation breaking.
+
+### Pre-Implementation Scope Assessment
+
+**BEFORE starting any implementation, determine commit strategy:**
+
+#### Single Commit Features (Default Approach)
+- **Simple algorithm implementations**: Single function, clear logic scope
+- **Small bug fixes**: 1-3 files, isolated problem resolution
+- **Configuration changes**: Environment, settings, or build modifications
+- **Code optimizations**: Performance improvements with clear scope
+
+#### Multi-Commit Feature Units (Requires Pre-Approval)
+- **Complex algorithmic features**: Data structure → algorithm → optimization → validation
+- **Multi-language implementations**: Interface definition → language-specific implementations
+- **Cross-cutting performance improvements**: Changes affecting multiple system components
+
+**APPROVAL REQUIREMENT**: For multi-commit features, request code-reviewer pre-approval with detailed commit plan BEFORE implementation begins.
+
+### Implementation Scope Monitoring
+
+**REAL-TIME SCOPE ASSESSMENT** during implementation:
+
+#### Stop and Reassess Triggers
+- **File count approaching 5**: Consider if changes can be split logically
+- **Line count approaching 500**: Assess if core change can be isolated from supporting changes
+- **Mixed concerns emerging**: Adding "and also" functionality indicates scope creep
+- **Dependency chain growing**: Implementation changes requiring changes in other areas
+
+#### Scope Creep Warning Signs
+- **"While I'm here" additions**: Fixing unrelated issues discovered during implementation
+- **"This also needs" cascade**: Original change requiring additional supporting implementations
+- **"Might as well" features**: Adding related functionality beyond original requirement
+- **"Quick fix" bundling**: Combining multiple small fixes into one commit
+
+### Multi-Commit Feature Planning
+
+**When requesting multi-commit pre-approval, provide:**
+
+1. **Logical Commit Sequence** (2-5 commits maximum):
+   ```
+   Commit 1: Add data structure for git worktree tracking
+   Commit 2: Implement core worktree creation and cleanup logic
+   Commit 3: Add error handling and recovery mechanisms
+   Commit 4: Add comprehensive unit and integration tests
+   ```
+
+2. **Dependency Justification**: Why commits must be in sequence and can't be combined
+3. **Working State Guarantee**: Each commit leaves system in functional state
+4. **Clear Boundaries**: What is included/excluded in each commit
+
+### Implementation Checkpoints
+
+**MANDATORY CHECKPOINTS** during implementation:
+
+#### Checkpoint: Core Logic Foundation
+- Essential algorithms and data structures implemented
+- **Assessment**: Can this be committed as functional foundation?
+- **Decision**: Commit foundation, then build incrementally
+
+#### Checkpoint: Integration Points
+- External interfaces and API connections implemented
+- **Assessment**: Are integration changes separate from core logic?
+- **Decision**: Consider separate commit for integration layer
+
+#### Checkpoint: Testing and Validation
+- Test coverage and validation logic added
+- **Assessment**: Can tests be committed separately from implementation?
+- **Decision**: Separate test commits if substantial test infrastructure added
+
+### Quality Gate Integration
+
+**BEFORE requesting code-reviewer approval:**
+
+- [ ] **Scope Declaration**: Explicit statement of "Single Commit" or "Multi-Commit Feature Unit"
+- [ ] **Quality Gates**: All tests/lint/typecheck passing
+- [ ] **Atomic Boundaries**: Each commit represents exactly one logical change
+- [ ] **TODO/Stub Compliance**: All TODOs use UUID tracking system
+- [ ] **Implementation Completeness**: Code ready for declared approval type
+
+### Scope Discipline Examples
+
+#### ✅ Good Atomic Scope Examples:
+- **"Add input validation for workspace configuration"** - Single concern, clear boundary
+- **"Implement git worktree cleanup on lease expiration"** - One logical feature, focused scope
+- **"Add error handling for malformed MCP requests"** - Specific error scenario
+
+#### ❌ Scope Creep Examples:
+- **"Add workspace management and fix logging and update docs"** - Three separate concerns
+- **"Implement MCP server with validation and database integration"** - Multiple logical features
+- **"Fix authentication bug and add session timeout feature"** - Bug fix + new feature
+
+### Recovery from Scope Creep
+
+**When scope grows beyond atomic boundaries during implementation:**
+
+1. **STOP adding features** - Don't continue expanding scope
+2. **Assess completed work** - What can be committed as-is?
+3. **Split remaining work** - Create separate tasks for additional features
+4. **Commit working state** - Deliver atomic change for completed work
+5. **Plan next increment** - Start new atomic commit for remaining features
+
+### Code-Reviewer Handoff Protocol
+
+**FOR SINGLE COMMITS:**
+```
+REQUESTING APPROVAL: Single Commit
+- Feature: [brief description]
+- Files Modified: [list, max 5]
+- Quality Gates: ✅ Tests, lint, typecheck passed
+- Scope: Atomic change as planned
+READY FOR REVIEW
+```
+
+**FOR MULTI-COMMIT SERIES:**
+```
+REQUESTING SERIES VALIDATION: [Feature Unit Name]
+- Commit sequence: [verify matches approved plan]
+- Quality gates per commit: [confirm each passed]
+- No scope creep: [confirm boundaries maintained]
+READY FOR SERIES APPROVAL
+```
+
 ## Commit Discipline
 
 When your work results in commits, follow the same atomic commit standards you enforce:

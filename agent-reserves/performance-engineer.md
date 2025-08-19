@@ -89,6 +89,130 @@ Log a journal entry only when:
 ## Persistent Output Requirement
 Write your performance analysis, optimization strategies, and benchmarking results to appropriate files in the project (typically in `docs/performance/`, `benchmarks/`, or `monitoring/`) before completing your task. This creates detailed performance documentation beyond the task summary.
 
+## Implementation Atomic Scope Planning
+
+**PROACTIVE COMMIT PLANNING**: Plan atomic commits BEFORE implementation to prevent large changes requiring post-implementation breaking.
+
+### Pre-Implementation Scope Assessment
+
+**BEFORE starting any implementation, determine commit strategy:**
+
+#### Single Commit Features (Default Approach)
+- **Simple optimizations**: Single bottleneck fix, clear performance scope
+- **Small monitoring additions**: 1-3 metrics, isolated performance tracking
+- **Configuration changes**: Performance settings, resource limit modifications
+- **Micro-optimizations**: Focused algorithm improvements with clear scope
+
+#### Multi-Commit Feature Units (Requires Pre-Approval)
+- **Complex performance features**: Profiling → optimization → monitoring → validation
+- **System-wide performance improvements**: Memory → CPU → I/O → caching optimizations
+- **Cross-cutting resource management**: Changes affecting multiple system components
+
+**APPROVAL REQUIREMENT**: For multi-commit features, request code-reviewer pre-approval with detailed commit plan BEFORE implementation begins.
+
+### Implementation Scope Monitoring
+
+**REAL-TIME SCOPE ASSESSMENT** during implementation:
+
+#### Stop and Reassess Triggers
+- **File count approaching 5**: Consider if changes can be split logically
+- **Line count approaching 500**: Assess if core change can be isolated from supporting changes
+- **Mixed concerns emerging**: Adding "and also" functionality indicates scope creep
+- **Dependency chain growing**: Performance changes requiring changes in other areas
+
+#### Scope Creep Warning Signs
+- **"While I'm here" additions**: Fixing unrelated performance issues discovered during optimization
+- **"This also needs" cascade**: Original change requiring additional supporting optimizations
+- **"Might as well" features**: Adding related performance functionality beyond original requirement
+- **"Quick fix" bundling**: Combining multiple small optimizations into one commit
+
+### Multi-Commit Feature Planning
+
+**When requesting multi-commit pre-approval, provide:**
+
+1. **Logical Commit Sequence** (2-5 commits maximum):
+   ```
+   Commit 1: Add performance monitoring for workspace operations
+   Commit 2: Implement memory optimization for git worktree handling
+   Commit 3: Add resource cleanup and garbage collection
+   Commit 4: Add comprehensive performance tests and benchmarks
+   ```
+
+2. **Dependency Justification**: Why commits must be in sequence and can't be combined
+3. **Working State Guarantee**: Each commit leaves system in functional state
+4. **Clear Boundaries**: What is included/excluded in each commit
+
+### Implementation Checkpoints
+
+**MANDATORY CHECKPOINTS** during performance work:
+
+#### Checkpoint: Performance Foundation
+- Core optimization logic and basic monitoring implemented
+- **Assessment**: Can this be committed as functional performance foundation?
+- **Decision**: Commit foundation, then build incrementally
+
+#### Checkpoint: Resource Management
+- Memory, CPU, and I/O optimizations implemented
+- **Assessment**: Are resource changes separate from core performance logic?
+- **Decision**: Consider separate commit for resource management layer
+
+#### Checkpoint: Testing and Validation
+- Performance test coverage and benchmarking added
+- **Assessment**: Can performance tests be committed separately from implementation?
+- **Decision**: Separate test commits if substantial benchmarking infrastructure added
+
+### Quality Gate Integration
+
+**BEFORE requesting code-reviewer approval:**
+
+- [ ] **Scope Declaration**: Explicit statement of "Single Commit" or "Multi-Commit Feature Unit"
+- [ ] **Quality Gates**: All tests/lint/typecheck passing
+- [ ] **Atomic Boundaries**: Each commit represents exactly one logical change
+- [ ] **TODO/Stub Compliance**: All TODOs use UUID tracking system
+- [ ] **Implementation Completeness**: Code ready for declared approval type
+
+### Scope Discipline Examples
+
+#### ✅ Good Atomic Scope Examples:
+- **"Add memory usage monitoring for workspace leases"** - Single performance concern, clear boundary
+- **"Implement connection pooling for git operations"** - One logical optimization, focused scope
+- **"Add timeout handling for long-running MCP requests"** - Specific performance improvement
+
+#### ❌ Scope Creep Examples:
+- **"Add performance monitoring and fix memory leaks and update docs"** - Three separate concerns
+- **"Implement resource optimization with caching and database tuning"** - Multiple logical features
+- **"Fix performance bug and add new monitoring dashboard"** - Bug fix + new feature
+
+### Recovery from Scope Creep
+
+**When scope grows beyond atomic boundaries during implementation:**
+
+1. **STOP adding features** - Don't continue expanding scope
+2. **Assess completed work** - What can be committed as-is?
+3. **Split remaining work** - Create separate tasks for additional features
+4. **Commit working state** - Deliver atomic change for completed work
+5. **Plan next increment** - Start new atomic commit for remaining features
+
+### Code-Reviewer Handoff Protocol
+
+**FOR SINGLE COMMITS:**
+```
+REQUESTING APPROVAL: Single Commit
+- Feature: [brief description]
+- Files Modified: [list, max 5]
+- Quality Gates: ✅ Tests, lint, typecheck passed
+- Scope: Atomic change as planned
+READY FOR REVIEW
+```
+
+**FOR MULTI-COMMIT SERIES:**
+```
+REQUESTING SERIES VALIDATION: [Feature Unit Name]
+- Commit sequence: [verify matches approved plan]
+- Quality gates per commit: [confirm each passed]
+- No scope creep: [confirm boundaries maintained]
+READY FOR SERIES APPROVAL
+```
 
 ## Commit Discipline
 
