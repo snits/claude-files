@@ -96,11 +96,33 @@ These checkpoints MUST be completed in sequence. Failure to complete any checkpo
 
 ### Checkpoint C: COMMIT READY
 **BEFORE committing code:**
-- [ ] Code-reviewer approval received with explicit "APPROVED" statement
-- [ ] Security-engineer approval obtained (if security-relevant changes)
 - [ ] All quality gates passed and documented
+- [ ] Atomic scope verified (single logical change)
+- [ ] Commit message drafted with clear scope boundaries
+- [ ] Security-engineer approval obtained (if security-relevant changes)
 - [ ] TodoWrite task marked complete
 - [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint C and am ready to commit"
+
+## Code-Reviewer Workflow Protocol
+
+### Commit-Then-Review Model
+
+**CORE PRINCIPLE**: Developers commit atomic changes following quality gates, then code-reviewer reviews the complete commit series.
+
+**Why This Works:**
+- Maintains atomic commit discipline and clean git history
+- Allows code-reviewer to see complete feature context
+- Enables efficient batch review of related changes
+- Preserves development momentum while ensuring quality oversight
+- Provides clear rollback points if major revisions needed
+
+### Workflow Sequence:
+1. **Implementation**: Developer follows Checkpoints A, B, C for each atomic change
+2. **Commit**: Developer commits each atomic change after quality gates pass
+3. **Series Completion**: Developer completes entire feature unit or logical grouping
+4. **Review Request**: Developer requests code-reviewer review of committed changes
+5. **Review Process**: Code-reviewer examines complete commit series
+6. **Revision Handling**: If changes needed, implement as new commits and re-review
 
 ## Code-Reviewer Approval Protocol
 
@@ -110,15 +132,15 @@ These checkpoints MUST be completed in sequence. Failure to complete any checkpo
 
 **Single Commit Units (Default):**
 - Simple changes, bug fixes, small features  
-- **Claude responsibility**: Complete Checkpoint B quality gates, then request code-reviewer approval
-- **Sequence**: Implement → Quality Gates → code-reviewer approval → Commit
+- **Claude responsibility**: Complete Checkpoint B quality gates, commit atomically, then request code-reviewer review
+- **Sequence**: Implement → Quality Gates → Commit → code-reviewer review
 
 **Multi-Commit Feature Units:**
 - Complex features requiring multiple logical commits (2-5 commits)
 - **Claude responsibility**: Define commit series plan and request series approval BEFORE implementation begins
 - **Pre-approval required**: "Feature Unit: User Authentication (3 commits: models, API endpoints, integration tests)"
-- **Execution**: Implement approved commit sequence without additional approvals
-- **Final validation**: Confirm series matched approved plan
+- **Execution**: Implement approved commit sequence following atomic discipline
+- **Final validation**: Submit complete commit series for code-reviewer review
 
 ### Claude-Level Enforcement (BEFORE code-reviewer involvement)
 
@@ -128,11 +150,13 @@ These checkpoints MUST be completed in sequence. Failure to complete any checkpo
 - [ ] **Approval request**: Request appropriate approval type (single commit vs. feature unit)
 - [ ] **Quality gates**: All tests/lint/typecheck must pass before ANY approval request
 
-**BLOCKING CONDITIONS**: Claude MUST NOT request code-reviewer approval without:
+**BLOCKING CONDITIONS**: Claude MUST NOT commit without:
 - Clear scope definition (single commit or defined multi-commit series)
 - Complete quality gate validation
-- Explicit documentation of what will be committed
+- Explicit documentation of what is being committed
 - Confirmation that scope matches original task requirements
+
+**POST-COMMIT REVIEW**: After committing, Claude MUST request code-reviewer review of the complete commit series
 
 ### Multi-Commit Criteria
 **APPROVE multi-commit series when:**
@@ -148,8 +172,7 @@ These checkpoints MUST be completed in sequence. Failure to complete any checkpo
 - Appears to be avoiding single-commit discipline
 
 ## NON-NEGOTIABLE PRE-COMMIT CHECKLIST
-Before ANY code-reviewer request:
-- [ ] **Repository is in clean state** - All changes committed, no uncommitted modifications
+Before ANY commit:
 - [ ] All tests pass (run project test suite)
 - [ ] Type checking clean (if applicable)  
 - [ ] Linting rules satisfied (run project linter)
@@ -159,15 +182,23 @@ Before ANY code-reviewer request:
 - [ ] Atomic scope defined (what exactly changes)
 - [ ] Commit message drafted (defines scope boundaries)
 
+## POST-COMMIT REVIEW PROTOCOL
+After committing atomic changes:
+- [ ] Request code-reviewer review of complete commit series
+- [ ] **Repository state**: All changes committed, clean working directory
+- [ ] **Review scope**: Entire feature unit or individual atomic commit
+- [ ] **Revision handling**: If changes requested, implement as new commits in same branch
+
 ## Development Workflow (TDD Required)
 1. **Plan validation**: Complex projects should get plan-validator review before implementation begins
 2. Write a failing test that correctly validates the desired functionality
 3. Run the test to confirm it fails as expected
 4. Write ONLY enough code to make the failing test pass
-5. **REQUEST CODE-REVIEWER APPROVAL**
+5. **COMMIT ATOMIC CHANGE** (following Checkpoint C)
 6. Run the test to confirm success
 7. Refactor if needed while keeping tests green
-8. Document any patterns, insights, or lessons learned
+8. **REQUEST CODE-REVIEWER REVIEW** of commit series
+9. Document any patterns, insights, or lessons learned
 
 ## Scope Discipline: When You Discover Additional Issues
 When implementing and you discover new problems:
@@ -205,7 +236,8 @@ Commit Message: "[type]: [concise description of change]"
 ### Sprint Execution:
 - Work one user story at a time
 - Follow TDD workflow within each story
-- Request code-reviewer approval before each commit
+- Commit atomic changes following quality gates
+- Request code-reviewer review after commit series complete
 - Update sprint backlog as stories complete
 - Create new stories if scope expands (don't modify existing ones)
 
@@ -435,7 +467,7 @@ When you are using /compact, please focus on our conversation, your most recent 
 ### Mandatory Workflow References
 - **SYSTEMATIC TOOL UTILIZATION**: ALL agents MUST complete the 5-step tool utilization checklist before implementation (0: Solution exists? 1: Context gathering, 2: Problem decomposition, 3: Domain expertise, 4: Task coordination, 5: Implementation)
 - **CHECKPOINT ENFORCEMENT**: ALL agents MUST verify and enforce Checkpoints A, B, and C before proceeding
-- **Code-reviewer approval protocol**: ALL code changes require code-reviewer approval BEFORE committing
+- **Code-reviewer review protocol**: ALL committed code changes require code-reviewer review AFTER committing
 - **Atomic commit strategy**: Single logical changes with proper commit message format
 - **Quality gates**: Language-specific test/lint/type-check commands must pass before code-reviewer requests
 - **TDD discipline**: Write failing test → implement → code-reviewer approval → commit cycle
@@ -453,8 +485,8 @@ When you are using /compact, please focus on our conversation, your most recent 
 
 **Implementation Agents** (senior-engineer, code-reviewer, debug-specialist, performance-engineer):
 - **CHECKPOINT A**: MUST verify git status clean and feature branch created before any code changes
-- **CHECKPOINT B**: MUST run all quality gates and verify completion before requesting code review
-- **CHECKPOINT C**: MUST verify all approvals obtained before committing
+- **CHECKPOINT B**: MUST run all quality gates and verify completion before committing
+- **CHECKPOINT C**: MUST verify all requirements met before committing, then request code-reviewer review
 - MUST reference TDD workflow and code-reviewer approval in their implementation process
 - MUST mention quality gates in their handoff protocols
 - MUST enforce atomic scope discipline to prevent "onion peeling"
@@ -474,16 +506,23 @@ When you are using /compact, please focus on our conversation, your most recent 
 - Analysis-only tools: Read, Grep, Glob, LS, WebFetch, WebSearch + domain-specific tools
 - Implementation via handoff to implementation agents
 
-### Code-Reviewer Efficiency Protocol
-**Code-reviewer MUST verify Checkpoint B completion before reviewing:**
-- [ ] All quality gates executed and passed
-- [ ] Atomic scope maintained 
-- [ ] Commit message drafted
-- [ ] EXPLICIT CONFIRMATION statement provided
+### Code-Reviewer Review Protocol
+**Code-reviewer reviews committed changes and verifies:**
+- [ ] All quality gates were executed and passed
+- [ ] Atomic scope maintained across commit series
+- [ ] Commit messages clear and accurate
+- [ ] Implementation matches intended scope
 
-**Minor fixes** (style, small refactors, test additions): Code-reviewer implements directly
-**Major changes** (architecture, significant logic): Hand back to original implementer
-**Always document**: What was changed and why in commit message
+**Review Outcomes:**
+- **APPROVED**: No changes needed, commit series accepted
+- **MINOR REVISIONS**: Small fixes needed, code-reviewer may implement directly as follow-up commits
+- **MAJOR REVISIONS**: Significant changes needed, return to original implementer for new commit series
+- **REJECTED**: Fundamental issues, requires complete reimplementation
+
+**Revision Process:**
+- All revisions implemented as new commits in same feature branch
+- Maintain atomic commit discipline even for revisions
+- Re-submit revised commit series for code-reviewer review
 
 # Hierarchical Decision Authority
 
@@ -506,7 +545,7 @@ When you are using /compact, please focus on our conversation, your most recent 
 - **After any new feature implementation** - Must validate comprehensive test coverage
 - **After bug fixes** - Must ensure fix is properly tested and won't regress
 - **When discovering untested code** - Must implement missing test coverage immediately
-- **Before code-reviewer approval** - Must verify all tests pass and coverage is complete
+- **Before committing code** - Must verify all tests pass and coverage is complete
 
 ### qa-engineer Mandatory Triggers:
 - **Before marking features as complete** - Must validate end-to-end user workflows
@@ -602,23 +641,24 @@ When you are using /compact, please focus on our conversation, your most recent 
 
 # code-reviewer standards:
 
-## Red Flags That Block Commits
+## Red Flags That Require Revision
 
-- **Repository not in clean state** - Uncommitted changes present
-- "Fix multiple issues" (split into separate commits)
+**During commit series review, code-reviewer identifies:**
+- "Fix multiple issues" (should have been split into separate commits)
 - "Update various files" (too vague, likely mixed concerns)
-- Large diffs with unrelated changes
+- Large commits with unrelated changes (violated atomic discipline)
 - Temporary debugging code included
-- Dependencies on uncommitted changes
+- Mixed concerns within single commits
+- Inadequate commit messages (unclear scope/rationale)
 
-## Quality Gate Process:
+## Review Process:
 
-1. **Clean repository verification** - Ensure no uncommitted changes
-2. Atomic scope verification
-3. Build and test validation
-4. Code quality and standards review
-5. Documentation and message review
-6. Integration impact assessment
+1. **Commit series analysis** - Examine complete feature implementation
+2. **Atomic scope verification** - Ensure each commit represents single logical change
+3. **Quality validation** - Verify all tests pass, linting clean, types correct
+4. **Code quality and standards review** - Assess maintainability and adherence to conventions
+5. **Documentation and message review** - Evaluate commit messages and code comments
+6. **Integration impact assessment** - Consider effects on broader system
 
 # Anti-Sycophancy
 
