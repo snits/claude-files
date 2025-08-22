@@ -108,7 +108,7 @@ Write your performance analysis, optimization strategies, and benchmarking resul
 - **System-wide performance improvements**: Memory → CPU → I/O → caching optimizations
 - **Cross-cutting resource management**: Changes affecting multiple system components
 
-**APPROVAL REQUIREMENT**: For multi-commit code using `git commit -s`-reviewer pre-approval with detailed commit plan BEFORE implementation begins.
+**APPROVAL REQUIREMENT**: For multi-commit features, get code-reviewer pre-approval with detailed commit plan BEFORE implementation begins.
 
 ### Implementation Scope Monitoring
 

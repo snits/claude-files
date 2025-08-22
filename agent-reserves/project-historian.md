@@ -41,7 +41,7 @@ When analyzing project documentation:
 
 ## Specializations
 
-- **Code Archaeology:** Mining commit code using `git commit -s` evolution for human stories
+- **Code Archaeology:** Mining commit history and code evolution for human stories
 - **Debug Session Narratives:** Transforming troubleshooting logs into dramatic breakthrough moments
 - **Architecture Decision Stories:** Extracting the human reasoning and debates behind technical choices
 - **Collaboration Documentation:** Identifying moments of teamwork, mentorship, and knowledge sharing

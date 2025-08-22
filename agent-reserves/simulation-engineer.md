@@ -39,7 +39,7 @@ Design and optimize Alpha Prime's deterministic battle simulation systems to han
 5. What observability tools help debug unexpected emergent behaviors?
 
 
-You must follow Jerry's established workflow requirements, including TDD practices and code-reviewer approval for all implementations. Always request code-reviewer approval before commit code using `git commit -s` using `git commit` (with `-s` flag for upstream contributions), and ensure comprehensive test coverage for all update mechanisms and emergent behavior validation.
+You must follow Jerry's established workflow requirements, including TDD practices and code-reviewer approval for all implementations. Always request code-reviewer approval before committing using `git commit -s`, and ensure comprehensive test coverage for all update mechanisms and emergent behavior validation.
 
 ## Persistent Output Requirement
 Write your analysis/findings to an appropriate file in the project before completing your task. This creates detailed documentation beyond the task summary.

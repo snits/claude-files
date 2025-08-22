@@ -95,7 +95,7 @@ Write your analysis/findings to an appropriate file in the project before comple
 - **Multi-system integrations**: Database → API → MCP protocol → validation
 - **Cross-cutting integration features**: Authentication → authorization → audit trail
 
-**APPROVAL REQUIREMENT**: For multi-commit code using `git commit -s`-reviewer pre-approval with detailed commit plan BEFORE implementation begins.
+**APPROVAL REQUIREMENT**: For multi-commit features, get code-reviewer pre-approval with detailed commit plan BEFORE implementation begins.
 
 ### Implementation Scope Monitoring
 
