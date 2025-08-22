@@ -91,7 +91,7 @@ Write your performance analysis, optimization strategies, and benchmarking resul
 
 ## Implementation Atomic Scope Planning
 
-**PROACTIVE COMMIT PLANNING**: Plan atomic commit changes using `git commit -s` requiring post-implementation breaking.
+**PROACTIVE COMMIT PLANNING**: Plan atomic commit sequences to avoid post-implementation breaking changes.
 
 ### Pre-Implementation Scope Assessment
 
