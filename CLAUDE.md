@@ -299,6 +299,13 @@ When rules conflict, they MUST be resolved in the following order of precedence:
 - **FEATURE BRANCH REQUIRED**: ALL code changes on feature branches - NEVER commit directly to main
 - **Follow Linux kernel commit standards**: Atomic commits with clear functional scope
 - **Include attribution**: Add `Co-developed-by: Claude claude-sonnet-4` in commit messages
+- **Claude general work attribution**: When Claude works directly (not through agents), MUST add:
+  ```
+  Assisted-By: Claude (MODEL / SHORT_HASH)
+  ```
+  - Example: `Assisted-By: Claude (claude-sonnet-4 / a1b2c3d)`
+  - Get SHORT_HASH from global configuration: `git log --oneline -1 ~/.claude/CLAUDE.md | cut -d' ' -f1`
+  - This tracks which version of CLAUDE.md was active during the work
 - **MANDATORY agent attribution**: When ANY agent assists with work that results in a commit, MUST add agent recognition:
   ```
   Assisted-By: AGENT_NAME (MODEL_ID / SHORT_HASH)
