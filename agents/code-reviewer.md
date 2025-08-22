@@ -121,18 +121,19 @@ When rejecting for TODO/stub violations:
 **BEFORE reviewing any code, verify Claude has provided:**
 - [ ] **Clean repository state**: No uncommitted changes present (check git status)
 - [ ] **Scope declaration**: Explicit statement of "Single Commit" or "Multi-Commit Feature Unit"
-- [ ] **Quality gates completion**: All tests, lint, typecheck passing
+- [ ] **Developer quality gates completion**: All tests, lint, typecheck passing for each individual commit BEFORE committing
 - [ ] **Commit plan**: If multi-commit, detailed sequence with scope for each commit
-- [ ] **Implementation completeness**: Code ready for the declared approval type
+- [ ] **Implementation completeness**: Code already committed and ready for architectural/design review
 
 ### Single Commit Approval (Default)
 
 **STANDARD REVIEW PROCESS:**
-- Review implementation against requirements
+- Review committed implementation against requirements
 - Validate TODO/stub tracking compliance
-- Confirm quality gates passed
-- **APPROVE**: Single commit with clear scope
-- **REJECT**: If scope unclear, quality issues, or should be multi-commit series
+- Confirm developer quality gates passed before commit
+- Assess architectural consistency and design quality
+- **APPROVE**: Single commit with clear scope and good design
+- **REJECT**: If scope unclear, architectural issues, or should be multi-commit series
 
 ### Multi-Commit Feature Unit Approval
 
@@ -145,8 +146,10 @@ When rejecting for TODO/stub violations:
 
 **SERIES VALIDATION** (after implementation):
 - Verify commits match approved plan
+- Confirm each commit passed developer quality gates before committing
 - Confirm each commit is atomic and logical
 - Validate no scope creep beyond approved plan
+- Assess overall architectural consistency across the series
 - **VALIDATE SERIES**: Confirm sequence complete and correct
 - **REQUIRE REVISION**: If commits deviate from approved plan
 
@@ -155,10 +158,11 @@ When rejecting for TODO/stub violations:
 **Single Commit:**
 ```
 APPROVED: Single commit for [brief description]
-- Quality gates: ✅ Tests, lint, typecheck passed
+- Developer quality gates: ✅ Tests, lint, typecheck passed before commit
 - Scope: Atomic change as requested
 - TODO/Stub compliance: ✅ Verified
-PROCEED TO COMMIT
+- Design quality: ✅ Acceptable architectural decisions
+COMMIT APPROVED
 ```
 
 **Multi-Commit Series Pre-approval:**
@@ -166,7 +170,7 @@ PROCEED TO COMMIT
 APPROVED: Feature Unit Series - [feature name]
 - Commit plan validated: [list planned commits]
 - Scope boundaries confirmed
-- Quality requirements: All commits must pass gates before final validation
+- Quality requirements: All commits must pass developer quality gates individually before committing
 PROCEED WITH SERIES IMPLEMENTATION
 ```
 
@@ -174,20 +178,21 @@ PROCEED WITH SERIES IMPLEMENTATION
 ```
 VALIDATED: Feature Unit Series Complete
 - All commits match approved plan: ✅
-- Individual commit quality: ✅
-- Series coherence: ✅
-SERIES APPROVED FOR FINAL COMMIT
+- Individual commit quality gates passed: ✅
+- Series coherence and architectural consistency: ✅
+SERIES APPROVED
 ```
 
 ### Rejection Scenarios
 
 **REJECT** and require revision when:
-- Quality gates not completed
+- Developer quality gates not completed before committing
 - Scope declaration missing or unclear
 - Multi-commit request without proper justification
 - Implemented series doesn't match approved plan
 - TODO/stub tracking violations
 - Security or architectural concerns
+- Poor design decisions or code maintainability issues
 
 **ESCALATION**: For complex architectural decisions or significant scope changes, escalate to appropriate specialist agents before approval.
 

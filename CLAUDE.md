@@ -85,14 +85,14 @@ These checkpoints MUST be completed in sequence. Failure to complete any checkpo
 - [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint A and am ready to begin implementation"
 
 ### Checkpoint B: IMPLEMENTATION COMPLETE  
-**BEFORE requesting code-reviewer approval:**
+**BEFORE committing (developer quality gates for individual commits):**
 - [ ] All tests pass: `[run project test command]`
 - [ ] Type checking clean: `[run project typecheck command]`
 - [ ] Linting satisfied: `[run project lint command]` 
 - [ ] Code formatting applied: `[run project format command]`
 - [ ] Atomic scope maintained (no scope creep)
 - [ ] Commit message drafted with clear scope boundaries
-- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint B and am ready for code review"
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint B and am ready to commit"
 
 ### Checkpoint C: COMMIT READY
 **BEFORE committing code:**
@@ -107,9 +107,10 @@ These checkpoints MUST be completed in sequence. Failure to complete any checkpo
 
 ### Commit-Then-Review Model
 
-**CORE PRINCIPLE**: Developers commit atomic changes following quality gates, then code-reviewer reviews the complete commit series.
+**CORE PRINCIPLE**: Developers commit atomic changes after passing individual commit quality gates (Checkpoint B), then code-reviewer reviews the complete commit series for architectural consistency and design quality.
 
 **Why This Works:**
+- Individual commits pass developer quality gates (tests, lint, typecheck) before committing
 - Maintains atomic commit discipline and clean git history
 - Allows code-reviewer to see complete feature context
 - Enables efficient batch review of related changes
@@ -118,10 +119,10 @@ These checkpoints MUST be completed in sequence. Failure to complete any checkpo
 
 ### Workflow Sequence:
 1. **Implementation**: Developer follows Checkpoints A, B, C for each atomic change
-2. **Commit**: Developer commits each atomic change after quality gates pass
+2. **Commit**: Developer commits each atomic change ONLY after Checkpoint B quality gates pass
 3. **Series Completion**: Developer completes entire feature unit or logical grouping
 4. **Review Request**: Developer requests code-reviewer review of committed changes
-5. **Review Process**: Code-reviewer examines complete commit series
+5. **Review Process**: Code-reviewer examines complete commit series for design quality and consistency
 6. **Revision Handling**: If changes needed, implement as new commits and re-review
 
 ## Code-Reviewer Approval Protocol
@@ -132,14 +133,14 @@ These checkpoints MUST be completed in sequence. Failure to complete any checkpo
 
 **Single Commit Units (Default):**
 - Simple changes, bug fixes, small features  
-- **Claude responsibility**: Complete Checkpoint B quality gates, commit atomically, then request code-reviewer review
-- **Sequence**: Implement → Quality Gates → Commit → code-reviewer review
+- **Claude responsibility**: Complete Checkpoint B developer quality gates, commit atomically, then request code-reviewer review
+- **Sequence**: Implement → Developer Quality Gates (Checkpoint B) → Commit → code-reviewer review
 
 **Multi-Commit Feature Units:**
 - Complex features requiring multiple logical commits (2-5 commits)
 - **Claude responsibility**: Define commit series plan and request series approval BEFORE implementation begins
 - **Pre-approval required**: "Feature Unit: User Authentication (3 commits: models, API endpoints, integration tests)"
-- **Execution**: Implement approved commit sequence following atomic discipline
+- **Execution**: Implement approved commit sequence following atomic discipline, each commit passing Checkpoint B quality gates
 - **Final validation**: Submit complete commit series for code-reviewer review
 
 ### Claude-Level Enforcement (BEFORE code-reviewer involvement)
@@ -148,11 +149,11 @@ These checkpoints MUST be completed in sequence. Failure to complete any checkpo
 - [ ] **Scope assessment**: Single commit or multi-commit feature unit?
 - [ ] **Commit plan**: If multi-commit, define exact commit sequence and scope for each
 - [ ] **Approval request**: Request appropriate approval type (single commit vs. feature unit)
-- [ ] **Quality gates**: All tests/lint/typecheck must pass before ANY approval request
+- [ ] **Developer quality gates**: All tests/lint/typecheck must pass for each individual commit before ANY code-reviewer review request
 
 **BLOCKING CONDITIONS**: Claude MUST NOT commit without:
 - Clear scope definition (single commit or defined multi-commit series)
-- Complete quality gate validation
+- Complete Checkpoint B developer quality gate validation (tests, lint, typecheck)
 - Explicit documentation of what is being committed
 - Confirmation that scope matches original task requirements
 
@@ -171,8 +172,8 @@ These checkpoints MUST be completed in sequence. Failure to complete any checkpo
 - More than 5 commits requested
 - Appears to be avoiding single-commit discipline
 
-## NON-NEGOTIABLE PRE-COMMIT CHECKLIST
-Before ANY commit:
+## NON-NEGOTIABLE PRE-COMMIT CHECKLIST (DEVELOPER QUALITY GATES)
+Before ANY commit (these are DEVELOPER gates, not code-reviewer gates):
 - [ ] All tests pass (run project test suite)
 - [ ] Type checking clean (if applicable)  
 - [ ] Linting rules satisfied (run project linter)
@@ -515,10 +516,12 @@ When you are using /compact, please focus on our conversation, your most recent 
 
 ### Code-Reviewer Review Protocol
 **Code-reviewer reviews committed changes and verifies:**
-- [ ] All quality gates were executed and passed
+- [ ] All developer quality gates were executed and passed for each commit
 - [ ] Atomic scope maintained across commit series
 - [ ] Commit messages clear and accurate
 - [ ] Implementation matches intended scope
+- [ ] Architectural consistency and design quality
+- [ ] Code maintainability and adherence to project conventions
 
 **Review Outcomes:**
 - **APPROVED**: No changes needed, commit series accepted

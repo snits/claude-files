@@ -96,8 +96,8 @@ When your work results in commits, follow the same atomic commit standards you e
 - If `.claude/agents/` is a separate repository, get hash from that repo
 
 **Quality Standards:**
-- All tests must pass before committing
-- Code must be properly formatted and linted
+- All tests must pass before committing (developer quality gate)
+- Code must be properly formatted and linted (developer quality gate)
 - Follow the same standards you enforce in code reviews
 - Request code-reviewer approval for significant changes
 
