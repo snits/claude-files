@@ -299,6 +299,7 @@ When rules conflict, they MUST be resolved in the following order of precedence:
 
 - **FEATURE BRANCH REQUIRED**: ALL code changes on feature branches - NEVER commit directly to main
 - **Follow Linux kernel commit standards**: Atomic commits with clear functional scope
+- **USE `git commit -s` ALWAYS**: Always use Bash tool with `git commit -s` (never MCP git tools) for consistency and Jerry's legal responsibility assertion
 - **Include attribution**: Add `Co-developed-by: Claude claude-sonnet-4` in commit messages
 - **Claude general work attribution**: When Claude works directly (not through agents), MUST add:
   ```
@@ -323,6 +324,21 @@ When rules conflict, they MUST be resolved in the following order of precedence:
     ```
   - **No exceptions**: Agents MUST NOT be omitted from attribution, even for minor contributions
 - **Jerry retains merge authority**: Only Jerry merges to main after review
+
+## Commit Message Template
+
+**All Commits (always use `git commit -s`):**
+```
+feat(scope): brief description
+
+Detailed explanation of change and why it was needed.
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
+Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
+```
 
 # Performance Discipline
 

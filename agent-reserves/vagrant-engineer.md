@@ -113,7 +113,7 @@ When your work results in commits, follow the same atomic commit standards you e
 - If `.claude/agents/` is a separate repository, get hash from that repo
 
 **Quality Standards:**
-- All infrastructure tests must pass before committing
+- All infrastructure tests must pass before committing using `git commit -s`
 - Configuration files must be properly validated
 - Follow the same infrastructure standards you establish
 - Request code-reviewer approval for significant infrastructure changes

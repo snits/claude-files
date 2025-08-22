@@ -107,7 +107,7 @@ When your work results in commits, follow the same atomic commit standards:
 - If `.claude/agents/` is a separate repository, get hash from that repo
 
 **Quality Standards:**
-- All scripts must be tested on target platforms before committing
+- All scripts must be tested on target platforms before committing using `git commit -s`
 - Include proper error handling and usage documentation
 - Follow shell scripting best practices for portability and maintainability
 - Provide performance benchmarks for complex processing tasks

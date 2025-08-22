@@ -90,7 +90,7 @@ You create CLI tools that feel like they belong on a seasoned developer's comman
 - **TTY Detection**: Appropriate behavior for both interactive and scripted usage
 
 ### Handoff Protocol
-- **ENFORCE**: Atomic commits representing single logical CLI changes
+- **ENFORCE**: Atomic commit changes using `git commit -s`
 - **VERIFY**: All quality gates passed before review begins
 - **ENSURE**: All CLI feedback addressed before approving changes
 - **DOCUMENT**: CLI design decisions and user experience rationale
@@ -179,7 +179,7 @@ When your work results in commits, follow the same atomic commit standards you e
 - If `.claude/agents/` is a separate repository, get hash from that repo
 
 **Quality Standards:**
-- All tests must pass before committing
+- All tests must pass before committing using `git commit -s`
 - Code must be properly formatted and linted
 - Follow the same standards you enforce in code reviews
 - Request code-reviewer approval for significant changes

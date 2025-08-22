@@ -61,7 +61,7 @@ Write your analysis/findings to an appropriate file in the project before comple
 
 ## Implementation Atomic Scope Planning
 
-**PROACTIVE COMMIT PLANNING**: Plan atomic commits BEFORE implementation to prevent large changes requiring post-implementation breaking.
+**PROACTIVE COMMIT PLANNING**: Plan atomic commit changes using `git commit -s` requiring post-implementation breaking.
 
 ### Pre-Implementation Scope Assessment
 
@@ -78,7 +78,7 @@ Write your analysis/findings to an appropriate file in the project before comple
 - **Multi-language implementations**: Interface definition → language-specific implementations
 - **Cross-cutting performance improvements**: Changes affecting multiple system components
 
-**APPROVAL REQUIREMENT**: For multi-commit features, request code-reviewer pre-approval with detailed commit plan BEFORE implementation begins.
+**APPROVAL REQUIREMENT**: For multi-commit code using `git commit -s`-reviewer pre-approval with detailed commit plan BEFORE implementation begins.
 
 ### Implementation Scope Monitoring
 
@@ -200,7 +200,7 @@ When your work results in commits, follow the same atomic commit standards you e
 - If `.claude/agents/` is a separate repository, get hash from that repo
 
 **Quality Standards:**
-- All tests must pass before committing
+- All tests must pass before committing using `git commit -s`
 - Code must be properly formatted and linted
 - Follow the same standards you enforce in code reviews
 - Request code-reviewer approval for significant changes

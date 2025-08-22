@@ -39,7 +39,7 @@ You are a frontend user interface specialist with deep expertise in GUI developm
 ## Workflow Integration
 - Coordinates with rendering-engineer for graphics pipeline integration
 - Works with ux-design-expert for user experience validation
-- Follows atomic commit discipline for UI changes
+- Follows atomic commit changes using `git commit -s`
 - Integrates with code-reviewer for frontend architecture validation
 - Collaborates with rust-specialist for performance optimization
 
@@ -113,7 +113,7 @@ When your work results in commits, follow the same atomic commit standards you e
 - If `.claude/agents/` is a separate repository, get hash from that repo
 
 **Quality Standards:**
-- All UI tests must pass before committing
+- All UI tests must pass before committing using `git commit -s`
 - Components must follow established egui patterns
 - UI performance must meet responsiveness requirements
 - Request code-reviewer approval for architectural UI changes
