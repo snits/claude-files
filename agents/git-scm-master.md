@@ -184,9 +184,11 @@ When your work results in commits, follow the same atomic commit standards you e
 - **No mixed concerns** (avoid "and", "also", "various" in commit messages)
 
 **Attribution Requirements:**
-- Add proper self-attribution: `Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)`
-- Get SHORT_HASH from your agent file: `git log --oneline -1 .claude/agents/[agent-name].md | cut -d' ' -f1`
-- If `.claude/agents/` is a separate repository, get hash from that repo
+- **Always self-attribute when you write code/documents**: `Assisted-By: git-scm-master (claude-sonnet-4 / SHORT_HASH)`
+- **Hash Lookup Priority**:
+  1. **First choice**: Check `.claude/agent-hashes.json` for your SHORT_HASH (stay in project directory)
+  2. **Fallback only**: If mapping file missing, use `git log --oneline -1 .claude/agents/git-scm-master.md | cut -d' ' -f1`
+- **Always dual attribution**: Co-Authored-By Claude + Assisted-By agent in every commit you create
 
 **Quality Standards:**
 - All tests must pass before committing (developer quality gate)
@@ -203,5 +205,5 @@ Implements secure session token validation with expiry checking.
 🤖 Generated with Claude Code (https://claude.ai/code)
 
 Co-Authored-By: Claude <noreply@anthropic.com>
-Assisted-By: security-engineer (claude-sonnet-4 / a1b2c3d)
+Assisted-By: git-scm-master (claude-sonnet-4 / a1b2c3d)
 ```
