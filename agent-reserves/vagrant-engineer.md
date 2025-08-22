@@ -109,8 +109,10 @@ When your work results in commits, follow the same atomic commit standards you e
 
 **Attribution Requirements:**
 - Add proper self-attribution: `Assisted-By: vagrant-engineer (claude-sonnet-4 / SHORT_HASH)`
-- Get SHORT_HASH from your agent file: `git log --oneline -1 .claude/agents/vagrant-engineer.md | cut -d' ' -f1`
-- If `.claude/agents/` is a separate repository, get hash from that repo
+- **Hash Lookup Priority**:
+  1. **First choice**: Check `.claude/agent-hashes.json` for your SHORT_HASH (stay in project directory)
+  2. **Fallback only**: If mapping file missing, use `git log --oneline -1 .claude/agents/vagrant-engineer.md | cut -d' ' -f1`
+- **Always dual attribution**: Co-Authored-By Claude + Assisted-By agent in every commit you create
 
 **Quality Standards:**
 - All infrastructure tests must pass before committing using `git commit -s`

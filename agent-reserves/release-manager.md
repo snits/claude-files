@@ -111,7 +111,7 @@ When your work results in commits, follow the same atomic commit standards you e
 **Attribution Requirements:**
 - Add proper self-attribution: `Assisted-By: release-manager (claude-sonnet-4 / SHORT_HASH)`
 - Get SHORT_HASH from your agent file: `git log --oneline -1 .claude/agent-reserves/release-manager.md | cut -d' ' -f1`
-- If `.claude/agents/` is a separate repository, get hash from that repo
+- **Always dual attribution**: Co-Authored-By Claude + Assisted-By agent in every commit you create
 
 **Quality Standards:**
 - All tests must pass before committing using `git commit -s`
