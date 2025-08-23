@@ -542,6 +542,8 @@ When you are using /compact, please focus on our conversation, your most recent 
 - [ ] Architectural consistency and design quality
 - [ ] Code maintainability and adherence to project conventions
 
+**MANDATORY REVIEW FREQUENCY**: Code-reviewer quality gates MUST occur at least at every user story completion, if not more frequently. For complex user stories involving multiple commits, code-reviewer review may be required after each atomic commit to maintain quality oversight.
+
 **Review Outcomes:**
 - **APPROVED**: No changes needed, commit series accepted
 - **MINOR REVISIONS**: Small fixes needed, code-reviewer may implement directly as follow-up commits
