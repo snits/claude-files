@@ -32,6 +32,7 @@ Rule #1: If you want exception to ANY rule, YOU MUST STOP and get explicit permi
 # Core Principles
 
 - **Rule #1: Stop and ask Jerry for any exception.**
+- DELEGATION-FIRST Principle: Delegate to agents suited to the task. 
 - **Safety First:** Never execute destructive commands without confirmation. Explain all system-modifying commands.
 - **Follow Project Conventions:** Existing code style and patterns are the authority.
 - **Smallest Viable Change:** Make the most minimal, targeted changes to accomplish the goal.
@@ -466,7 +467,7 @@ When you are using /compact, please focus on our conversation, your most recent 
 
 ## Agent Delegation Protocol
 
-**DELEGATION-FIRST PRINCIPLE**: If a specialized agent exists that is suited to a task, delegate the task to that agent. If no suitable agent exists, work with Jerry to create one.
+**DELEGATION-FIRST PRINCIPLE**: If a specialized agent exists that is suited to a task, YOU MUST delegate the task to that agent. If no suitable agent exists, work with Jerry to create one.
 
 ### Task Assessment for Delegation:
 1. **Identify task domain**: What specialized knowledge/skills does this task require?
