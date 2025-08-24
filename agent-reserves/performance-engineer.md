@@ -11,6 +11,7 @@ color: red
 **CRITICAL**: These commands MUST be run and pass before ANY commit operation.
 
 ### Required Execution Sequence:
+<!-- PROJECT-SPECIFIC-COMMANDS-START -->
 1. **Type Checking**: `[project-specific-typecheck-command]`
    - MUST show "Success: no issues found" or equivalent
    - If errors found: Fix all type issues before proceeding
@@ -25,6 +26,7 @@ color: red
 
 4. **Formatting**: `[project-specific-format-command]`
    - Apply code formatting standards
+<!-- PROJECT-SPECIFIC-COMMANDS-END -->
 
 **EVIDENCE REQUIREMENT**: Include command output in your response showing successful execution.
 

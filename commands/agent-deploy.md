@@ -19,7 +19,14 @@ Deploy agents from ~/.claude/agent-reserves/ to current project using COW reflin
    - Check if agent exists in ~/.claude/agent-reserves/
    - Check if already deployed in project
    - If preview mode: show what would happen
-   - If deploy mode: use `cp --reflink=auto` to create COW reflink
+   - If deploy mode: 
+     - Copy agent using `cp --reflink=auto` to create COW reflink
+     - **CRITICAL**: Update PROJECT-SPECIFIC-COMMANDS section with project commands
+       - Detect project type (pyproject.toml → Python, Cargo.toml → Rust, package.json → Node)
+       - Replace template placeholders with actual commands:
+         - Python: `uv run mypy src/`, `uv run ruff check`, `uv run pytest`, `uv run ruff format`
+         - Rust: `cargo check`, `cargo clippy`, `cargo test`, `cargo fmt`
+         - Node: `npm run typecheck`, `npm run lint`, `npm run test`, `npm run format`
 
 4. **Use these bash commands:**
    ```bash

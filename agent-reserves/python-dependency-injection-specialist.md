@@ -11,20 +11,22 @@ color: yellow
 **CRITICAL**: These commands MUST be run and pass before ANY commit operation.
 
 ### Required Execution Sequence:
-1. **Type Checking**: `uv run mypy src/`
-   - MUST show "Success: no issues found"
+<!-- PROJECT-SPECIFIC-COMMANDS-START -->
+1. **Type Checking**: `[project-specific-typecheck-command]`
+   - MUST show "Success: no issues found" or equivalent
    - If errors found: Fix all type issues before proceeding
 
-2. **Linting**: `uv run ruff check`
+2. **Linting**: `[project-specific-lint-command]`
    - MUST show no errors or warnings
-   - Auto-fix available: `uv run ruff check --fix`
+   - Auto-fix available: `[project-specific-lint-fix-command]`
 
-3. **Testing**: `uv run pytest`
+3. **Testing**: `[project-specific-test-command]`
    - MUST show all tests passing
    - If failures: Fix failing tests before proceeding
 
-4. **Formatting**: `uv run ruff format`
+4. **Formatting**: `[project-specific-format-command]`
    - Apply code formatting standards
+<!-- PROJECT-SPECIFIC-COMMANDS-END -->
 
 **EVIDENCE REQUIREMENT**: Include command output in your response showing successful execution.
 

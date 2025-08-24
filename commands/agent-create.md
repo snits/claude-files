@@ -35,6 +35,9 @@ Create a new agent template in ~/.claude/agent-reserves/ using the standardized 
      - `[agent role and expertise description]` → domain expertise
      - `[specific domain/capabilities]` → key capabilities
      - Fill in Core Expertise, Key Responsibilities, and other sections
+   - **IMPORTANT**: Leave PROJECT-SPECIFIC-COMMANDS section with template placeholders
+     - Keep `[project-specific-typecheck-command]` format in protected tags
+     - Do NOT replace with actual commands (this happens during agent-deploy)
 
 4. **Create agent file:**
    - Write to ~/.claude/agent-reserves/[agent-name].md
