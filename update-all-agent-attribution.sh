@@ -7,7 +7,7 @@ for agent_file in agent-reserves/*.md; do
   agent_name=$(basename "$agent_file" .md)
   
   # Skip agents we already updated manually
-  if [[ "$agent_name" =~ ^(git-scm-master|senior-engineer|systems-architect|rust-specialist|integration-specialist|performance-engineer)$ ]]; then
+  if [[ "$agent_name" =~ ^(git-scm-master|systems-architect|rust-specialist|integration-specialist|performance-engineer)$ ]]; then
     echo "Skipping already updated: $agent_name"
     continue
   fi

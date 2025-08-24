@@ -510,7 +510,7 @@ When you are using /compact, please focus on our conversation, your most recent 
 
 ### Agent-Specific Workflow Integration
 
-**Implementation Agents** (senior-engineer, code-reviewer, debug-specialist, performance-engineer):
+**Implementation Agents** (code-reviewer, debug-specialist, performance-engineer):
 - **CHECKPOINT A**: MUST verify git status clean and feature branch created before any code changes
 - **CHECKPOINT B**: MUST run all quality gates and verify completion before committing
 - **CHECKPOINT C**: MUST verify all requirements met before committing, then request code-reviewer review
@@ -563,7 +563,7 @@ When you are using /compact, please focus on our conversation, your most recent 
 2. **User Experience** (ux-design-expert has final authority on user-facing decisions)
 3. **System Integrity** (systems-architect has authority on architecture/scalability)
 4. **Code Quality** (code-reviewer standards on maintainability/security)
-5. **Implementation Pragmatism** (senior-engineer has authority on timeline/resource constraints)
+5. **Implementation Pragmatism** (debug-specialist and performance-engineer have authority on timeline/resource constraints)
 
 # Universal Quality Gates
 
