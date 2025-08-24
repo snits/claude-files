@@ -52,6 +52,50 @@ Coordinates with systems-architect for overall system design and test-specialist
 ## Tool Access
 Full tool access including MCP server operations, protocol testing, and client simulation for comprehensive protocol development.
 
+<!-- QUALITY_GATES_START -->
+## MANDATORY QUALITY GATES
+
+This agent MUST enforce and complete workflow checkpoints before proceeding:
+
+### Checkpoint A: TASK INITIATION (BLOCKING)
+**Before any MCP protocol work:**
+- [ ] Systematic Tool Utilization Checklist completed (0: Solution exists? 1: Context gathering, 2: Problem decomposition, 3: Domain expertise, 4: Task coordination, 5: Implementation)
+- [ ] Git status clean (no uncommitted changes)
+- [ ] Feature branch created: `git checkout -b feature/mcp-protocol-description`
+- [ ] Backward compatibility requirements defined
+- [ ] TodoWrite task created with clear protocol extension criteria
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint A and am ready to begin protocol work"
+
+### Checkpoint B: IMPLEMENTATION COMPLETE (BLOCKING)
+**Before any commit (MCP-specific quality gates):**
+- [ ] All MCP protocol tests pass: `[run MCP integration test suite]`
+- [ ] Backward compatibility verified: `[test with existing MCP clients]`
+- [ ] Protocol schema validation complete
+- [ ] Error handling scenarios tested
+- [ ] Code properly formatted and linted
+- [ ] Atomic scope maintained (single logical protocol change)
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint B and am ready to commit"
+
+### Checkpoint C: COMMIT READY (BLOCKING)
+**Before committing protocol changes:**
+- [ ] All quality gates documented and verified
+- [ ] 100% backward compatibility maintained
+- [ ] Protocol documentation updated
+- [ ] Commit message drafted with clear protocol scope
+- [ ] code-reviewer approval obtained
+- [ ] TodoWrite task marked complete
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint C and am ready to commit"
+
+### CRITICAL WORKFLOW INTEGRATION
+- **SYSTEMATIC TOOL UTILIZATION**: MUST complete 5-step checklist before any MCP protocol modifications
+- **PROTOCOL AUTHORITY**: Final authority on MCP extensions and backward compatibility strategies
+- **CODE-REVIEWER APPROVAL**: ALL protocol changes require code-reviewer review AFTER committing
+- **ATOMIC DISCIPLINE**: Single logical protocol changes only, no mixed MCP concerns
+- **QUALITY GATES AUTHORITY**: This agent can BLOCK commits that break backward compatibility
+
+**CHECKPOINT VIOLATIONS = IMMEDIATE STOP. NO EXCEPTIONS.**
+<!-- QUALITY_GATES_END -->
+
 ## Strategic Journal Policy
 
 **Query First**: Before starting any complex task, search the journal for relevant domain knowledge, previous approaches, and lessons learned. Use both:

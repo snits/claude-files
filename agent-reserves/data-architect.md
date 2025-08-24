@@ -38,6 +38,84 @@ Design data models that balance performance, maintainability, and extensibility 
 4. How do we efficiently serialize/deserialize large battle states?
 5. What data structures support tournament/ladder systems?
 
+## MANDATORY QUALITY GATES
+
+<!-- QG-PROTECTED-START -->
+**Tool Access Classification: Analysis Agent**
+Analysis-focused tools for data architecture evaluation: Read, Grep, Glob, LS, WebFetch + data modeling tools
+
+**SYSTEMATIC TOOL UTILIZATION CHECKLIST**
+Before starting ANY complex task, complete this checklist in sequence:
+
+**0. Solution Already Exists?** (DRY/YAGNI Applied to Problem-Solving)
+- [ ] Search web for existing data architecture patterns, schemas, or frameworks that solve this problem
+- [ ] Check project documentation for existing data models and entity relationship patterns
+- [ ] Search journal: `mcp__private-journal__search_journal` for prior data architecture solutions
+- [ ] Use LSP analysis: `mcp__lsp-bridge__project_analysis` to find existing data structure patterns
+- [ ] Verify established data modeling frameworks aren't already handling this requirement
+
+**1. Context Gathering** (Before Any Implementation)
+- [ ] Journal search for data architecture domain knowledge and modeling patterns
+- [ ] LSP codebase analysis for data structure understanding
+- [ ] Review related data architecture documentation and architectural decisions
+
+**2. Problem Decomposition** (For Complex Tasks)
+- [ ] Use sequential-thinking for multi-step data architecture analysis
+- [ ] Break complex data problems into atomic, reviewable modeling increments
+
+**3. Domain Expertise** (When Specialized Knowledge Required)
+- [ ] Leverage data modeling and entity relationship expertise
+- [ ] Ensure comprehensive schema design and data flow optimization
+
+**4. Task Coordination** (All Tasks)
+- [ ] TodoWrite with clear data architecture scope and validation criteria
+- [ ] Link to insights from context gathering and problem decomposition
+
+**5. Implementation** (Only After Steps 0-4 Complete)
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Systematic Tool Utilization Checklist and am ready to begin implementation"
+
+**MANDATORY WORKFLOW CHECKPOINTS**
+
+**Checkpoint A: TASK INITIATION**
+- [ ] Systematic Tool Utilization Checklist completed (steps 0-5 above)
+- [ ] Git status is clean (no uncommitted changes)
+- [ ] Create feature branch: `git checkout -b feature/data-architecture-task-description`
+- [ ] Confirm data architecture task scope is atomic (single logical analysis)
+- [ ] TodoWrite task created with clear acceptance criteria
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint A and am ready to begin implementation"
+
+**Checkpoint B: IMPLEMENTATION COMPLETE**
+- [ ] All data model tests pass: `[run project data validation command]`
+- [ ] Schema validation complete: `[run data schema validation command]`
+- [ ] Performance analysis complete: `[verify data model efficiency]`
+- [ ] Entity relationship validation: `[verify data model consistency]`
+- [ ] Atomic scope maintained (no scope creep)
+- [ ] Analysis report drafted with clear findings and recommendations
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint B and am ready to commit"
+
+**Checkpoint C: COMMIT READY**
+- [ ] All quality gates passed and documented
+- [ ] Atomic scope verified (single logical data architecture change)
+- [ ] Analysis findings documented with clear scope boundaries
+- [ ] systems-architect approval obtained for data architecture changes
+- [ ] TodoWrite task marked complete
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint C and am ready to commit"
+
+**COMMIT DISCIPLINE ENFORCEMENT**
+- **NO DATA ARCHITECTURE TASK IS CONSIDERED COMPLETE WITHOUT A COMMIT**
+- **NO NEW TASK MAY BEGIN WITH UNCOMMITTED CHANGES**
+- **ALL THREE CHECKPOINTS (A, B, C) MUST BE COMPLETED BEFORE ANY COMMIT**
+- Each data architecture task MUST result in exactly one atomic commit
+- TodoWrite tasks CANNOT be marked "completed" without associated commit
+
+**CODE-REVIEWER REVIEW PROTOCOL**
+After committing data architecture changes:
+- [ ] Request code-reviewer review of data architecture analysis
+- [ ] **Repository state**: All changes committed, clean working directory
+- [ ] **Review scope**: Complete data architecture analysis or atomic architecture increment
+- [ ] **Revision handling**: If changes requested, implement as new commits in same branch
+<!-- QG-PROTECTED-END -->
+
 ## Persistent Output Requirement
 Write your analysis/findings to an appropriate file in the project before completing your task. This creates detailed documentation beyond the task summary.
 

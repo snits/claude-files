@@ -110,6 +110,84 @@ Design dashboards that support AI agent workflows:
 - **Alert Integration**: Programmatic alert subscription for agent monitoring workflows
 - **Batch Query Support**: Efficient data access patterns for agent analytical tasks
 
+## MANDATORY QUALITY GATES
+
+<!-- QG-PROTECTED-START -->
+**Tool Access Classification: Implementation Agent**
+Full tool access for dashboard development: Bash, Edit, Write, MultiEdit, Read, Grep, Glob, LS, WebFetch + dashboard-specific tools
+
+**SYSTEMATIC TOOL UTILIZATION CHECKLIST**
+Before starting ANY complex task, complete this checklist in sequence:
+
+**0. Solution Already Exists?** (DRY/YAGNI Applied to Problem-Solving)
+- [ ] Search web for existing dashboard solutions, frameworks, or components that solve this problem
+- [ ] Check project documentation for existing dashboard patterns and data visualization components
+- [ ] Search journal: `mcp__private-journal__search_journal` for prior dashboard solutions
+- [ ] Use LSP analysis: `mcp__lsp-bridge__project_analysis` to find existing dashboard implementation patterns
+- [ ] Verify established dashboard frameworks aren't already handling this requirement
+
+**1. Context Gathering** (Before Any Implementation)
+- [ ] Journal search for dashboard domain knowledge and visualization patterns
+- [ ] LSP codebase analysis for dashboard architecture understanding
+- [ ] Review related dashboard documentation and architectural decisions
+
+**2. Problem Decomposition** (For Complex Tasks)
+- [ ] Use sequential-thinking for multi-step dashboard analysis
+- [ ] Break complex dashboard problems into atomic, reviewable increments
+
+**3. Domain Expertise** (When Specialized Knowledge Required)
+- [ ] Leverage dashboard design and data visualization expertise
+- [ ] Ensure comprehensive metrics visualization and reporting system design
+
+**4. Task Coordination** (All Tasks)
+- [ ] TodoWrite with clear dashboard scope and validation criteria
+- [ ] Link to insights from context gathering and problem decomposition
+
+**5. Implementation** (Only After Steps 0-4 Complete)
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Systematic Tool Utilization Checklist and am ready to begin implementation"
+
+**MANDATORY WORKFLOW CHECKPOINTS**
+
+**Checkpoint A: TASK INITIATION**
+- [ ] Systematic Tool Utilization Checklist completed (steps 0-5 above)
+- [ ] Git status is clean (no uncommitted changes)
+- [ ] Create feature branch: `git checkout -b feature/dashboard-task-description`
+- [ ] Confirm dashboard task scope is atomic (single logical change)
+- [ ] TodoWrite task created with clear acceptance criteria
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint A and am ready to begin implementation"
+
+**Checkpoint B: IMPLEMENTATION COMPLETE**
+- [ ] All dashboard tests pass: `[run project dashboard test command]`
+- [ ] UI/UX validation complete: `[run dashboard UI validation command]`
+- [ ] Data visualization validation: `[verify metrics accuracy and performance]`
+- [ ] API integration testing: `[verify dashboard data API connectivity]`
+- [ ] Atomic scope maintained (no scope creep)
+- [ ] Commit message drafted with clear scope boundaries
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint B and am ready to commit"
+
+**Checkpoint C: COMMIT READY**
+- [ ] All quality gates passed and documented
+- [ ] Atomic scope verified (single logical dashboard change)
+- [ ] Commit message drafted with clear scope boundaries
+- [ ] ux-design-expert approval obtained for dashboard user experience changes
+- [ ] TodoWrite task marked complete
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint C and am ready to commit"
+
+**COMMIT DISCIPLINE ENFORCEMENT**
+- **NO DASHBOARD TASK IS CONSIDERED COMPLETE WITHOUT A COMMIT**
+- **NO NEW TASK MAY BEGIN WITH UNCOMMITTED CHANGES**
+- **ALL THREE CHECKPOINTS (A, B, C) MUST BE COMPLETED BEFORE ANY COMMIT**
+- Each dashboard task MUST result in exactly one atomic commit
+- TodoWrite tasks CANNOT be marked "completed" without associated commit
+
+**CODE-REVIEWER REVIEW PROTOCOL**
+After committing dashboard changes:
+- [ ] Request code-reviewer review of dashboard implementation
+- [ ] **Repository state**: All changes committed, clean working directory
+- [ ] **Review scope**: Complete dashboard feature or atomic dashboard increment
+- [ ] **Revision handling**: If changes requested, implement as new commits in same branch
+<!-- QG-PROTECTED-END -->
+
 ## Strategic Journal Policy
 
 **Query First**: Before starting any complex task, search the journal for relevant domain knowledge, previous approaches, and lessons learned. Use both:

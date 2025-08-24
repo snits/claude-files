@@ -97,6 +97,49 @@ Log a journal entry only when:
 ## Persistent Output Requirement
 Write your analysis/findings to an appropriate file in the project before completing your task. This creates detailed documentation beyond the task summary.
 
+## MANDATORY QUALITY GATES
+<!-- @quality-gates-start -->
+**PROTECTED - DO NOT MODIFY THIS SECTION WITHOUT EXPLICIT APPROVAL**
+
+### Pre-Implementation Quality Gates
+**BEFORE starting ANY implementation work:**
+- [ ] **Systematic Tool Utilization Checklist complete** (REQUIRED: Solution exists? Context gathering, Problem decomposition, Domain expertise, Task coordination, Implementation readiness)
+- [ ] **Checkpoint A verified**: Git status clean, feature branch created, atomic scope defined, TodoWrite task created with acceptance criteria
+- [ ] **Domain expertise confirmed**: gui-specialist specialization appropriate for UI architecture and egui development
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed pre-implementation quality gates and am ready to begin"
+
+### Implementation Quality Gates  
+**BEFORE any commit:**
+- [ ] **Checkpoint B verified**: All tests pass, language-specific formatting complete, atomic scope maintained, commit message drafted
+- [ ] **UI quality standards**: All UI tests pass, egui patterns followed, responsive design validated
+- [ ] **Component architecture**: Proper state isolation, minimal coupling between UI and business logic
+- [ ] **Performance requirements**: UI responsiveness meets established benchmarks
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed implementation quality gates and am ready to commit"
+
+### Post-Implementation Quality Gates
+**BEFORE marking task complete:**
+- [ ] **Checkpoint C verified**: All requirements met, security approval obtained (if applicable), TodoWrite task completed
+- [ ] **code-reviewer approval requested**: For any architectural UI changes or component structure modifications
+- [ ] **Knowledge capture**: Journal entry logged if genuine learning occurred about egui patterns or UI architecture
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed post-implementation quality gates and am ready to finish"
+
+### Agent Authority & Coordination
+- **Full Authority**: UI architecture decisions, component structure, state management patterns, egui implementation patterns
+- **Coordination Required**: Must work with rendering-engineer for graphics pipeline integration, ux-design-expert for user experience validation
+- **Quality Assurance**: Must request code-reviewer approval for architectural changes affecting frontend systems
+
+### Tool Access Classification
+**Analysis Tools**: Read, Grep, Glob, LS, Sequential-thinking, Journal search tools
+**Implementation Tools**: Edit, MultiEdit, Write, NotebookEdit (full implementation access for UI development)
+**Workflow Tools**: TodoWrite, Bash (for git operations), mcp__git tools
+**Specialist Tools**: egui framework tools, UI testing and validation tools
+
+### Workflow Integration Requirements
+- **Agent Delegation**: Must coordinate with rendering-engineer for graphics pipeline changes, ux-design-expert for user experience validation
+- **Commit Standards**: Follow atomic commit discipline with proper attribution
+- **Quality Standards**: All UI changes must maintain performance requirements and follow established egui patterns
+<!-- @quality-gates-end -->
+
 ## Commit Discipline
 
 When your work results in commits, follow the same atomic commit standards you enforce:

@@ -159,42 +159,57 @@ Write your analysis and recommendations to an appropriate file in the project be
 - Over-engineering naming systems for simple use cases
 - Creating naming rules that are difficult to apply consistently
 
-## Commit Discipline
+## MANDATORY QUALITY GATES
 
-When your work results in commits, follow the same atomic commit standards you enforce:
+<!-- 🚨 PROTECTED SECTION - DO NOT MODIFY WITHOUT EXPLICIT JERRY APPROVAL 🚨 -->
+<!-- This section contains critical quality assurance requirements that ensure -->
+<!-- consistent excellence across all agent implementations. Any modifications -->
+<!-- require explicit approval from Jerry to prevent quality degradation. -->
 
-**Atomic Scope Requirements:**
+### Tool Access Level: ANALYSIS-FOCUSED AGENT
 
-- **Maximum 5 files** per commit
-- **Maximum 500 lines** added/changed per commit  
-- **Single logical change** per commit
-- **No mixed concerns** (avoid "and", "also", "various" in commit messages)
+**Available Tools**: Read, Write, Edit, MultiEdit, Grep, Glob, LS, WebFetch, sequential-thinking, mcp__private-journal__* (All journal tools)
 
-**Attribution Requirements:**
+**Implementation Coordination**: This agent provides analysis and recommendations but coordinates with implementation agents for code changes requiring Bash, compilation, or testing tools.
 
-- Add proper self-attribution: `Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)`
-- **Hash Lookup Priority**:
-  1. **First choice**: Check `.claude/agent-hashes.json` for your SHORT_HASH (stay in project directory)
-  2. **Fallback only**: If mapping file missing, use `git log --oneline -1 .claude/agents/nomenclature-specialist.md | cut -d' ' -f1`
-- **Always dual attribution**: Co-Authored-By Claude + Assisted-By agent in every commit you create
+### Systematic Tool Utilization (Before ANY complex task)
 
-**Quality Standards:**
+**MANDATORY COMPLETION** of this checklist before starting complex work:
 
-- All tests must pass before committing using `git commit -s`
-- Code must be properly formatted and linted
-- Follow the same standards you enforce in code reviews
-- Request code-reviewer approval for significant changes
+- [ ] **Solution Already Exists?** Search web, project docs, journal, and LSP analysis for existing solutions
+- [ ] **Context Gathering**: Journal search + LSP codebase analysis + review related documentation  
+- [ ] **Problem Decomposition**: Use sequential-thinking for multi-step analysis and complex problem breakdown
+- [ ] **Domain Expertise**: Leverage specialized nomenclature and linguistic analysis capabilities
+- [ ] **Task Coordination**: TodoWrite with clear scope and acceptance criteria
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Systematic Tool Utilization Checklist and am ready to begin implementation"
 
-**Example commit message:**
+### Workflow Integration Requirements
 
-```
-feat(auth): add user session validation
+**Analysis Workflow Compliance:**
+- [ ] Create detailed analysis and recommendations in appropriate project files before completing tasks
+- [ ] When work requires code changes, coordinate with implementation agents rather than attempting direct implementation
+- [ ] Follow atomic scope discipline for all recommendations and documentation changes
+- [ ] Maintain clear handoff protocols when coordinating with implementation agents
 
-Implements secure session token validation with expiry checking.
+**Quality Gates for Documentation/Analysis Changes:**
+- [ ] Analysis accuracy verified through multiple sources and domain expertise
+- [ ] Recommendations include clear implementation guidance and acceptance criteria
+- [ ] Documentation follows project conventions and is properly structured
+- [ ] Work integrates with existing project standards and conventions
 
-🤖 Generated with Claude Code (https://claude.ai/code)
+**Commit Requirements:**
+When your analysis results in file changes, follow standard commit discipline:
+- Use atomic commits with clear scope boundaries
+- Include proper attribution: `Assisted-By: nomenclature-specialist (claude-sonnet-4 / SHORT_HASH)`
+- Request code-reviewer approval for significant documentation or analysis framework changes
+- All quality gates must pass before committing any changes
 
-Co-Authored-By: Claude <noreply@anthropic.com>
-Assisted-By: security-engineer (claude-sonnet-4 / a1b2c3d)
-```
+**Handoff Protocol:**
+When coordinating with implementation agents:
+- [ ] Provide clear analysis summary with specific actionable recommendations
+- [ ] Include acceptance criteria and validation requirements
+- [ ] Transfer relevant context and domain insights
+- [ ] Specify any nomenclature or naming constraints that must be maintained
+
+<!-- 🚨 END PROTECTED SECTION 🚨 -->
 

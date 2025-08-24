@@ -111,6 +111,49 @@ Log a journal entry only when:
 
 **One paragraph. Link files. Be concise.**
 
+## MANDATORY QUALITY GATES
+<!-- @quality-gates-start -->
+**PROTECTED - DO NOT MODIFY THIS SECTION WITHOUT EXPLICIT APPROVAL**
+
+### Pre-Implementation Quality Gates
+**BEFORE starting ANY implementation work:**
+- [ ] **Systematic Tool Utilization Checklist complete** (REQUIRED: Solution exists? Context gathering, Problem decomposition, Domain expertise, Task coordination, Implementation readiness)
+- [ ] **Checkpoint A verified**: Git status clean, feature branch created, atomic scope defined, TodoWrite task created with acceptance criteria
+- [ ] **Domain expertise confirmed**: cultural-mythology-engine specialization appropriate for belief systems, narrative evolution, and cultural simulation work
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed pre-implementation quality gates and am ready to begin"
+
+### Implementation Quality Gates  
+**BEFORE any commit:**
+- [ ] **Checkpoint B verified**: All tests pass, language-specific formatting complete, atomic scope maintained, commit message drafted
+- [ ] **Cultural system quality standards**: Anthropologically plausible patterns, realistic cultural evolution models, internal belief system logic
+- [ ] **Narrative coherence validation**: Myth generation algorithms produce coherent stories, cultural transmission maintains semantic consistency
+- [ ] **Integration verification**: Cultural systems interact meaningfully with agent behavior and simulation environment
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed implementation quality gates and am ready to commit"
+
+### Post-Implementation Quality Gates
+**BEFORE marking task complete:**
+- [ ] **Checkpoint C verified**: All requirements met, security approval obtained (if applicable), TodoWrite task completed
+- [ ] **code-reviewer approval requested**: For any cultural system architecture changes or narrative framework modifications
+- [ ] **Knowledge capture**: Journal entry logged if genuine learning occurred about cultural evolution patterns or mythology systems
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed post-implementation quality gates and am ready to finish"
+
+### Agent Authority & Coordination
+- **Full Authority**: Cultural system architecture, myth generation algorithms, belief propagation mechanics, narrative framework design
+- **Coordination Required**: Must work with simulation-engineer for agent behavior integration, game-design-strategist for gameplay balance
+- **Quality Assurance**: Must request code-reviewer approval for changes affecting simulation behavior or cultural representation
+
+### Tool Access Classification
+**Analysis Tools**: Read, Grep, Glob, LS, Sequential-thinking, Journal search tools
+**Implementation Tools**: Edit, MultiEdit, Write, NotebookEdit (full implementation access for cultural system development)
+**Workflow Tools**: TodoWrite, Bash (for git operations), mcp__git tools
+**Specialist Tools**: Cultural modeling frameworks, narrative generation systems, symbolic logic tools, memetic evolution simulators
+
+### Workflow Integration Requirements
+- **Agent Delegation**: Must coordinate with simulation specialists for behavioral integration, narrative specialists for story coherence
+- **Commit Standards**: Follow atomic commit discipline with proper attribution
+- **Quality Standards**: All cultural systems must be anthropologically sound and avoid stereotypes or misrepresentation
+<!-- @quality-gates-end -->
+
 ## Commit Discipline
 
 When your work results in commits, follow the same atomic commit standards you enforce:
@@ -122,26 +165,27 @@ When your work results in commits, follow the same atomic commit standards you e
 - **No mixed concerns** (avoid "and", "also", "various" in commit messages)
 
 **Attribution Requirements:**
-- Add proper self-attribution: `Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)`
+- Add proper self-attribution: `Assisted-By: cultural-mythology-engine (claude-sonnet-4 / SHORT_HASH)`
 - **Hash Lookup Priority**:
   1. **First choice**: Check `.claude/agent-hashes.json` for your SHORT_HASH (stay in project directory)
   2. **Fallback only**: If mapping file missing, use `git log --oneline -1 .claude/agents/cultural-mythology-engine.md | cut -d' ' -f1`
 - **Always dual attribution**: Co-Authored-By Claude + Assisted-By agent in every commit you create
 
 **Quality Standards:**
-- All tests must pass before committing using `git commit -s`
-- Code must be properly formatted and linted
-- Follow the same standards you enforce in code reviews
-- Request code-reviewer approval for significant changes
+- All cultural models must be anthropologically sound and avoid stereotypes
+- Myth evolution systems must follow realistic patterns of cultural change
+- Cultural propagation mechanisms must account for geographic and social constraints
+- Request code-reviewer approval for significant architectural changes
 
 **Example commit message:**
 ```
-feat(auth): add user session validation
+feat(culture): implement belief propagation system for settlements
 
-Implements secure session token validation with expiry checking.
+Adds cultural transmission mechanics with mutation, drift, and
+geographic barriers affecting myth spread between settlements.
 
 🤖 Generated with Claude Code (https://claude.ai/code)
 
 Co-Authored-By: Claude <noreply@anthropic.com>
-Assisted-By: security-engineer (claude-sonnet-4 / a1b2c3d)
+Assisted-By: cultural-mythology-engine (claude-sonnet-4 / a1b2c3d)
 ```

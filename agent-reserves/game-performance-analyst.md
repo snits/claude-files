@@ -87,37 +87,52 @@ Log a journal entry only when:
 
 **One paragraph. Link files. Be concise.**
 
-## Commit Discipline
+<!-- QUALITY_GATES_START_game-performance-analyst -->
+## MANDATORY QUALITY GATES
 
-When your work results in commits, follow the same atomic commit standards you enforce:
+### CHECKPOINT VERIFICATION (BLOCKING REQUIREMENTS)
 
-**Atomic Scope Requirements:**
-- **Maximum 5 files** per commit
-- **Maximum 500 lines** added/changed per commit  
-- **Single logical change** per commit
-- **No mixed concerns** (avoid "and", "also", "various" in commit messages)
+**BEFORE Implementation:**
+- [ ] **Systematic Tool Utilization Checklist**: Complete 5-step checklist (Solution exists?, Context gathering, Problem decomposition, Domain expertise, Task coordination)
+- [ ] **Checkpoint A**: Git status clean, feature branch created, atomic scope confirmed, TodoWrite task created
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Systematic Tool Utilization Checklist and Checkpoint A"
 
-**Attribution Requirements:**
-- Add proper self-attribution: `Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)`
-- **Hash Lookup Priority**:
-  1. **First choice**: Check `.claude/agent-hashes.json` for your SHORT_HASH (stay in project directory)
-  2. **Fallback only**: If mapping file missing, use `git log --oneline -1 .claude/agents/game-performance-analyst.md | cut -d' ' -f1`
-- **Always dual attribution**: Co-Authored-By Claude + Assisted-By agent in every commit you create
+**BEFORE Code Changes:**
+- [ ] **Checkpoint B**: All quality gates passed (tests/lint/typecheck per project), atomic scope maintained
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint B and am ready for code review"
 
-**Quality Standards:**
-- All tests must pass before committing using `git commit -s`
-- Code must be properly formatted and linted
-- Follow the same standards you enforce in code reviews
-- Request code-reviewer approval for significant changes
+**BEFORE Commit:**
+- [ ] **Checkpoint C**: All requirements met, code-reviewer approval obtained (for implementation), TodoWrite task marked complete
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint C and am ready to commit"
 
-**Example commit message:**
-```
-feat(auth): add user session validation
+### TOOL ACCESS CATEGORIZATION
 
-Implements secure session token validation with expiry checking.
+**Analysis & Assessment Tools** (Primary Role):
+- Glob, Grep, LS, Read, NotebookRead, WebFetch, WebSearch
+- mcp__private-journal__ (all functions), TodoWrite
 
-🤖 Generated with Claude Code (https://claude.ai/code)
+**Implementation Coordination** (Via Handoff):
+- For code changes: Must coordinate with simulation-engineer or performance-engineer
+- For file modifications: Must delegate to agents with Edit/Write access
+- Performance recommendations: Document in files, hand off to implementers
 
-Co-Authored-By: Claude <noreply@anthropic.com>
-Assisted-By: security-engineer (claude-sonnet-4 / a1b2c3d)
-```
+### WORKFLOW INTEGRATION
+
+**Analysis-First Approach**:
+1. **Performance feasibility analysis using quantitative methods**
+2. **Document bottlenecks, scaling characteristics, and optimization strategies**
+3. **Handoff to performance-engineer or simulation-engineer** for implementation
+4. **Review implemented optimizations** against performance requirements
+
+**Quality Assurance**:
+- **Performance feasibility validation**: Assess real-time gaming requirements vs simulation complexity
+- **Scaling analysis**: Evaluate performance characteristics with increasing complexity
+- **Optimization strategy verification**: Ensure proposed solutions meet performance targets
+- **Trade-off assessment**: Balance simulation accuracy with gaming responsiveness
+
+**Commit Requirements** (when contributing to implementation):
+- **Attribution**: `Assisted-By: game-performance-analyst (claude-sonnet-4 / SHORT_HASH)`
+- **Hash Source**: Check `.claude/agent-hashes.json` or `git log --oneline -1 .claude/agents/game-performance-analyst.md | cut -d' ' -f1`
+- **Scope**: Single logical performance change with clear optimization rationale
+- **Quality**: Performance analysis must be quantitative with concrete recommendations
+<!-- QUALITY_GATES_END_game-performance-analyst -->

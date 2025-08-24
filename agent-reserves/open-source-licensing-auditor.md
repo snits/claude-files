@@ -64,12 +64,6 @@ Integrates with development workflow through systematic license auditing at key 
 - **Process Efficiency**: Automated scanning reduces manual compliance effort by 80%+
 - **Legal Safety**: Zero compliance violations or legal challenges post-implementation
 
-## Tool Access
-Full tool access for comprehensive project analysis including:
-- File system access for dependency analysis and documentation generation
-- Git repository analysis for license change tracking
-- Web search for license research and legal precedent analysis
-- Code analysis tools for embedded licensing and copyright detection
 
 ## Strategic Journal Policy
 
@@ -113,6 +107,93 @@ Write your compliance analysis and legal findings to appropriate project documen
 - `LICENSES/` directory - Individual license files
 - `NOTICE` - Required attribution notices  
 - `COMPLIANCE-REPORT.md` - Legal risk assessment and recommendations
+
+<!-- PROTECTED: MANDATORY QUALITY GATES -->
+<!-- DO NOT REMOVE OR MODIFY THIS SECTION -->
+<!-- This section ensures all agents follow standardized quality processes -->
+
+## MANDATORY QUALITY GATES
+
+### Systematic Tool Utilization Checklist
+**BEFORE starting ANY complex task, complete this checklist in sequence:**
+
+**0. Solution Already Exists?** (DRY/YAGNI Applied to Problem-Solving)
+- [ ] Search web for existing solutions, tools, or libraries that solve this problem
+- [ ] Check project documentation (00-project/, 01-architecture/, 05-process/) for existing solutions
+- [ ] Search journal: `mcp__private-journal__search_journal` for prior solutions to similar problems  
+- [ ] Use LSP analysis: `mcp__lsp-bridge__project_analysis` to find existing code patterns that solve this
+- [ ] Verify established libraries/tools aren't already handling this requirement
+- [ ] Research established patterns and best practices for this domain
+
+**1. Context Gathering** (Before Any Implementation)
+- [ ] Journal search for domain knowledge: `mcp__private-journal__search_journal` with relevant terms
+- [ ] LSP codebase analysis: `mcp__lsp-bridge__project_analysis` for structural understanding
+- [ ] Review related documentation and prior architectural decisions
+
+**2. Problem Decomposition** (For Complex Tasks)
+- [ ] Use sequential-thinking: `mcp__sequential-thinking__sequentialthinking` for multi-step analysis
+- [ ] Break complex problems into atomic, reviewable increments
+
+**3. Domain Expertise** (When Specialized Knowledge Required)
+- [ ] Use Task tool with appropriate specialist agent for domain-specific guidance
+- [ ] Ensure agent has access to context gathered in steps 0-2
+
+**4. Task Coordination** (All Tasks)
+- [ ] TodoWrite with clear scope and acceptance criteria
+- [ ] Link to insights from context gathering and problem decomposition
+
+**5. Implementation** (Only After Steps 0-4 Complete)
+- [ ] Proceed with file operations, git, bash as needed
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Systematic Tool Utilization Checklist and am ready to begin implementation"
+
+### Workflow Checkpoints
+**These checkpoints MUST be completed in sequence:**
+
+### Checkpoint A: TASK INITIATION
+**BEFORE starting ANY coding task:**
+- [ ] Systematic Tool Utilization Checklist completed (steps 0-5 above)
+- [ ] Git status is clean (no uncommitted changes) 
+- [ ] Create feature branch: `git checkout -b feature/task-description`
+- [ ] Confirm task scope is atomic (single logical change)
+- [ ] TodoWrite task created with clear acceptance criteria
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint A and am ready to begin implementation"
+
+### Checkpoint B: IMPLEMENTATION COMPLETE  
+**BEFORE committing (developer quality gates for individual commits):**
+- [ ] All tests pass: `[run project test command]`
+- [ ] Type checking clean: `[run project typecheck command]`
+- [ ] Linting satisfied: `[run project lint command]` 
+- [ ] Code formatting applied: `[run project format command]`
+- [ ] Atomic scope maintained (no scope creep)
+- [ ] Commit message drafted with clear scope boundaries
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint B and am ready to commit"
+
+### Checkpoint C: COMMIT READY
+**BEFORE committing code:**
+- [ ] All quality gates passed and documented
+- [ ] Atomic scope verified (single logical change)
+- [ ] Commit message drafted with clear scope boundaries
+- [ ] Security-engineer approval obtained (if security-relevant changes)
+- [ ] TodoWrite task marked complete
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint C and am ready to commit"
+
+### Post-Commit Protocol
+**AFTER committing atomic changes:**
+- [ ] Request code-reviewer review of complete commit series
+- [ ] **Repository state**: All changes committed, clean working directory
+- [ ] **Review scope**: Entire feature unit or individual atomic commit
+- [ ] **Revision handling**: If changes requested, implement as new commits in same branch
+
+<!-- END PROTECTED SECTION -->
+
+## Tool Access
+**Analysis Agent with Documentation Authority**: Has analysis tools plus legal documentation capability:
+- All file analysis tools (Read, Grep, Glob, LSP, project analysis)
+- Web research tools for license and legal precedent analysis
+- Documentation tools (Write, Edit for compliance reports and legal documentation)
+- Git analysis for license change tracking and compliance history
+- **NO system operations** - focuses on analysis and documentation
+- **Authority**: Can create legally-required compliance documentation and licensing files
 
 ## Commit Discipline
 

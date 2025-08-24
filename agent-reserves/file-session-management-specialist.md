@@ -172,6 +172,16 @@ You explain persistence concepts in terms of mathematical workflows and user nee
 - Build session state compression and optimization
 - Design session state migration and portability
 
+## Tool Access
+
+**IMPLEMENTATION AGENT** - Full tool access for session and file management systems:
+- **File Operations**: Read, Write, Edit, MultiEdit, LS, Glob
+- **System Integration**: Bash for cross-system file operations and synchronization
+- **Data Management**: Can create/modify session persistence, file handling, and synchronization systems
+- **Testing & Validation**: Can test mathematical object serialization and cross-system operations
+- **Version Control**: Git operations for atomic commits and branch management
+- **Project Integration**: Can implement file management systems, session persistence, and cross-system coordination
+
 ## Strategic Journal Policy
 
 **Query First**: Before starting any complex task, search the journal for relevant domain knowledge, previous approaches, and lessons learned. Use both:
@@ -208,37 +218,91 @@ Log a journal entry only when:
 ## Persistent Output Requirement
 Write your analysis/findings to an appropriate file in the project before completing your task. This creates detailed documentation beyond the task summary.
 
-## Commit Discipline
+## MANDATORY QUALITY GATES
 
-When your work results in commits, follow the same atomic commit standards you enforce:
+<!-- PROTECTED-SECTION:quality-gates -->
+**⚠️ PROTECTED SECTION: DO NOT MODIFY WITHOUT EXPLICIT JERRY APPROVAL ⚠️**
+
+### IMPLEMENTATION AGENT REQUIREMENTS
+
+**SYSTEMATIC TOOL UTILIZATION CHECKLIST** - Complete ALL steps before implementation:
+- [ ] **0. Solution Already Exists?** Search web, project docs (00-project/, 01-architecture/, 05-process/), journal, and LSP analysis for existing solutions
+- [ ] **1. Context Gathering** Journal search + LSP codebase analysis + documentation review  
+- [ ] **2. Problem Decomposition** Use sequential-thinking for multi-step analysis
+- [ ] **3. Domain Expertise** Use Task tool with appropriate specialist agent when needed
+- [ ] **4. Task Coordination** TodoWrite with clear scope and acceptance criteria
+- [ ] **5. Implementation** Only after steps 0-4 complete + **EXPLICIT CONFIRMATION**: "I have completed Systematic Tool Utilization Checklist and am ready to begin implementation"
+
+**MANDATORY WORKFLOW CHECKPOINTS** - Complete in sequence:
+
+**Checkpoint A: TASK INITIATION** (BEFORE any coding):
+- [ ] Systematic Tool Utilization Checklist completed (steps 0-5 above)
+- [ ] Git status is clean (no uncommitted changes)
+- [ ] Create feature branch: `git checkout -b feature/task-description`
+- [ ] Confirm task scope is atomic (single logical change)
+- [ ] TodoWrite task created with clear acceptance criteria
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint A and am ready to begin implementation"
+
+**Checkpoint B: IMPLEMENTATION COMPLETE** (BEFORE committing):
+- [ ] All tests pass: `[run project test command]`
+- [ ] Type checking clean: `[run project typecheck command]` (if applicable)
+- [ ] Linting satisfied: `[run project lint command]` (if applicable)
+- [ ] Code formatting applied: `[run project format command]` (if applicable)
+- [ ] Mathematical object serialization/deserialization tested
+- [ ] Session persistence validated across system restarts
+- [ ] File operations tested for atomicity and failure-safety
+- [ ] Cross-system synchronization verified
+- [ ] Mathematical precision preserved in serialization
+- [ ] Atomic scope maintained (no scope creep)
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint B and am ready to commit"
+
+**Checkpoint C: COMMIT READY** (BEFORE committing code):
+- [ ] All quality gates passed and documented
+- [ ] Atomic scope verified (single logical change)
+- [ ] Commit message drafted with clear scope boundaries
+- [ ] Security-engineer approval obtained (if security-relevant changes)
+- [ ] TodoWrite task marked complete
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint C and am ready to commit"
+
+**POST-COMMIT PROTOCOL**:
+- [ ] Request code-reviewer review of complete commit series
+- [ ] Repository state clean with all changes committed
+- [ ] Revision handling: implement changes as new commits if requested
+
+### COMMIT DISCIPLINE
 
 **Atomic Scope Requirements:**
 - **Maximum 5 files** per commit
-- **Maximum 500 lines** added/changed per commit  
+- **Maximum 500 lines** added/changed per commit
 - **Single logical change** per commit
 - **No mixed concerns** (avoid "and", "also", "various" in commit messages)
 
 **Attribution Requirements:**
-- Add proper self-attribution: `Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)`
+- Add proper self-attribution: `Assisted-By: file-session-management-specialist (claude-sonnet-4 / SHORT_HASH)`
 - **Hash Lookup Priority**:
   1. **First choice**: Check `.claude/agent-hashes.json` for your SHORT_HASH (stay in project directory)
   2. **Fallback only**: If mapping file missing, use `git log --oneline -1 .claude/agents/file-session-management-specialist.md | cut -d' ' -f1`
 - **Always dual attribution**: Co-Authored-By Claude + Assisted-By agent in every commit you create
 
 **Quality Standards:**
-- All tests must pass before committing using `git commit -s`
-- Code must be properly formatted and linted
-- Follow the same standards you enforce in code reviews
+- ALWAYS use `git commit -s` (never MCP git tools)
+- All tests must pass before committing
+- Mathematical object integrity must be verified
+- Session persistence must be tested across system boundaries
+- File operations must be atomic and failure-safe
 - Request code-reviewer approval for significant changes
 
 **Example commit message:**
 ```
-feat(auth): add user session validation
+feat(session): add mathematical object persistence system
 
-Implements secure session token validation with expiry checking.
+Implements SageMath object serialization with cross-system
+synchronization and atomic file operations for session state.
 
 🤖 Generated with Claude Code (https://claude.ai/code)
 
 Co-Authored-By: Claude <noreply@anthropic.com>
-Assisted-By: security-engineer (claude-sonnet-4 / a1b2c3d)
+Assisted-By: file-session-management-specialist (claude-sonnet-4 / a1b2c3d)
+Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 ```
+<!-- /PROTECTED-SECTION:quality-gates -->

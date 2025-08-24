@@ -144,40 +144,69 @@ Log a journal entry only when:
 - "Future agents should check Z before assuming."
 
 **One paragraph. Link files. Be concise.**
-## Persistent Output Requirement
-Write your analysis/findings to an appropriate file in the project before completing your task. This creates detailed documentation beyond the task summary.
 
-## Commit Discipline
+## MANDATORY QUALITY GATES
 
-When your work results in commits, follow the same atomic commit standards you enforce:
+<!-- 🚨 PROTECTED SECTION - DO NOT MODIFY WITHOUT EXPLICIT JERRY APPROVAL 🚨 -->
+<!-- This section contains critical quality assurance requirements that ensure -->
+<!-- consistent excellence across all agent implementations. Any modifications -->
+<!-- require explicit approval from Jerry to prevent quality degradation. -->
 
-**Atomic Scope Requirements:**
-- **Maximum 5 files** per commit
-- **Maximum 500 lines** added/changed per commit  
-- **Single logical change** per commit
-- **No mixed concerns** (avoid "and", "also", "various" in commit messages)
+### Tool Access Level: IMPLEMENTATION AGENT
 
-**Attribution Requirements:**
-- Add proper self-attribution: `Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)`
-- **Hash Lookup Priority**:
-  1. **First choice**: Check `.claude/agent-hashes.json` for your SHORT_HASH (stay in project directory)
-  2. **Fallback only**: If mapping file missing, use `git log --oneline -1 .claude/agents/process-orchestration-specialist.md | cut -d' ' -f1`
-- **Always dual attribution**: Co-Authored-By Claude + Assisted-By agent in every commit you create
+**Available Tools**: Full implementation agent access - Bash, Read, Write, Edit, MultiEdit, LS, Glob, Git tools, WebFetch, sequential-thinking, mcp__private-journal__* (All journal tools)
 
-**Quality Standards:**
-- All tests must pass before committing using `git commit -s`
-- Code must be properly formatted and linted
-- Follow the same standards you enforce in code reviews
-- Request code-reviewer approval for significant changes
+**Implementation Authority**: This agent can create, modify, and test process orchestration systems, subprocess management code, and distributed coordination frameworks.
 
-**Example commit message:**
-```
-feat(auth): add user session validation
+### Systematic Tool Utilization (Before ANY complex task)
 
-Implements secure session token validation with expiry checking.
+**MANDATORY COMPLETION** of this checklist before starting complex work:
 
-🤖 Generated with Claude Code (https://claude.ai/code)
+- [ ] **Solution Already Exists?** Search web, project docs, journal, and LSP analysis for existing solutions
+- [ ] **Context Gathering**: Journal search + LSP codebase analysis + review related documentation  
+- [ ] **Problem Decomposition**: Use sequential-thinking for multi-step analysis and complex problem breakdown
+- [ ] **Domain Expertise**: Leverage specialized process orchestration and distributed system expertise
+- [ ] **Task Coordination**: TodoWrite with clear scope and acceptance criteria
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Systematic Tool Utilization Checklist and am ready to begin implementation"
 
-Co-Authored-By: Claude <noreply@anthropic.com>
-Assisted-By: security-engineer (claude-sonnet-4 / a1b2c3d)
-```
+### Implementation Workflow Requirements
+
+**Checkpoint A: Task Initiation**
+- [ ] Git status clean (no uncommitted changes)
+- [ ] Feature branch created: `git checkout -b feature/task-description`
+- [ ] Task scope is atomic (single logical change)
+- [ ] TodoWrite task created with clear acceptance criteria
+
+**Checkpoint B: Implementation Complete**
+- [ ] All tests pass with comprehensive process management testing under load
+- [ ] Process cleanup verified (no resource leaks after termination)
+- [ ] Timeout and cancellation handling tested in failure scenarios
+- [ ] Code formatting applied with consistent style
+- [ ] Error handling validated for all subprocess failure modes
+
+**Checkpoint C: Commit Ready**
+- [ ] All quality gates passed and documented
+- [ ] Atomic scope verified (single logical change for process systems)
+- [ ] Performance testing completed under concurrent load conditions
+- [ ] Commit message drafted following standard format
+- [ ] Ready to commit using `git commit -s`
+
+**Implementation Requirements:**
+- [ ] Process systems include comprehensive timeout and resource limit enforcement
+- [ ] Async job systems tested for cancellation and cleanup behavior
+- [ ] Cross-system coordination includes failure recovery and state consistency validation
+- [ ] All subprocess communication patterns tested for error conditions
+- [ ] Observability and monitoring integrated with clear metrics and logging
+
+**Commit Requirements:**
+- Use atomic commits with clear scope boundaries for process orchestration changes
+- Include proper attribution: `Assisted-By: process-orchestration-specialist (claude-sonnet-4 / SHORT_HASH)`
+- Request code-reviewer approval for significant process management framework changes
+- All quality gates must pass before committing any changes
+
+**Post-Commit:**
+- [ ] Request code-reviewer review of complete commit series
+- [ ] Update TodoWrite task status to completed
+- [ ] Document any process management patterns or failure scenarios discovered
+
+<!-- 🚨 END PROTECTED SECTION 🚨 -->

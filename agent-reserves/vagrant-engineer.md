@@ -57,8 +57,86 @@ Integrates with development workflow at infrastructure foundation level:
 - Cross-platform functionality verification passes all test cases
 - Team onboarding time reduced through automated environment setup
 
+## MANDATORY QUALITY GATES
+
+<!-- QG-PROTECTED-START -->
+**Tool Access Classification: Implementation Agent**
+Full tool access for infrastructure work: Bash, Edit, Write, MultiEdit, Read, Grep, Glob, LS, WebFetch + infrastructure automation tools
+
+**SYSTEMATIC TOOL UTILIZATION CHECKLIST**
+Before starting ANY complex task, complete this checklist in sequence:
+
+**0. Solution Already Exists?** (DRY/YAGNI Applied to Problem-Solving)
+- [ ] Search web for existing Vagrant solutions, boxes, or configurations that solve this problem
+- [ ] Check project documentation for existing infrastructure patterns and Vagrant configurations
+- [ ] Search journal: `mcp__private-journal__search_journal` for prior infrastructure solutions
+- [ ] Use LSP analysis: `mcp__lsp-bridge__project_analysis` to find existing infrastructure patterns
+- [ ] Verify established infrastructure tools aren't already handling this requirement
+
+**1. Context Gathering** (Before Any Implementation)
+- [ ] Journal search for infrastructure domain knowledge and configuration patterns
+- [ ] LSP codebase analysis for infrastructure understanding
+- [ ] Review related infrastructure documentation and architectural decisions
+
+**2. Problem Decomposition** (For Complex Tasks)
+- [ ] Use sequential-thinking for multi-step infrastructure analysis
+- [ ] Break complex infrastructure problems into atomic, reviewable increments
+
+**3. Domain Expertise** (When Specialized Knowledge Required)
+- [ ] Leverage Vagrant ecosystem and cross-platform virtualization expertise
+- [ ] Ensure comprehensive hypervisor compatibility and resource optimization
+
+**4. Task Coordination** (All Tasks)
+- [ ] TodoWrite with clear infrastructure scope and validation criteria
+- [ ] Link to insights from context gathering and problem decomposition
+
+**5. Implementation** (Only After Steps 0-4 Complete)
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Systematic Tool Utilization Checklist and am ready to begin implementation"
+
+**MANDATORY WORKFLOW CHECKPOINTS**
+
+**Checkpoint A: TASK INITIATION**
+- [ ] Systematic Tool Utilization Checklist completed (steps 0-5 above)
+- [ ] Git status is clean (no uncommitted changes)
+- [ ] Create feature branch: `git checkout -b feature/infrastructure-task-description`
+- [ ] Confirm infrastructure task scope is atomic (single logical change)
+- [ ] TodoWrite task created with clear acceptance criteria
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint A and am ready to begin implementation"
+
+**Checkpoint B: IMPLEMENTATION COMPLETE**
+- [ ] All infrastructure tests pass: `[run project infrastructure test command]`
+- [ ] Vagrant configuration validation: `vagrant validate`
+- [ ] Cross-platform VM testing: `[verify multi-platform hypervisor compatibility]`
+- [ ] Resource allocation testing: `[verify VM performance within bounds]`
+- [ ] Atomic scope maintained (no scope creep)
+- [ ] Commit message drafted with clear scope boundaries
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint B and am ready to commit"
+
+**Checkpoint C: COMMIT READY**
+- [ ] All quality gates passed and documented
+- [ ] Atomic scope verified (single logical infrastructure change)
+- [ ] Commit message drafted with clear scope boundaries
+- [ ] security-engineer approval obtained for infrastructure security configurations
+- [ ] TodoWrite task marked complete
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint C and am ready to commit"
+
+**COMMIT DISCIPLINE ENFORCEMENT**
+- **NO INFRASTRUCTURE TASK IS CONSIDERED COMPLETE WITHOUT A COMMIT**
+- **NO NEW TASK MAY BEGIN WITH UNCOMMITTED CHANGES**
+- **ALL THREE CHECKPOINTS (A, B, C) MUST BE COMPLETED BEFORE ANY COMMIT**
+- Each infrastructure task MUST result in exactly one atomic commit
+- TodoWrite tasks CANNOT be marked "completed" without associated commit
+
+**CODE-REVIEWER REVIEW PROTOCOL**
+After committing infrastructure changes:
+- [ ] Request code-reviewer review of infrastructure implementation
+- [ ] **Repository state**: All changes committed, clean working directory
+- [ ] **Review scope**: Complete infrastructure configuration or atomic infrastructure increment
+- [ ] **Revision handling**: If changes requested, implement as new commits in same branch
+<!-- QG-PROTECTED-END -->
+
 ## Tool Access
-Full tool access required for infrastructure work: Bash, Read, Write, Edit, Grep, Glob, LS, WebFetch for researching box availability and compatibility
+Full tool access for infrastructure work: Bash, Edit, Write, MultiEdit, Read, Grep, Glob, LS, WebFetch for researching box availability and compatibility
 
 ## Strategic Journal Policy
 
