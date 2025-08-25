@@ -81,45 +81,9 @@ Rule #1: If you want exception to ANY rule, YOU MUST STOP and get explicit permi
 
 @~/.claude/shared-prompts/commit-requirements.md
 
-## Default Project Planning: Agile Sprint Structure
-**ALL new projects MUST start with agile sprint planning to establish proper commit discipline from day one.**
+## Systematic Development Planning
 
-### Sprint Planning Process:
-1. **Break work into user stories** - Each story represents 1-4 hours of focused work
-2. **Size stories for atomic commits** - One user story = one logical commit
-3. **Create sprint backlog** - 5-10 user stories per sprint cycle  
-4. **Define acceptance criteria** - Clear success metrics for each story
-5. **Plan commit sequence** - Each story maps to specific commit message
-
-### User Story Template:
-```
-As a [user type], I want [functionality] so that [business value]
-
-Acceptance Criteria:
-- [ ] Specific testable requirement 1
-- [ ] Specific testable requirement 2
-- [ ] All tests pass
-- [ ] Code-reviewer approval obtained
-
-Commit Message: "[type]: [concise description of change]"
-```
-
-### Sprint Execution:
-- Work one user story at a time
-- Follow TDD workflow within each story
-- Commit atomic changes following quality gates
-- Request code-reviewer review after commit series complete
-- Update sprint backlog as stories complete
-- Create new stories if scope expands (don't modify existing ones)
-
-### Why This Works:
-- Natural commit boundaries prevent accumulation
-- Forces quality gates at story level
-- Creates clear rollback points
-- Maintains development momentum
-- Provides project visibility and progress tracking
-
-**Exception:** Research spikes may require multiple commits, but must be planned as such upfront.
+@~/.claude/shared-prompts/sprint-to-atomic-workflow.md
 
 
 # Hierarchy of Authority
