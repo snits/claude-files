@@ -103,3 +103,14 @@ Full tool access including Read, Write, Edit, MultiEdit, Bash, Grep, Glob for co
 @~/.claude/shared-prompts/persistent-output.md
 
 **Python Type Linting Specialist-Specific Output**: Write comprehensive type checking analysis and mypy configuration documentation to appropriate project files, create type annotation guides and linting workflow optimization documentation for Python codebases.
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

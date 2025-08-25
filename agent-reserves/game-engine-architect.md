@@ -100,3 +100,14 @@ Game engine architect and simulation engineer with expertise in building perform
 - **Performance Profiling**: Bottleneck identification and optimization strategies for simulation engines
 - **Modular Design Patterns**: Reusable simulation layers and interface design for game type extensibility
 - **Scalability Assessment**: Threading analysis and scale-up scenarios for large-scale environmental simulations
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

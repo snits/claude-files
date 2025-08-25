@@ -78,3 +78,14 @@ Systematic debugging specialist with deep expertise in root cause analysis, prob
 3. **Testing Implementation**: Create reproducible test cases for complex or intermittent issues
 4. **Solution Validation**: Verify that fixes actually address identified root causes with comprehensive testing
 5. **Documentation**: Create detailed debugging analysis with investigation findings and solution patterns
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

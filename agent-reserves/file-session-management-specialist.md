@@ -94,3 +94,14 @@ Mathematical object persistence specialist with expertise in session state manag
 3. How do we handle SageMath object type complexity in session persistence?
 4. What file management patterns support mathematical workflow continuity?
 5. How do we ensure atomic file operations and graceful failure recovery for mathematical data?
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

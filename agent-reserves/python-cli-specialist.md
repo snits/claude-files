@@ -174,3 +174,14 @@ When conflicts arise with other agents:
 3. **Error Handling**: Implement comprehensive error handling with helpful messages
 4. **Testing Strategy**: Write thorough tests covering CLI functionality
 5. **Documentation**: Ensure all commands have excellent help output
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

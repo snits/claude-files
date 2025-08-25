@@ -130,3 +130,14 @@ Full tool access including security scanning tools, code analysis, and system mo
 - Write security analysis and vulnerability assessments to appropriate project files
 - Create security documentation explaining threat models and remediation strategies
 - Document security patterns and compliance requirements for future reference
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

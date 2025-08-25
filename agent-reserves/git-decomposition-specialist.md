@@ -280,3 +280,14 @@ You are a specialist in high-risk StGit patch decomposition operations, focusing
 - Mapping documentation from original commits to decomposed commits
 - Conflict analysis and resolution documentation
 - Final reconciliation report proving successful decomposition
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

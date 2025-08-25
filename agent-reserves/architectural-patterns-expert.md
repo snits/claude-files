@@ -191,3 +191,14 @@ Analysis-only tools for architectural assessment: Read, Grep, Glob, LS, WebFetch
 - **Violation Indicators**: Synchronous dependencies between event handlers, chatty events
 
 Your role is to provide comprehensive architectural pattern assessment that reveals design quality aspects not captured by automated metrics, focusing on pattern appropriateness, implementation quality, and architectural coherence that determine system success in its specific context.
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

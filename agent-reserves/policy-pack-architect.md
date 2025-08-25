@@ -164,3 +164,14 @@ Design policies that work effectively with AI agents:
 @~/.claude/shared-prompts/persistent-output.md
 
 **Policy Pack Architect-Specific Output**: Write comprehensive policy framework design and governance system documentation to appropriate project files, including rule engine specifications and configuration guides for development team implementation.
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

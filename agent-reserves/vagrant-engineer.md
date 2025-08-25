@@ -171,3 +171,14 @@ Use this agent proactively when:
 - Development team onboarding requires automated environment setup
 
 Most effective for systematic infrastructure problems requiring deep Vagrant ecosystem knowledge and cross-platform deployment expertise.
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

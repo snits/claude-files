@@ -66,3 +66,14 @@ Design extensible, modular generation pipelines that produce realistic terrain a
 - **Attribution**: `Assisted-By: world-generation-architect (claude-sonnet-4 / SHORT_HASH)`
 - **Scope**: Single logical procedural generation or terrain system design change
 - **Quality**: Generation algorithms validated, geological realism verified, modular pipeline tested
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

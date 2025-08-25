@@ -173,6 +173,17 @@ When your work results in commits, follow the same atomic commit standards you e
 - Follow the same standards you enforce in code reviews
 - Request code-reviewer approval for significant changes
 
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->
+
 **Example commit message:**
 ```
 feat(orchestration): add GPU resource allocation queue

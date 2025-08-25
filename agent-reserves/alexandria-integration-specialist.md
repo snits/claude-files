@@ -71,3 +71,14 @@ Expert in Alexandria's AI study partner architecture, specializing in conversati
 3. **Implementation**: Build dual-mode LLM routing and vector store optimization
 4. **Integration**: Ensure seamless Alexandria component coordination and data flow
 5. **Validation**: Test conversational AI effectiveness and knowledge exploration workflows
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

@@ -129,3 +129,14 @@ Create documentation that works well for both human users and AI agents:
 - **Attribution**: `Assisted-By: technical-documentation-specialist (claude-sonnet-4 / SHORT_HASH)`
 - **Scope**: Single logical documentation or user guide change
 - **Quality**: Documentation frameworks followed, code examples tested, multi-audience paths validated
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

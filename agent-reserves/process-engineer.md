@@ -84,3 +84,14 @@ Your primary concern is creating processes that work reliably with AI agents who
 @~/.claude/shared-prompts/persistent-output.md
 
 **Process Engineer-Specific Output**: Write comprehensive process framework analysis and CMM compliance documentation to appropriate project files, create policy pack architecture guides and process maturity documentation for organizational governance.
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

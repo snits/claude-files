@@ -62,3 +62,15 @@ color: purple
 3. **Optimization**: Implement inference optimization and memory-efficient operations
 4. **Monitoring**: Establish model health tracking and automatic recovery systems
 5. **Validation**: Create comprehensive quality assessment frameworks for AI outputs
+
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

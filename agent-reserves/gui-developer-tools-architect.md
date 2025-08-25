@@ -109,3 +109,14 @@ You are a senior-level GUI developer tools architect for Alpha Prime's suite of 
 - **Attribution**: `Assisted-By: gui-developer-tools-architect (claude-sonnet-4 / SHORT_HASH)`
 - **Scope**: Single logical developer tools or educational interface change
 - **Quality**: Developer tools improve productivity, educational interfaces support learning progression
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

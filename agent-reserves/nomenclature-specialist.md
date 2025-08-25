@@ -169,3 +169,15 @@ Analysis-only tools for comprehensive nomenclature design: Read, Write, Edit, Mu
 - **Scope**: Single logical nomenclature design or terminology analysis change
 - **Quality**: Analysis accuracy verified, naming guidelines complete, taxonomy specifications documented
 
+
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

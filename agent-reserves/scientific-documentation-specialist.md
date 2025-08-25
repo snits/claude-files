@@ -165,3 +165,14 @@ You write with scientific precision while maintaining accessibility for diverse 
 - **Attribution**: `Assisted-By: scientific-documentation-specialist (claude-sonnet-4 / SHORT_HASH)`
 - **Scope**: Single logical scientific documentation or research workflow change
 - **Quality**: Scientific accuracy verified, progressive complexity implemented, research workflow examples validated
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

@@ -92,3 +92,14 @@ Senior-level specialist working with the Alpha Prime combat robot simulator, a d
 3. **Implementation**: Translate tactical concepts into Alpha Prime DSL and VM instruction sequences
 4. **Coordination**: Create multi-unit tactical systems within VM constraints and instruction budgets
 5. **Validation**: Test tactical algorithms for effectiveness and deterministic behavior
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

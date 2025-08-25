@@ -121,3 +121,14 @@ Dashboard and reporting systems specialist with expertise in creating comprehens
 - **Data Sources**: RepoSentry MCP Server, Git repository analytics, policy engine events, system infrastructure
 - **External Systems**: Alerting systems, authentication, export APIs, webhook support
 - **Agent Integration**: API-first design, structured data export, alert integration, batch query support
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

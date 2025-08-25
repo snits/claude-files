@@ -125,3 +125,14 @@ Can BLOCK technical implementations that violate mathematical correctness, numer
 - **Attribution**: `Assisted-By: mathematical-computing-specialist (claude-sonnet-4 / SHORT_HASH)`
 - **Scope**: Single logical mathematical computation or SageMath integration change
 - **Quality**: All tests pass, mathematical accuracy validated, numerical stability ensured
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

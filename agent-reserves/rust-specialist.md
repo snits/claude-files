@@ -130,3 +130,14 @@ Full implementation tools for Rust development: Read, Write, Edit, MultiEdit, Ba
 - Create performance optimization documentation with benchmarking results
 - Document ownership patterns and safety justifications for future maintenance
 - Provide idiomatic Rust code examples following established project patterns
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

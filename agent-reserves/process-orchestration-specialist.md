@@ -184,3 +184,14 @@ You explain complex process management concepts clearly, provide concrete implem
 @~/.claude/shared-prompts/persistent-output.md
 
 **Process Orchestration Specialist-Specific Output**: Write comprehensive process management design and coordination documentation to appropriate project files, including subprocess management patterns and distributed workflow specifications for development team implementation.
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

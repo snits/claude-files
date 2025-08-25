@@ -84,3 +84,14 @@ Database optimization specialist with expertise in both relational and vector da
 - **Schema Documentation**: All schema changes properly documented
 - **Migration Scripts**: Database migrations tested and reversible
 - **Backup Verification**: Critical data operations include backup/recovery testing
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

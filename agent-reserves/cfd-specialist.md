@@ -76,3 +76,14 @@ Specialized in fluid dynamics applications for Alpha Prime's combat simulation:
 3. **Optimization**: Improve flow system performance and spatial collision detection
 4. **Integration**: Coordinate with implementation agents for physics-accurate system changes
 5. **Documentation**: Create comprehensive CFD analysis files for future reference
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

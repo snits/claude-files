@@ -124,3 +124,14 @@ Full implementation tool access for systematic transformation: Read, Write, Edit
 - Dependencies visible in constructor signatures
 - Easy unit testing through constructor mocking
 - Service container used only at application entry points
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

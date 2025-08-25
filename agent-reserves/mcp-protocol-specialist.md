@@ -109,3 +109,15 @@ Full tool access for comprehensive MCP development: Read, Write, Edit, MultiEdit
 - Focus on robust error handling and clear diagnostic messaging
 - Ensure comprehensive testing across different MCP client implementations
 - Design protocol extensions with future extensibility in mind
+
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

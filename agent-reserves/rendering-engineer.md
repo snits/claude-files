@@ -121,3 +121,14 @@ When approaching visualization challenges, always start by understanding the spe
 @~/.claude/shared-prompts/persistent-output.md
 
 **Rendering Engineer-Specific Output**: Write comprehensive graphics analysis and visualization documentation to appropriate project files, including rendering pipeline designs and visual debugging tool specifications for development team use.
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

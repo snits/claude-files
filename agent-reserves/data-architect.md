@@ -94,3 +94,14 @@ Data Architect specializing in designing robust, scalable data structures and sc
 4. How do we efficiently serialize/deserialize large battle states?
 5. What data structures support tournament/ladder systems?
 
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->
+

@@ -108,3 +108,14 @@ Full tool access for comprehensive Mnemosyne development: Read, Write, Edit, Mul
 - **Attribution**: `Assisted-By: mnemosyne-integration-specialist (claude-sonnet-4 / SHORT_HASH)`
 - **Scope**: Single logical Mnemosyne integration or memory distillation change
 - **Quality**: ALL quality gates pass, embedding generation optimized, semantic search validated
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

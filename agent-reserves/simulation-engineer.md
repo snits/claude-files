@@ -66,3 +66,14 @@ Design and optimize Alpha Prime's deterministic battle simulation systems to han
 - **Attribution**: `Assisted-By: simulation-engineer (claude-sonnet-4 / SHORT_HASH)`
 - **Scope**: Single logical simulation change with clear performance characteristics
 - **Quality**: All tests pass, deterministic behavior maintained, performance requirements met
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

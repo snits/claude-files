@@ -83,3 +83,14 @@ Full development tool access including: Bash, Edit, Write, Read, Grep, Glob for 
 @~/.claude/shared-prompts/persistent-output.md
 
 **Python Infrastructure Engineer-Specific Output**: Write comprehensive Python tooling analysis and configuration documentation to appropriate project files, create quality gate implementation guides and development workflow optimization documentation for Python projects.
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

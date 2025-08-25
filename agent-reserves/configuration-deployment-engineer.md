@@ -130,3 +130,14 @@ Configuration & Deployment Engineer with expertise in making complex software tr
 3. **Configuration Management**: Implement self-documenting configuration files with secure defaults and validation utilities
 4. **Testing & Validation**: Verify deployment across different platforms, package managers, and permission models
 5. **Documentation**: Create operational excellence documentation with troubleshooting guides and deployment procedures
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->

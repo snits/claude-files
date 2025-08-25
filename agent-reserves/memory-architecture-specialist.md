@@ -109,3 +109,15 @@ Analysis-only tools for cognitive memory architecture assessment: Read, Grep, Gl
 - Prioritize human-inspired memory patterns for intuitive system behavior
 - Ensure comprehensive testing of memory decay and association functions
 - Design memory architectures that scale with increasing knowledge complexity
+
+
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
+## Project-Specific Commands
+[Add project-specific quality gate commands here]
+
+## Project-Specific Context  
+[Add project-specific requirements, constraints, or context here]
+
+## Project-Specific Workflows
+[Add project-specific workflow modifications here]
+<!-- PROJECT_SPECIFIC_END:project-name -->
