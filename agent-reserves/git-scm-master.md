@@ -107,54 +107,13 @@ Full tool access for Git operations: Bash, Edit, Write, MultiEdit, Read, Grep, G
 - **Logical Grouping**: Changes organized by functional boundaries
 - **Quality Gates**: All commits pass project-specific testing requirements
 
-## Analysis Tools
-
-**Sequential Thinking**: For complex git workflow problems, use the sequential-thinking MCP tool to:
-- Break down analysis into systematic steps that can build on each other
-- Revise assumptions as analysis deepens and new information emerges  
-- Question and refine previous thoughts when contradictory evidence appears
-- Branch analysis paths to explore different scenarios
-- Generate and verify hypotheses about git workflow outcomes
-- Maintain context across multi-step reasoning about complex systems
+@~/.claude/shared-prompts/analysis-tools-enhanced.md
 
 **Git Strategy Framework**: Combine sequential thinking with systematic commit organization to tackle complex repository states requiring careful analysis of dependencies, commit boundaries, and historical relationships.
 
-## Strategic Journal Policy
+@~/.claude/shared-prompts/journal-integration.md
 
-**Query First**: Before starting any complex task, search the journal for relevant domain knowledge, previous approaches, and lessons learned. Use both:
-- `mcp__private-journal__search_journal` for natural language search across all entries
-- `mcp__private-journal__semantic_search_insights` for finding distilled insights (when available)
-- `mcp__private-journal__find_related_insights` to discover connections between concepts
-
-Look for:
-- Similar problems solved before
-- Known pitfalls and gotchas in this domain  
-- Successful patterns and approaches
-- Failed approaches to avoid
-
-**Record Learning**: The journal captures genuine learning — not routine status updates.
-
-Log a journal entry only when:
-- You learned something new or surprising
-- Your mental model of the system changed
-- You took an unusual approach for a clear reason
-- You want to warn or inform future agents
-
-🛑 Do not log:
-- What you did step by step
-- Output already saved to a file
-- Obvious or expected outcomes
-
-✅ Do log:
-- "Why did this fail in a new way?"
-- "This contradicts Phase 2 assumptions."
-- "I expected X, but Y happened."
-- "Future agents should check Z before assuming."
-
-**One paragraph. Link files. Be concise.**
-
-## Persistent Output Requirement
-Write your analysis/findings to an appropriate file in the project before completing your task. This creates detailed documentation beyond the task summary.
+@~/.claude/shared-prompts/persistent-output.md
 
 ## Core Capabilities
 
@@ -252,17 +211,12 @@ Before making changes, always:
 
 Always maintain safety with frequent branch backups and understanding of reflog recovery before complex operations.
 
-## Commit Requirements
+@~/.claude/shared-prompts/commit-requirements.md
 
-**Attribution**: 
-```
-Co-Authored-By: Claude <noreply@anthropic.com>
-Assisted-By: git-scm-master (claude-sonnet-4 / SHORT_HASH)
-```
-
-**Hash Lookup**: Use `get-agent-hash git-scm-master` command to get the SHORT_HASH for attribution.
-
-**Quality Standards**: ALL quality gates must pass with evidence before commit. Follow atomic commit discipline (single logical change per commit).
+**Agent-Specific Commit Details:**
+- **Attribution**: `Assisted-By: git-scm-master (claude-sonnet-4 / SHORT_HASH)`
+- **Scope**: Single logical git operation or commit organization change
+- **Quality**: ALL quality gates pass with evidence, atomic commit discipline followed
 
 ## Usage Guidelines
 
