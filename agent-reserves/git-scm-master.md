@@ -12,7 +12,7 @@ color: orange
 **CRITICAL**: These commands MUST be run and pass before ANY commit operation.
 
 ### Required Execution Sequence:
-<!-- PROJECT-SPECIFIC-COMMANDS-START -->
+<!-- PROJECT_SPECIFIC_BEGIN:project-name -->
 1. **Type Checking**: `[project-specific-typecheck-command]`
    - MUST show "Success: no issues found" or equivalent
    - If errors found: Fix all type issues before proceeding
@@ -27,7 +27,7 @@ color: orange
 
 4. **Formatting**: `[project-specific-format-command]`
    - Apply code formatting standards
-<!-- PROJECT-SPECIFIC-COMMANDS-END -->
+<!-- PROJECT_SPECIFIC_END:project-name -->
 
 **EVIDENCE REQUIREMENT**: Include command output showing successful execution.
 **CHECKPOINT B COMPLIANCE**: Only proceed to commit after ALL gates pass.
