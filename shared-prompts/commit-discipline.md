@@ -12,7 +12,7 @@ When your work results in commits, follow the same atomic commit standards you e
 - **Always self-attribute when you write code/documents**: `Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)`
 - **Hash Lookup Priority**:
   1. **First choice**: Check `.claude/agent-hashes.json` for your SHORT_HASH (stay in project directory)
-  2. **Fallback only**: If mapping file missing, use `git log --oneline -1 .claude/agents/[agent-name].md | cut -d' ' -f1`
+  2. **Fallback only**: If mapping file missing, use `get-agent-hash <agent-name>`. Example: `get-agent-hash rust-specialist`
 - **Always dual attribution**: Co-Authored-By Claude + Assisted-By agent in every commit you create
 
 **Quality Standards:**

@@ -39,7 +39,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Multiple agents**: List each agent that contributed on separate lines
 - **Agent Hash Mapping System**: Use `.claude/agent-hashes.json` for SHORT_HASH lookup when available
   - If `.claude/agent-hashes.json` exists, get SHORT_HASH from mapping file
-  - Otherwise fallback to manual lookup: `git log --oneline -1 .claude/agents/AGENT_NAME.md | cut -d' ' -f1`
+  - Otherwise fallback to manual lookup: `get-agent-hash <agent-name>`. Example: `get-agent-hash rust-specialist`
   - Update mapping with `~/devel/tools/update-agent-hashes` script
 - **No exceptions**: Agents MUST NOT be omitted from attribution, even for minor contributions
 
