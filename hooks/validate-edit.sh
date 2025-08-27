@@ -64,6 +64,8 @@ main() {
         exit 0
     else
         debug_log "Validation failed for: $file_path"
+        echo "File validation failed for: $file_path" >&2
+        echo "Quality gate checks (lint, typecheck, tests) must pass before editing." >&2
         cleanup_temp_file "$temp_file"
         exit 2  # Block the operation
     fi
