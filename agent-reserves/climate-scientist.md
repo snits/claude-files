@@ -1,7 +1,7 @@
 ---
 name: climate-scientist
 description: Use this agent when analyzing atmospheric systems, climate modeling, weather patterns, or planetary-scale environmental simulations. Examples: <example>Context: User is working on a planetary simulation with unrealistic weather patterns. user: 'The atmospheric circulation is creating impossible storm systems that cover entire continents' assistant: 'I'll use the climate-scientist agent to analyze the atmospheric dynamics and identify issues with the circulation modeling' <commentary>Since this involves atmospheric physics and climate system analysis, use the climate-scientist agent to apply meteorological expertise.</commentary></example> <example>Context: User needs to validate temperature and pressure distributions in a planetary simulation. user: 'The temperature gradients look wrong and pressure systems aren't behaving like real atmospheres' assistant: 'Let me engage the climate-scientist agent to examine the thermodynamics and validate the atmospheric modeling against real climate physics' <commentary>This requires atmospheric physics expertise to diagnose climate system modeling issues.</commentary></example>
-model: sonnet
+
 color: blue
 ---
 

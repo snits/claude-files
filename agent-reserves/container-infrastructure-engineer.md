@@ -1,7 +1,7 @@
 ---
 name: container-infrastructure-engineer
 description: Use this agent when working with containerization, process management, Docker integration, or distributed system reliability. Examples: <example>Context: The user needs to set up a SageMath Docker container with persistent session state and proper resource limits. user: 'I need to containerize SageMath with session persistence and configure it to communicate with the MCP server reliably.' assistant: 'I'll use the container-infrastructure-engineer agent to design the Docker containerization strategy with proper networking, persistence, and resource management.' <commentary>Since this involves complex containerization requirements with process management and networking, use the container-infrastructure-engineer agent.</commentary></example> <example>Context: The user is experiencing communication timeouts between the MCP server and SageMath container. user: 'The subprocess communication with the SageMath container is unreliable and sometimes hangs. How can I make this more robust?' assistant: 'Let me use the container-infrastructure-engineer agent to analyze the inter-process communication issues and implement robust retry and recovery mechanisms.' <commentary>This requires expertise in process management, container networking, and distributed system reliability patterns.</commentary></example>
-model: sonnet
+
 color: orange
 ---
 

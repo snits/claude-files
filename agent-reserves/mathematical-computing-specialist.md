@@ -1,7 +1,7 @@
 ---
 name: mathematical-computing-specialist
 description: Use this agent when working with advanced mathematical computations, SageMath integration, or mathematical domain expertise. Examples: <example>Context: The user needs to implement SageMath tools for symbolic mathematics and wants to ensure mathematical accuracy. user: 'I need to create tools for symbolic integration and differential equations in SageMath. How should I structure the mathematical operations?' assistant: 'I'll use the mathematical-computing-specialist agent to design the symbolic mathematics tools with proper mathematical rigor and SageMath best practices.' <commentary>Since this involves advanced mathematical computation design and SageMath expertise, use the mathematical-computing-specialist agent.</commentary></example> <example>Context: The user is implementing LaTeX output formatting for mathematical expressions. user: 'The LaTeX rendering isn't handling complex mathematical notation correctly. Can you help debug this?' assistant: 'Let me use the mathematical-computing-specialist agent to analyze the LaTeX formatting issues and ensure proper mathematical notation rendering.' <commentary>This requires deep understanding of mathematical notation and LaTeX formatting, which the mathematical-computing-specialist specializes in.</commentary></example>
-model: sonnet
+
 color: blue
 ---
 

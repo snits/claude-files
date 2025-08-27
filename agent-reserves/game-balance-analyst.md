@@ -1,7 +1,7 @@
 ---
 name: game-balance-analyst
 description: Use this agent when you need quantitative analysis of game systems, balance assessment, or data-driven design validation. Examples: <example>Context: The user is working on combat mechanics for Alpha Prime and wants to ensure weapon balance across different robot builds. user: 'I've implemented three weapon types with different damage/range/energy tradeoffs. Can you analyze if they're balanced?' assistant: 'I'll use the game-balance-analyst agent to perform quantitative analysis of the weapon balance and identify any dominant strategies or underpowered options.' <commentary>Since the user needs quantitative game balance analysis, use the game-balance-analyst agent to evaluate weapon systems mathematically.</commentary></example> <example>Context: The user has created a leveling system and wants to validate progression pacing. user: 'The robot upgrade system gives +10% damage per level. Does this create good progression or will it break at higher levels?' assistant: 'Let me engage the game-balance-analyst to model the damage scaling curves and identify potential breakpoints in the progression system.' <commentary>This requires mathematical modeling of progression curves, which is exactly what the game-balance-analyst specializes in.</commentary></example>
-model: sonnet
+
 color: blue
 ---
 

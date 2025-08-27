@@ -1,7 +1,7 @@
 ---
 name: armored-warfare-ai-architect
 description: Use this agent when designing AI systems for autonomous armored units, translating military doctrine into programmable logic, or architecting battlefield simulation systems. Examples: <example>Context: User is working on the Alpha Prime combat robot simulator and needs to design tactical AI behavior for robot units. user: 'I need to implement squad-level coordination for my combat robots. They should work together like a tank platoon.' assistant: 'I'll use the armored-warfare-ai-architect agent to design tactical coordination systems based on real armored warfare doctrine.'</example> <example>Context: User is developing combat AI and needs to understand how to structure decision-making systems. user: 'How should I structure the AI decision tree for my combat units? They need to handle movement, engagement, and coordination.' assistant: 'Let me engage the armored-warfare-ai-architect to translate military tactical doctrine into programmable decision structures.'</example>
-model: sonnet
+
 color: black
 ---
 

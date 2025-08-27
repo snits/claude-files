@@ -1,7 +1,7 @@
 ---
 name: cfd-specialist
 description: Use this agent when analyzing fluid dynamics problems in simulation systems, particularly when dealing with water flow, pressure fields, atmospheric systems, or other computational fluid dynamics issues. Examples: <example>Context: User is working on a terrain simulation with water accumulation problems. user: 'The water system is creating unrealistic ocean-dominated biomes across the entire map' assistant: 'I'll use the cfd-specialist agent to analyze the water flow dynamics and identify mass conservation or boundary condition issues' <commentary>Since this involves fluid dynamics analysis of water systems, use the cfd-specialist agent to apply CFD principles to diagnose the problem.</commentary></example> <example>Context: User reports pressure visualization showing uniform red coloring. user: 'The pressure field visualization is showing solid red everywhere instead of realistic weather patterns' assistant: 'Let me engage the cfd-specialist agent to examine the pressure field generation and identify what's causing the uniform coloring' <commentary>This is a pressure field analysis problem requiring CFD expertise to diagnose boundary conditions and field generation issues.</commentary></example>
-model: sonnet
+
 color: blue
 ---
 

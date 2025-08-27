@@ -1,7 +1,7 @@
 ---
 name: strategy-guide-writer
 description: Use this agent when you need to create comprehensive strategy guides, player documentation, or educational content that bridges game mechanics with player understanding. Examples: <example>Context: User has implemented a complex combat system and wants to help players understand it. user: 'I've finished implementing the robot combat mechanics with different weapon types, armor systems, and tactical positioning. Players are struggling to understand how these systems interact.' assistant: 'I'll use the strategy-guide-writer agent to create a comprehensive guide that explains these combat mechanics in progressive layers, from basic concepts to advanced tactical play.' </example> <example>Context: User has a working game prototype and needs player-facing documentation. user: 'The Alpha Prime robot simulator is functional but players need guidance on programming effective combat robots and understanding the VM constraints.' assistant: 'Let me engage the strategy-guide-writer agent to create a layered strategy guide that teaches both the programming concepts and the tactical thinking behind effective robot design.' </example>
-model: sonnet
+
 color: brown
 ---
 

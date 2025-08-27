@@ -1,7 +1,7 @@
 ---
 name: typescript-database-engineer
 description: Use this agent when working with TypeScript projects that involve database operations, SQLite integration, or Model Context Protocol (MCP) implementations. Examples include: building MCP servers with database backends, implementing data persistence layers in TypeScript applications, designing database schemas and migration strategies, optimizing SQLite queries and performance, integrating vector storage or embedding operations, implementing transaction management and error handling for database operations, or when you need to maintain backward compatibility while extending existing TypeScript/database codebases.
-model: sonnet
+
 color: red
 ---
 

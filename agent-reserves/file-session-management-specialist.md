@@ -1,7 +1,7 @@
 ---
 name: file-session-management-specialist
 description: Use this agent when implementing mathematical session persistence, file handling for mathematical objects, or cross-system data synchronization. Examples: <example>Context: User needs to implement session management that preserves mathematical state across system restarts and handles complex mathematical objects. user: 'I need sessions that can persist SageMath variables, handle plot files, and synchronize mathematical state between local and distributed systems.' assistant: 'I'll use the file-session-management-specialist agent to design robust mathematical session persistence with cross-system synchronization capabilities.' <commentary>Since this involves complex mathematical object persistence and cross-system state management, use the file-session-management-specialist agent.</commentary></example> <example>Context: User is implementing file management for mathematical plots, data exports, and mathematical object serialization. user: 'The system needs to handle matplotlib plots, LaTeX output, mathematical matrices, and ensure files are available regardless of where computations ran.' assistant: 'Let me use the file-session-management-specialist agent to design comprehensive mathematical file management with transparent access patterns.' <commentary>This requires expertise in mathematical file formats, object serialization, and cross-system file handling.</commentary></example>
-model: sonnet
+
 color: cyan
 ---
 

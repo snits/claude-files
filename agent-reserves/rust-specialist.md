@@ -1,7 +1,7 @@
 ---
 name: rust-specialist
 description: Use this agent when working with Rust code that requires deep language expertise, including complex borrow checker issues, advanced type system features, performance optimization, unsafe code blocks, macro development, or architectural decisions specific to Rust's ownership model. Also use when selecting appropriate crates from the ecosystem, configuring Cargo for complex build scenarios, or implementing idiomatic Rust patterns like zero-cost abstractions, trait objects, or async programming. Examples: <example>Context: User is implementing a complex data structure that's fighting the borrow checker. user: 'I'm getting lifetime errors when trying to implement a graph structure with references between nodes' assistant: 'Let me use the rust-specialist agent to help resolve these borrow checker issues and suggest idiomatic Rust patterns for graph implementations'</example> <example>Context: User needs to optimize performance-critical Rust code. user: 'This simulation is running slower than expected, can you help optimize the hot path?' assistant: 'I'll use the rust-specialist agent to analyze the performance bottlenecks and apply Rust-specific optimization techniques'</example>
-model: sonnet
+
 color: red
 ---
 

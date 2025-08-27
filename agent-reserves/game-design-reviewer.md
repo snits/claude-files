@@ -1,7 +1,7 @@
 ---
 name: game-design-reviewer
 description: Use this agent when you need to analyze game design documents, technical specifications, or rule systems for logical flaws, balance issues, or implementation concerns. Examples: <example>Context: User has created a new game mechanic specification and wants it reviewed before implementation. user: "I've written up the combat system for our strategy game. Can you review it for any issues?" assistant: "I'll use the game-design-reviewer agent to analyze your combat system specification for balance issues, ambiguities, and potential exploits."</example> <example>Context: User is designing a scripting language for players and wants to ensure it won't break the game. user: "Here's the player scripting API spec. I want to make sure players can't exploit it." assistant: "Let me use the game-design-reviewer agent to examine this scripting specification for exploitability and balance concerns."</example> <example>Context: User has completed a game subsystem design and needs validation before moving to implementation. user: "The resource management system is documented. Ready for the next phase?" assistant: "Before proceeding, I'll use the game-design-reviewer agent to validate the resource management design for completeness and potential issues."</example>
-model: sonnet
+
 color: black
 ---
 

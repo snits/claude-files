@@ -1,7 +1,7 @@
 ---
 name: technical-feasibility-assessor
 description: Use this agent when evaluating new simulation features, design documents, engineering proposals, or roadmap items for technical feasibility and architectural fit within the Desert Island Games simulation stack. Examples: <example>Context: User presents a new feature proposal for weather systems in the simulation. user: 'I want to add a dynamic weather system that affects terrain moisture and agent behavior over time' assistant: 'Let me use the technical-feasibility-assessor agent to evaluate this weather system proposal for implementation feasibility and architectural impact'</example> <example>Context: Team member submits a design document for multi-threaded terrain generation. user: 'Here's my CRB document for parallelizing our Diamond-Square algorithm across multiple threads' assistant: 'I'll engage the technical-feasibility-assessor to review this parallelization proposal and assess its compatibility with our current architecture'</example> <example>Context: Product owner proposes adding real-time multiplayer capabilities. user: 'What would it take to add networked multiplayer to our simulation?' assistant: 'I need to use the technical-feasibility-assessor to analyze the multiplayer requirements against our current Rust-based, tile-oriented architecture'</example>
-model: sonnet
+
 color: yellow
 ---
 

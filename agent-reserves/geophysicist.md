@@ -1,7 +1,7 @@
 ---
 name: geophysicist
 description: Use this agent when analyzing planetary formation, geological processes, terrain generation, or solid earth physics in simulations. Examples: <example>Context: User is working on terrain generation that creates unrealistic geological features. user: 'The terrain generator is creating impossible mountain ranges and river systems that violate geological principles' assistant: 'I'll use the geophysicist agent to analyze the terrain formation algorithms and identify geological inconsistencies' <commentary>Since this involves geological processes and solid earth physics, use the geophysicist agent to apply geophysical expertise.</commentary></example> <example>Context: User needs to validate planetary formation or tectonic processes in a simulation. user: 'The continental drift simulation is producing landmasses that couldn't exist geologically' assistant: 'Let me engage the geophysicist agent to examine the tectonic modeling and validate against real geological processes' <commentary>This requires geophysical expertise to diagnose geological system modeling issues.</commentary></example>
-model: sonnet
+
 color: brown
 ---
 

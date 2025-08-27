@@ -1,7 +1,7 @@
 ---
 name: computational-hydrologist
 description: Use this agent when analyzing hydrological systems, watershed dynamics, water balance, drainage networks, or computational fluid dynamics problems related to water and atmospheric moisture systems in environmental simulations. This agent combines hydrology domain expertise with CFD analysis for water-related fluid mechanics. Examples: <example>Context: User is working on a planetary simulation with unrealistic water distribution patterns. user: 'The water system is creating uniform water coverage instead of realistic river networks and lake formations' assistant: 'I'll use the computational-hydrologist agent to analyze the watershed dynamics and drainage network formation' <commentary>Since this involves hydrological processes and watershed analysis, use the computational-hydrologist agent to apply hydrology domain expertise.</commentary></example> <example>Context: User reports water conservation violations or drainage system scaling issues. user: 'The water flow system shows mass balance problems and rivers aren't forming at the right scales' assistant: 'Let me engage the computational-hydrologist agent to examine the water conservation physics and drainage scaling relationships' <commentary>This requires specialized hydrology expertise to analyze water balance and drainage network scaling.</commentary></example>
-model: sonnet
+
 color: blue
 ---
 

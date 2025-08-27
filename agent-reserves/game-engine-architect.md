@@ -1,7 +1,7 @@
 ---
 name: game-engine-architect
 description: Use this agent when you need architectural review and guidance for game engine systems, particularly for simulation engines built in Rust. This agent should be called after implementing significant architectural components, when planning major system refactors, or when considering scalability and performance implications of design decisions. Examples: <example>Context: User has implemented a new terrain generation system and wants architectural feedback before proceeding with water simulation systems. user: 'I've completed the Diamond-Square terrain generator with a trait-based architecture. Here's the current implementation...' assistant: 'Let me use the game-engine-architect agent to review this terrain generation architecture and provide guidance for the upcoming water simulation integration.' <commentary>Since the user is requesting architectural review of a game engine component, use the game-engine-architect agent to provide expert analysis of the implementation and guidance for future development.</commentary></example> <example>Context: User is considering adding ECS architecture to their simulation engine and wants expert guidance on the transition. user: 'Should we refactor our current simulation architecture to use an ECS pattern? What are the trade-offs?' assistant: 'I'll use the game-engine-architect agent to analyze our current architecture and provide expert guidance on ECS integration strategies.' <commentary>This is a major architectural decision that requires game engine expertise, so the game-engine-architect agent should be used to provide comprehensive analysis.</commentary></example>
-model: sonnet
+
 color: black
 ---
 

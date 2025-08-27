@@ -1,7 +1,7 @@
 ---
 name: process-orchestration-specialist
 description: Use this agent when implementing complex subprocess management, async job queuing, or cross-system process coordination. Examples: <example>Context: User needs to implement long-running SageMath processes with timeout handling and job queuing. user: 'I need to manage multiple SageMath processes running simultaneously with different timeouts and the ability to cancel jobs mid-execution.' assistant: 'I'll use the process-orchestration-specialist agent to design a robust process management system with proper async job handling and resource coordination.' <commentary>Since this involves complex process lifecycle management and async coordination, use the process-orchestration-specialist agent.</commentary></example> <example>Context: User is implementing cross-system process coordination for distributed mathematical workflows. user: 'The system needs to coordinate SageMath processes between Mac Studio and Linux systems, handling failures and cleanup across both machines.' assistant: 'Let me use the process-orchestration-specialist agent to design the distributed process coordination and failure handling.' <commentary>This requires expertise in cross-system process management and distributed coordination patterns.</commentary></example>
-model: sonnet
+
 color: orange
 ---
 

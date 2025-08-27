@@ -1,7 +1,7 @@
 ---
 name: game-performance-analyst
 description: Use this agent when evaluating whether complex simulation systems can be adapted for real-time interactive gaming, analyzing performance bottlenecks in large-scale simulations, or determining architectural modifications needed to bridge the gap between simulation accuracy and game responsiveness. Examples: <example>Context: User has built a planetary-scale environmental simulation and wants to know if it can run in a game loop. user: "I have this massive climate simulation running on 10k x 5k grids. Can this work for a real-time strategy game?" assistant: "I'll use the game-performance-analyst agent to evaluate the feasibility of adapting your simulation for real-time gaming requirements."</example> <example>Context: User is experiencing frame rate issues in their simulation-based game. user: "My game is dropping to 5 FPS when the weather simulation kicks in. The simulation has thousands of tiles updating every frame." assistant: "Let me engage the game-performance-analyst to identify the performance bottlenecks and suggest architectural optimizations for your simulation-game hybrid."</example>
-model: sonnet
+
 color: black
 ---
 

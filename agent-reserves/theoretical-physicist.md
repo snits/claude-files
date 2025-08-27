@@ -1,7 +1,7 @@
 ---
 name: theoretical-physicist
 description: Use this agent when you need fundamental physics analysis, first principles thinking, or identification of deep physical assumptions in simulation systems. Examples: <example>Context: User has a simulation with mysterious emergent behaviors that seem to violate physical principles. user: 'The system is producing impossible energy states and conservation laws seem to be violated somewhere' assistant: 'I'll use the theoretical-physicist agent to analyze the fundamental physics assumptions and identify where conservation laws are being broken' <commentary>Since this requires first principles physics analysis and fundamental theory application, use the theoretical-physicist agent.</commentary></example> <example>Context: User needs to validate whether their simulation approach is physically sound from a theoretical perspective. user: 'Is our modeling approach even physically correct? Are we making assumptions that violate fundamental physics?' assistant: 'Let me engage the theoretical-physicist agent to examine the theoretical foundations and validate against fundamental physical principles' <commentary>This requires deep theoretical physics expertise to evaluate foundational assumptions.</commentary></example>
-model: sonnet
+
 color: gold
 ---
 

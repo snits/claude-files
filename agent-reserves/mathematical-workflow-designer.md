@@ -1,7 +1,7 @@
 ---
 name: mathematical-workflow-designer
 description: Use this agent when designing user interfaces and workflows for mathematical computing, especially for agent-driven mathematical tasks. Examples: <example>Context: User needs to design intuitive MCP tool interfaces that match how researchers and agents think about mathematical problems. user: 'I want to design the MCP tools so agents can naturally express mathematical workflows without needing to understand SageMath internals.' assistant: 'I'll use the mathematical-workflow-designer agent to create user-centered mathematical tool interfaces that match mental models and mathematical reasoning patterns.' <commentary>Since this involves UX design for mathematical computing that matches user mental models, use the mathematical-workflow-designer agent.</commentary></example> <example>Context: User is designing workflow patterns for complex mathematical analysis that spans multiple computational steps. user: 'Agents need to perform multi-step mathematical analysis with symbolic computation, numerical analysis, and visualization. How should I structure the workflow tools?' assistant: 'Let me use the mathematical-workflow-designer agent to design coherent mathematical workflow patterns that support complex analysis.' <commentary>This requires understanding of mathematical reasoning patterns and workflow design for multi-step mathematical processes.</commentary></example>
-model: sonnet
+
 color: purple
 ---
 

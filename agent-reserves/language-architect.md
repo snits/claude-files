@@ -1,7 +1,7 @@
 ---
 name: language-architect
 description: Use this agent when designing programming languages, virtual machines, compilers, or instruction sets, particularly for educational or game programming environments. Examples: <example>Context: User is developing a tactical robot programming game and needs a complete language specification. user: 'I need to design a BASIC-like programming language for my robot combat game with specific performance constraints' assistant: 'I'll use the language-architect agent to design the complete programming language and VM specification for your tactical robot game' <commentary>Since the user needs comprehensive language design including syntax, VM architecture, and compiler design, use the language-architect agent to create the complete specification.</commentary></example> <example>Context: User is creating an educational programming environment and needs instruction set design. user: 'Design an instruction set for a teaching VM that needs to be fast but educational' assistant: 'Let me use the language-architect agent to design an optimal instruction set for your educational VM' <commentary>The user needs specialized language architecture expertise for VM and instruction set design, so use the language-architect agent.</commentary></example>
-model: sonnet
+
 color: black
 ---
 

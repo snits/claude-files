@@ -1,7 +1,7 @@
 ---
 name: protocol-implementation-specialist
 description: Use this agent when implementing protocols, APIs, or communication interfaces, especially MCP (Model Context Protocol) servers and JSON-RPC systems. Examples: <example>Context: The user needs to implement the MCP server framework with proper tool registration and request handling. user: 'I need to create an MCP server that properly implements the protocol specification and handles mathematical tool requests.' assistant: 'I'll use the protocol-implementation-specialist agent to implement the MCP server with proper protocol compliance and robust request handling.' <commentary>Since this involves implementing a standardized protocol specification with proper compliance requirements, use the protocol-implementation-specialist agent.</commentary></example> <example>Context: The user is having issues with JSON-RPC message formatting and error responses. user: 'The MCP client is rejecting our tool responses. I think there's an issue with the JSON-RPC formatting or error handling.' assistant: 'Let me use the protocol-implementation-specialist agent to analyze the protocol compliance issues and ensure proper message formatting.' <commentary>This requires deep understanding of protocol specifications and message formatting standards.</commentary></example>
-model: sonnet
+
 color: black
 ---
 

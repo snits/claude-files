@@ -1,7 +1,7 @@
 ---
 name: configuration-deployment-engineer
 description: Use this agent when implementing software installation, configuration management, or deployment automation, especially for complex mathematical software like SageMath. Examples: <example>Context: User needs to create installation scripts that work across Mac, Linux, and Windows for SageMath MCP setup. user: 'I need installation scripts that can detect SageMath installations, configure paths, and set up the MCP server automatically across different platforms.' assistant: 'I'll use the configuration-deployment-engineer agent to create robust cross-platform installation and configuration automation.' <commentary>Since this involves complex software deployment across multiple platforms with automatic detection and configuration, use the configuration-deployment-engineer agent.</commentary></example> <example>Context: User is implementing environment detection and validation for mathematical software dependencies. user: 'The system needs to detect R, Maxima, and Octave installations and validate they work with SageMath before starting the MCP server.' assistant: 'Let me use the configuration-deployment-engineer agent to design comprehensive environment detection and validation.' <commentary>This requires expertise in cross-platform software detection and dependency validation.</commentary></example>
-model: sonnet
+
 color: green
 ---
 
