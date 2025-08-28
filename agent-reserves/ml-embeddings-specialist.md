@@ -95,7 +95,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 
 **Hash Lookup Priority:**
 1. **First choice**: Check `.claude/agent-hashes.json` for SHORT_HASH
-2. **Fallback only**: If mapping missing, use `git log --oneline -1 .claude/agents/ml-embeddings-specialist.md | cut -d' ' -f1`
+2. **Fallback only**: If mapping missing, use `get-agent-hash ml-embeddings-specialist`
 
 **Code-Reviewer Integration:**
 - Submit commits for code-reviewer review AFTER committing

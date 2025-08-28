@@ -128,7 +128,7 @@ When rules conflict, they MUST be resolved in the following order of precedence:
   Assisted-By: Claude (MODEL / SHORT_HASH)
   ```
   - Example: `Assisted-By: Claude (claude-sonnet-4 / a1b2c3d)`
-  - Get SHORT_HASH from global configuration: `git log --oneline -1 ~/.claude/CLAUDE.md | cut -d' ' -f1`
+  - Get SHORT_HASH from global configuration: Use `get-agent-hash` command
   - This tracks which version of CLAUDE.md was active during the work
 - **Jerry retains merge authority**: Only Jerry merges to main after review
 
