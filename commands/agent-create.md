@@ -1,10 +1,12 @@
-Create a new agent template in ~/.claude/agent-reserves/ using the standardized template.
+Task agent-prompt-engineer with creating a new agent template in ~/.claude/agent-templates/ using the standardized template (~/claudes-home/templates/agent-prompt.d). Once the template has been created, compile it with `~/devel/tools/compile-agent-templates <template-name minus the .md extension>`
 
 **Arguments: $ARGUMENTS**
+
 - Agent name: "database-optimization-specialist"
 - With domain: "database-optimization-specialist --domain=performance"
 
 **Implementation steps:**
+
 1. **Validate agent name:**
    - Extract agent name from $ARGUMENTS (first argument)
    - Ensure name follows kebab-case convention
@@ -52,15 +54,17 @@ Create a new agent template in ~/.claude/agent-reserves/ using the standardized 
    - Suggest using `/agent-browse` to verify it appears in listings
 
 **Example usage:**
+
 ```bash
 /agent-create performance-optimization-specialist
 /agent-create blockchain-architect --domain=cryptocurrency
 ```
 
 **Template sections to customize:**
+
 - Agent description and trigger conditions
 - Core Expertise (3-4 key areas)
-- Key Responsibilities 
+- Key Responsibilities
 - Analysis Tools (domain-specific tools)
 - Workflow Integration (how it fits with other agents)
 - Decision Authority (what it can decide vs escalate)
@@ -68,6 +72,7 @@ Create a new agent template in ~/.claude/agent-reserves/ using the standardized 
 - Usage Guidelines (when and how to use effectively)
 
 **Quality checks:**
+
 - Ensure agent follows established naming conventions
 - Verify color categorization is appropriate
 - Confirm Strategic Journal Policy matches current template
