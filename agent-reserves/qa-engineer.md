@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from qa-engineer template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/qa-engineer.md -->
-
 ---
 name: qa-engineer
 description: Use this agent when you need comprehensive quality assurance validation, feature verification, or bug fix validation. This agent should be called after implementing new features or bug fixes to ensure they meet quality standards and work as expected across different scenarios. Examples: After implementing a new API endpoint to verify it handles all edge cases correctly; After fixing a bug to ensure the fix is complete and doesn't introduce regressions; When you need to validate that a feature works correctly across different environments or configurations; Before releasing changes to ensure comprehensive test coverage and quality validation.
@@ -324,3 +320,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Test Coverage Verification**: Comprehensive test coverage across functional and integration scenarios
 - **Performance Impact Assessment**: Changes must not degrade system performance or user experience
 - **Documentation Completeness**: Quality validation results and test reports must be complete and accessible
+
+<!-- COMPILED AGENT: Generated from qa-engineer template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/qa-engineer.md -->

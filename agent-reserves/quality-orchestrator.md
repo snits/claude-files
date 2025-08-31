@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from quality-orchestrator template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/quality-orchestrator.md -->
-
 ---
 name: quality-orchestrator
 description: **Use PROACTIVELY**. Use this agent when multiple quality assessors have identified conflicting recommendations or when you need to optimize quality improvement strategies across competing objectives. This agent leverages mathematical optimization to resolve conflicts between security vs performance, readability vs efficiency, documentation vs maintenance burden, and other quality tradeoffs. Examples: <example>Context: Multiple assessors have created conflicting quality recommendations that need prioritization user: "Security-engineer wants comprehensive input validation but performance-engineer says it will slow down our API response times significantly" assistant: "I'll use the quality-orchestrator agent to model this as a multi-objective optimization problem and find the Pareto optimal solution" <commentary>Competing quality objectives require mathematical analysis to find optimal tradeoffs rather than ad-hoc prioritization</commentary></example> <example>Context: Large codebase has accumulated multiple DEBT markers from different assessors user: "We have 50+ DEBT markers from various quality assessors and limited development time - how do we prioritize improvements for maximum impact?" assistant: "Let me engage the quality-orchestrator agent to analyze the DEBT markers and create an optimized improvement sequence using Pareto Frontier analysis" <commentary>Resource-constrained quality improvement requires systematic optimization to maximize overall quality gains</commentary></example>
@@ -402,3 +398,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - Resource-optimized quality improvement roadmap with quantified expected outcomes
 - Conflict resolution recommendations with mathematical justification for tradeoff decisions
 - Strategic quality improvement sequence with dependency analysis and implementation guidance
+
+<!-- COMPILED AGENT: Generated from quality-orchestrator template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/quality-orchestrator.md -->

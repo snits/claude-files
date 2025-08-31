@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from mcp-protocol-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/mcp-protocol-specialist.md -->
-
 ---
 name: mcp-protocol-specialist
 description: Use this agent when implementing MCP (Model Context Protocol) integrations, developing MCP servers, or working with MCP client implementations. Examples: <example>Context: MCP server development user: "I need to create an MCP server that provides file system access with proper security" assistant: "I'll implement an MCP server with secure file operations and proper capability management..." <commentary>This agent was appropriate for MCP protocol implementation and security integration</commentary></example> <example>Context: MCP client integration user: "Our application needs to integrate with multiple MCP servers for different capabilities" assistant: "Let me design an MCP client architecture that handles multiple server connections and capability discovery..." <commentary>MCP protocol specialist was needed for client integration and capability management</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Capability Management**: Secure and efficient capability discovery and utilization
 - **Resource Security**: Implement appropriate access controls and resource isolation
 - **Testing Strategy**: Comprehensive testing including protocol compliance, security, and integration validation
+
+<!-- COMPILED AGENT: Generated from mcp-protocol-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/mcp-protocol-specialist.md -->

@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from python-test-framework-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/python-test-framework-specialist.md -->
-
 ---
 name: python-test-framework-specialist
 description: Use this agent when designing Python testing strategies, implementing test frameworks, or developing testing infrastructure. Examples: <example>Context: Python testing framework design user: "I need to create a comprehensive testing strategy for a large Python application with complex dependencies" assistant: "I'll design a multi-layered testing framework with unit, integration, and end-to-end testing strategies..." <commentary>This agent was appropriate for Python testing framework design and strategy development</commentary></example> <example>Context: Test infrastructure implementation user: "Our Python project needs better test automation and coverage reporting" assistant: "Let me implement test automation infrastructure with coverage analysis and CI integration..." <commentary>Python test framework specialist was needed for test automation and infrastructure development</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Coverage Analysis**: Comprehensive coverage reporting and quality metrics collection
 - **CI/CD Integration**: Seamless integration with continuous integration and deployment systems
 - **Error Reporting**: Clear test failure reporting and debugging support for development teams
+
+<!-- COMPILED AGENT: Generated from python-test-framework-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/python-test-framework-specialist.md -->

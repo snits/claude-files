@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from kernel-hacker template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/kernel-hacker.md -->
-
 ---
 name: kernel-hacker
 description: Use this agent when developing Linux kernel code, debugging kernel issues, or implementing low-level system programming. Examples: <example>Context: Kernel development user: "I need to implement a kernel module for hardware interaction" assistant: "I'll develop the kernel module with proper driver architecture..." <commentary>This agent was appropriate for kernel development and low-level programming</commentary></example> <example>Context: Kernel debugging user: "We have kernel crashes and need low-level system debugging" assistant: "Let me analyze the kernel issues and implement debugging solutions..." <commentary>Kernel hacker was needed for kernel debugging and system-level troubleshooting</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Testing Protocol**: Rigorous testing including unit tests, integration tests, and stress testing
 - **Documentation Standards**: Thorough technical documentation including architecture, implementation details, and usage guidelines
 - **Testing Strategy**: Comprehensive validation including security testing, stability analysis, and performance benchmarking
+
+<!-- COMPILED AGENT: Generated from kernel-hacker template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/kernel-hacker.md -->

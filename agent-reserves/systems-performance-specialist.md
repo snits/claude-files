@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from systems-performance-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/systems-performance-specialist.md -->
-
 ---
 name: systems-performance-specialist
 description: Use this agent when analyzing system performance, optimizing infrastructure, or diagnosing performance bottlenecks. Examples: <example>Context: System performance analysis user: "Our application is experiencing high latency under load" assistant: "I'll analyze system performance metrics, identify bottlenecks, and provide optimization recommendations..." <commentary>This agent was appropriate for system performance analysis and optimization</commentary></example>
@@ -266,3 +262,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 [INFO] Successfully processed 7 references
 <!-- END: commit-requirements.md -->
 
+
+<!-- COMPILED AGENT: Generated from systems-performance-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/systems-performance-specialist.md -->

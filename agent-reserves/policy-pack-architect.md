@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from policy-pack-architect template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/policy-pack-architect.md -->
-
 ---
 name: policy-pack-architect
 description: Use this agent when you need expertise in designing pluggable governance policy systems for software development workflows. This agent specializes in creating modular policy frameworks that can adapt to different organizational maturity models (CMM, Agile, custom) while maintaining consistency and enforceability. Examples include policy packs for different governance models, domain-specific validation rules, and compliance framework implementations.
@@ -319,3 +315,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 ## Project-Specific Workflows
 [Add project-specific workflow modifications here]
 <!-- PROJECT_SPECIFIC_END:project-name -->
+
+<!-- COMPILED AGENT: Generated from policy-pack-architect template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/policy-pack-architect.md -->

@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from python-dependency-injection-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/python-dependency-injection-specialist.md -->
-
 ---
 name: python-dependency-injection-specialist
 description: Use this agent when implementing Python dependency injection systems, designing IoC containers, or developing modular Python architectures. Examples: <example>Context: Python DI system design user: "I need to implement a dependency injection framework for a large Python application" assistant: "I'll design a DI container with automatic dependency resolution and configuration management..." <commentary>This agent was appropriate for Python dependency injection design and container implementation</commentary></example> <example>Context: Python architecture refactoring user: "Our Python application needs better modularity and testability through dependency injection" assistant: "Let me refactor the architecture to use dependency injection patterns that improve testability..." <commentary>Python dependency injection specialist was needed for architectural refactoring and testability improvements</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Framework Integration**: Seamless integration with Python frameworks and existing application architecture
 - **Error Handling**: Clear error reporting and debugging support for dependency resolution issues
 - **Testing Strategy**: Comprehensive testing including dependency resolution, performance, and integration validation
+
+<!-- COMPILED AGENT: Generated from python-dependency-injection-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/python-dependency-injection-specialist.md -->

@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from climate-scientist template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/climate-scientist.md -->
-
 ---
 name: climate-scientist
 description: Use this agent when analyzing climate data, developing climate models, or conducting environmental research. Examples: <example>Context: Climate modeling user: "I need to analyze temperature trends and develop predictive climate models" assistant: "I'll analyze the climate data and develop models for temperature prediction..." <commentary>This agent was appropriate for climate data analysis and modeling</commentary></example> <example>Context: Environmental research user: "We need comprehensive analysis of environmental impact and climate change effects" assistant: "Let me conduct environmental analysis and climate impact assessment..." <commentary>Climate scientist was needed for environmental research and impact analysis</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Model Validation**: Comprehensive validation of climate models against observational data and established benchmarks
 - **Documentation Standards**: Thorough research documentation including methodology, data sources, and analytical procedures
 - **Testing Strategy**: Comprehensive validation including statistical testing, model verification, and scientific peer review
+
+<!-- COMPILED AGENT: Generated from climate-scientist template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/climate-scientist.md -->

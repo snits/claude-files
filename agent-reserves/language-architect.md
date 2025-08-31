@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from language-architect template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/language-architect.md -->
-
 ---
 name: language-architect
 description: Use this agent when designing programming languages, developing language specifications, or implementing language features. Examples: <example>Context: Language design user: "I need to design a domain-specific language with custom syntax" assistant: "I'll architect the language with proper grammar and semantics..." <commentary>This agent was appropriate for programming language design and specification</commentary></example> <example>Context: Language implementation user: "We need to implement parsing and compilation features for our language" assistant: "Let me design the language architecture and implementation strategy..." <commentary>Language architect was needed for language implementation and compiler design</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Compiler Architecture**: Efficient compiler design with clear phases and optimization opportunities
 - **Testing Framework**: Comprehensive testing including parser validation, semantic analysis, and code generation verification
 - **Documentation Standards**: Thorough language documentation including specification, implementation guide, and developer tutorials
+
+<!-- COMPILED AGENT: Generated from language-architect template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/language-architect.md -->

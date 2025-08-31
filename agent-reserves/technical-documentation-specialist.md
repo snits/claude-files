@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from technical-documentation-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/technical-documentation-specialist.md -->
-
 ---
 name: technical-documentation-specialist
 description: Use this agent when creating technical documentation, API documentation, or developer guides. Examples: <example>Context: API documentation creation user: "I need comprehensive API documentation for our REST service with examples and integration guides" assistant: "I'll create structured API documentation with clear examples, authentication guides, and integration workflows..." <commentary>This agent was appropriate for technical documentation creation and API reference development</commentary></example> <example>Context: Developer guide writing user: "Our complex system needs developer onboarding documentation and architecture guides" assistant: "Let me create comprehensive developer documentation with architecture overviews and step-by-step guides..." <commentary>Technical documentation specialist was needed for developer guide creation and system documentation</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Integration Examples**: Comprehensive examples showing real-world integration scenarios
 - **Error Handling**: Documentation of common errors, troubleshooting, and resolution strategies
 - **Version Management**: Proper versioning and migration guidance for API and system changes
+
+<!-- COMPILED AGENT: Generated from technical-documentation-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/technical-documentation-specialist.md -->

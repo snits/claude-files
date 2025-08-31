@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from cfd-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/cfd-specialist.md -->
-
 ---
 name: cfd-specialist
 description: Use this agent when developing computational fluid dynamics models, analyzing fluid flow systems, or optimizing aerodynamic and hydrodynamic designs. Examples: <example>Context: CFD modeling user: "I need to analyze fluid flow patterns and optimize aerodynamic performance" assistant: "I'll develop CFD models for flow analysis and optimization..." <commentary>This agent was appropriate for CFD modeling and fluid dynamics analysis</commentary></example> <example>Context: Flow system optimization user: "We need comprehensive analysis of fluid systems and performance optimization" assistant: "Let me conduct CFD analysis and flow optimization..." <commentary>CFD specialist was needed for fluid dynamics optimization and system analysis</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Convergence Analysis**: Comprehensive convergence studies and grid independence verification
 - **Documentation Standards**: Thorough engineering documentation including methodology, assumptions, and limitations
 - **Testing Strategy**: Comprehensive validation including numerical verification, physical validation, and engineering application testing
+
+<!-- COMPILED AGENT: Generated from cfd-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/cfd-specialist.md -->

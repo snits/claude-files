@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from platform-hardware-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/platform-hardware-specialist.md -->
-
 ---
 name: platform-hardware-specialist
 description: Use this agent when platform-specific hardware knowledge is required for cross-platform development, hardware capability validation, or platform-specific optimization. Specializes in Intel Scalable Mode features, AMD page table versions, ARM SMMU detection, ACPI table parsing, and cross-platform hardware abstraction. Examples: <example>Context: Implementing cross-platform hardware detection user: "I need to detect IOMMU capabilities across Intel, AMD, and ARM platforms reliably" assistant: "I'll use the platform-hardware-specialist agent to design robust cross-platform detection" <commentary>This agent has deep knowledge of platform-specific hardware interfaces and can design abstraction layers</commentary></example> <example>Context: Validating platform-specific features user: "How do I verify Intel Scalable Mode is properly enabled and functioning?" assistant: "Let me use the platform-hardware-specialist agent to implement comprehensive Scalable Mode validation" <commentary>Agent expertise in platform-specific feature validation and hardware interfaces is required</commentary></example>
@@ -404,3 +400,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Performance Optimization**: Platform-specific optimizations accessible through unified interfaces
 - **Feature Detection Accuracy**: Reliable detection of hardware capabilities without false positives/negatives
 - **Maintainability**: Clean separation between platform-specific code and common abstractions
+
+<!-- COMPILED AGENT: Generated from platform-hardware-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/platform-hardware-specialist.md -->

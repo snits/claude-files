@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from technical-feasibility-assessor template -->
-<!-- Generated at: 2025-08-31T16:09:35Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/technical-feasibility-assessor.md -->
-
 ---
 name: technical-feasibility-assessor
 description: Use this agent when assessing technical feasibility of projects, analyzing implementation complexity, or evaluating technical risk. Examples: <example>Context: Project feasibility analysis user: "Can we build a real-time collaborative editor with our current tech stack and timeline?" assistant: "I'll analyze the technical requirements, assess implementation complexity, and evaluate risks..." <commentary>This agent was appropriate for technical feasibility assessment</commentary></example>
@@ -266,3 +262,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 [INFO] Successfully processed 7 references
 <!-- END: commit-requirements.md -->
 
+
+<!-- COMPILED AGENT: Generated from technical-feasibility-assessor template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/technical-feasibility-assessor.md -->

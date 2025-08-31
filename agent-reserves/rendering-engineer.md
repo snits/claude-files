@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from rendering-engineer template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/rendering-engineer.md -->
-
 ---
 name: rendering-engineer
 description: Use this agent when you need to create or improve visual representations of complex simulation data, debug rendering issues, or enhance the visual clarity of game systems. Examples: <example>Context: User is working on a complex multi-agent simulation and needs to visualize agent interactions and state changes for debugging purposes. user: 'The simulation is running but I can't tell what's happening with the agent behaviors. I need to see their decision-making process visually.' assistant: 'I'll use the rendering-engineer agent to design visualization systems that make the agent behaviors and interactions clearly visible for debugging.' <commentary>Since the user needs visual representation of complex simulation state for debugging, use the rendering-engineer agent to create appropriate visualization solutions.</commentary></example> <example>Context: User has implemented a game economy system but players are confused about resource flows and market dynamics. user: 'Players don't understand how the economy works. The numbers are all there but it's not intuitive.' assistant: 'Let me use the rendering-engineer agent to design clear visual representations of the economic flows and market states.' <commentary>Since the user needs to improve game UX through better visual representation of complex systems, use the rendering-engineer agent to design intuitive visualizations.</commentary></example>
@@ -314,3 +310,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 
 [Add project-specific workflow modifications here]
 <!-- PROJECT_SPECIFIC_END:project-name -->
+
+<!-- COMPILED AGENT: Generated from rendering-engineer template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/rendering-engineer.md -->

@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from game-balance-analyst template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/game-balance-analyst.md -->
-
 ---
 name: game-balance-analyst
 description: Use this agent when analyzing game balance, progression systems, or player progression optimization. Examples: <example>Context: Game balance issues user: "Our RPG has players reaching endgame content too quickly" assistant: "I'll analyze the progression curves and identify balance points that need adjustment..." <commentary>This agent was appropriate for game balance analysis and progression optimization</commentary></example> <example>Context: Competitive game balance user: "Players are complaining that one character class is overpowered in PvP" assistant: "Let me perform a comprehensive balance analysis across all character abilities and combat scenarios..." <commentary>Game balance analyst was needed for competitive balance assessment</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Player Impact Analysis**: Analyze how balance changes affect different player types and skill levels
 - **Testing Results**: Comprehensive validation data for balance change effectiveness
 - **Monitoring Plans**: Ongoing data collection strategies for balance validation and iteration
+
+<!-- COMPILED AGENT: Generated from game-balance-analyst template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/game-balance-analyst.md -->

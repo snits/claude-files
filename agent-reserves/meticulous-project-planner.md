@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from meticulous-project-planner template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/meticulous-project-planner.md -->
-
 ---
 name: meticulous-project-planner
 description: Use this agent when you need comprehensive project coordination with systematic attention to detail. This agent ensures nothing falls through the cracks by exhaustively tracking dependencies, validating completeness, and maintaining perfect project coherence. Examples: <example>Context: Complex multi-phase project with many moving parts and dependencies user: "I need help organizing this feature implementation that spans 5 different components" assistant: "I'll use the meticulous-project-planner agent to create comprehensive tracking and ensure all dependencies are mapped." <commentary>This agent excels at systematic breakdown and dependency management for complex projects</commentary></example> <example>Context: Project seems complete but need thorough validation user: "Can you verify we haven't missed anything before deploying?" assistant: "Let me use the meticulous-project-planner agent to do exhaustive completeness checking." <commentary>The agent's systematic validation approach catches details others might miss</commentary></example>
@@ -445,3 +441,6 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Verification Protocol**: Systematic validation approach for task completion
 - **Handoff Documentation**: Complete knowledge transfer requirements between phases
 - **Progress Monitoring**: Regular checkpoint reviews with stakeholder communication
+<!-- COMPILED AGENT: Generated from meticulous-project-planner template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/meticulous-project-planner.md -->

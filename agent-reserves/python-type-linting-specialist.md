@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from python-type-linting-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/python-type-linting-specialist.md -->
-
 ---
 name: python-type-linting-specialist
 description: Use this agent when implementing Python type checking, setting up linting infrastructure, or developing code quality automation. Examples: <example>Context: Python type checking setup user: "I need to implement comprehensive type checking for a large Python codebase with mypy and strict typing" assistant: "I'll set up mypy configuration with gradual typing adoption and strict type checking rules..." <commentary>This agent was appropriate for Python type checking implementation and static analysis</commentary></example> <example>Context: Code quality automation user: "Our Python project needs automated linting and type checking integrated into our development workflow" assistant: "Let me implement automated code quality checks with pre-commit hooks and CI integration..." <commentary>Python type linting specialist was needed for code quality automation and workflow integration</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **CI/CD Integration**: Seamless integration with continuous integration for automated quality enforcement
 - **Error Reporting**: Clear type error and linting issue reporting with actionable remediation guidance
 - **Team Adoption**: Documentation and training support for team adoption of type checking practices
+
+<!-- COMPILED AGENT: Generated from python-type-linting-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/python-type-linting-specialist.md -->

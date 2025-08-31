@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from protocol-implementation-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/protocol-implementation-specialist.md -->
-
 ---
 name: protocol-implementation-specialist
 description: Use this agent when implementing network protocols, designing communication systems, or developing protocol adapters. Examples: <example>Context: Network protocol implementation user: "I need to implement a custom binary protocol for high-performance data transfer" assistant: "I'll design a binary protocol with efficient serialization and error handling..." <commentary>This agent was appropriate for network protocol design and implementation</commentary></example> <example>Context: Protocol integration user: "Our system needs to communicate with legacy protocols while supporting modern standards" assistant: "Let me create protocol adapters that bridge legacy and modern communication standards..." <commentary>Protocol implementation specialist was needed for protocol bridging and compatibility</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Connection Management**: Proper network connection handling and resource management
 - **Error Handling**: Comprehensive error detection, reporting, and recovery mechanisms
 - **Testing Strategy**: Thorough testing including performance, reliability, and compatibility validation
+
+<!-- COMPILED AGENT: Generated from protocol-implementation-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/protocol-implementation-specialist.md -->

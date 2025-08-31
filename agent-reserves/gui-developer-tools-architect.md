@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from gui-developer-tools-architect template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/gui-developer-tools-architect.md -->
-
 ---
 name: gui-developer-tools-architect
 description: Use this agent when designing developer tool interfaces, IDE extensions, or development environment UX. Examples: <example>Context: Developer tool interface design user: "I need to create a debugging interface that shows complex data structures clearly" assistant: "I'll design an interface architecture with hierarchical data visualization and interactive debugging workflows..." <commentary>This agent was appropriate for developer tool interface design and debugging UX</commentary></example> <example>Context: IDE extension development user: "Our code analysis tool needs an intuitive interface for displaying analysis results" assistant: "Let me design an interface system that integrates with IDE workflows and presents analysis data effectively..." <commentary>GUI developer tools architect was needed for IDE integration and developer UX</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Data Presentation**: Design clear and actionable data visualization for complex development information
 - **Workflow Continuity**: Maintain development workflow continuity while providing powerful tool functionality
 - **Customization Support**: Enable developer customization of tool interfaces and interaction patterns
+
+<!-- COMPILED AGENT: Generated from gui-developer-tools-architect template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/gui-developer-tools-architect.md -->

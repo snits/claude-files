@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from game-performance-analyst template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/game-performance-analyst.md -->
-
 ---
 name: game-performance-analyst
 description: Use this agent when optimizing game performance, analyzing frame rates, or resolving performance bottlenecks. Examples: <example>Context: Game performance optimization user: "Our game drops to 20 FPS during large battles with multiple effects" assistant: "I'll analyze the rendering pipeline and identify performance bottlenecks in particle systems and draw calls..." <commentary>This agent was appropriate for game performance analysis and optimization</commentary></example> <example>Context: Memory performance issues user: "The game crashes on lower-end devices due to memory usage" assistant: "Let me analyze memory allocation patterns and design optimization strategies for constrained environments..." <commentary>Game performance analyst was needed for memory optimization and platform constraints</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **CPU Optimization**: Algorithm efficiency, threading optimization, and computation distribution
 - **Memory Optimization**: Asset optimization, memory pooling, and garbage collection minimization
 - **Platform-Specific**: Hardware-specific optimizations and API usage optimization
+
+<!-- COMPILED AGENT: Generated from game-performance-analyst template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/game-performance-analyst.md -->

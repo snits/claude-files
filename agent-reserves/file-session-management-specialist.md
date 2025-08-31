@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from file-session-management-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/file-session-management-specialist.md -->
-
 ---
 name: file-session-management-specialist
 description: Use this agent when managing file sessions, designing file handling systems, or developing session persistence solutions. Examples: <example>Context: Session management system user: "I need to implement file-based session management with automatic cleanup and recovery" assistant: "I'll design a session management system with file persistence, cleanup routines, and crash recovery..." <commentary>This agent was appropriate for file session management and persistence system design</commentary></example>
@@ -266,3 +262,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 [INFO] Successfully processed 7 references
 <!-- END: commit-requirements.md -->
 
+
+<!-- COMPILED AGENT: Generated from file-session-management-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/file-session-management-specialist.md -->

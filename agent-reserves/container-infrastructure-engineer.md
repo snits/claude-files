@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from container-infrastructure-engineer template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/container-infrastructure-engineer.md -->
-
 ---
 name: container-infrastructure-engineer
 description: Use this agent when working with containerization, orchestration, Docker integration, or distributed system infrastructure. Examples - Context: The user needs to set up a containerized microservices architecture with proper networking and resource management. Context: The user is experiencing communication issues between containers and needs robust networking solutions.
@@ -353,3 +349,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - Container security posture providing comprehensive protection against known attack vectors
 - Scalability architecture supporting business growth without infrastructure bottlenecks
 - Monitoring and observability enabling rapid issue identification and resolution
+
+<!-- COMPILED AGENT: Generated from container-infrastructure-engineer template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/container-infrastructure-engineer.md -->

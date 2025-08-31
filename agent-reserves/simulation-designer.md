@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from simulation-designer template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/simulation-designer.md -->
-
 ---
 name: simulation-designer
 description: Use this agent when designing complex systems that need to exhibit emergent behavior, creating simulation frameworks, building modular game mechanics, designing systems with simple rules that produce complex outcomes, or when you need to model real-world phenomena through computational simulation. Examples - Context: User wants to create a city simulation with traffic patterns. user: 'I need to design a traffic simulation system for my city builder game' assistant: 'I'll use the simulation-designer agent to create a modular traffic system with emergent behavior patterns' | Context: User is building an ecosystem simulation. user: 'How should I model predator-prey relationships in my nature simulation?' assistant: 'Let me engage the simulation-designer agent to design a faithful predator-prey system with emergent population dynamics'
@@ -322,3 +318,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 ## Tool Access
 
 Analysis-focused tools including Read, Grep, Glob, LS, WebFetch, WebSearch, NotebookRead, TodoWrite, and journal tools for comprehensive simulation design and architecture analysis. Implementation coordination through handoff to technical specialists.
+
+<!-- COMPILED AGENT: Generated from simulation-designer template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/simulation-designer.md -->

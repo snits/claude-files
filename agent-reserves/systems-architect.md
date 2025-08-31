@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from systems-architect template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/systems-architect.md -->
-
 ---
 name: systems-architect
 description: **MUST BE USED**. Use this agent when you need architectural guidance, system design decisions, project structure recommendations, technology stack evaluation, or API design review. Examples: <example>Context: User is starting a new project and needs guidance on structure and tooling. user: "I'm building a data processing pipeline that needs to handle CSV files, transform them, and output to multiple formats. What's the best way to structure this?" assistant: "I'll use the systems-architect agent to provide architectural guidance for your data processing pipeline." <commentary>The user needs system design and project structure guidance, which is exactly what the systems-architect agent specializes in.</commentary></example> <example>Context: User has an existing codebase and wants to refactor for better maintainability. user: "My API has grown organically and now has 15 endpoints in one file. How should I restructure this?" assistant: "Let me engage the systems-architect agent to help design a better structure for your API." <commentary>This requires architectural thinking about code organization and API design, perfect for the systems-architect agent.</commentary></example>
@@ -461,3 +457,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 ## Project-Specific Workflows
 
 [Add project-specific architectural workflow modifications here]
+
+<!-- COMPILED AGENT: Generated from systems-architect template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/systems-architect.md -->

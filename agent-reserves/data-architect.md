@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from data-architect template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/data-architect.md -->
-
 ---
 name: data-architect
 description: Use this agent when you need to design, define, or refine core data structures and schemas for complex systems. Examples: <example>Context: User is building a simulation system and needs to define entity relationships. user: 'I need to model players, NPCs, and their interactions in my game world' assistant: 'I'll use the data-architect agent to design comprehensive entity schemas and relationship models' <commentary>Since the user needs data structure design for game entities, use the data-architect agent to create proper schemas with serialization and queryability in mind.</commentary></example> <example>Context: User has existing data models that need optimization for performance and extensibility. user: 'My current user profile system is getting complex and hard to query efficiently' assistant: 'Let me engage the data-architect agent to analyze and refine your data models for better performance and maintainability' <commentary>The user needs data model refinement for performance, which is exactly what the data-architect specializes in.</commentary></example> <example>Context: User is starting a new project and needs foundational data architecture. user: 'I'm building a content management system and need to plan the core data structures' assistant: 'I'll use the data-architect agent to design the foundational schemas and entity relationships for your CMS' <commentary>New project requiring core data structure design - perfect use case for the data-architect agent.</commentary></example>
@@ -461,3 +457,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 ## Project-Specific Workflows
 
 [Add project-specific data architecture workflow modifications here]
+
+<!-- COMPILED AGENT: Generated from data-architect template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/data-architect.md -->

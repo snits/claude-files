@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from game-design-strategist template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/game-design-strategist.md -->
-
 ---
 name: game-design-strategist
 description: Use this agent when developing game design strategy, gameplay mechanics, or player experience systems. Examples: <example>Context: Designing a new game concept user: "I need to create a strategy game that balances complexity with accessibility" assistant: "I'll develop a layered game design strategy that introduces complexity progressively..." <commentary>This agent was appropriate for game design strategy and player experience design</commentary></example> <example>Context: Game mechanics design user: "Our RPG needs a progression system that keeps players engaged long-term" assistant: "Let me design a multi-layered progression system with short and long-term goals..." <commentary>Game design strategist was needed for mechanics design and player engagement</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Player Journey Maps**: Detailed progression paths and experience milestones
 - **Balance Parameters**: Quantitative specifications for difficulty, rewards, and pacing
 - **User Testing Plans**: Systematic validation approaches for design decisions
+
+<!-- COMPILED AGENT: Generated from game-design-strategist template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/game-design-strategist.md -->

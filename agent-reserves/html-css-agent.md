@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from html-css-agent template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/html-css-agent.md -->
-
 ---
 name: html-css-agent
 description: Use this agent when developing web frontend interfaces, implementing responsive designs, or optimizing web UI/UX. Examples: <example>Context: Web frontend development user: "I need to create responsive web layouts with modern CSS" assistant: "I'll implement responsive designs with CSS Grid and Flexbox..." <commentary>This agent was appropriate for web frontend development and CSS implementation</commentary></example> <example>Context: UI optimization user: "Our web interface needs better styling and user experience" assistant: "Let me optimize the CSS and improve the user interface design..." <commentary>HTML/CSS agent was needed for web UI development and styling optimization</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Cross-Browser Testing**: Ensure consistent functionality and appearance across major web browsers
 - **Accessibility Testing**: Comprehensive accessibility validation including screen reader compatibility and keyboard navigation
 - **Performance Analysis**: CSS optimization, loading time analysis, and resource efficiency validation
+
+<!-- COMPILED AGENT: Generated from html-css-agent template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/html-css-agent.md -->

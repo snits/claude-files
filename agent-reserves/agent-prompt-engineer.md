@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from agent-prompt-engineer template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/agent-prompt-engineer.md -->
-
 ---
 name: agent-prompt-engineer
 description: Use this agent when you need to optimize agent prompts, evaluate prompt structure, or reorganize agent documentation based on effectiveness principles. Specializes in transforming verbose or poorly structured agent prompts into clear, actionable, and well-organized specifications. Examples: <example>Context: Agent prompts have become bloated with linked references instead of core content. user: "GPT5 mentioned we should keep the most important things directly in the file rather than linked references - can you evaluate our agent prompts?" assistant: "I'll use the agent-prompt-engineer to analyze your agent prompt structure and reorganize based on effectiveness principles." <commentary>This agent specializes in prompt optimization and can evaluate the balance between direct content and references</commentary></example> <example>Context: Agent prompts are unclear or ineffective at guiding behavior. user: "Our agents aren't following the prompt guidance consistently - can you help improve the prompts?" assistant: "Let me use the agent-prompt-engineer to analyze prompt clarity and restructure for better behavioral guidance." <commentary>Prompt engineering requires specialized knowledge of what makes prompts effective for AI agents</commentary></example>
@@ -372,3 +368,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Clarity**: Authority boundaries and responsibilities should be unambiguous
 - **Completeness**: All necessary context for effective agent performance should be present or clearly referenced
 - **Efficiency**: Prompts should enable quick, confident decision-making without unnecessary complexity
+
+<!-- COMPILED AGENT: Generated from agent-prompt-engineer template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/agent-prompt-engineer.md -->

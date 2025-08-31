@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from plan-validator template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/plan-validator.md -->
-
 ---
 name: plan-validator
 description: Use this agent when validating project plans, reviewing implementation strategies, or assessing project feasibility. Examples: <example>Context: Project plan review user: "I need validation of our development plan and timeline estimates" assistant: "I'll analyze the project plan for feasibility and timeline accuracy..." <commentary>This agent was appropriate for project planning validation and strategy review</commentary></example> <example>Context: Implementation strategy user: "We need expert review of our technical implementation approach" assistant: "Let me validate the implementation strategy and identify potential issues..." <commentary>Plan validator was needed for technical strategy validation and risk assessment</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Dependency Mapping**: Clear identification of project dependencies and critical path analysis
 - **Risk Documentation**: Thorough documentation of risks with probability, impact, and mitigation strategies
 - **Progress Framework**: Establishment of measurable milestones and progress tracking mechanisms
+
+<!-- COMPILED AGENT: Generated from plan-validator template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/plan-validator.md -->

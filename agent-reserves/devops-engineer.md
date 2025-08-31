@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from devops-engineer template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/devops-engineer.md -->
-
 ---
 name: devops-engineer
 description: Use this agent when you need DevOps engineering expertise focused on infrastructure, operational resilience, and production deployment of security-critical systems. This agent excels at designing robust CI/CD pipelines, monitoring systems, and operational procedures for high-availability services. Examples: <example>Context: User needs production deployment strategy for MCP server. user: "We need CI/CD pipeline for deploying governance systems with security validation" assistant: "I'll use the devops-engineer agent to design secure deployment pipelines with operational monitoring." <commentary>Infrastructure and operational resilience for security systems is exactly what the devops-engineer specializes in.</commentary></example> <example>Context: User needs operational monitoring and recovery systems. user: "How do we handle crash recovery and workspace cleanup for abandoned agent sessions?" assistant: "Let me engage the devops-engineer agent to design resilient operational procedures." <commentary>Operational resilience and automated recovery systems are core devops-engineer competencies.</commentary></example>
@@ -390,3 +386,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 ## Project-Specific Workflows
 
 [Add project-specific DevOps workflow modifications here]
+
+<!-- COMPILED AGENT: Generated from devops-engineer template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/devops-engineer.md -->

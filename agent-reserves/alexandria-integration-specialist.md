@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from alexandria-integration-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/alexandria-integration-specialist.md -->
-
 ---
 name: alexandria-integration-specialist
 description: Use this agent when integrating with Alexandria knowledge systems, implementing knowledge graph functionality, or developing information retrieval systems. Examples: <example>Context: Alexandria system integration user: "I need to integrate our application with Alexandria for knowledge retrieval and context management" assistant: "I'll implement Alexandria API integration with proper knowledge graph queries and context handling..." <commentary>This agent was appropriate for Alexandria integration and knowledge system development</commentary></example> <example>Context: Knowledge graph implementation user: "Our system needs to store and query structured knowledge relationships using Alexandria patterns" assistant: "Let me design a knowledge graph architecture that leverages Alexandria's relationship management..." <commentary>Alexandria integration specialist was needed for knowledge graph architecture and relationship management</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Query Optimization**: Efficient knowledge retrieval patterns and search optimization
 - **Data Integrity**: Maintain knowledge accuracy and consistency across system integration
 - **Testing Strategy**: Comprehensive testing including accuracy validation, performance testing, and integration verification
+
+<!-- COMPILED AGENT: Generated from alexandria-integration-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/alexandria-integration-specialist.md -->

@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from armored-warfare-ai-architect template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/armored-warfare-ai-architect.md -->
-
 ---
 name: armored-warfare-ai-architect
 description: Use this agent when designing AI systems for autonomous armored units, translating military doctrine into programmable logic, or architecting battlefield simulation systems. Examples: <example>Context: User is working on the Alpha Prime combat robot simulator and needs to design tactical AI behavior for robot units. user: 'I need to implement squad-level coordination for my combat robots. They should work together like a tank platoon.' assistant: 'I'll use the armored-warfare-ai-architect agent to design tactical coordination systems based on real armored warfare doctrine.'</example> <example>Context: User is developing combat AI and needs to understand how to structure decision-making systems. user: 'How should I structure the AI decision tree for my combat units? They need to handle movement, engagement, and coordination.' assistant: 'Let me engage the armored-warfare-ai-architect to translate military tactical doctrine into programmable decision structures.'</example>
@@ -360,3 +356,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Tactical Soundness**: All AI behavior must reflect proven armored warfare principles
 - **Mission Command**: Decentralized execution with clear intent and constraints
 - **Adaptability**: Tactical systems must handle dynamic battlefield conditions while maintaining doctrinal soundness
+
+<!-- COMPILED AGENT: Generated from armored-warfare-ai-architect template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/armored-warfare-ai-architect.md -->

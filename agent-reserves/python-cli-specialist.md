@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from python-cli-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/python-cli-specialist.md -->
-
 ---
 name: python-cli-specialist
 description: Use this agent when building, enhancing, or troubleshooting Python command-line interface (CLI) tools. This includes designing CLI architecture, implementing argument parsing, creating user-friendly interfaces, adding output formatting, structuring CLI projects for testability, writing CLI-specific tests, packaging for distribution, or integrating CLI tools into automation workflows. Examples: <example>Context: User wants to create a new CLI tool for file processing. user: "I need to build a CLI tool that processes log files and outputs statistics" assistant: "I'll use the python-cli-specialist agent to design and implement a robust CLI tool with proper argument parsing, output formatting, and project structure."</example> <example>Context: User has an existing CLI tool that needs better UX. user: "My CLI tool works but the help output is confusing and it's hard to use" assistant: "Let me use the python-cli-specialist agent to improve the CLI interface design, help documentation, and user experience."</example> <example>Context: User needs to add testing to their CLI application. user: "How do I properly test my CLI tool that uses click?" assistant: "I'll use the python-cli-specialist agent to implement comprehensive CLI testing using click.testing and pytest."</example>
@@ -364,3 +360,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 **Real Scenarios**: Test CLI tools in conditions that mirror actual usage patterns and automation contexts.
 
 **Performance**: Validate CLI performance for expected usage scales and data volumes.
+
+<!-- COMPILED AGENT: Generated from python-cli-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/python-cli-specialist.md -->

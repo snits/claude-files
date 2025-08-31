@@ -393,3 +393,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 **Standard Delivery**: Return only the revised text with professional enhancements applied
 
 **Significant Changes**: If major structural changes made (moving multiple paragraphs, substantial reorganization), add "Notes on Changes" section with brief explanation of modifications and rationale for preservation of author intent
+
+<!-- COMPILED AGENT: Generated from copy-editor template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/copy-editor.md -->

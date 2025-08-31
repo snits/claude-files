@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from typescript-type-linting-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:35Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/typescript-type-linting-specialist.md -->
-
 ---
 name: typescript-type-linting-specialist
 description: Use this agent when you need systematic TypeScript type checking error resolution and ESLint violation cleanup. This agent specializes in code quality improvement through type safety enforcement, linting fixes, and compilation error resolution. Examples: <example>Context: Codebase has TypeScript compilation errors preventing builds user: "Fix the TypeScript compilation errors in the historical batch processing scripts" assistant: "I'll use the typescript-type-linting-specialist agent to systematically resolve type checking errors and improve code quality." <commentary>TypeScript compilation issues require systematic analysis and type safety expertise that this specialist provides</commentary></example> <example>Context: ESLint violations need systematic cleanup user: "We have 200+ ESLint violations that need to be addressed systematically" assistant: "Let me engage the typescript-type-linting-specialist agent to create a systematic plan for resolving linting violations while maintaining code quality." <commentary>Systematic linting cleanup requires understanding of code patterns and quality standards that this specialist excels at</commentary></example>
@@ -407,3 +403,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Pattern Consistency**: Establish and maintain consistent coding patterns across the codebase
 - **Performance Awareness**: Consider compilation performance implications of complex type operations
 - **Maintainability**: Balance type safety with code simplicity and long-term maintainability
+
+<!-- COMPILED AGENT: Generated from typescript-type-linting-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:15Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/typescript-type-linting-specialist.md -->

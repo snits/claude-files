@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from scientific-documentation-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/scientific-documentation-specialist.md -->
-
 ---
 name: scientific-documentation-specialist
 description: Use this agent when creating scientific documentation, research papers, or technical specifications with mathematical content. Examples: <example>Context: Research documentation user: "I need to document our machine learning research with proper mathematical notation and experimental methodology" assistant: "I'll create scientific documentation with proper LaTeX formatting, experimental design, and statistical analysis..." <commentary>This agent was appropriate for scientific documentation with mathematical content</commentary></example>
@@ -273,3 +269,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - Creating scientific research documentation and technical specifications
 - Documenting mathematical algorithms and experimental methodologies
 - Establishing research reproducibility and documentation standards
+
+<!-- COMPILED AGENT: Generated from scientific-documentation-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/scientific-documentation-specialist.md -->

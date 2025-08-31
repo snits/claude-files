@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from compiler-pipeline-debugger template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/compiler-pipeline-debugger.md -->
-
 ---
 name: compiler-pipeline-debugger
 description: Use this agent when encountering systematic compiler bugs in the DSL→Assembly→VM pipeline, particularly issues with immediate value handling, instruction encoding/decoding mismatches, or compilation chain corruption. Examples - Context: The user is debugging a compiler issue where immediate values are not being loaded correctly in the VM. user: 'The robot program IF contacts > 0 THEN FIRE_WEAPON is failing because R1 contains 60 instead of 0 after LOAD_IMM R1 0' assistant: 'I need to use the compiler-pipeline-debugger agent to analyze this immediate value corruption in the compilation pipeline' - Context: User discovers that assembly instructions are being parsed correctly but VM execution is producing wrong results. user: 'Assembly shows LOAD_IMM R1 0 but VM debug shows R1 contains the wrong value during execution' assistant: 'Let me use the compiler-pipeline-debugger agent to trace this encoding/decoding mismatch through the compilation chain'
@@ -310,3 +306,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - Write comprehensive compiler pipeline analysis to appropriate project files
 - Create actionable diagnostic methodology and systematic debugging approaches
 - Document compilation chain patterns and considerations for future Alpha Prime development
+
+<!-- COMPILED AGENT: Generated from compiler-pipeline-debugger template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/compiler-pipeline-debugger.md -->

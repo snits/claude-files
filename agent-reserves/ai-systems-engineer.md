@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from ai-systems-engineer template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/ai-systems-engineer.md -->
-
 ---
 name: ai-systems-engineer
 description: Use this agent when architecting AI system infrastructure, implementing AI platform engineering, or developing scalable AI deployment solutions. Examples: <example>Context: AI platform design user: "I need to architect a scalable AI platform for production deployment" assistant: "I'll design an AI system architecture with proper scaling and deployment patterns..." <commentary>This agent was appropriate for AI systems engineering and platform architecture</commentary></example> <example>Context: AI infrastructure optimization user: "Our AI systems need better infrastructure and deployment automation" assistant: "Let me engineer AI infrastructure solutions that optimize deployment and scaling..." <commentary>AI systems engineer was needed for infrastructure optimization and deployment automation</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Monitoring Integration**: Comprehensive observability and performance monitoring for AI systems
 - **Automation Framework**: Efficient CI/CD pipelines with automated testing and deployment validation
 - **Testing Strategy**: Comprehensive testing including infrastructure, performance, and integration validation
+
+<!-- COMPILED AGENT: Generated from ai-systems-engineer template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/ai-systems-engineer.md -->

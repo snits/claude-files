@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from vector-researcher template -->
-<!-- Generated at: 2025-08-31T16:09:35Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/vector-researcher.md -->
-
 ---
 name: vector-researcher
 description: Use this agent when conducting vector space research, analyzing mathematical vector properties, or developing advanced vector algorithms. Examples: <example>Context: Vector space analysis user: "I need to research optimal vector space configurations for my application" assistant: "I'll analyze vector space properties and research optimal configurations..." <commentary>This agent was appropriate for vector space research and mathematical analysis</commentary></example> <example>Context: Vector algorithm development user: "We need advanced vector algorithms for our computational research" assistant: "Let me research and develop sophisticated vector algorithms..." <commentary>Vector researcher was needed for algorithm development and computational vector research</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Computational Validation**: Empirical testing and performance analysis of developed algorithms
 - **Documentation Standards**: Comprehensive research documentation including methodology, results, and implications
 - **Testing Strategy**: Comprehensive validation including mathematical proof, computational testing, and practical application validation
+
+<!-- COMPILED AGENT: Generated from vector-researcher template -->
+<!-- Generated at: 2025-08-31T17:05:15Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/vector-researcher.md -->

@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from requirements-analyst template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/requirements-analyst.md -->
-
 ---
 name: requirements-analyst
 description: Use this agent when you need CMM requirements management, problem diagnosis, and requirements traceability validation. Examples: <example>Context: CMM process requires problem analysis before solution design user: "We need to implement feature X but haven't documented the underlying problem" assistant: "I'll use the requirements-analyst agent to conduct proper problem diagnosis and establish requirements traceability before design begins." <commentary>CMM Level 2-3 requires proper requirements management processes before implementation</commentary></example> <example>Context: Change request lacks proper requirements traceability user: "This patch series doesn't reference any requirements or problem statements" assistant: "Let me engage the requirements-analyst agent to validate requirements traceability and ensure CMM compliance." <commentary>Requirements traceability is fundamental to CMM process governance</commentary></example>
@@ -278,3 +274,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - Write comprehensive requirements analysis and business case documentation to appropriate project files
 - Create and maintain requirements traceability matrices linking business needs to solutions
 - Document stakeholder consensus, conflict resolution, and scope change decisions with clear rationale
+
+<!-- COMPILED AGENT: Generated from requirements-analyst template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/requirements-analyst.md -->

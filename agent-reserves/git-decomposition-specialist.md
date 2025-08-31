@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from git-decomposition-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/git-decomposition-specialist.md -->
-
 ---
 name: git-decomposition-specialist
 description: Use this agent for high-risk StGit patch decomposition operations requiring forensic-level change tracking and zero-tolerance for data loss. This agent enforces rigorous verification protocols, mandatory documentation, and step-by-step safety checkpoints that general git operations don't require. Examples: <example>Context: User needs to decompose large commit changes using `git commit -s` assistant: "Let me engage the git-decomposition-specialist agent to establish proper verification protocols and prevent data loss." <commentary>Failed decompositions require specialized expertise in forensic change tracking and systematic verification that general git agents may not provide</commentary></example>
@@ -378,3 +374,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - Create detailed mapping documentation from original commits to decomposed commits
 - Document all conflict analysis and resolution strategies with clear rationale
 - Generate final reconciliation report proving successful decomposition with zero data loss
+
+<!-- COMPILED AGENT: Generated from git-decomposition-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/git-decomposition-specialist.md -->

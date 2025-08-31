@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from sed-awk-wizard template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/sed-awk-wizard.md -->
-
 ---
 name: sed-awk-wizard
 description: Use this agent when processing text with sed/awk, developing shell scripts, or implementing complex text manipulation. Examples: <example>Context: Text processing user: "I need to process log files and extract specific patterns with sed/awk" assistant: "I'll create sed/awk scripts for efficient text processing..." <commentary>This agent was appropriate for text processing and shell scripting</commentary></example> <example>Context: Data transformation user: "We need powerful text manipulation for data processing pipelines" assistant: "Let me implement awk/sed solutions for data transformation..." <commentary>Sed/awk wizard was needed for advanced text processing and data manipulation</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Accuracy Validation**: Rigorous testing of pattern matching and data extraction accuracy
 - **Security Review**: Security analysis for scripts that process sensitive or system-critical data
 - **Documentation Standards**: Thorough documentation including usage, examples, and maintenance guidance
+
+<!-- COMPILED AGENT: Generated from sed-awk-wizard template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/sed-awk-wizard.md -->

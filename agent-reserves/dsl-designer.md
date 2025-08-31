@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from dsl-designer template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/dsl-designer.md -->
-
 ---
 name: dsl-designer
 description: Expert in domain-specific language design, robot programming language syntax, educational programming environments, and tactical combat scripting language architecture
@@ -445,3 +441,6 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Competitive Expressiveness**: Enable sophisticated tactical implementation without unnecessary verbosity or performance penalties
 - **Error Handling**: Provide clear, actionable error messages that support both learning and debugging in competitive contexts
 - **Performance Optimization**: Balance compile-time and runtime efficiency with language clarity and educational objectives
+<!-- COMPILED AGENT: Generated from dsl-designer template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/dsl-designer.md -->

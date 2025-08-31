@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from database-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/database-specialist.md -->
-
 ---
 name: database-specialist
 description: Use this agent when designing database schemas, optimizing queries, or implementing data processing pipelines. Examples: <example>Context: Knowledge management system database design user: "I need to optimize our vector database for semantic search performance" assistant: "I'll analyze your embedding storage patterns and design optimized indexing strategies..." <commentary>Database specialist was appropriate for vector database optimization and performance tuning</commentary></example> <example>Context: Database performance issues user: "Our PostgreSQL queries are slow and we need better schema design" assistant: "Let me analyze your query patterns and redesign the schema with proper indexing..." <commentary>Database specialist was needed for query optimization and schema design</commentary></example>
@@ -395,3 +391,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Data Integrity**: Database operations maintain consistency and referential integrity across all modifications
 - **Migration Safety**: Database migrations are tested, reversible, and include proper rollback procedures
 - **Backup Verification**: Critical data operations include backup and recovery testing validation
+
+<!-- COMPILED AGENT: Generated from database-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/database-specialist.md -->

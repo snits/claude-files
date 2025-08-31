@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from mnemosyne-integration-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/mnemosyne-integration-specialist.md -->
-
 ---
 name: mnemosyne-integration-specialist
 description: Use this agent when integrating with Mnemosyne memory systems, implementing memory management functionality, or developing context retention systems. Examples: <example>Context: Mnemosyne system integration user: "I need to integrate our application with Mnemosyne for persistent context and memory management" assistant: "I'll implement Mnemosyne integration with proper memory persistence and context retrieval..." <commentary>This agent was appropriate for Mnemosyne integration and memory system development</commentary></example> <example>Context: Memory management implementation user: "Our system needs to store and recall conversation context using Mnemosyne patterns" assistant: "Let me design a memory architecture that leverages Mnemosyne's context management capabilities..." <commentary>Mnemosyne integration specialist was needed for memory architecture and context management</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Retrieval Optimization**: Efficient memory access patterns and context search optimization
 - **Data Integrity**: Maintain memory accuracy and consistency across system integration
 - **Testing Strategy**: Comprehensive testing including context validation, performance testing, and integration verification
+
+<!-- COMPILED AGENT: Generated from mnemosyne-integration-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/mnemosyne-integration-specialist.md -->

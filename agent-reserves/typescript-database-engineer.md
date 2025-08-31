@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from typescript-database-engineer template -->
-<!-- Generated at: 2025-08-31T16:09:35Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/typescript-database-engineer.md -->
-
 ---
 name: typescript-database-engineer
 description: Use this agent when working with TypeScript projects that involve database operations, SQLite integration, or Model Context Protocol (MCP) implementations. Examples include: building MCP servers with database backends, implementing data persistence layers in TypeScript applications, designing database schemas and migration strategies, optimizing SQLite queries and performance, integrating vector storage or embedding operations, implementing transaction management and error handling for database operations, or when you need to maintain backward compatibility while extending existing TypeScript/database codebases.
@@ -321,3 +317,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 3. **Protocol Compliance**: Ensure MCP server implementations follow protocol specifications
 4. **Schema Evolution**: Plan migration strategies that maintain backward compatibility
 5. **Error Handling**: Implement robust error handling and recovery patterns for database operations
+
+<!-- COMPILED AGENT: Generated from typescript-database-engineer template -->
+<!-- Generated at: 2025-08-31T17:05:15Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/typescript-database-engineer.md -->

@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from release-manager template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/release-manager.md -->
-
 ---
 name: release-manager
 description: Use this agent when managing software releases, coordinating deployment processes, or establishing release workflows. Examples: <example>Context: Release planning user: "I need to coordinate a major software release with multiple teams" assistant: "I'll establish the release process and coordinate team deliverables..." <commentary>This agent was appropriate for release management and deployment coordination</commentary></example> <example>Context: Deployment automation user: "We need better release workflows and deployment automation" assistant: "Let me design release management processes and automation..." <commentary>Release manager was needed for deployment process optimization and release coordination</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Rollback Planning**: Clear rollback procedures and automated rollback capabilities for deployment failures
 - **Communication Framework**: Structured communication protocols for release coordination and incident response
 - **Documentation Standards**: Thorough release documentation including procedures, dependencies, and post-deployment validation
+
+<!-- COMPILED AGENT: Generated from release-manager template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/release-manager.md -->

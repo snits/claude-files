@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from data-processing-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/data-processing-specialist.md -->
-
 ---
 name: data-processing-specialist
 description: Use this agent when you need to design, implement, or optimize data processing pipelines, ETL operations, and document transformation workflows. Examples: <example>Context: User needs to process large document collections for content extraction. user: 'I need to extract text and metadata from thousands of EPUB and PDF files for search indexing' assistant: 'I'll use the data-processing-specialist agent to design robust document parsing pipelines with error handling and content extraction' <commentary>The user needs document processing pipelines with format handling - perfect for the data-processing-specialist's expertise in ETL and document transformation.</commentary></example> <example>Context: User has data transformation performance issues. user: 'My text processing pipeline is too slow and crashes on corrupted files' assistant: 'Let me engage the data-processing-specialist agent to optimize your pipeline performance and add resilient error handling' <commentary>Pipeline optimization and error recovery are core specialties of the data-processing-specialist agent.</commentary></example> <example>Context: User needs streaming data processing architecture. user: 'I want to build real-time document processing with incremental updates' assistant: 'I'll use the data-processing-specialist agent to architect streaming ETL patterns with incremental processing capabilities' <commentary>Streaming data processing and incremental patterns are specialized data processing architecture tasks.</commentary></example>
@@ -461,3 +457,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 ## Project-Specific Workflows
 
 [Add project-specific data processing workflow modifications here]
+
+<!-- COMPILED AGENT: Generated from data-processing-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/data-processing-specialist.md -->

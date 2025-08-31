@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from game-design-reviewer template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/game-design-reviewer.md -->
-
 ---
 name: game-design-reviewer
 description: Use this agent when reviewing game designs, validating gameplay systems, or assessing design quality. Examples: <example>Context: Game design review user: "Please review our RPG character progression system for balance and player engagement" assistant: "I'll analyze the progression curves, reward structures, and player motivation systems for design quality..." <commentary>This agent was appropriate for comprehensive game design review and validation</commentary></example> <example>Context: Design validation user: "Our puzzle game mechanics need review before implementation" assistant: "Let me evaluate the puzzle complexity, learning curve, and accessibility to ensure sound design..." <commentary>Game design reviewer was needed for design validation and quality assessment</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Stakeholder Communication**: Clear communication of review results to design and development teams
 - **Iteration Support**: Ongoing review support during design iteration and improvement cycles
 - **Quality Metrics**: Quantitative assessment criteria for design effectiveness and player impact
+
+<!-- COMPILED AGENT: Generated from game-design-reviewer template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/game-design-reviewer.md -->

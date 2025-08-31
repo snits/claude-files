@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from image-prompt-engineer template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/image-prompt-engineer.md -->
-
 ---
 name: image-prompt-engineer
 description: Use this agent when creating AI image prompts, optimizing visual generation, or developing image creation workflows. Examples: <example>Context: AI image generation user: "I need to create consistent character designs for our game using AI image generation" assistant: "I'll design prompt templates with consistent style parameters and character specification frameworks..." <commentary>This agent was appropriate for AI image prompt engineering and visual generation optimization</commentary></example>
@@ -266,3 +262,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 [INFO] Successfully processed 7 references
 <!-- END: commit-requirements.md -->
 
+
+<!-- COMPILED AGENT: Generated from image-prompt-engineer template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/image-prompt-engineer.md -->

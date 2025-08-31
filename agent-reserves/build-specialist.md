@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from build-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/build-specialist.md -->
-
 ---
 name: build-specialist
 description: Use this agent for all build, compilation, and distribution tasks. CRITICAL: Prevents breaking npm-linked packages by using safe compilation methods. Examples include validating TypeScript compilation without generating files, testing builds safely, managing npm link compatibility, preparing distribution packages, and ensuring build processes don't interfere with development workflows.
@@ -366,3 +362,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Clear Authority**: Build specialist has final blocking power over any operation that could break development environments
 - **Development vs Release**: Clear separation between safe development validation and production build processes
 - **Integration**: Seamless coordination with quality gates while maintaining build safety discipline
+
+<!-- COMPILED AGENT: Generated from build-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/build-specialist.md -->

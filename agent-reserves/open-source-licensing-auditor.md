@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from open-source-licensing-auditor template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/open-source-licensing-auditor.md -->
-
 ---
 name: open-source-licensing-auditor
 description: Use this agent when auditing open source licenses, ensuring license compliance, or managing license risks. Examples: <example>Context: License compliance audit user: "I need to audit our dependencies for license compatibility and compliance risks" assistant: "I'll analyze all dependencies, identify license conflicts, and provide compliance recommendations..." <commentary>This agent was appropriate for license compliance auditing</commentary></example>
@@ -266,3 +262,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 [INFO] Successfully processed 7 references
 <!-- END: commit-requirements.md -->
 
+
+<!-- COMPILED AGENT: Generated from open-source-licensing-auditor template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/open-source-licensing-auditor.md -->

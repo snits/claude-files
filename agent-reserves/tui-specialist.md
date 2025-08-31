@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from tui-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:35Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/tui-specialist.md -->
-
 ---
 name: tui-specialist
 description: Use this agent when developing terminal user interfaces, CLI tools with interactive elements, or text-based interface systems. Examples: <example>Context: Terminal interface development user: "I need to create an interactive terminal application for system monitoring" assistant: "I'll design a TUI architecture with real-time data display and keyboard navigation..." <commentary>This agent was appropriate for terminal interface development and interactive CLI design</commentary></example> <example>Context: CLI tool enhancement user: "Our command-line tool needs interactive configuration and status display" assistant: "Let me implement interactive TUI components that enhance the CLI workflow with visual feedback..." <commentary>TUI specialist was needed for interactive CLI enhancement and terminal UX</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Event Handling**: Robust keyboard and terminal event handling for interactive functionality
 - **Performance Optimization**: Efficient screen updates and rendering for responsive terminal interfaces
 - **Error Handling**: Clear error presentation and recovery mechanisms within terminal constraints
+
+<!-- COMPILED AGENT: Generated from tui-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:15Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/tui-specialist.md -->

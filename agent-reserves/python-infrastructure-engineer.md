@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from python-infrastructure-engineer template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/python-infrastructure-engineer.md -->
-
 ---
 name: python-infrastructure-engineer
 description: Use this agent when you need Python ecosystem tooling, configuration management, and development workflow setup. Examples: <example>Context: Pre-commit hooks failing due to tool configuration issues user: "bandit security scanning is causing pre-commit failures" assistant: "I'll use the python-infrastructure-engineer agent to diagnose and fix the bandit configuration issue." <commentary>Tool configuration problems require Python infrastructure expertise to resolve properly</commentary></example> <example>Context: Quality gates need to be enforced without bypasses user: "We're using --no-verify to bypass quality checks" assistant: "Let me engage the python-infrastructure-engineer agent to fix the tooling so all quality gates work properly." <commentary>Python tooling expertise needed to ensure proper development workflow</commentary></example>
@@ -400,3 +396,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Clear Feedback**: When quality gates fail, error messages should provide actionable remediation steps  
 - **Efficient Execution**: Pre-commit hooks and quality checks should complete in under 2 minutes for typical changes
 - **Comprehensive Coverage**: Security, style, typing, and testing should all be integrated into seamless workflow
+
+<!-- COMPILED AGENT: Generated from python-infrastructure-engineer template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/python-infrastructure-engineer.md -->

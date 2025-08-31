@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from integration-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/integration-specialist.md -->
-
 ---
 name: integration-specialist
 description: Use this agent when you need expertise in cross-system integration with deep knowledge of protocols, APIs, and complex system boundaries. This agent specializes in MCP protocol implementation, Git internals, and designing robust interfaces between disparate systems. Examples: <example>Context: User needs to implement MCP protocol handlers with error recovery. user: "We need robust MCP server implementation with comprehensive failure handling" assistant: "I'll use the integration-specialist agent to implement MCP protocol with proper error handling and recovery." <commentary>MCP protocol mastery and complex integration scenarios are exactly what the integration-specialist excels at.</commentary></example> <example>Context: User needs git integration for workspace management. user: "How do we safely manage git worktrees for agent isolation while protecting the main repository?" assistant: "Let me engage the integration-specialist agent to design secure git operations with proper boundaries." <commentary>Git internals and secure system boundary design are core integration-specialist competencies.</commentary></example>
@@ -369,3 +365,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - Write comprehensive integration analysis to appropriate project files
 - Create actionable protocol implementation and error handling documentation
 - Document integration patterns and security considerations for future development
+
+<!-- COMPILED AGENT: Generated from integration-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/integration-specialist.md -->

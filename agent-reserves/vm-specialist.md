@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from vm-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:35Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/vm-specialist.md -->
-
 ---
 name: vm-specialist
 description: Expert in register-based virtual machines, bytecode execution, instruction dispatch optimization, and VM security isolation for Alpha Prime's deterministic robot execution environment
@@ -320,3 +316,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 ## Project-Specific Workflows
 [Add project-specific workflow modifications here]
 <!-- PROJECT_SPECIFIC_END:project-name -->
+
+<!-- COMPILED AGENT: Generated from vm-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:15Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/vm-specialist.md -->

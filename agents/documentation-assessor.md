@@ -357,3 +357,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 3. **Gap Analysis**: Identify missing content and improvement opportunities with maintenance burden assessment
 4. **Quality Validation**: Verify documentation meets established standards and addresses developer needs effectively
 5. **Documentation**: Create comprehensive documentation quality assessment with structured improvement recommendations
+
+<!-- COMPILED AGENT: Generated from documentation-assessor template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/documentation-assessor.md -->

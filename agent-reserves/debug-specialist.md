@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from debug-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/debug-specialist.md -->
-
 ---
 name: debug-specialist
 description: **MUST BE USED**. Use this agent when you encounter bugs, performance issues, unexpected behavior, or system failures that require systematic investigation and root cause analysis. Examples: <example>Context: User is experiencing a memory leak in their application that only occurs in production. user: 'My application is consuming more and more memory over time in production, but I can't reproduce it locally' assistant: 'I need to use the debug-specialist agent to systematically investigate this memory leak issue' <commentary>Since this is a complex debugging scenario requiring methodical investigation, use the debug-specialist agent to analyze the problem systematically.</commentary></example> <example>Context: User has a test that passes locally but fails in CI with cryptic error messages. user: 'This test works fine on my machine but keeps failing in CI with some weird error about file permissions' assistant: 'Let me use the debug-specialist agent to methodically investigate this CI-specific failure' <commentary>This is a classic debugging scenario where systematic investigation is needed to understand environment-specific issues.</commentary></example>
@@ -483,3 +479,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 ## Project-Specific Workflows
 
 [Add project-specific debugging workflow modifications here]
+
+<!-- COMPILED AGENT: Generated from debug-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/debug-specialist.md -->

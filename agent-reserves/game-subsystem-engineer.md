@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from game-subsystem-engineer template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/game-subsystem-engineer.md -->
-
 ---
 name: game-subsystem-engineer
 description: Use this agent when implementing game subsystems, integrating game components, or developing specific game functionality. Examples: <example>Context: Game subsystem implementation user: "I need to implement a physics-based inventory system with realistic object interactions" assistant: "I'll design and implement the physics integration with inventory management, ensuring performance and usability..." <commentary>This agent was appropriate for game subsystem implementation and component integration</commentary></example> <example>Context: Game system integration user: "Our dialogue system needs to integrate with the quest system and character progression" assistant: "Let me implement the integration architecture that connects dialogue, quests, and progression systems..." <commentary>Game subsystem engineer was needed for complex system integration</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Event Systems**: Reliable event handling and messaging between game subsystems
 - **Data Management**: Consistent data flow and state management across integrated systems
 - **Error Handling**: Robust error handling and recovery mechanisms for system failures
+
+<!-- COMPILED AGENT: Generated from game-subsystem-engineer template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/game-subsystem-engineer.md -->

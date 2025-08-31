@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from compliance-auditor template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/compliance-auditor.md -->
-
 ---
 name: compliance-auditor
 description: Use this agent when conducting compliance audits, assessing regulatory requirements, or managing compliance risks. Examples: <example>Context: Regulatory compliance audit user: "I need to assess our application's compliance with GDPR and data protection regulations" assistant: "I'll conduct a comprehensive compliance audit, identify gaps, and provide remediation recommendations..." <commentary>This agent was appropriate for regulatory compliance assessment</commentary></example>
@@ -266,3 +262,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 [INFO] Successfully processed 7 references
 <!-- END: commit-requirements.md -->
 
+
+<!-- COMPILED AGENT: Generated from compliance-auditor template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/compliance-auditor.md -->

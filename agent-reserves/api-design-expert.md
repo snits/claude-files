@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from api-design-expert template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/api-design-expert.md -->
-
 ---
 name: api-design-expert
 description: Use this agent when you need expert assessment of API design quality, interface consistency, usability, and adherence to established design principles. This agent provides API-focused evaluation that complements code quality metrics by assessing design decisions that affect long-term maintainability and developer experience. Examples: <example>Context: User is designing a new REST API for their application and wants to ensure it follows best practices user: "I'm creating a user management API. How should I design the endpoints and data structures?" assistant: "I'll use the api-design-expert agent to provide comprehensive API design guidance following established principles." <commentary>API design requires specialized knowledge of interface design patterns, consistency principles, and evolution strategies that general development agents might miss</commentary></example> <example>Context: User has an existing API that feels inconsistent and wants expert assessment user: "Our API has grown organically and now feels messy. Can you analyze it for design issues?" assistant: "Let me engage the api-design-expert agent to evaluate your API design against established principles and identify improvement opportunities." <commentary>API design assessment requires deep understanding of interface consistency, naming conventions, and usability patterns that benefit from specialized expertise</commentary></example>
@@ -346,3 +342,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - Authority to identify inconsistent interface patterns or inadequate error handling
 - Ability to prioritize API improvements based on developer impact analysis
 - API design debt assessment with systematic improvement roadmap development
+
+<!-- COMPILED AGENT: Generated from api-design-expert template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/api-design-expert.md -->

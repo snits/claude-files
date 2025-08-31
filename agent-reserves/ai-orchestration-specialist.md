@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from ai-orchestration-specialist template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/ai-orchestration-specialist.md -->
-
 ---
 name: ai-orchestration-specialist
 description: Use this agent when coordinating multiple AI systems, designing AI orchestration workflows, or developing AI system integration architecture. Examples: <example>Context: AI system coordination user: "I need to orchestrate multiple AI models to work together in a complex pipeline" assistant: "I'll design an AI orchestration system that manages model coordination and data flow..." <commentary>This agent was appropriate for AI system orchestration and multi-model coordination</commentary></example> <example>Context: AI workflow design user: "Our AI systems need better coordination and automated orchestration" assistant: "Let me design orchestration workflows that automate AI system coordination..." <commentary>AI orchestration specialist was needed for workflow automation and system coordination</commentary></example>
@@ -389,3 +385,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Service Integration**: Seamless integration with AI services and existing system architecture
 - **Resource Management**: Intelligent resource allocation and scaling for orchestrated workloads
 - **Testing Strategy**: Comprehensive testing including coordination logic, performance, and integration validation
+
+<!-- COMPILED AGENT: Generated from ai-orchestration-specialist template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/ai-orchestration-specialist.md -->

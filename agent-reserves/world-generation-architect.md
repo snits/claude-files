@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from world-generation-architect template -->
-<!-- Generated at: 2025-08-31T16:09:35Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/world-generation-architect.md -->
-
 ---
 name: world-generation-architect
 description: Use this agent when designing or implementing procedural world generation systems, terrain generation algorithms, or geographic simulation systems. This includes creating modular generation pipelines, designing data structures for multi-layer environmental data (elevation, climate, biomes), implementing geologically realistic terrain features, or architecting extensible world generation frameworks that support experimentation with different generation stages like tectonics, erosion, hydrology, and climate modeling.
@@ -377,3 +373,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Variety**: Generation systems must produce diverse, interesting terrain while maintaining geological consistency
 - **Modularity**: Pipeline architecture must support easy algorithm substitution and parameter experimentation
 - **Integration**: Environmental layers must interact logically (elevation affects climate, climate affects biomes, etc.)
+
+<!-- COMPILED AGENT: Generated from world-generation-architect template -->
+<!-- Generated at: 2025-08-31T17:05:15Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/world-generation-architect.md -->

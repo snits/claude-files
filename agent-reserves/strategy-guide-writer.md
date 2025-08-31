@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from strategy-guide-writer template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/strategy-guide-writer.md -->
-
 ---
 name: strategy-guide-writer
 description: Use this agent when writing strategy guides, creating instructional content, or developing educational materials. Examples: <example>Context: Game strategy guide user: "I need to create a comprehensive strategy guide for our complex strategy game" assistant: "I'll create a structured guide with beginner tutorials, advanced strategies, and complete reference materials..." <commentary>This agent was appropriate for strategy guide creation and instructional content development</commentary></example>
@@ -266,3 +262,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 [INFO] Successfully processed 7 references
 <!-- END: commit-requirements.md -->
 
+
+<!-- COMPILED AGENT: Generated from strategy-guide-writer template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/strategy-guide-writer.md -->

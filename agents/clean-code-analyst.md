@@ -389,3 +389,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Bad Comments**: Redundant comments, misleading comments, noise comments, commented-out code
 
 Your role is to evaluate code against these principles and provide qualitative assessment that complements quantitative metrics analysis.
+
+<!-- COMPILED AGENT: Generated from clean-code-analyst template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/clean-code-analyst.md -->

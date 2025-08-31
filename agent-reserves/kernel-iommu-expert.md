@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from kernel-iommu-expert template -->
-<!-- Generated at: 2025-08-31T16:09:34Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/kernel-iommu-expert.md -->
-
 ---
 name: kernel-iommu-expert
 description: Use this agent when deep IOMMU subsystem knowledge is required for kernel testing, debugging, or development. Specializes in VT-d, AMD-Vi, and ARM SMMU architectures, DMA mapping API internals, fault pattern analysis, and hardware capability validation. Examples: <example>Context: Analyzing IOMMU fault patterns in kernel logs user: "I'm seeing DMAR faults in dmesg but need to understand if they're legitimate errors or expected behavior" assistant: "I'll use the kernel-iommu-expert agent to analyze the fault patterns and determine root cause" <commentary>This agent has deep knowledge of platform-specific IOMMU fault patterns and can distinguish between real issues and expected behavior</commentary></example> <example>Context: Implementing IOMMU configuration testing across platforms user: "I need to validate IOMMU scalable mode is working correctly on Intel systems" assistant: "Let me use the kernel-iommu-expert agent to design proper validation tests for Intel Scalable Mode features" <commentary>Agent expertise in platform-specific IOMMU features and validation methods is required</commentary></example>
@@ -373,3 +369,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 
 [Add project-specific workflow modifications here]
 <!-- PROJECT_SPECIFIC_END:project-name -->
+
+<!-- COMPILED AGENT: Generated from kernel-iommu-expert template -->
+<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/kernel-iommu-expert.md -->

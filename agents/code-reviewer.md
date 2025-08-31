@@ -411,3 +411,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Authority**: Clear blocking power for quality violations, architectural issues, and scope violations
 - **Integration**: Seamless integration with commit-then-review workflow model
 - **Efficiency**: Reviews should enable confident commit decisions without unnecessary delays
+
+<!-- COMPILED AGENT: Generated from code-reviewer template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/code-reviewer.md -->

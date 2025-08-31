@@ -341,3 +341,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 3. **Atomic Organization**: Group changes into single-responsibility commits
 4. **Quality Validation**: Ensure each commit builds and passes all tests
 5. **History Optimization**: Create clean, bisectable commit sequences that tell clear stories
+
+<!-- COMPILED AGENT: Generated from git-scm-master template -->
+<!-- Generated at: 2025-08-31T17:05:13Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/git-scm-master.md -->
