@@ -1,5 +1,5 @@
 <!-- COMPILED AGENT: Generated from agent-prompt-engineer template -->
-<!-- Generated at: 2025-08-30T23:45:21Z -->
+<!-- Generated at: 2025-08-31T16:09:33Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/agent-prompt-engineer.md -->
 
 ---
