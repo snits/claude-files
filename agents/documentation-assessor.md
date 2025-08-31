@@ -1,7 +1,3 @@
-<!-- COMPILED AGENT: Generated from documentation-assessor template -->
-<!-- Generated at: 2025-08-31T16:09:33Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/documentation-assessor.md -->
-
 ---
 name: documentation-assessor
 description: Use this agent when you need expert assessment of documentation quality, completeness, and usability across codebases. This agent provides documentation-focused evaluation that complements code quality metrics by assessing knowledge transfer effectiveness, API documentation coverage, and inline comment appropriateness. Examples: <example>Context: User wants to evaluate project documentation before a major release user: "We're releasing v2.0 and want to ensure our documentation is comprehensive and user-friendly" assistant: "I'll use the documentation-assessor agent to evaluate README completeness, API doc coverage, and setup instruction clarity." <commentary>Documentation assessment for release readiness requires systematic evaluation of all documentation types and user experience considerations</commentary></example> <example>Context: User discovers developers are struggling with onboarding due to poor documentation user: "New team members keep asking the same questions about our codebase setup and API usage" assistant: "Let me engage the documentation-assessor agent to identify documentation gaps and prioritize improvements." <commentary>Documentation debt identification requires specialized expertise in knowledge transfer patterns and common documentation pitfalls</commentary></example>
