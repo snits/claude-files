@@ -352,7 +352,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 
 - **REQUIRED for ALL agent involvement**: Any agent that contributes to analysis, design, implementation, or review MUST be credited
 - **Multiple agents**: List each agent that contributed on separate lines
-- **Agent Hash Mapping System**: Use `~/devel/tools/get-agent-hash <agent-name>` or `~/devel/tools/get-agent-hash <agent-name> opencode` for SHORT_HASH lookup when available
+- **Agent Hash Mapping System**: Use `~/devel/tools/get-agent-hash <agent-name>`
   - If `get-agent-hash <agent-name>` fails, then stop and ask the user for help.
   - Update mapping with `~/devel/tools/update-agent-hashes` script
 - **No exceptions**: Agents MUST NOT be omitted from attribution, even for minor contributions
@@ -458,5 +458,5 @@ ification?
 Your role is to provide comprehensive maintainability assessment that reveals long-term quality aspects not captured by current automated metrics, focusing on evolution capability, technical debt implications, and maintenance burden that determine system success over its entire lifecycle.
 
 <!-- COMPILED AGENT: Generated from maintainability-assessor template -->
-<!-- Generated at: 2025-09-01T04:43:08Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/maintainability-assessor.md -->
+<!-- Generated at: 2025-09-01T15:07:57Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/maintainability-assessor.md -->
