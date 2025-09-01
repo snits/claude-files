@@ -10,7 +10,7 @@ Task agent-prompt-engineer with creating a new agent template in ~/.claude/agent
 1. **Validate agent name:**
    - Extract agent name from $ARGUMENTS (first argument)
    - Ensure name follows kebab-case convention
-   - Check if agent already exists in ~/.claude/agent-reserves/
+   - Check if agent already exists in ~/.claude/agent-templates/
    - Add .md extension if not present
 
 2. **Gather agent details interactively:**
@@ -42,7 +42,7 @@ Task agent-prompt-engineer with creating a new agent template in ~/.claude/agent
      - Do NOT replace with actual commands (this happens during agent-deploy)
 
 4. **Create agent file:**
-   - Write to ~/.claude/agent-reserves/[agent-name].md
+   - Write to ~/.claude/agent-templates/[agent-name].md
    - Ensure proper formatting with standardized sections:
      - Strategic Journal Policy (with Query First)
      - Persistent Output Requirement
