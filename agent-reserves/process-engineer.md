@@ -418,5 +418,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Flexibility**: Support for multiple process frameworks (CMM, Agile, custom) within unified architecture
 - **Scalability**: Process frameworks that maintain effectiveness across team sizes and project complexity levels
 <!-- COMPILED AGENT: Generated from process-engineer template -->
-<!-- Generated at: 2025-08-31T17:05:14Z -->
+<!-- Generated at: 2025-09-01T04:43:09Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/process-engineer.md -->
