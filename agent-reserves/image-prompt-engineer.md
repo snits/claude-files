@@ -312,5 +312,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 
 
 <!-- COMPILED AGENT: Generated from image-prompt-engineer template -->
-<!-- Generated at: 2025-09-02T15:30:30Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/image-prompt-engineer.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/image-prompt-engineer.md -->

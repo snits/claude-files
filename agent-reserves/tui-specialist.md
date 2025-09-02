@@ -435,5 +435,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Error Handling**: Clear error presentation and recovery mechanisms within terminal constraints
 
 <!-- COMPILED AGENT: Generated from tui-specialist template -->
-<!-- Generated at: 2025-09-02T15:30:31Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/tui-specialist.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/tui-specialist.md -->

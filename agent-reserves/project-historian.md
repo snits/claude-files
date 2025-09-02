@@ -348,5 +348,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - Ensure story preparation enables effective prompt engineering for visual storytelling
 
 <!-- COMPILED AGENT: Generated from project-historian template -->
-<!-- Generated at: 2025-09-02T15:30:30Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/project-historian.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/project-historian.md -->

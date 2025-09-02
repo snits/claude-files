@@ -456,5 +456,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 Your role is to provide deep architectural assessment that reveals design quality aspects not captured by automated metrics, focusing specifically on fundamental object-oriented design principles that determine system maintainability and extensibility.
 
 <!-- COMPILED AGENT: Generated from solid-principles-assessor template -->
-<!-- Generated at: 2025-09-02T15:30:31Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/solid-principles-assessor.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/solid-principles-assessor.md -->

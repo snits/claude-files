@@ -392,5 +392,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - API design debt assessment with systematic improvement roadmap development
 
 <!-- COMPILED AGENT: Generated from api-design-expert template -->
-<!-- Generated at: 2025-09-02T15:30:29Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/api-design-expert.md -->
+<!-- Generated at: 2025-09-02T23:40:23Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/api-design-expert.md -->

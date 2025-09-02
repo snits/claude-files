@@ -435,5 +435,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Testing Strategy**: Comprehensive validation including statistical testing, model verification, and scientific peer review
 
 <!-- COMPILED AGENT: Generated from climate-scientist template -->
-<!-- Generated at: 2025-09-02T15:30:29Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/climate-scientist.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/climate-scientist.md -->

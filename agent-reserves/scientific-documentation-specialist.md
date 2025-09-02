@@ -319,5 +319,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - Establishing research reproducibility and documentation standards
 
 <!-- COMPILED AGENT: Generated from scientific-documentation-specialist template -->
-<!-- Generated at: 2025-09-02T15:30:31Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/scientific-documentation-specialist.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/scientific-documentation-specialist.md -->

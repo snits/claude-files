@@ -312,5 +312,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 
 
 <!-- COMPILED AGENT: Generated from systems-performance-specialist template -->
-<!-- Generated at: 2025-09-02T15:30:31Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/systems-performance-specialist.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/systems-performance-specialist.md -->

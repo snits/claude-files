@@ -418,5 +418,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Efficiency**: Prompts should enable quick, confident decision-making without unnecessary complexity
 
 <!-- COMPILED AGENT: Generated from agent-prompt-engineer template -->
-<!-- Generated at: 2025-09-02T15:30:29Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/agent-prompt-engineer.md -->
+<!-- Generated at: 2025-09-02T23:40:23Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/agent-prompt-engineer.md -->

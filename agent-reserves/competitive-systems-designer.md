@@ -494,5 +494,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Documentation**: Comprehensive design specifications enabling effective implementation and future system evolution
 
 <!-- COMPILED AGENT: Generated from competitive-systems-designer template -->
-<!-- Generated at: 2025-09-02T15:30:29Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/competitive-systems-designer.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/competitive-systems-designer.md -->

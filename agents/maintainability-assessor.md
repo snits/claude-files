@@ -475,5 +475,5 @@ ification?
 Your role is to provide comprehensive maintainability assessment that reveals long-term quality aspects not captured by current automated metrics, focusing on evolution capability, technical debt implications, and maintenance burden that determine system success over its entire lifecycle.
 
 <!-- COMPILED AGENT: Generated from maintainability-assessor template -->
-<!-- Generated at: 2025-09-02T15:30:30Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/maintainability-assessor.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/maintainability-assessor.md -->

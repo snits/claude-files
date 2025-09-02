@@ -435,5 +435,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Quality Metrics**: Quantitative assessment criteria for design effectiveness and player impact
 
 <!-- COMPILED AGENT: Generated from game-design-reviewer template -->
-<!-- Generated at: 2025-09-02T15:30:30Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/game-design-reviewer.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/game-design-reviewer.md -->

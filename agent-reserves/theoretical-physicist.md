@@ -435,5 +435,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Testing Strategy**: Comprehensive validation including mathematical verification, physical consistency checks, and theoretical peer review
 
 <!-- COMPILED AGENT: Generated from theoretical-physicist template -->
-<!-- Generated at: 2025-09-02T15:30:31Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/theoretical-physicist.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/theoretical-physicist.md -->

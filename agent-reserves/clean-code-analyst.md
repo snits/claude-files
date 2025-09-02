@@ -439,5 +439,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 Your role is to evaluate code against these principles and provide qualitative assessment that complements quantitative metrics analysis.
 
 <!-- COMPILED AGENT: Generated from clean-code-analyst template -->
-<!-- Generated at: 2025-09-02T15:30:29Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/clean-code-analyst.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/clean-code-analyst.md -->

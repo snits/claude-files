@@ -423,5 +423,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Integration**: Environmental layers must interact logically (elevation affects climate, climate affects biomes, etc.)
 
 <!-- COMPILED AGENT: Generated from world-generation-architect template -->
-<!-- Generated at: 2025-09-02T15:30:31Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/world-generation-architect.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/world-generation-architect.md -->

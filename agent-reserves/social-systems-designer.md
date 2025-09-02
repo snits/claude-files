@@ -341,5 +341,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Community Resilience**: Build systems that maintain healthy community dynamics over time
 
 <!-- COMPILED AGENT: Generated from social-systems-designer template -->
-<!-- Generated at: 2025-09-02T15:30:31Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/social-systems-designer.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/social-systems-designer.md -->

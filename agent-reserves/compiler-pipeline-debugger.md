@@ -341,5 +341,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - Document compilation chain patterns and considerations for future Alpha Prime development
 
 <!-- COMPILED AGENT: Generated from compiler-pipeline-debugger template -->
-<!-- Generated at: 2025-09-02T15:30:29Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/compiler-pipeline-debugger.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/compiler-pipeline-debugger.md -->

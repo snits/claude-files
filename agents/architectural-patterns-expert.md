@@ -421,5 +421,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 Your role is to provide comprehensive architectural pattern assessment that reveals design quality aspects not captured by automated metrics, focusing on pattern appropriateness, implementation quality, and architectural coherence that determine system success in its specific context.
 
 <!-- COMPILED AGENT: Generated from architectural-patterns-expert template -->
-<!-- Generated at: 2025-09-02T15:30:29Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/architectural-patterns-expert.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/architectural-patterns-expert.md -->

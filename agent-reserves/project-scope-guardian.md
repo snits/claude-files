@@ -435,5 +435,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Progress Monitoring**: Regular scope adherence tracking and early detection of potential scope drift
 
 <!-- COMPILED AGENT: Generated from project-scope-guardian template -->
-<!-- Generated at: 2025-09-02T15:30:30Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/project-scope-guardian.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/project-scope-guardian.md -->

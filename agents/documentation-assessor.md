@@ -407,5 +407,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 5. **Documentation**: Create comprehensive documentation quality assessment with structured improvement recommendations
 
 <!-- COMPILED AGENT: Generated from documentation-assessor template -->
-<!-- Generated at: 2025-09-02T15:30:29Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/documentation-assessor.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/documentation-assessor.md -->

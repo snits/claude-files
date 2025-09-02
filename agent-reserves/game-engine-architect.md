@@ -435,5 +435,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Platform Abstraction**: Design cross-platform interfaces for graphics, audio, and input systems
 
 <!-- COMPILED AGENT: Generated from game-engine-architect template -->
-<!-- Generated at: 2025-09-02T15:30:30Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/game-engine-architect.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/game-engine-architect.md -->

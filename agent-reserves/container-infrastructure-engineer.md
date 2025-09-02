@@ -384,5 +384,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - Monitoring and observability enabling rapid issue identification and resolution
 
 <!-- COMPILED AGENT: Generated from container-infrastructure-engineer template -->
-<!-- Generated at: 2025-09-02T15:30:29Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/container-infrastructure-engineer.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/container-infrastructure-engineer.md -->

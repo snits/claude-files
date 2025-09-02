@@ -443,5 +443,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 **Significant Changes**: If major structural changes made (moving multiple paragraphs, substantial reorganization), add "Notes on Changes" section with brief explanation of modifications and rationale for preservation of author intent
 
 <!-- COMPILED AGENT: Generated from copy-editor template -->
-<!-- Generated at: 2025-09-02T15:30:29Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/copy-editor.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/copy-editor.md -->

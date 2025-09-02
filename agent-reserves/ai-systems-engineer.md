@@ -435,5 +435,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Testing Strategy**: Comprehensive testing including infrastructure, performance, and integration validation
 
 <!-- COMPILED AGENT: Generated from ai-systems-engineer template -->
-<!-- Generated at: 2025-09-02T15:30:29Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/ai-systems-engineer.md -->
+<!-- Generated at: 2025-09-02T23:40:23Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/ai-systems-engineer.md -->

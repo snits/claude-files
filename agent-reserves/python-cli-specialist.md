@@ -395,5 +395,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 **Performance**: Validate CLI performance for expected usage scales and data volumes.
 
 <!-- COMPILED AGENT: Generated from python-cli-specialist template -->
-<!-- Generated at: 2025-09-02T15:30:30Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/python-cli-specialist.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/python-cli-specialist.md -->

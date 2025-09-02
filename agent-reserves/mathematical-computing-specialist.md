@@ -436,5 +436,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Documentation**: Mathematical approaches and computational decisions documented with theoretical justification
 
 <!-- COMPILED AGENT: Generated from mathematical-computing-specialist template -->
-<!-- Generated at: 2025-09-02T15:30:30Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/mathematical-computing-specialist.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/mathematical-computing-specialist.md -->

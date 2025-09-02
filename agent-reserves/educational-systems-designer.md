@@ -441,5 +441,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Accessibility Compliance**: Implement universal design for learning principles supporting cognitive, physical, and sensory accessibility requirements
 - **Teacher Support Integration**: Provide comprehensive educator resources including curriculum guides, assessment rubrics, and professional development materials
 <!-- COMPILED AGENT: Generated from educational-systems-designer template -->
-<!-- Generated at: 2025-09-02T15:30:29Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/educational-systems-designer.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/educational-systems-designer.md -->

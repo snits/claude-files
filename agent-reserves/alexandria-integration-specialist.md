@@ -435,5 +435,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Testing Strategy**: Comprehensive testing including accuracy validation, performance testing, and integration verification
 
 <!-- COMPILED AGENT: Generated from alexandria-integration-specialist template -->
-<!-- Generated at: 2025-09-02T15:30:29Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/alexandria-integration-specialist.md -->
+<!-- Generated at: 2025-09-02T23:40:23Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/alexandria-integration-specialist.md -->

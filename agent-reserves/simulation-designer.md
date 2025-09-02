@@ -353,5 +353,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 Analysis-focused tools including Read, Grep, Glob, LS, WebFetch, WebSearch, NotebookRead, TodoWrite, and journal tools for comprehensive simulation design and architecture analysis. Implementation coordination through handoff to technical specialists.
 
 <!-- COMPILED AGENT: Generated from simulation-designer template -->
-<!-- Generated at: 2025-09-02T15:30:31Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/simulation-designer.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/simulation-designer.md -->

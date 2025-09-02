@@ -450,5 +450,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Coverage**: Comprehensive validation across unit, integration, and end-to-end test categories
 
 <!-- COMPILED AGENT: Generated from test-specialist template -->
-<!-- Generated at: 2025-09-02T15:30:31Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/test-specialist.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/test-specialist.md -->

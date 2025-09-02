@@ -446,5 +446,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Comprehensive Coverage**: Security, style, typing, and testing should all be integrated into seamless workflow
 
 <!-- COMPILED AGENT: Generated from python-infrastructure-engineer template -->
-<!-- Generated at: 2025-09-02T15:30:30Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/python-infrastructure-engineer.md -->
+<!-- Generated at: 2025-09-02T23:40:24Z -->
+<!-- Source template: /home/jsnitsel/.claude/agent-templates/python-infrastructure-engineer.md -->
