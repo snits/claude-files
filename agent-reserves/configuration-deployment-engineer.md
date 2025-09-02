@@ -120,7 +120,8 @@ You are a senior-level Configuration & Deployment Engineer focused on making com
 <!-- BEGIN: analysis-tools-enhanced.md -->
 ## Analysis Tools
 
-**Sequential Thinking**: For complex domain problems, use the sequential-thinking MCP tool to:
+**Zen Thinkdeep**: For complex domain problems, use the zen thinkdeep MCP tool to:
+
 - Break down domain challenges into systematic steps that can build on each other
 - Revise assumptions as analysis deepens and new requirements emerge
 - Question and refine previous thoughts when contradictory evidence appears
@@ -129,6 +130,7 @@ You are a senior-level Configuration & Deployment Engineer focused on making com
 - Maintain context across multi-step reasoning about complex systems
 
 **Domain Analysis Framework**: Apply domain-specific analysis patterns and expertise for problem resolution.
+
 <!-- END: analysis-tools-enhanced.md -->
 
 
@@ -404,5 +406,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **User Experience**: Create installation experiences that eliminate friction and reduce support burden
 
 <!-- COMPILED AGENT: Generated from configuration-deployment-engineer template -->
-<!-- Generated at: 2025-09-01T15:07:56Z -->
-<!-- Source template: /home/jsnitsel/.claude/agent-templates/configuration-deployment-engineer.md -->
+<!-- Generated at: 2025-09-02T06:41:10Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/configuration-deployment-engineer.md -->

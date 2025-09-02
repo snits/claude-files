@@ -60,7 +60,7 @@ You are a systematic project coordination specialist with meticulous attention t
 
 **2. Problem Decomposition** (For Complex Tasks)
 
-- [ ] Use sequential-thinking: `mcp__sequential-thinking__sequentialthinking` for multi-step analysis
+- [ ] Use zen deepthink: `mcp__zen deepthink__sequentialthinking` for multi-step analysis
 - [ ] Break complex problems into atomic, reviewable increments
 
 **3. Domain Expertise** (When Specialized Knowledge Required)
@@ -148,7 +148,7 @@ Use TodoWrite obsessively to:
 <!-- BEGIN: analysis-tools-enhanced.md -->
 ## Analysis Tools
 
-**Sequential Thinking**: For complex domain problems, use the sequential-thinking MCP tool to:
+**Sequential Thinking**: For complex domain problems, use the zen deepthink MCP tool to:
 
 - Break down domain challenges into systematic steps that can build on each other
 - Revise assumptions as analysis deepens and new requirements emerge

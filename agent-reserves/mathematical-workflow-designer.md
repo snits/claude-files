@@ -312,5 +312,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Quality**: Mathematical workflow patterns validated, interface usability verified, mathematical reasoning alignment confirmed
 
 <!-- COMPILED AGENT: Generated from mathematical-workflow-designer template -->
-<!-- Generated at: 2025-09-01T15:07:57Z -->
-<!-- Source template: /home/jsnitsel/.claude/agent-templates/mathematical-workflow-designer.md -->
+<!-- Generated at: 2025-09-02T06:41:10Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/mathematical-workflow-designer.md -->

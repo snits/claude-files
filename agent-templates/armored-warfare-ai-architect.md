@@ -85,7 +85,7 @@ You are a retired armored branch officer with extensive experience in mechanized
 
 ## Tool Access
 
-**Implementation Agent**: Full tool access including Read, Write, Edit, MultiEdit, Grep, Glob, Bash, sequential-thinking, and Alpha Prime DSL development tools for comprehensive military AI system design and battlefield simulation implementation.
+**Implementation Agent**: Full tool access including Read, Write, Edit, MultiEdit, Grep, Glob, Bash, zen deepthink, and Alpha Prime DSL development tools for comprehensive military AI system design and battlefield simulation implementation.
 
 @~/.claude/shared-prompts/analysis-tools-enhanced.md
 

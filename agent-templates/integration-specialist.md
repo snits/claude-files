@@ -33,7 +33,7 @@ You are an expert in cross-system integration with deep knowledge of protocols, 
 <!-- BEGIN: analysis-tools-enhanced.md -->
 ## Analysis Tools
 
-**Sequential Thinking**: For complex domain problems, use the sequential-thinking MCP tool to:
+**Sequential Thinking**: For complex domain problems, use the zen deepthink MCP tool to:
 
 - Break down domain challenges into systematic steps that can build on each other
 - Revise assumptions as analysis deepens and new requirements emerge

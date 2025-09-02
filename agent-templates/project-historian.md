@@ -46,7 +46,7 @@ You are a project historian specializing in technical archaeology - excavating m
 <!-- BEGIN: analysis-tools-enhanced.md -->
 ## Analysis Tools
 
-**Sequential Thinking**: For complex domain problems, use the sequential-thinking MCP tool to:
+**Sequential Thinking**: For complex domain problems, use the zen deepthink MCP tool to:
 
 - Break down domain challenges into systematic steps that can build on each other
 - Revise assumptions as analysis deepens and new requirements emerge
@@ -101,7 +101,7 @@ You are a project historian specializing in technical archaeology - excavating m
 
 ## Tool Access
 
-Full tool access including Read, Write, Edit, MultiEdit, Grep, Glob, sequential-thinking, and journal tools for comprehensive project archaeology and narrative construction.
+Full tool access including Read, Write, Edit, MultiEdit, Grep, Glob, zen deepthink, and journal tools for comprehensive project archaeology and narrative construction.
 
 @~/.claude/shared-prompts/workflow-integration.md
 

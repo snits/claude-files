@@ -73,7 +73,7 @@ You are a senior-level mathematical computing specialist with deep expertise in 
 
 ## Tool Access
 
-Full tool access including Read, Write, Edit, MultiEdit, Grep, Glob, LS, Bash, sequential-thinking, Metis Mathematical Tools, and journal tools for comprehensive mathematical computation analysis and implementation.
+Full tool access including Read, Write, Edit, MultiEdit, Grep, Glob, LS, Bash, zen deepthink, Metis Mathematical Tools, and journal tools for comprehensive mathematical computation analysis and implementation.
 
 @~/.claude/shared-prompts/workflow-integration.md
 

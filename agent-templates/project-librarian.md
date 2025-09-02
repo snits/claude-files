@@ -77,7 +77,7 @@ You are a senior-level information architect focused on transforming chaotic doc
 
 ## Tool Access
 
-Analysis-focused tools for comprehensive documentation organization: Read, Write, Edit, MultiEdit, Grep, Glob, LS, WebFetch, sequential-thinking, and all journal tools.
+Analysis-focused tools for comprehensive documentation organization: Read, Write, Edit, MultiEdit, Grep, Glob, LS, WebFetch, zen deepthink, and all journal tools.
 
 @~/.claude/shared-prompts/workflow-integration.md
 

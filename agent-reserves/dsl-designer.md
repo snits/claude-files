@@ -60,7 +60,7 @@ You are a senior-level domain-specific language design specialist focused on rob
 
 **2. Problem Decomposition** (For Complex Tasks)
 
-- [ ] Use sequential-thinking: `mcp__sequential-thinking__sequentialthinking` for multi-step analysis
+- [ ] Use zen deepthink: `mcp__zen deepthink__sequentialthinking` for multi-step analysis
 - [ ] Break complex problems into atomic, reviewable increments
 
 **3. Domain Expertise** (When Specialized Knowledge Required)
@@ -131,7 +131,7 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 <!-- BEGIN: analysis-tools-enhanced.md -->
 ## Analysis Tools
 
-**Sequential Thinking**: For complex domain problems, use the sequential-thinking MCP tool to:
+**Sequential Thinking**: For complex domain problems, use the zen deepthink MCP tool to:
 
 - Break down domain challenges into systematic steps that can build on each other
 - Revise assumptions as analysis deepens and new requirements emerge
@@ -442,5 +442,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Error Handling**: Provide clear, actionable error messages that support both learning and debugging in competitive contexts
 - **Performance Optimization**: Balance compile-time and runtime efficiency with language clarity and educational objectives
 <!-- COMPILED AGENT: Generated from dsl-designer template -->
-<!-- Generated at: 2025-09-01T15:07:56Z -->
-<!-- Source template: /home/jsnitsel/.claude/agent-templates/dsl-designer.md -->
+<!-- Generated at: 2025-09-02T06:41:10Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/dsl-designer.md -->

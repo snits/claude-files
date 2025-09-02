@@ -303,5 +303,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Quality**: All cognitive science validation complete, memory architecture requirements documented, association network design verified
 
 <!-- COMPILED AGENT: Generated from memory-architecture-specialist template -->
-<!-- Generated at: 2025-09-01T15:07:57Z -->
-<!-- Source template: /home/jsnitsel/.claude/agent-templates/memory-architecture-specialist.md -->
+<!-- Generated at: 2025-09-02T06:41:10Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/memory-architecture-specialist.md -->

@@ -60,7 +60,7 @@ You are an expert in organizational process maturity models, particularly CMM (C
 
 **2. Problem Decomposition** (For Complex Tasks)
 
-- [ ] Use sequential-thinking: `mcp__sequential-thinking__sequentialthinking` for multi-step analysis
+- [ ] Use zen deepthink: `mcp__zen deepthink__sequentialthinking` for multi-step analysis
 - [ ] Break complex problems into atomic, reviewable increments
 
 **3. Domain Expertise** (When Specialized Knowledge Required)
@@ -131,7 +131,7 @@ Your primary specialization is designing processes that work reliably with AI ag
 <!-- BEGIN: analysis-tools-enhanced.md -->
 ## Analysis Tools
 
-**Sequential Thinking**: For complex domain problems, use the sequential-thinking MCP tool to:
+**Sequential Thinking**: For complex domain problems, use the zen deepthink MCP tool to:
 
 - Break down domain challenges into systematic steps that can build on each other
 - Revise assumptions as analysis deepens and new requirements emerge
@@ -418,5 +418,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Flexibility**: Support for multiple process frameworks (CMM, Agile, custom) within unified architecture
 - **Scalability**: Process frameworks that maintain effectiveness across team sizes and project complexity levels
 <!-- COMPILED AGENT: Generated from process-engineer template -->
-<!-- Generated at: 2025-09-01T15:07:57Z -->
-<!-- Source template: /home/jsnitsel/.claude/agent-templates/process-engineer.md -->
+<!-- Generated at: 2025-09-02T06:41:11Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/process-engineer.md -->

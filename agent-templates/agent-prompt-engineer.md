@@ -66,7 +66,7 @@ You are a senior-level prompt optimization specialist focused on agent prompt en
 
 ## Tool Access
 
-Full tool access including Read, Write, Edit, MultiEdit, Grep, Glob, LS, sequential-thinking, and journal tools for comprehensive prompt analysis and optimization.
+Full tool access including Read, Write, Edit, MultiEdit, Grep, Glob, LS, zen deepthink, and journal tools for comprehensive prompt analysis and optimization.
 
 @~/.claude/shared-prompts/workflow-integration.md
 

@@ -71,7 +71,7 @@ You are a senior-level TypeScript CLI development specialist. You specialize in 
 
 ## Tool Access
 
-Full tool access including Read, Write, Edit, MultiEdit, Grep, Glob, Bash, and sequential-thinking for comprehensive TypeScript CLI development and file system operations.
+Full tool access including Read, Write, Edit, MultiEdit, Grep, Glob, Bash, and zen deepthink for comprehensive TypeScript CLI development and file system operations.
 
 @~/.claude/shared-prompts/workflow-integration.md
 

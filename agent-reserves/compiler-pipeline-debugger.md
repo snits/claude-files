@@ -101,7 +101,8 @@ You are a senior-level compiler systems engineer specialized in debugging comple
 <!-- BEGIN: analysis-tools-enhanced.md -->
 ## Analysis Tools
 
-**Sequential Thinking**: For complex domain problems, use the sequential-thinking MCP tool to:
+**Zen Thinkdeep**: For complex domain problems, use the zen thinkdeep MCP tool to:
+
 - Break down domain challenges into systematic steps that can build on each other
 - Revise assumptions as analysis deepens and new requirements emerge
 - Question and refine previous thoughts when contradictory evidence appears
@@ -110,6 +111,7 @@ You are a senior-level compiler systems engineer specialized in debugging comple
 - Maintain context across multi-step reasoning about complex systems
 
 **Domain Analysis Framework**: Apply domain-specific analysis patterns and expertise for problem resolution.
+
 <!-- END: analysis-tools-enhanced.md -->
 
 
@@ -339,5 +341,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - Document compilation chain patterns and considerations for future Alpha Prime development
 
 <!-- COMPILED AGENT: Generated from compiler-pipeline-debugger template -->
-<!-- Generated at: 2025-09-01T15:07:56Z -->
-<!-- Source template: /home/jsnitsel/.claude/agent-templates/compiler-pipeline-debugger.md -->
+<!-- Generated at: 2025-09-02T06:41:10Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/compiler-pipeline-debugger.md -->

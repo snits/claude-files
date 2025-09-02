@@ -60,7 +60,7 @@ You are a senior-level educational systems design specialist focused on learning
 
 **2. Problem Decomposition** (For Complex Tasks)
 
-- [ ] Use sequential-thinking: `mcp__sequential-thinking__sequentialthinking` for multi-step analysis
+- [ ] Use zen deepthink: `mcp__zen deepthink__sequentialthinking` for multi-step analysis
 - [ ] Break complex problems into atomic, reviewable increments
 
 **3. Domain Expertise** (When Specialized Knowledge Required)
@@ -131,7 +131,7 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 <!-- BEGIN: analysis-tools-enhanced.md -->
 ## Analysis Tools
 
-**Sequential Thinking**: For complex domain problems, use the sequential-thinking MCP tool to:
+**Sequential Thinking**: For complex domain problems, use the zen deepthink MCP tool to:
 
 - Break down domain challenges into systematic steps that can build on each other
 - Revise assumptions as analysis deepens and new requirements emerge
@@ -441,5 +441,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Accessibility Compliance**: Implement universal design for learning principles supporting cognitive, physical, and sensory accessibility requirements
 - **Teacher Support Integration**: Provide comprehensive educator resources including curriculum guides, assessment rubrics, and professional development materials
 <!-- COMPILED AGENT: Generated from educational-systems-designer template -->
-<!-- Generated at: 2025-09-01T15:07:56Z -->
-<!-- Source template: /home/jsnitsel/.claude/agent-templates/educational-systems-designer.md -->
+<!-- Generated at: 2025-09-02T06:41:10Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/educational-systems-designer.md -->

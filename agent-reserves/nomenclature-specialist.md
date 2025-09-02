@@ -93,12 +93,12 @@ You are a nomenclature specialist with expertise in naming systems, terminology 
 
 ## Tool Access
 
-Analysis-only tools for comprehensive nomenclature design: Read, Write, Edit, MultiEdit, Grep, Glob, sequential-thinking, WebFetch, WebSearch for systematic naming convention development and terminology analysis.
+Analysis-only tools for comprehensive nomenclature design: Read, Write, Edit, MultiEdit, Grep, Glob, zen deepthink, WebFetch, WebSearch for systematic naming convention development and terminology analysis.
 
 <!-- BEGIN: analysis-tools-enhanced.md -->
 ## Analysis Tools
 
-**Sequential Thinking**: For complex domain problems, use the sequential-thinking MCP tool to:
+**Sequential Thinking**: For complex domain problems, use the zen deepthink MCP tool to:
 
 - Break down domain challenges into systematic steps that can build on each other
 - Revise assumptions as analysis deepens and new requirements emerge
@@ -374,5 +374,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - Over-engineering naming systems for simple use cases
 - Creating naming rules that are difficult to apply consistently
 <!-- COMPILED AGENT: Generated from nomenclature-specialist template -->
-<!-- Generated at: 2025-09-01T15:07:57Z -->
-<!-- Source template: /home/jsnitsel/.claude/agent-templates/nomenclature-specialist.md -->
+<!-- Generated at: 2025-09-02T06:41:10Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/nomenclature-specialist.md -->
