@@ -435,5 +435,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Version Management**: Proper versioning and migration guidance for API and system changes
 
 <!-- COMPILED AGENT: Generated from technical-documentation-specialist template -->
-<!-- Generated at: 2025-09-02T06:41:11Z -->
+<!-- Generated at: 2025-09-02T15:30:31Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/technical-documentation-specialist.md -->

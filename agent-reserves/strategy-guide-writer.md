@@ -312,5 +312,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 
 
 <!-- COMPILED AGENT: Generated from strategy-guide-writer template -->
-<!-- Generated at: 2025-09-02T06:41:11Z -->
+<!-- Generated at: 2025-09-02T15:30:31Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/strategy-guide-writer.md -->

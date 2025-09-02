@@ -312,5 +312,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 
 
 <!-- COMPILED AGENT: Generated from open-source-licensing-auditor template -->
-<!-- Generated at: 2025-09-02T06:41:10Z -->
+<!-- Generated at: 2025-09-02T15:30:30Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/open-source-licensing-auditor.md -->

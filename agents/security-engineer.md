@@ -456,5 +456,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 [Add project-specific security workflow modifications here]
 
 <!-- COMPILED AGENT: Generated from security-engineer template -->
-<!-- Generated at: 2025-09-02T06:41:11Z -->
+<!-- Generated at: 2025-09-02T15:30:31Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/security-engineer.md -->

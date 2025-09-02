@@ -435,5 +435,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Documentation Standards**: Thorough release documentation including procedures, dependencies, and post-deployment validation
 
 <!-- COMPILED AGENT: Generated from release-manager template -->
-<!-- Generated at: 2025-09-02T06:41:11Z -->
+<!-- Generated at: 2025-09-02T15:30:30Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/release-manager.md -->

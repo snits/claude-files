@@ -435,5 +435,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Accessibility**: Ensure dashboard visualizations are accessible to users with diverse abilities and technical contexts
 
 <!-- COMPILED AGENT: Generated from dashboard-specialist template -->
-<!-- Generated at: 2025-09-02T06:41:10Z -->
+<!-- Generated at: 2025-09-02T15:30:29Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/dashboard-specialist.md -->

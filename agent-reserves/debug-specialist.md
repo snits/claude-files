@@ -529,5 +529,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 [Add project-specific debugging workflow modifications here]
 
 <!-- COMPILED AGENT: Generated from debug-specialist template -->
-<!-- Generated at: 2025-09-02T06:41:10Z -->
+<!-- Generated at: 2025-09-02T15:30:29Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/debug-specialist.md -->

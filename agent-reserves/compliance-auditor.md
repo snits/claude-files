@@ -312,5 +312,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 
 
 <!-- COMPILED AGENT: Generated from compliance-auditor template -->
-<!-- Generated at: 2025-09-02T06:41:10Z -->
+<!-- Generated at: 2025-09-02T15:30:29Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/compliance-auditor.md -->

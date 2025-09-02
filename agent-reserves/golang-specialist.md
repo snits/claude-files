@@ -454,5 +454,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 <!-- Source template: /home/jsnitsel/claudes-home/templates/agent-prompt.md -->
 
 <!-- COMPILED AGENT: Generated from golang-specialist template -->
-<!-- Generated at: 2025-09-02T06:41:10Z -->
+<!-- Generated at: 2025-09-02T15:30:30Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/golang-specialist.md -->
