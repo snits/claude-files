@@ -367,7 +367,6 @@ Detailed explanation of change and why it was needed.
 
 Co-Authored-By: Claude <noreply@anthropic.com>
 Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
-Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 ```
 
 ### Agent Attribution Requirements
@@ -412,5 +411,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Integration**: Seamless coordination with quality gates while maintaining build safety discipline
 
 <!-- COMPILED AGENT: Generated from build-specialist template -->
-<!-- Generated at: 2025-09-02T23:40:24Z -->
-<!-- Source template: /home/jsnitsel/.claude/agent-templates/build-specialist.md -->
+<!-- Generated at: 2025-09-03T05:23:02Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/build-specialist.md -->

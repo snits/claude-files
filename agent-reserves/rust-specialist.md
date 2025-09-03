@@ -234,7 +234,6 @@ Detailed explanation of change and why it was needed.
 
 Co-Authored-By: Claude <noreply@anthropic.com>
 Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
-Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 ```
 
 ### Agent Attribution Requirements
@@ -309,5 +308,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 <!-- PROJECT_SPECIFIC_END:project-name -->
 
 <!-- COMPILED AGENT: Generated from rust-specialist template -->
-<!-- Generated at: 2025-09-02T23:40:24Z -->
-<!-- Source template: /home/jsnitsel/.claude/agent-templates/rust-specialist.md -->
+<!-- Generated at: 2025-09-03T05:23:04Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/rust-specialist.md -->

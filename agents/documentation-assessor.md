@@ -355,7 +355,6 @@ Detailed explanation of change and why it was needed.
 
 Co-Authored-By: Claude <noreply@anthropic.com>
 Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
-Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 ```
 
 ### Agent Attribution Requirements
@@ -407,5 +406,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 5. **Documentation**: Create comprehensive documentation quality assessment with structured improvement recommendations
 
 <!-- COMPILED AGENT: Generated from documentation-assessor template -->
-<!-- Generated at: 2025-09-02T23:40:24Z -->
-<!-- Source template: /home/jsnitsel/.claude/agent-templates/documentation-assessor.md -->
+<!-- Generated at: 2025-09-03T05:23:03Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/documentation-assessor.md -->

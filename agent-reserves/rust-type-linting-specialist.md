@@ -426,5 +426,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 <!-- Generated at: 2025-01-08T20:15:00Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/rust-type-linting-specialist.md -->
 <!-- COMPILED AGENT: Generated from rust-type-linting-specialist template -->
-<!-- Generated at: 2025-09-02T23:40:24Z -->
-<!-- Source template: /home/jsnitsel/.claude/agent-templates/rust-type-linting-specialist.md -->
+<!-- Generated at: 2025-09-03T05:23:04Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/rust-type-linting-specialist.md -->

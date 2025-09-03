@@ -340,7 +340,6 @@ Detailed explanation of change and why it was needed.
 
 Co-Authored-By: Claude <noreply@anthropic.com>
 Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
-Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 ```
 
 ### Agent Attribution Requirements
@@ -401,5 +400,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - User experience debt assessment with systematic improvement roadmap development
 
 <!-- COMPILED AGENT: Generated from ux-design-expert template -->
-<!-- Generated at: 2025-09-02T23:40:24Z -->
-<!-- Source template: /home/jsnitsel/.claude/agent-templates/ux-design-expert.md -->
+<!-- Generated at: 2025-09-03T05:23:04Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/ux-design-expert.md -->

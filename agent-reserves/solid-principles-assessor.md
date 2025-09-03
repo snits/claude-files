@@ -361,7 +361,6 @@ Detailed explanation of change and why it was needed.
 
 Co-Authored-By: Claude <noreply@anthropic.com>
 Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
-Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 ```
 
 ### Agent Attribution Requirements
@@ -456,5 +455,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 Your role is to provide deep architectural assessment that reveals design quality aspects not captured by automated metrics, focusing specifically on fundamental object-oriented design principles that determine system maintainability and extensibility.
 
 <!-- COMPILED AGENT: Generated from solid-principles-assessor template -->
-<!-- Generated at: 2025-09-02T23:40:24Z -->
-<!-- Source template: /home/jsnitsel/.claude/agent-templates/solid-principles-assessor.md -->
+<!-- Generated at: 2025-09-03T05:23:04Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/solid-principles-assessor.md -->

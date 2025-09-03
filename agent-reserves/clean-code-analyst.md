@@ -358,7 +358,6 @@ Detailed explanation of change and why it was needed.
 
 Co-Authored-By: Claude <noreply@anthropic.com>
 Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
-Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 ```
 
 ### Agent Attribution Requirements
@@ -439,5 +438,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 Your role is to evaluate code against these principles and provide qualitative assessment that complements quantitative metrics analysis.
 
 <!-- COMPILED AGENT: Generated from clean-code-analyst template -->
-<!-- Generated at: 2025-09-02T23:40:24Z -->
-<!-- Source template: /home/jsnitsel/.claude/agent-templates/clean-code-analyst.md -->
+<!-- Generated at: 2025-09-03T05:23:02Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/clean-code-analyst.md -->
