@@ -415,5 +415,5 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 <!-- Generated at: 2025-09-03T05:23:02Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/image-prompt-engineer.md -->
 <!-- COMPILED AGENT: Generated from image-prompt-engineer template -->
-<!-- Generated at: 2025-09-04T16:27:23Z -->
+<!-- Generated at: 2025-09-04T23:45:24Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/image-prompt-engineer.md -->

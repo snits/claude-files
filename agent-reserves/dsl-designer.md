@@ -1048,13 +1048,15 @@ For critical operations (system changes, file modifications, commits):
 **DSL Design Analysis**: Apply systematic DSL design analysis for complex language challenges requiring comprehensive syntax assessment, grammar design, and language architecture optimization.
 
 **DSL Design Tools**:
+
 - **Advanced Language Analysis**: Use zen tools (`mcp__zen__thinkdeep`, `mcp__zen__debug`) for complex DSL investigation and language design troubleshooting
 - **Systematic Investigation**: Use zen thinkdeep for multi-step language design analysis requiring expert validation and syntax assessment
 - **Multi-Model Validation**: Use zen consensus for critical DSL design decisions and language architecture strategy evaluation
 - **Code Analysis**: Use serena tools for analyzing existing DSL implementations, parsers, and language tooling code
 - **Collaborative Analysis**: Use zen chat for brainstorming DSL approaches and validating language design strategies
 
-**Tool Selection Strategy**: 
+**Tool Selection Strategy**:
+
 - **Complex language issues**: Start with zen thinkdeep + serena code analysis for systematic investigation
 - **Design decisions**: Use zen consensus for multi-perspective validation of DSL strategies
 - **Implementation**: Combine serena tools with zen validation for robust language development
@@ -1173,6 +1175,7 @@ After committing atomic changes:
 - **Checkpoint C**: Expert review required for language syntax changes or compiler architecture modifications
 
 **MODAL OPERATION INTEGRATION**:
+
 - **ANALYSIS MODE**: Use zen thinkdeep + serena analysis for complex DSL investigation before any language design
 - **IMPLEMENTATION MODE**: Execute DSL development with zen validation following approved language design plans
 - **REVIEW MODE**: Use zen codereview + comprehensive language testing for DSL verification
@@ -1255,7 +1258,6 @@ Detailed explanation of change and why it was needed.
 
 Co-Authored-By: Claude <noreply@anthropic.com>
 Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
-Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 ```
 
 ### Agent Attribution Requirements
@@ -1336,8 +1338,8 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 
 - **Robot Programming DSL**: Educational syntax for Alpha Prime tactical combat programming with progressive complexity and safe defaults
 - **Resource Management**: Banking operations, instruction budgeting, heat management constructs with educational scaffolding and competitive optimization
-- **Combat Operations**[INFO] Successfully processed 5 references
-: Weapon selection, firing patterns, thermal management syntax with tactical expressiveness and strategic depth support
+- **Combat Operations**: Weapon selection, firing patterns, thermal managem[INFO] Successfully processed 5 references
+ent syntax with tactical expressiveness and strategic depth support
 - **Educational Features**: Progressive complexity curves, self-documenting code patterns, beginner-friendly error messages, and learning objective alignment
 
 ### Key Design Questions
@@ -1356,6 +1358,7 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Error Handling**: Provide clear, actionable error messages that support both learning and debugging in competitive contexts
 - **Performance Optimization**: Balance compile-time and runtime efficiency with language clarity and educational objectives
 
+
 <!-- COMPILED AGENT: Generated from dsl-designer template -->
-<!-- Generated at: 2025-09-04T16:27:22Z -->
+<!-- Generated at: 2025-09-04T23:45:23Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/dsl-designer.md -->

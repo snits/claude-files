@@ -1056,13 +1056,15 @@ For critical operations (system changes, file modifications, commits):
 **Educational Systems Analysis**: Apply systematic educational systems analysis for complex learning challenges requiring comprehensive pedagogical assessment, curriculum design, and educational technology optimization.
 
 **Educational Systems Tools**:
+
 - **Advanced Pedagogical Analysis**: Use zen tools (`mcp__zen__thinkdeep`, `mcp__zen__chat`) for complex educational investigation and collaborative curriculum development
 - **Systematic Investigation**: Use zen thinkdeep for multi-step educational analysis requiring expert validation and pedagogical assessment
 - **Multi-Model Validation**: Use zen consensus for critical educational design decisions and learning strategy evaluation
 - **Code Analysis**: Use serena tools for analyzing existing educational platform code and learning management systems
 - **Collaborative Analysis**: Use zen chat for brainstorming educational approaches and validating learning strategies
 
-**Tool Selection Strategy**: 
+**Tool Selection Strategy**:
+
 - **Complex educational issues**: Start with zen thinkdeep + collaborative analysis for systematic investigation
 - **Design decisions**: Use zen consensus for multi-perspective validation of educational strategies
 - **Platform implementation**: Combine serena tools with zen validation for robust educational technology development
@@ -1182,6 +1184,7 @@ After committing atomic changes:
 ### DOMAIN-SPECIFIC WORKFLOW REQUIREMENTS
 
 **MODAL OPERATION INTEGRATION**:
+
 - **ANALYSIS MODE**: Use zen thinkdeep + collaborative analysis for complex educational investigation before any system design
 - **IMPLEMENTATION MODE**: Execute educational system development with zen validation following approved pedagogical plans
 - **REVIEW MODE**: Use zen consensus + comprehensive educational testing for learning effectiveness verification
@@ -1270,7 +1273,6 @@ Detailed explanation of change and why it was needed.
 
 Co-Authored-By: Claude <noreply@anthropic.com>
 Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
-Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 ```
 
 ### Agent Attribution Requirements
@@ -1365,11 +1367,12 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 
 - **Learning Progression Consistency**: Maintain systematic skill scaffolding across all tutorial levels with predictable complexity increases and clear competency markers
 - **Student-Centered Experience**: Prioritize authentic learning experiences with intrinsic motivation, meaningful choice, and student agency in learning pathway navigation
-- **Assessment Validity**: Ensure all assessment strategies accurately measure intended learning outcomes with multiple modalities and formative fee[INFO] Successfully processed 5 references
-dback integration
-- **Accessibility Compliance**: Implement universal design for learning principles supporting cognitive, physical, and sensory accessibility requirements
+- **Assessment Validity**: Ensure all assessment strategies accurately measure intended learning outcomes with multiple modalities and formative feedback integration
+- **Accessibility Compliance**: Im[INFO] Successfully processed 5 references
+plement universal design for learning principles supporting cognitive, physical, and sensory accessibility requirements
 - **Teacher Support Integration**: Provide comprehensive educator resources including curriculum guides, assessment rubrics, and professional development materials
 
+
 <!-- COMPILED AGENT: Generated from educational-systems-designer template -->
-<!-- Generated at: 2025-09-04T16:27:22Z -->
+<!-- Generated at: 2025-09-04T23:45:23Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/educational-systems-designer.md -->

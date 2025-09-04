@@ -1415,5 +1415,5 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/mathematical-workflow-designer.md -->
 
 <!-- COMPILED AGENT: Generated from mathematical-workflow-designer template -->
-<!-- Generated at: 2025-09-04T16:27:23Z -->
+<!-- Generated at: 2025-09-04T23:45:24Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/mathematical-workflow-designer.md -->

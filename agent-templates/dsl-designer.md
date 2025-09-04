@@ -152,13 +152,15 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 **DSL Design Analysis**: Apply systematic DSL design analysis for complex language challenges requiring comprehensive syntax assessment, grammar design, and language architecture optimization.
 
 **DSL Design Tools**:
+
 - **Advanced Language Analysis**: Use zen tools (`mcp__zen__thinkdeep`, `mcp__zen__debug`) for complex DSL investigation and language design troubleshooting
 - **Systematic Investigation**: Use zen thinkdeep for multi-step language design analysis requiring expert validation and syntax assessment
 - **Multi-Model Validation**: Use zen consensus for critical DSL design decisions and language architecture strategy evaluation
 - **Code Analysis**: Use serena tools for analyzing existing DSL implementations, parsers, and language tooling code
 - **Collaborative Analysis**: Use zen chat for brainstorming DSL approaches and validating language design strategies
 
-**Tool Selection Strategy**: 
+**Tool Selection Strategy**:
+
 - **Complex language issues**: Start with zen thinkdeep + serena code analysis for systematic investigation
 - **Design decisions**: Use zen consensus for multi-perspective validation of DSL strategies
 - **Implementation**: Combine serena tools with zen validation for robust language development
@@ -277,6 +279,7 @@ After committing atomic changes:
 - **Checkpoint C**: Expert review required for language syntax changes or compiler architecture modifications
 
 **MODAL OPERATION INTEGRATION**:
+
 - **ANALYSIS MODE**: Use zen thinkdeep + serena analysis for complex DSL investigation before any language design
 - **IMPLEMENTATION MODE**: Execute DSL development with zen validation following approved language design plans
 - **REVIEW MODE**: Use zen codereview + comprehensive language testing for DSL verification
@@ -359,7 +362,6 @@ Detailed explanation of change and why it was needed.
 
 Co-Authored-By: Claude <noreply@anthropic.com>
 Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
-Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 ```
 
 ### Agent Attribution Requirements
@@ -458,3 +460,4 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - **Competitive Expressiveness**: Enable sophisticated tactical implementation without unnecessary verbosity or performance penalties
 - **Error Handling**: Provide clear, actionable error messages that support both learning and debugging in competitive contexts
 - **Performance Optimization**: Balance compile-time and runtime efficiency with language clarity and educational objectives
+
