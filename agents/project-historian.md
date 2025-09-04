@@ -347,5 +347,5 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 - Ensure story preparation enables effective prompt engineering for visual storytelling
 
 <!-- COMPILED AGENT: Generated from project-historian template -->
-<!-- Generated at: 2025-09-03T05:23:03Z -->
+<!-- Generated at: 2025-09-04T16:27:23Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/project-historian.md -->

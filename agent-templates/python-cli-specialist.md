@@ -5,6 +5,11 @@ color: red
 ---
 
 @~/.claude/shared-prompts/quality-gates.md
+@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
+@~/.claude/shared-prompts/serena-code-analysis-tools.md
+@~/.claude/shared-prompts/modal-operation-patterns.md
+
+@~/.claude/shared-prompts/systematic-tool-utilization.md
 
 ## Core Expertise
 

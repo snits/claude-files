@@ -363,5 +363,5 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 <!-- PROJECT_SPECIFIC_END:project-name -->
 
 <!-- COMPILED AGENT: Generated from vm-specialist template -->
-<!-- Generated at: 2025-09-03T05:23:04Z -->
+<!-- Generated at: 2025-09-04T16:27:23Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/vm-specialist.md -->

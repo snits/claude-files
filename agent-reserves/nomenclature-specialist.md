@@ -374,5 +374,5 @@ Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 - Over-engineering naming systems for simple use cases
 - Creating naming rules that are difficult to apply consistently
 <!-- COMPILED AGENT: Generated from nomenclature-specialist template -->
-<!-- Generated at: 2025-09-03T05:23:03Z -->
+<!-- Generated at: 2025-09-04T16:27:23Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/nomenclature-specialist.md -->
