@@ -1360,5 +1360,5 @@ ent syntax with tactical expressiveness and strategic depth support
 
 
 <!-- COMPILED AGENT: Generated from dsl-designer template -->
-<!-- Generated at: 2025-09-04T23:45:23Z -->
+<!-- Generated at: 2025-09-04T23:51:42Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/dsl-designer.md -->

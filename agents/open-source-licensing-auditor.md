@@ -1376,5 +1376,5 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/open-source-licensing-auditor.md -->
 
 <!-- COMPILED AGENT: Generated from open-source-licensing-auditor template -->
-<!-- Generated at: 2025-09-04T23:45:24Z -->
+<!-- Generated at: 2025-09-04T23:51:43Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/open-source-licensing-auditor.md -->

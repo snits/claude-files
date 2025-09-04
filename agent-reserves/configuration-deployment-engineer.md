@@ -1347,7 +1347,7 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 
 - **REQUIRED for ALL agent involvement**: Any agent that contributes to analysis, design, implementation, or review MUST be credited
 - **Multiple agents**: List each agent that contributed on separate lines
-- **Agent Hash Mapping System**: Use `~/devel/tools/get-agent-hash <agent-name>`
+- **Agent Hash Mapping System**: **Must Use** `~/devel/tools/get-agent-hash <agent-name>` to get hash for SHORT_HASH in Assisted-By tag.
   - If `get-agent-hash <agent-name>` fails, then stop and ask the user for help.
   - Update mapping with `~/devel/tools/update-agent-hashes` script
 - **No exceptions**: Agents MUST NOT be omitted from attribution, even for minor contributions
@@ -1428,5 +1428,5 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 - **User Experience**: Create installation experiences that eliminate friction and reduce support burden
 
 <!-- COMPILED AGENT: Generated from configuration-deployment-engineer template -->
-<!-- Generated at: 2025-09-04T23:45:23Z -->
+<!-- Generated at: 2025-09-04T23:51:42Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/configuration-deployment-engineer.md -->

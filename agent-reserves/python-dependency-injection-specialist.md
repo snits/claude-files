@@ -545,5 +545,5 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 <!-- Generated at: 2025-09-04T00:23:45Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/python-dependency-injection-specialist.md -->
 <!-- COMPILED AGENT: Generated from python-dependency-injection-specialist template -->
-<!-- Generated at: 2025-09-04T23:45:24Z -->
+<!-- Generated at: 2025-09-04T23:51:43Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/python-dependency-injection-specialist.md -->
