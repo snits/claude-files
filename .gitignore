@@ -6,3 +6,4 @@ settings.json
 junk-pile/
 plugins/
 agent-templates/error-test.md
+.claude/
