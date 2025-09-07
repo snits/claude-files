@@ -1,6 +1,6 @@
 1. Open `docs/00-project/TODO.md` () and select the first unchecked items to work on.
 2. Using ToDoWrite create a list that includes the following steps:
-    - A step to task an appropriate agent with completing the item, using the corresponding prompt given in `docs/00-project/plan.md` or `docs/00-project/tdd-prompts.md` if one exists. If not, create an appropriate prompt in the format used by the other prompts with `docs/00-project/plan.md` or `docs/00-project/tdd-prompts.md`
+    - A step to task the most domain-relevant agent with completing the item, using the corresponding prompt given in `docs/00-project/plan.md` or `docs/00-project/tdd-prompts.md` if one exists. Prioritize technical implementation agents (rust-specialist, debug-specialist, performance-engineer) for code changes, and architectural agents (systems-architect) for design decisions. If no prompt exists, create an appropriate prompt in the format used by the other prompts.
     - A step for committing the change. Use get-agent-hash to get the hash for any agents involved.
     - A step for tasking test-specialist to review any tests created for the item.
     - A step for tasking code-reviewer with doing quality gates for the change.
