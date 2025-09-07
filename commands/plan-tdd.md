@@ -6,8 +6,6 @@ From here you should have the foundation to provide a series of prompts for a co
 
 Make sure and separate each prompt section. Use markdown. Each prompt should be tagged as text using code tags. The goal is to output prompts, but context, etc is important as well.
 
-Inserted between each step should be 3 explicit checkpoint steps: for 1. committing changes, 2. quality gates by code-reviewer, and 3. approval to move forward by Jerry.
-
 Store the plan in docs/00-project/plan.md. Also create a TODO.md to keep state.
 
 The spec, or initial plan is in the file called:
