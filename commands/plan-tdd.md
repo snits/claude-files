@@ -1,88 +1,13 @@
-You are an experienced technical lead and software architect operating within our systematic development framework with 71+ specialized agents, MCP tools, and modal workflow discipline.
+Task meticulous-project-planner with using the zen planner tool to draft a detailed, step-by-step blueprint for building this project. Then, once they have a solid plan, have them break it down into small, iterative chunks that build on each other. Look at these chunks and then go another round to break it into small steps. Review the results and make sure that the steps are small enough to be implemented safely with strong testing, but big enough to move the project forward. Have the agent iterate until you feel that the steps are right sized for this project. Capture the plan into a markdown file.
 
-# 🚨 MANDATORY MODE DECLARATION
-**ENTERING ANALYSIS MODE: Systematic TDD planning with framework integration**
+Then task plan-validator with looking over for any issues. Address any issues that are raised.
 
-# Planning Mode Constraints
-- Focus ONLY on analysis, strategy, and systematic planning
-- MUST NOT write, edit, or modify production files
-- MUST NOT commit or execute system changes
-- Use Read, Grep, Glob, WebSearch, MCP analysis tools only
+From here you should have the foundation to provide a series of prompts for a code-generation LLM that will implement each step in a test-driven manner. Prioritize best practices, incremental progress, and early testing, ensuring no big jumps in complexity at any stage. Make sure that each prompt builds on the previous prompts, and ends with wiring things together. There should be no hanging or orphaned code that isn't integrated into a previous step.
 
-# 🛠️ SYSTEMATIC TOOL UTILIZATION CHECKLIST (MANDATORY)
+Make sure and separate each prompt section. Use markdown. Each prompt should be tagged as text using code tags. The goal is to output prompts, but context, etc is important as well.
 
-**BEFORE starting planning, complete this checklist in sequence:**
+Inserted between each step should be 3 explicit checkpoint steps: for 1. committing changes, 2. quality gates by code-reviewer, and 3. approval to move forward by Jerry.
 
-## Step 0: Solution Already Exists? (DRY/YAGNI)
-- [ ] Search web for existing solutions, tools, or libraries
-- [ ] Check project documentation (00-project/, 01-architecture/, 05-process/)
-- [ ] Journal search: `mcp__private-journal__search_journal` for prior solutions
-- [ ] Use serena tools: `mcp__serena__get_symbols_overview` for existing patterns
-- [ ] Verify established libraries aren't handling this requirement
+Store the plan in docs/00-project/plan.md. Also create a TODO.md to keep state.
 
-## Step 1: Context Gathering
-- [ ] Journal search for domain knowledge: `mcp__private-journal__search_journal`
-- [ ] Codebase analysis: `mcp__serena__get_symbols_overview` for structural understanding
-- [ ] Review related documentation and architectural decisions
-
-## Step 2: Problem Decomposition (Complex Tasks)
-- [ ] **Use zen thinkdeep**: `mcp__zen__thinkdeep` for multi-step investigation
-- [ ] **Use zen chat**: `mcp__zen__chat` for brainstorming approaches
-- [ ] **Use zen planner**: `mcp__zen__planner` for complex system design
-- [ ] Break into atomic, reviewable increments
-
-## Step 3: Domain Expertise
-- [ ] **Agent delegation**: Use Task tool with appropriate specialist agents
-- [ ] **Mathematical modeling**: Use `mcp__metis__design_mathematical_model` if computational
-
-## Step 4: Task Coordination
-- [ ] **TodoWrite**: Clear scope and acceptance criteria
-- [ ] **Link insights**: Connect context gathering and problem decomposition
-
-# 📋 SYSTEMATIC TDD PLANNING PROCESS
-
-## Phase 1: Strategic Analysis
-- **Use MCP tools proactively**: zen thinkdeep for complex analysis, serena for codebase discovery
-- Understand current codebase architecture with `mcp__serena__get_symbols_overview`
-- Research patterns with `mcp__serena__search_for_pattern`
-- Document findings with `mcp__serena__write_memory`
-
-## Phase 2: Test Strategy Design
-- **Test-first mindset**: Design comprehensive test scenarios before implementation
-- **Edge case identification**: Use zen consensus for complex test strategy validation
-- **Testing pyramid**: Unit → Integration → E2E with clear coverage goals
-- **Agent delegation**: Delegate complex test scenarios to test-specialist
-
-## Phase 3: Implementation Architecture
-- **Atomic task breakdown**: Each TodoWrite task = single commit scope
-- **Agent assignment strategy**: Map tasks to specialist agents (debug-specialist, security-engineer, etc.)
-- **Dependency mapping**: Identify integration points and handoff requirements
-- **Risk assessment**: Use zen thinkdeep for complexity and risk analysis
-
-## Phase 4: Quality Gate Definition
-- **Checkpoint A**: Task initiation (clean git, feature branch, TodoWrite tasks)
-- **Checkpoint B**: Implementation complete (tests pass, lint clean, typecheck)
-- **Checkpoint C**: Commit ready (quality gates passed, atomic scope verified)
-- **Agent review requirements**: code-reviewer for commits, qa-engineer for features
-
-## Phase 5: Execution Readiness
-- **TodoWrite structure**: Clear tasks with acceptance criteria
-- **Agent delegation map**: Specific agent types for each task domain
-- **Tool utilization plan**: MCP tool selection for each phase
-- **Transition criteria**: Clear exit conditions for ANALYSIS → IMPLEMENTATION
-
-# ✅ ANALYSIS MODE EXIT CRITERIA
-
-**MANDATORY COMPLETION CHECKLIST**:
-- [ ] Systematic Tool Utilization Checklist completed (steps 0-4)
-- [ ] Complete implementation plan with atomic task breakdown
-- [ ] Agent delegation strategy with specific specialist assignments
-- [ ] Quality gate validation plan with Checkpoint A/B/C integration
-- [ ] TodoWrite tasks created with clear acceptance criteria
-- [ ] **MODE TRANSITION**: "EXITING ANALYSIS MODE → Implementation ready for specialized agents"
-
-**OUTPUT REQUIREMENTS**:
-- Detailed TodoWrite task list with agent assignments
-- Risk assessment and mitigation strategies
-- Clear handoff protocols for implementation agents
-- Quality validation criteria for each task
+The spec, or initial plan is in the file called:
