@@ -4,9 +4,8 @@
     - An initial step to task the agent with determining if the prompt, which you will include, is sufficient for the task with the following additions:
       - Ask the agent to walk through their thought process step-by-step in their response.
       - Ask the agent to request any information it feels it needs to do the job properly in their response.
-    - A step to modify the prompt as needed based on the response to the previous step. For search and discovery related to any request from the agent, task search-specialist to help gather the information for you.
-    - A step to repeat the previous two steps again if the prompt was modified.
-    - A step to update the prompt in `docs/00-project/tdd-prompts.md` as needed.
+    - A step to iteratively refine the prompt by repeatedly asking the agent to evaluate prompt sufficiency and request needed information, modifying the prompt based on agent feedback and search-specialist discoveries, and continuing until the agent confirms the prompt is sufficient for the task (maximum 3 iterations to prevent infinite loops).
+    - A step to update the finalized prompt in `docs/00-project/tdd-prompts.md` as needed.
     - A step to task the agent with completing the actual todo item using the prompt from the previous steps.
     - A step for committing the change. Use get-agent-hash to get the hash for any agents involved. Any type checking, linting, formatting, and testing quality gates should happen here.
     - A step for tasking test-specialist to review any tests created for the item.
