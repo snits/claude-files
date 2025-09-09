@@ -6,7 +6,7 @@
       - Ask the agent to request any information it feels it needs to do the job properly in their response.
     - A step to modify the prompt as needed based the response to the previous step. Continue these 2 steps until no more information is needed. Update the prompt in `docs/00-project/tdd-prompts.md` as needed.
     - A step to task the agent with completing the actual todo item using the prompt from the previous steps.
-    - A step for committing the change. Use get-agent-hash to get the hash for any agents involved.
+    - A step for committing the change. Use get-agent-hash to get the hash for any agents involved. Any type checking, linting, formatting, and testing quality gates should happen here.
     - A step for tasking test-specialist to review any tests created for the item.
     - A step for tasking code-reviewer with doing quality gates for the change using the zen codereview tool.
     - A step for getting approval from Jerry to move forward.
