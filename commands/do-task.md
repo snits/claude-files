@@ -5,5 +5,6 @@
     - A step for tasking test-specialist to review any tests created for the item.
     - A step for tasking code-reviewer with doing quality gates for the change.
     - A step for getting approval from Jerry to move forward.
-3. Carry out the steps in the ToDoWrite list.
-4. Check off the item in `docs/00-project/TODO.md` when it is completed. Items with children, should only be marked complete when all items nested below them are marked complete.
+3. Create a new branch.
+4. Carry out the steps in the ToDoWrite list.
+5. Check off the item in `docs/00-project/TODO.md` when it is completed. Items with children, should only be marked complete when all items nested below them are marked complete.
