@@ -12,4 +12,5 @@
     - A step for tasking code-reviewer with doing quality gates for the change using the zen codereview tool.
     - A step for getting approval from Jerry to move forward.
 3. Carry out the steps in the ToDoWrite list.
-4. Check off the item in `specs/$1/tasks.md` when it is completed. Items with children, should only be marked complete when all items nested below them are marked complete.
+4. If issues are raised during the execution of these steps, then tasks should be added to `specs/$1/tasks.md` and appropriate prompt files created in `specs/$1/task-prompts/`  
+5. Check off the item in `specs/$1/tasks.md` when it is completed. Items with children, should only be marked complete when all items nested below them are marked complete.
