@@ -1850,5 +1850,5 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/typescript-cli-engineer.md -->
 
 <!-- COMPILED AGENT: Generated from typescript-cli-engineer template -->
-<!-- Generated at: 2025-09-04T23:51:43Z -->
+<!-- Generated at: 2025-09-11T19:01:00Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/typescript-cli-engineer.md -->

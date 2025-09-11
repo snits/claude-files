@@ -681,3 +681,7 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 - **Project Pattern Discovery**: MUST use serena tools for project structure analysis and planning documentation discovery
 - **Quantitative Project Assessment**: MUST use metis tools for resource optimization and project metrics modeling when applicable
 
+
+<!-- COMPILED AGENT: Generated from meticulous-project-planner template -->
+<!-- Generated at: 2025-09-11T19:01:00Z -->
+<!-- Source template: /Users/jsnitsel/.claude/agent-templates/meticulous-project-planner.md -->

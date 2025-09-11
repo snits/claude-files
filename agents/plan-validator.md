@@ -560,5 +560,5 @@ should undergo systematic investigation before approval or modification recommen
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/plan-validator.md -->
 
 <!-- COMPILED AGENT: Generated from plan-validator template -->
-<!-- Generated at: 2025-09-04T23:51:43Z -->
+<!-- Generated at: 2025-09-11T19:01:00Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/plan-validator.md -->

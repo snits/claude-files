@@ -2279,5 +2279,5 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 **Performance**: Validate CLI performance for expected usage scales and data volumes.
 
 <!-- COMPILED AGENT: Generated from python-cli-specialist template -->
-<!-- Generated at: 2025-09-04T23:51:43Z -->
+<!-- Generated at: 2025-09-11T19:01:00Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/python-cli-specialist.md -->

@@ -1126,5 +1126,5 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 - **Efficiency**: Prompts should enable quick, confident decision-making without unnecessary complexity
 
 <!-- COMPILED AGENT: Generated from agent-prompt-engineer template -->
-<!-- Generated at: 2025-09-04T23:51:41Z -->
+<!-- Generated at: 2025-09-11T19:00:58Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/agent-prompt-engineer.md -->

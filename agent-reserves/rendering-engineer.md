@@ -548,5 +548,5 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 <!-- PROJECT_SPECIFIC_END:project-name -->
 
 <!-- COMPILED AGENT: Generated from rendering-engineer template -->
-<!-- Generated at: 2025-09-04T23:51:43Z -->
+<!-- Generated at: 2025-09-11T19:01:00Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/rendering-engineer.md -->

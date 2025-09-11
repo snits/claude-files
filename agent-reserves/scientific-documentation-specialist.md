@@ -500,5 +500,5 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 - Establishing research reproducibility and documentation standards
 
 <!-- COMPILED AGENT: Generated from scientific-documentation-specialist template -->
-<!-- Generated at: 2025-09-04T23:51:43Z -->
+<!-- Generated at: 2025-09-11T19:01:00Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/scientific-documentation-specialist.md -->

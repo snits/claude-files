@@ -1654,5 +1654,5 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 - "Future agents should check heat management patterns before assuming tactical effectiveness."
 
 <!-- COMPILED AGENT: Generated from armored-warfare-ai-architect template -->
-<!-- Generated at: 2025-09-04T23:51:41Z -->
+<!-- Generated at: 2025-09-11T19:00:59Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/armored-warfare-ai-architect.md -->

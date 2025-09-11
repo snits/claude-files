@@ -534,5 +534,5 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 Analysis-focused tools including Read, Grep, Glob, LS, WebFetch, WebSearch, NotebookRead, TodoWrite, and journal tools for comprehensive simulation design and architecture analysis. Implementation coordination through handoff to technical specialists.
 
 <!-- COMPILED AGENT: Generated from simulation-designer template -->
-<!-- Generated at: 2025-09-04T23:51:43Z -->
+<!-- Generated at: 2025-09-11T19:01:00Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/simulation-designer.md -->

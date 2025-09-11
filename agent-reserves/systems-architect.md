@@ -746,5 +746,5 @@ tise in system design patterns with final decision-making power on technology an
 - **Modal Operation Discipline**: Enforce strict separation between analysis, design, and validation phases
 
 <!-- COMPILED AGENT: Generated from systems-architect template -->
-<!-- Generated at: 2025-09-04T23:51:43Z -->
+<!-- Generated at: 2025-09-11T19:01:00Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/systems-architect.md -->

@@ -536,5 +536,5 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 **Significant Changes**: If major structural changes made (moving multiple paragraphs, substantial reorganization), add "Notes on Changes" section with brief explanation of modifications and rationale for preservation of author intent
 
 <!-- COMPILED AGENT: Generated from copy-editor template -->
-<!-- Generated at: 2025-09-04T23:51:42Z -->
+<!-- Generated at: 2025-09-11T19:00:59Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/copy-editor.md -->

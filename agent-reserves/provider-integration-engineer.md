@@ -1621,5 +1621,5 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/agent-prompt-engineer.md -->
 
 <!-- COMPILED AGENT: Generated from provider-integration-engineer template -->
-<!-- Generated at: 2025-09-06T02:26:23Z -->
+<!-- Generated at: 2025-09-11T19:01:00Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/provider-integration-engineer.md -->

@@ -1075,5 +1075,5 @@ tation
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/rust-type-linting-specialist.md -->
 
 <!-- COMPILED AGENT: Generated from rust-type-linting-specialist template -->
-<!-- Generated at: 2025-09-04T23:51:43Z -->
+<!-- Generated at: 2025-09-11T19:01:00Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/rust-type-linting-specialist.md -->

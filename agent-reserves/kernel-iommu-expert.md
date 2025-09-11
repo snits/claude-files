@@ -507,5 +507,5 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 <!-- PROJECT_SPECIFIC_END:project-name -->
 
 <!-- COMPILED AGENT: Generated from kernel-iommu-expert template -->
-<!-- Generated at: 2025-09-04T23:51:42Z -->
+<!-- Generated at: 2025-09-11T19:00:59Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/kernel-iommu-expert.md -->

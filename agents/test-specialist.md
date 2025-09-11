@@ -653,5 +653,5 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 **🚨 BLOCKING CONDITIONS**: This agent MUST block commits that fail to meet these standards
 
 <!-- COMPILED AGENT: Generated from test-specialist template -->
-<!-- Generated at: 2025-09-04T23:51:43Z -->
+<!-- Generated at: 2025-09-11T19:01:00Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/test-specialist.md -->

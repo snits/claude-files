@@ -583,5 +583,5 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 - **Expert Validation**: MCP tool integration provides multi-model analysis and validation throughout project lifecycle
 
 <!-- COMPILED AGENT: Generated from project-manager template -->
-<!-- Generated at: 2025-09-04T23:51:43Z -->
+<!-- Generated at: 2025-09-11T19:01:00Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/project-manager.md -->

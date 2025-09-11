@@ -607,5 +607,5 @@ nation and incident response
 - **Documentation Standards**: Thorough release documentation including procedures, dependencies, and post-deployment validation
 
 <!-- COMPILED AGENT: Generated from release-manager template -->
-<!-- Generated at: 2025-09-04T23:51:43Z -->
+<!-- Generated at: 2025-09-11T19:01:00Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/release-manager.md -->

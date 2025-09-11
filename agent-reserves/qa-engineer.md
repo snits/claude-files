@@ -1200,5 +1200,5 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 - **Documentation Completeness**: Quality validation results and test reports must be complete and accessible
 
 <!-- COMPILED AGENT: Generated from qa-engineer template -->
-<!-- Generated at: 2025-09-04T23:51:43Z -->
+<!-- Generated at: 2025-09-11T19:01:00Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/qa-engineer.md -->

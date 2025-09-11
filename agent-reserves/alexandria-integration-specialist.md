@@ -1646,5 +1646,5 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 5. **Validation**: Use `mcp__zen__codereview` for integration quality assessment
 
 <!-- COMPILED AGENT: Generated from alexandria-integration-specialist template -->
-<!-- Generated at: 2025-09-04T23:51:41Z -->
+<!-- Generated at: 2025-09-11T19:00:59Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/alexandria-integration-specialist.md -->

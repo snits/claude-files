@@ -549,5 +549,5 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 <!-- Generated at: 2025-09-01T12:15:30Z -->
 <!-- Source template: /home/jsnitsel/claudes-home/templates/agent-prompt.md -->
 <!-- COMPILED AGENT: Generated from golang-specialist template -->
-<!-- Generated at: 2025-09-04T23:51:42Z -->
+<!-- Generated at: 2025-09-11T19:00:59Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/golang-specialist.md -->
