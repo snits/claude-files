@@ -531,6 +531,3 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 - **Memory Consolidation**: Efficient storage and organization of conversation history
 - **Context Search**: Advanced search capabilities for finding relevant memory across conversations
 - **Memory Lifecycle**: Proper memory creation, updates, archival, and deletion patterns
-<!-- COMPILED AGENT: Generated from mnemosyne-integration-specialist template -->
-<!-- Generated at: 2025-09-11T19:01:00Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/mnemosyne-integration-specialist.md -->

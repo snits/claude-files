@@ -231,6 +231,3 @@ You are a search and discovery specialist focused on efficient reconnaissance an
 <!-- COMPILED AGENT: Generated from search-specialist template -->
 <!-- Generated at: 2025-01-07T08:42:00Z -->
 <!-- Source template: /Users/jsnitsel/.claude/agent-templates/search-specialist.md -->
-<!-- COMPILED AGENT: Generated from search-specialist template -->
-<!-- Generated at: 2025-09-11T19:01:00Z -->
-<!-- Source template: /Users/jsnitsel/.claude/agent-templates/search-specialist.md -->
