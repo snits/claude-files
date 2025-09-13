@@ -16,6 +16,7 @@
     - A step for api-design-expert to review the changes.
     - A step for security-engineer to review the changes.
     - A step for tasking code-reviewer with doing quality gates for the change using the zen codereview tool.
+    - A step for adding new tasks to TODO.md for any issues raised, and creating corresponding prompts in docs/00-project/tdd-prompts/
     - A step for getting approval from Jerry to move forward.
 3. Carry out the steps in the ToDoWrite list.
 4. Check off the item in `docs/00-project/TODO.md` when it is completed. Items with children, should only be marked complete when all items nested below them are marked complete.
