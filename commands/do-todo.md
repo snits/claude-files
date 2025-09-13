@@ -8,15 +8,14 @@
     - A step to update the finalized prompt in the file in `docs/00-project/tdd-prompts/` as needed.
     - A step to task the agent with completing the actual todo item using the prompt from the previous steps.
     - A step for committing the change. Use get-agent-hash to get the hash for any agents involved. Any type checking, linting, formatting, and testing quality gates should happen here.
-    - A step for tasking test-specialist to review any tests created for the item.
-    - A step for tasking clean-code-analyst to review the changes.
-    - A step for tasking solid-principles-assessor to review the changes.
-    - A step for architectural-patterns-expert to review the changes.
-    - A step for maintainability-assessor to review the changes.
-    - A step for api-design-expert to review the changes.
-    - A step for security-engineer to review the changes.
-    - A step for tasking code-reviewer with doing quality gates for the change using the zen codereview tool.
-    - A step for adding new tasks to TODO.md for any issues raised
+    - A step for tasking test-specialist to review any tests created for the item. Add tasks to docs/00-project/TODO.md for any issues raised, if one doesn't already exist.
+    - A step for tasking clean-code-analyst to review the changes. Add tasks to docs/00-project/TODO.md for any issues raised, if one doesn't already exist.
+    - A step for tasking solid-principles-assessor to review the changes. Add tasks to docs/00-project/TODO.md for any issues raised, if one doesn't already exist.
+    - A step for architectural-patterns-expert to review the changes. Add tasks to docs/00-project/TODO.md for any issues raised, if one doesn't already exist.
+    - A step for maintainability-assessor to review the changes. Add tasks to docs/00-project/TODO.md for any issues raised, if one doesn't already exist.
+    - A step for api-design-expert to review the changes. Add tasks to docs/00-project/TODO.md for any issues raised, if one doesn't already exist.
+    - A step for security-engineer to review the changes. Add tasks to docs/00-project/TODO.md for any issues raised, if one doesn't already exist.
+    - A step for tasking code-reviewer with doing quality gates for the change using the zen codereview tool. Add tasks to docs/00-project/TODO.md for any issues raised, if one doesn't already exist.
     - A step for getting approval from Jerry to move forward.
 3. Carry out the steps in the ToDoWrite list.
 4. Check off the item in `docs/00-project/TODO.md` when it is completed. Items with children, should only be marked complete when all items nested below them are marked complete.
