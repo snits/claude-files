@@ -6,16 +6,16 @@
       - Ask the agent to request any information it feels it needs to do the job properly in their response.
     - A step to iteratively refine the prompt by repeatedly asking the agent to evaluate prompt sufficiency and request needed information, modifying the prompt based on agent feedback and search-specialist discoveries, and continuing until the agent confirms the prompt is sufficient for the task (maximum 3 iterations to prevent infinite loops).
     - A step to update the finalized prompt in the file in `specs/$1/task-prompts/` as needed.
-    - A step to task the agent with completing the actual todo item using the prompt from the previous steps.
+    - A step to task the agent with completing the actual todo item using the prompt from the previous steps. While implementing, keep in mind project scope, goal, and end-use case.
     - A step for committing the change. Use get-agent-hash to get the hash for any agents involved. Any type checking, linting, formatting, and testing quality gates should happen here.
-    - A step for tasking test-specialist to review any testing changes for the task. Add tasks to specs/$1/tasks.md for any issues raised, if one doesn't already exist.
-    - A step for tasking clean-code-analyst to review any code changes. Add tasks to specs/$1/tasks.md for any issues raised, if one doesn't already exist.
-    - A step for tasking solid-principles-assessor to review any code changes. Add tasks to specs/$1/tasks.md for any issues raised, if one doesn't already exist.
-    - A step for architectural-patterns-expert to review any code changes. Add tasks to specs/$1/tasks.md for any issues raised, if one doesn't already exist.
-    - A step for maintainability-assessor to review any code changes. Add tasks to specs/$1/tasks.md for any issues raised, if one doesn't already exist.
-    - A step for api-design-expert to review any code changes. Add tasks to specs/$1/tasks.md for any issues raised, if one doesn't already exist.
-    - A step for security-engineer to review any code changes. Add tasks to specs/$1/tasks.md for any issues raised, if one doesn't already exist.
-    - A step for documentation-assessor to review any documentation changes. Add tasks to specs/$1/tasks.md for any issues raised, if one doesn't already exist.
-    - A step for tasking code-reviewer with doing quality gates for the change using the zen codereview tool. Add tasks to specs/$1/tasks.md for any issues raised, if one doesn't already exist.
+    - A step for tasking test-specialist to review any testing changes for the task. Add tasks to specs/$1/tasks.md for any issues raised, if one doesn't already exist. When deciding to add a task keep in mind the project scope, goals, and end-use case.
+    - A step for tasking clean-code-analyst to review any code changes. Add tasks to specs/$1/tasks.md for any issues raised, if one doesn't already exist. When deciding to add a task keep in mind the project scope, goals, and end-use case.
+    - A step for tasking solid-principles-assessor to review any code changes. Add tasks to specs/$1/tasks.md for any issues raised, if one doesn't already exist. When deciding to add a task keep in mind the project scope, goals, and end-use case.
+    - A step for architectural-patterns-expert to review any code changes. Add tasks to specs/$1/tasks.md for any issues raised, if one doesn't already exist. When deciding to add a task keep in mind the project scope, goals, and end-use case.
+    - A step for maintainability-assessor to review any code changes. Add tasks to specs/$1/tasks.md for any issues raised, if one doesn't already exist. When deciding to add a task keep in mind the project scope, goals, and end-use case.
+    - A step for api-design-expert to review any code changes. Add tasks to specs/$1/tasks.md for any issues raised, if one doesn't already exist. When deciding to add a task keep in mind the project scope, goals, and end-use case.
+    - A step for security-engineer to review any code changes. Add tasks to specs/$1/tasks.md for any issues raised, if one doesn't already exist. When deciding to add a task keep in mind the project scope, goals, and end-use case.
+    - A step for documentation-assessor to review any documentation changes. Add tasks to specs/$1/tasks.md for any issues raised, if one doesn't already exist. When deciding to add a task keep in mind the project scope, goals, and end-use case.
+    - A step for tasking code-reviewer with doing quality gates for the change using the zen codereview tool. Add tasks to specs/$1/tasks.md for any issues raised, if one doesn't already exist. When deciding to add a task keep in mind the project scope, goals, and end-use case.
 3. Carry out the steps in the ToDoWrite list.
 4. Check off the item in `specs/$1/tasks.md` when it is completed. Items with children, should only be marked complete when all items nested below them are marked complete.
