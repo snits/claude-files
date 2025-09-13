@@ -1,4 +1,4 @@
-Task agent-prompt-engineer with creating a new agent template in ~/.claude/agent-templates/ using the standardized template (~/claudes-home/templates/agent-prompt.d). Once the template has been created, compile it with `~/devel/tools/compile-agent-templates <template-name minus the .md extension>`
+Task agent-prompt-engineer with creating a new agent prompt file in ~/.claude/agent-reserves/ using the standardized template (~/claudes-home/templates/agent-prompt.d).
 
 **Arguments: $ARGUMENTS**
 
@@ -42,13 +42,20 @@ Task agent-prompt-engineer with creating a new agent template in ~/.claude/agent
      - Do NOT replace with actual commands (this happens during agent-deploy)
 
 4. **Create agent file:**
-   - Write to ~/.claude/agent-templates/[agent-name].md
+   - Write to ~/.claude/agent-reserves/[agent-name].md
    - Ensure proper formatting with standardized sections:
      - Strategic Journal Policy (with Query First)
      - Persistent Output Requirement
      - Analysis Tools (including sequential-thinking guidance)
 
-5. **Confirm creation:**
+**5. Iteratively improve the agent prompt file:**
+
+- Task clean-code-analyst with asessing ~/.claude/agent-reserves/[agent-name].md
+- Assess it yourself through the lense of [agent-name], with assessing ~/.claude/agent-reserves/[agent-name].md and the assessment from clean-code-analyst, and provide assessment of the prompt file.
+- Task agent-prompt-engineer with taking these 2 assessments and updating ~/.claude/agent-reserves/[agent-name].md
+- Perform the iteration everyone is satisfied, or a max of 3 iterations have occurred.
+
+6. **Confirm creation:**
    - Display success message with file path
    - Show agent color and categorization
    - Suggest using `/agent-browse` to verify it appears in listings
