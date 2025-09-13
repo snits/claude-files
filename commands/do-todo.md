@@ -8,7 +8,7 @@
     - A step to update the finalized prompt in the file in `docs/00-project/tdd-prompts/` as needed.
     - A step to task the agent with completing the actual todo item using the prompt from the previous steps.
     - A step for committing the change. Use get-agent-hash to get the hash for any agents involved. Any type checking, linting, formatting, and testing quality gates should happen here.
-    - A step for tasking test-specialist to review any tests created for the item. Add tasks to docs/00-project/TODO.md for any issues raised, if one doesn't already exist.
+    - A step for tasking test-specialist to review any testing changes for the task. Add tasks to docs/00-project/TODO.md for any issues raised, if one doesn't already exist.
     - A step for tasking clean-code-analyst to review any code changes. Add tasks to docs/00-project/TODO.md for any issues raised, if one doesn't already exist.
     - A step for tasking solid-principles-assessor to review any code changes. Add tasks to docs/00-project/TODO.md for any issues raised, if one doesn't already exist.
     - A step for architectural-patterns-expert to review any code changes. Add tasks to docs/00-project/TODO.md for any issues raised, if one doesn't already exist.
