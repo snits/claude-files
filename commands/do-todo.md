@@ -34,7 +34,7 @@
 
    ```
    // Core Quality Reviews (Always Execute)
-   ├── zen codereview → Comprehensive quality gates analysis
+   ├── code-reviewer @ zen codereview → Comprehensive quality gates analysis
    ├── security-engineer → Security impact assessment
    └── test-specialist → Testing coverage validation
 
@@ -48,7 +48,7 @@
    ```
 
    **Review Consolidation Rules**:
-   - If zen codereview identifies issues covered by specialist reviews, skip redundant specialist reviews
+   - If zen codereview identifies issues covered by specialist reviews, skip the corresponding specialist review. This requires `zen codereview` to tag findings with the relevant domain (e.g., `[api-design]`, `[security]`).
    - Add tasks to `docs/00-project/TODO.md` for any issues raised (avoid duplicates)
 
    **Automated Review Selection**: Determine which specialist reviews to include:
@@ -99,7 +99,7 @@
 - Consolidate similar review findings to avoid duplicate tasks
 
 ### **Quality Assurance**
-- All TIER 3 reviews must complete successfully before marking task complete
+- All TIER 3 reviews must complete successfully before proceeding to TIER 4
 - Security-engineer approval is mandatory for all code changes
 - zen precommit validation required before any commits
 - **Human approval gate (Jerry) required after all quality reviews complete**
