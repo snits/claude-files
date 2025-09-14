@@ -1,25 +1,105 @@
-1. Open `docs/00-project/TODO.md` () and select the first unchecked actionable task in the todo list to work on. An actionable task is the most granular, concrete item that has no further sub-tasks beneath it (a true leaf node with no children). Always traverse down through all nested levels to find the deepest unchecked item that represents actual work to be done, not a category or grouping. Parent node items should only be marked as complete when all of the descendant node items are marked complete.
-2. Using ToDoWrite create a list that includes the following steps:
-    - A step to determine the most domain-relevant agent for completing the item. Read the corresponding prompt given in the file named for the item in `docs/00-project/tdd-prompts/`. If no prompt exists for the specific task, think deeply and create an appropriate prompt in the format used by the other prompts, and add it in a markdown file, appropriately named in `docs/00-project/tdd-prompts/`. Prioritize technical implementation and domain expert agents (such as rust-specialist, debug-specialist, performance-engineer) for code changes, architectural agents (such as systems-architect) for design decisions, security concerns to security-engineer, and testing to test-specialist. Also keep in mind project scope, goals, and end use-case. The agent should use the zen precommit tool prior completing their task if it involved code changes.
-    - An initial step to task the agent with determining if the prompt, which you will include, is sufficient for the task with the following additions:
-      - Ask the agent to walk through their thought process step-by-step in their response.
-      - Ask the agent to request any information it feels it needs to do the job properly in their response.
-    - A step to research whether a technology already exists that can be used for the implementation of the task.
-    - A step to iteratively refine the prompt by repeatedly asking the agent to evaluate prompt sufficiency and request needed information, modifying the prompt based on agent feedback and search-specialist discoveries, and continuing until the agent confirms the prompt is sufficient for the task (maximum 3 iterations to prevent infinite loops).
-    - A step to update the finalized prompt in the file in `docs/00-project/tdd-prompts/` as needed.
-    - A step to task the agent with completing the actual todo item using the prompt from the previous steps. While implementing, keep in mind the project scope, goals, and end use-case.
-    - A step for committing the change. Use get-agent-hash to get the hash for any agents involved. Any type checking, linting, formatting, and testing quality gates should happen here.
-    - A step for assessing whether any of the following steps should be included for the completed change:
-      - A step for tasking test-specialist to review any testing changes for the task. Add tasks to docs/00-project/TODO.md for any issues raised, if one doesn't already exist. When deciding to add a task keep in mind the project scope, goals, and end-use case.
-      - A step for tasking clean-code-analyst to review any code changes. Add tasks to docs/00-project/TODO.md for any issues raised, if one doesn't already exist. When deciding to add a task keep in mind the project scope, goals, and end-use case.
-      - A step for tasking solid-principles-assessor to review any code changes. Add tasks to docs/00-project/TODO.md for any issues raised, if one doesn't already exist. When deciding to add a task keep in mind the project scope, goals, and end-use case.
-      - A step for architectural-patterns-expert to review any code changes. Add tasks to docs/00-project/TODO.md for any issues raised, if one doesn't already exist. When deciding to add a task keep in mind the project scope, goals, and end-use case.
-      - A step for maintainability-assessor to review any code changes. Add tasks to docs/00-project/TODO.md for any issues raised, if one doesn't already exist. When deciding to add a task keep in mind the project scope, goals, and end-use case.
-      - A step for api-design-expert to review any code changes. Add tasks to docs/00-project/TODO.md for any issues raised, if one doesn't already exist. When deciding to add a task keep in mind the project scope, goals, and end-use case.
-      - A step for security-engineer to review any code changes. Add tasks to docs/00-project/TODO.md for any issues raised, if one doesn't already exist. When deciding to add a task keep in mind the project scope, goals, and end-use case.
-      - A step for documentation-assessor to review any documentation changes. Add tasks to docs/00-project/TODO.md for any issues raised, if one doesn't already exist. When deciding to add a task keep in mind the project scope, goals, and end-use case.
-    - A step for tasking code-reviewer with doing quality gates for the change using the zen codereview tool. Add tasks to docs/00-project/TODO.md for any issues raised, if one doesn't already exist. When deciding to add a task keep in mind the project scope, goals, and end-use case.
-    - A step for getting approval from Jerry to move forward.
-3. Carry out the steps in the ToDoWrite list.
-4. Assess whether any tasks added to docs/00-project/TODO.md are outside of the scope, goals, and end use-case of the project. Refer to docs/00-project/plan.md for guidance on the project.
-5. Check off the item in `docs/00-project/TODO.md` when it is completed. Items with children, should only be marked complete when all items nested below them are marked complete.
+# Tiered Parallel Pipeline Architecture
+
+1. **Task Selection**: Open `docs/00-project/TODO.md` and select the first unchecked actionable task in the todo list to work on. An actionable task is the most granular, concrete item that has no further sub-tasks beneath it (a true leaf node with no children). Always traverse down through all nested levels to find the deepest unchecked item that represents actual work to be done, not a category or grouping. Parent node items should only be marked as complete when all of the descendant node items are marked complete.
+
+2. **Automated Setup Phase** - Using ToDoWrite create a list that includes the following steps:
+
+   ## **TIER 1: Automated Agent Selection & Context Preparation** *(Sequential - Foundation Layer)*
+
+   - **Auto-Agent Selection**: Determine the most domain-relevant agent using these automated rules:
+     * **Code Implementation**: `rust-specialist`, `debug-specialist`, `performance-engineer` (prioritize by file type and complexity)
+     * **Architecture & Design**: `systems-architect` (for structural decisions, system design)
+     * **Security**: `security-engineer` (for authentication, data handling, cryptography)
+     * **Testing**: `test-specialist` (for test implementation, coverage analysis)
+     * **Fallback**: Use search-specialist to analyze task requirements if no clear match
+     * Read existing prompt from `docs/00-project/tdd-prompts/` or create new one if missing
+
+   - **Context Research**: Research whether existing technology/libraries solve this task (search-specialist for discovery)
+
+   - **Single-Round Prompt Validation**: Task selected agent to validate prompt sufficiency with requirements:
+     * Walk through thought process step-by-step
+     * Request any missing information needed
+     * **One iteration only** - refine prompt immediately based on feedback, then proceed
+     * Update finalized prompt in `docs/00-project/tdd-prompts/`
+
+   ## **TIER 2: Implementation Execution** *(Sequential - Critical Path)*
+
+   - **Primary Implementation**: Task agent with completing the todo item using finalized prompt. Agent must use zen precommit tool prior to completion if code changes involved.
+
+   - **Quality Gates & Commit**: Execute all type checking, linting, formatting, and testing gates. Use get-agent-hash for agent attribution. Commit changes only after all gates pass.
+
+   ## **TIER 3: Parallel Quality Review** *(Parallel - Quality Assurance Layer)*
+
+   **⚡ PARALLEL EXECUTION BLOCK** *(All reviews execute simultaneously)*
+
+   ```
+   // Core Quality Reviews (Always Execute)
+   ├── zen codereview → Comprehensive quality gates analysis
+   ├── security-engineer → Security impact assessment
+   └── test-specialist → Testing coverage validation
+
+   // Specialized Reviews (Execute Based on Change Type)
+   ├── clean-code-analyst → Code structure review (if code changes)
+   ├── solid-principles-assessor → SOLID compliance (if code changes)
+   ├── architectural-patterns-expert → Pattern compliance (if design changes)
+   ├── maintainability-assessor → Long-term maintainability (if complex changes)
+   ├── api-design-expert → API design review (if interface changes)
+   └── documentation-assessor → Documentation review (if docs changed)
+   ```
+
+   **Review Consolidation Rules**:
+   - If zen codereview identifies issues covered by specialist reviews, skip redundant specialist reviews
+   - Add tasks to `docs/00-project/TODO.md` for any issues raised (avoid duplicates)
+
+   **Automated Review Selection**: Determine which specialist reviews to include:
+   * **Code changes** → clean-code-analyst, solid-principles-assessor, maintainability-assessor
+   * **API/Interface changes** → api-design-expert
+   * **Architecture changes** → architectural-patterns-expert
+   * **Documentation changes** → documentation-assessor
+   * **All changes** → zen codereview, security-engineer, test-specialist (always execute)
+
+   ## **TIER 4: Human Approval Gate** *(Sequential - Final Validation)*
+
+   - **Jerry Approval**: Get approval from Jerry to move forward with the completed implementation and quality reviews.
+
+3. **Execution Phase**: Carry out the steps in the ToDoWrite list using the Tiered Parallel Pipeline:
+   - Execute TIER 1 sequentially (foundation must be solid)
+   - Execute TIER 2 sequentially (implementation is critical path)
+   - Execute TIER 3 reviews in parallel (quality assurance can be parallelized)
+   - Wait for all TIER 3 reviews to complete before proceeding
+   - Execute TIER 4 approval gate (human validation checkpoint)
+
+4. **Scope & Complexity Validation**: Assess whether any tasks added to `docs/00-project/TODO.md` are appropriate for the project context:
+   - **Scope Alignment**: Tasks must align with project goals, scope, and end use-case (refer to `docs/00-project/plan.md`)
+   - **Solution Complexity Matching**: Engineering practices and architectural patterns must match project type:
+     * Simple tools/games: Avoid enterprise patterns, prefer straightforward solutions
+     * Developer utilities: Focus on usability over complex abstractions
+     * Enterprise systems: Apply appropriate scaling patterns and robust error handling
+     * Libraries/frameworks: Design for extensibility and maintainability
+   - **Architectural Appropriateness**: Solution complexity should match actual requirements, not impose unnecessary patterns or over-engineering
+
+5. **Task Completion**: Check off the item in `docs/00-project/TODO.md` when it is completed. Items with children, should only be marked complete when all items nested below them are marked complete.
+
+---
+
+## **Implementation Notes**
+
+### **Parallel Execution Guidelines**
+- Use separate Tool calls for each parallel review in TIER 3
+- Batch similar reviews where possible (e.g., multiple code quality reviews)
+- Collect all parallel results before moving to next phase
+
+### **Automation Fallbacks**
+- If automated agent selection is unclear, use search-specialist for task analysis
+- If zen codereview fails, fall back to individual specialist reviews
+- If parallel reviews conflict, prioritize security-engineer > zen codereview > specialists
+
+### **Performance Optimizations**
+- Skip redundant specialist reviews when zen codereview covers the same areas
+- Consolidate similar review findings to avoid duplicate tasks
+
+### **Quality Assurance**
+- All TIER 3 reviews must complete successfully before marking task complete
+- Security-engineer approval is mandatory for all code changes
+- zen precommit validation required before any commits
+- **Human approval gate (Jerry) required after all quality reviews complete**
