@@ -18,4 +18,5 @@
     - A step for documentation-assessor to review any documentation changes. Add tasks to specs/$1/tasks.md for any issues raised, if one doesn't already exist. When deciding to add a task keep in mind the project scope, goals, and end-use case.
     - A step for tasking code-reviewer with doing quality gates for the change using the zen codereview tool. Add tasks to specs/$1/tasks.md for any issues raised, if one doesn't already exist. When deciding to add a task keep in mind the project scope, goals, and end-use case.
 3. Carry out the steps in the ToDoWrite list.
-4. Check off the item in `specs/$1/tasks.md` when it is completed. Items with children, should only be marked complete when all items nested below them are marked complete.
+4. Assess whether any tasks added to specs/$1/tasks.md are outside of the scope, goals, and end use-case of the project.
+5. Check off the item in `specs/$1/tasks.md` when it is completed. Items with children, should only be marked complete when all items nested below them are marked complete.
