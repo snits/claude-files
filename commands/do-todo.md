@@ -7,23 +7,23 @@
    ## **TIER 1: Agent Selection & Context Preparation** *(Sequential - Foundation Layer)*
 
    - **Thoughtful Agent Selection**: Determine the most domain-relevant agent by:
-     * Analyzing the specific task requirements and domain
-     * Reviewing what agents are actually available to the current project
-     * Considering the agent's expertise match to the task needs
-     * Prioritizing technical implementation and domain expert agents for code changes
-     * Prioritizing architectural agents for design decisions
-     * Prioritizing security-engineer for security concerns
-     * Prioritizing test-specialist for testing tasks
-     * Keeping in mind project scope, goals, and end use-case
-     * Read existing prompt from `docs/00-project/tdd-prompts/` or create new one if missing
+     - Analyzing the specific task requirements and domain
+     - Reviewing what agents are actually available to the current project
+     - Considering the agent's expertise match to the task needs
+     - Prioritizing technical implementation and domain expert agents for code changes
+     - Prioritizing architectural agents for design decisions
+     - Prioritizing security-engineer for security concerns
+     - Prioritizing test-specialist for testing tasks
+     - Keeping in mind project scope, goals, and end use-case
+     - Read existing prompt from `docs/00-project/tdd-prompts/` or create new one if missing
 
    - **Context Research**: Research whether existing technology/libraries solve this task (search-specialist for discovery)
 
    - **Single-Round Prompt Validation**: Task selected agent to validate prompt sufficiency with requirements:
-     * Walk through thought process step-by-step
-     * Request any missing information needed
-     * **One iteration only** - refine prompt immediately based on feedback, then proceed
-     * Update finalized prompt in `docs/00-project/tdd-prompts/`
+     - Walk through thought process step-by-step
+     - Request any missing information needed
+     - **One iteration only** - refine prompt immediately based on feedback, then proceed
+     - Update finalized prompt in `docs/00-project/tdd-prompts/`
 
    ## **TIER 2: Implementation Execution** *(Sequential - Critical Path)*
 
@@ -51,15 +51,15 @@
    ```
 
    **Review Consolidation Rules**:
-   - If zen codereview identifies issues covered by specialist reviews, skip the corresponding specialist review. This requires `zen codereview` to tag findings with the relevant domain (e.g., `[api-design]`, `[security]`).
+   - If zen codereview mcp tool identifies issues covered by specialist reviews, skip the corresponding specialist review. This requires `zen codereview` to tag findings with the relevant domain (e.g., `[api-design]`, `[security]`).
    - Add tasks to `docs/00-project/TODO.md` for any issues raised (avoid duplicates)
 
    **Automated Review Selection**: Determine which specialist reviews to include:
-   * **Code changes** → clean-code-analyst, solid-principles-assessor, maintainability-assessor
-   * **API/Interface changes** → api-design-expert
-   * **Architecture changes** → architectural-patterns-expert
-   * **Documentation changes** → documentation-assessor
-   * **All changes** → zen codereview, security-engineer, test-specialist (always execute)
+   - **Code changes** → clean-code-analyst, solid-principles-assessor, maintainability-assessor
+   - **API/Interface changes** → api-design-expert
+   - **Architecture changes** → architectural-patterns-expert
+   - **Documentation changes** → documentation-assessor
+   - **All changes** → zen codereview, security-engineer, test-specialist (always execute)
 
    ## **TIER 4: Human Approval Gate** *(Sequential - Final Validation)*
 
@@ -75,10 +75,10 @@
 4. **Scope & Complexity Validation**: Assess whether any tasks added to `docs/00-project/TODO.md` are appropriate for the project context:
    - **Scope Alignment**: Tasks must align with project goals, scope, and end use-case (refer to `docs/00-project/plan.md`)
    - **Solution Complexity Matching**: Engineering practices and architectural patterns must match project type:
-     * Simple tools/games: Avoid enterprise patterns, prefer straightforward solutions
-     * Developer utilities: Focus on usability over complex abstractions
-     * Enterprise systems: Apply appropriate scaling patterns and robust error handling
-     * Libraries/frameworks: Design for extensibility and maintainability
+     - Simple tools/games: Avoid enterprise patterns, prefer straightforward solutions
+     - Developer utilities: Focus on usability over complex abstractions
+     - Enterprise systems: Apply appropriate scaling patterns and robust error handling
+     - Libraries/frameworks: Design for extensibility and maintainability
    - **Architectural Appropriateness**: Solution complexity should match actual requirements, not impose unnecessary patterns or over-engineering
 
 5. **Task Completion**: Check off the item in `docs/00-project/TODO.md` when it is completed. Items with children, should only be marked complete when all items nested below them are marked complete.
@@ -88,21 +88,26 @@
 ## **Implementation Notes**
 
 ### **Parallel Execution Guidelines**
+
 - Use separate Tool calls for each parallel review in TIER 3
 - Batch similar reviews where possible (e.g., multiple code quality reviews)
 - Collect all parallel results before moving to next phase
 
 ### **Automation Fallbacks**
+
 - If agent selection is unclear, use search-specialist for task analysis
 - If zen codereview fails, fall back to individual specialist reviews
 - If parallel reviews conflict, prioritize security-engineer > zen codereview > specialists
 
 ### **Performance Optimizations**
+
 - Skip redundant specialist reviews when zen codereview covers the same areas
 - Consolidate similar review findings to avoid duplicate tasks
 
 ### **Quality Assurance**
+
 - All TIER 3 reviews must complete successfully before proceeding to TIER 4
 - Security-engineer approval is mandatory for all code changes
 - zen precommit validation required before any commits
 - **Human approval gate (Jerry) required after all quality reviews complete**
+

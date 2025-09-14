@@ -7,23 +7,23 @@
    ## **TIER 1: Agent Selection & Context Preparation** *(Sequential - Foundation Layer)*
 
    - **Thoughtful Agent Selection**: Determine the most domain-relevant agent by:
-     * Analyzing the specific task requirements and domain
-     * Reviewing what agents are actually available to the current project
-     * Considering the agent's expertise match to the task needs
-     * Prioritizing technical implementation and domain expert agents for code changes
-     * Prioritizing architectural agents for design decisions
-     * Prioritizing security-engineer for security concerns
-     * Prioritizing test-specialist for testing tasks
-     * Keeping in mind project scope, goals, and end use-case
-     * Read existing prompt from `specs/$1/task-prompts/` or create new one if missing
+     - Analyzing the specific task requirements and domain
+     - Reviewing what agents are actually available to the current project
+     - Considering the agent's expertise match to the task needs
+     - Prioritizing technical implementation and domain expert agents for code changes
+     - Prioritizing architectural agents for design decisions
+     - Prioritizing security-engineer for security concerns
+     - Prioritizing test-specialist for testing tasks
+     - Keeping in mind project scope, goals, and end use-case
+     - Read existing prompt from `specs/$1/task-prompts/` or create new one if missing
 
    - **Context Research**: Research whether existing technology/libraries solve this task (search-specialist for discovery)
 
    - **Single-Round Prompt Validation**: Task selected agent to validate prompt sufficiency with requirements:
-     * Walk through thought process step-by-step
-     * Request any missing information needed
-     * **One iteration only** - refine prompt immediately based on feedback, then proceed
-     * Update finalized prompt in `specs/$1/task-prompts/`
+     - Walk through thought process step-by-step
+     - Request any missing information needed
+     - **One iteration only** - refine prompt immediately based on feedback, then proceed
+     - Update finalized prompt in `specs/$1/task-prompts/`
 
    ## **TIER 2: Implementation Execution** *(Sequential - Critical Path)*
 
@@ -37,7 +37,7 @@
 
    ```
    // Core Quality Reviews (Always Execute)
-   ├── zen codereview → Comprehensive quality gates analysis
+   ├── zen codereview mcp tool → Comprehensive quality gates analysis
    ├── security-engineer → Security impact assessment
    └── test-specialist → Testing coverage validation
 
@@ -51,15 +51,15 @@
    ```
 
    **Review Consolidation Rules**:
-   - If zen codereview identifies issues covered by specialist reviews, skip redundant specialist reviews
+   - If zen codereview mcp tool identifies issues covered by specialist reviews, skip redundant specialist reviews
    - Add tasks to `specs/$1/tasks.md` for any issues raised (avoid duplicates)
 
    **Automated Review Selection**: Determine which specialist reviews to include:
-   * **Code changes** → clean-code-analyst, solid-principles-assessor, maintainability-assessor
-   * **API/Interface changes** → api-design-expert
-   * **Architecture changes** → architectural-patterns-expert
-   * **Documentation changes** → documentation-assessor
-   * **All changes** → zen codereview, security-engineer, test-specialist (always execute)
+   - **Code changes** → clean-code-analyst, solid-principles-assessor, maintainability-assessor
+   - **API/Interface changes** → api-design-expert
+   - **Architecture changes** → architectural-patterns-expert
+   - **Documentation changes** → documentation-assessor
+   - **All changes** → zen codereview, security-engineer, test-specialist (always execute)
 
 3. **Execution Phase**: Carry out the steps in the ToDoWrite list using the Tiered Parallel Pipeline:
    - Execute TIER 1 sequentially (foundation must be solid)
@@ -70,10 +70,10 @@
 4. **Scope & Complexity Validation**: Assess whether any tasks added to specs/$1/tasks.md are appropriate for the project context:
    - **Scope Alignment**: Tasks must align with project goals, scope, and end use-case (refer to specs/$1/plan.md)
    - **Solution Complexity Matching**: Engineering practices and architectural patterns must match project type:
-     * Simple tools/games: Avoid enterprise patterns, prefer straightforward solutions
-     * Developer utilities: Focus on usability over complex abstractions
-     * Enterprise systems: Apply appropriate scaling patterns and robust error handling
-     * Libraries/frameworks: Design for extensibility and maintainability
+     - Simple tools/games: Avoid enterprise patterns, prefer straightforward solutions
+     - Developer utilities: Focus on usability over complex abstractions
+     - Enterprise systems: Apply appropriate scaling patterns and robust error handling
+     - Libraries/frameworks: Design for extensibility and maintainability
    - **Architectural Appropriateness**: Solution complexity should match actual requirements, not impose unnecessary patterns or over-engineering
 
 5. **Task Completion**: Check off the item in `specs/$1/tasks.md` when it is completed. Items with children, should only be marked complete when all items nested below them are marked complete.
@@ -83,20 +83,25 @@
 ## **Implementation Notes**
 
 ### **Parallel Execution Guidelines**
+
 - Use separate Tool calls for each parallel review in TIER 3
 - Batch similar reviews where possible (e.g., multiple code quality reviews)
 - Collect all parallel results before moving to next phase
 
 ### **Automation Fallbacks**
+
 - If agent selection is unclear, use search-specialist for task analysis
 - If zen codereview fails, fall back to individual specialist reviews
 - If parallel reviews conflict, prioritize security-engineer > zen codereview > specialists
 
 ### **Performance Optimizations**
+
 - Skip redundant specialist reviews when zen codereview covers the same areas
 - Consolidate similar review findings to avoid duplicate tasks
 
 ### **Quality Assurance**
+
 - All TIER 3 reviews must complete successfully before marking task complete
 - Security-engineer approval is mandatory for all code changes
 - zen precommit validation required before any commits
+
