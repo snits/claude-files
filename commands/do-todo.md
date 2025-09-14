@@ -59,7 +59,7 @@
    - **API/Interface changes** → api-design-expert
    - **Architecture changes** → architectural-patterns-expert
    - **Documentation changes** → documentation-assessor
-   - **All changes** → zen codereview, security-engineer, test-specialist (always execute)
+   - **All changes** → zen codereview mcp tool, security-engineer, test-specialist (always execute)
 
    ## **TIER 4: Human Approval Gate** *(Sequential - Final Validation)*
 
@@ -96,18 +96,17 @@
 ### **Automation Fallbacks**
 
 - If agent selection is unclear, use search-specialist for task analysis
-- If zen codereview fails, fall back to individual specialist reviews
-- If parallel reviews conflict, prioritize security-engineer > zen codereview > specialists
+- If zen codereview mcp tool fails, fall back to individual specialist reviews
+- If parallel reviews conflict, prioritize security-engineer > zen codereview mcp tool > specialists
 
 ### **Performance Optimizations**
 
-- Skip redundant specialist reviews when zen codereview covers the same areas
+- Skip redundant specialist reviews when zen codereview mcp tool covers the same areas
 - Consolidate similar review findings to avoid duplicate tasks
 
 ### **Quality Assurance**
 
 - All TIER 3 reviews must complete successfully before proceeding to TIER 4
 - Security-engineer approval is mandatory for all code changes
-- zen precommit validation required before any commits
+- zen precommit mcp tool validation required before any commits
 - **Human approval gate (Jerry) required after all quality reviews complete**
-

@@ -59,7 +59,7 @@
    - **API/Interface changes** → api-design-expert
    - **Architecture changes** → architectural-patterns-expert
    - **Documentation changes** → documentation-assessor
-   - **All changes** → zen codereview, security-engineer, test-specialist (always execute)
+   - **All changes** → zen codereview mcp tool, security-engineer, test-specialist (always execute)
 
 3. **Execution Phase**: Carry out the steps in the ToDoWrite list using the Tiered Parallel Pipeline:
    - Execute TIER 1 sequentially (foundation must be solid)
@@ -91,17 +91,16 @@
 ### **Automation Fallbacks**
 
 - If agent selection is unclear, use search-specialist for task analysis
-- If zen codereview fails, fall back to individual specialist reviews
-- If parallel reviews conflict, prioritize security-engineer > zen codereview > specialists
+- If zen codereview mcp tool fails, fall back to individual specialist reviews
+- If parallel reviews conflict, prioritize security-engineer > zen codereview mcp tool > specialists
 
 ### **Performance Optimizations**
 
-- Skip redundant specialist reviews when zen codereview covers the same areas
+- Skip redundant specialist reviews when zen codereview mcp tool covers the same areas
 - Consolidate similar review findings to avoid duplicate tasks
 
 ### **Quality Assurance**
 
 - All TIER 3 reviews must complete successfully before marking task complete
 - Security-engineer approval is mandatory for all code changes
-- zen precommit validation required before any commits
-
+- zen precommit mcp tool validation required before any commits
