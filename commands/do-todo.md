@@ -27,7 +27,7 @@
 
    ## **TIER 2: Implementation Execution** *(Sequential - Critical Path)*
 
-   - **Primary Implementation**: Task agent with completing the todo item using finalized prompt. Agent must use the zen precommit mcp tool prior to completion if code changes involved.
+   - **Primary Implementation**: Task agent selected with completing the todo item using finalized prompt. Agent must use the zen precommit mcp tool prior to completion if code changes involved.
 
    - **Quality Gates & Commit**: Execute all type checking, linting, formatting, and testing gates. Use get-agent-hash for agent attribution. Commit changes only after all gates pass.
 
