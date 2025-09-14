@@ -27,7 +27,7 @@
 
    ## **TIER 2: Implementation Execution** *(Sequential - Critical Path)*
 
-   - **Primary Implementation**: Task agent with completing the todo item using finalized prompt. Agent must use zen precommit tool prior to completion if code changes involved.
+   - **Primary Implementation**: Task agent with completing the todo item using finalized prompt. Agent must use the zen precommit mcp tool prior to completion if code changes involved.
 
    - **Quality Gates & Commit**: Execute all type checking, linting, formatting, and testing gates. Use get-agent-hash for agent attribution. Commit changes only after all gates pass.
 
@@ -51,7 +51,7 @@
    ```
 
    **Review Consolidation Rules**:
-   - If zen codereview mcp tool identifies issues covered by specialist reviews, skip the corresponding specialist review. This requires `zen codereview` to tag findings with the relevant domain (e.g., `[api-design]`, `[security]`).
+   - If zen codereview mcp tool identifies issues covered by specialist reviews, skip the corresponding specialist review. This requires the zen codereview mcp tool use to tag findings with the relevant domain (e.g., `[api-design]`, `[security]`).
    - Add tasks to `docs/00-project/TODO.md` for any issues raised (avoid duplicates)
 
    **Automated Review Selection**: Determine which specialist reviews to include:
