@@ -13,7 +13,7 @@ Execute these three activities **simultaneously**:
 #### 1.1 Structure Generation
 
 ```
-zen planner mcp tool → High-level project architecture and phases
+planner-agent (using `mcp__zen__planner`) → High-level project architecture and phases
 - Focus: Project structure, major components, dependencies
 - Output: Initial plan skeleton with phases and major deliverables
 ```
@@ -31,7 +31,7 @@ search-specialist → Technology landscape analysis
 #### 1.3 Architecture Validation
 
 ```
-zen consensus mcp tool → Architecture pattern and approach validation
+systems-architect (using `mcp__zen__consensus`) → Architecture pattern and approach validation
 - Multi-model validation of technical approach
 - Risk assessment and mitigation strategies
 - Integration pattern recommendations

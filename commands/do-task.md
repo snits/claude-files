@@ -27,7 +27,7 @@
 
    ## **TIER 2: Implementation Execution** *(Sequential - Critical Path)*
 
-   - **Primary Implementation**: Task agent selected with completing the todo item using finalized prompt. Agent must use zen precommit tool prior to completion if code changes involved.
+   - **Primary Implementation**: Task agent selected with completing the todo item using finalized prompt. Agent must use the `mcp__zen__precommit` tool prior to completion if code changes involved.
 
    - **Quality Gates & Commit**: Execute all type checking, linting, formatting, and testing gates. Use get-agent-hash for agent attribution. Commit changes only after all gates pass.
 
@@ -37,7 +37,7 @@
 
    ```
    // Core Quality Reviews (Always Execute)
-   ├── zen codereview mcp tool → Comprehensive quality gates analysis
+   ├── code-reviewer (using `mcp__zen__codereview`) → Comprehensive quality gates analysis
    ├── security-engineer → Security impact assessment
    └── test-specialist → Testing coverage validation
 
@@ -51,7 +51,7 @@
    ```
 
    **Review Consolidation Rules**:
-   - If zen codereview mcp tool identifies issues covered by specialist reviews, skip redundant specialist reviews
+   - If code-reviewer using `mcp__zen__codereview` identifies issues covered by specialist reviews, skip redundant specialist reviews
    - Add tasks to `specs/$1/tasks.md` for any issues raised (avoid duplicates)
 
    **Automated Review Selection**: Determine which specialist reviews to include:
@@ -59,7 +59,7 @@
    - **API/Interface changes** → api-design-expert
    - **Architecture changes** → architectural-patterns-expert
    - **Documentation changes** → documentation-assessor
-   - **All changes** → zen codereview mcp tool, security-engineer, test-specialist (always execute)
+   - **All changes** → code-reviewer (using `mcp__zen__codereview`), security-engineer, test-specialist (always execute)
 
 3. **Execution Phase**: Carry out the steps in the ToDoWrite list using the Tiered Parallel Pipeline:
    - Execute TIER 1 sequentially (foundation must be solid)
@@ -91,16 +91,16 @@
 ### **Automation Fallbacks**
 
 - If agent selection is unclear, use search-specialist for task analysis
-- If zen codereview mcp tool fails, fall back to individual specialist reviews
-- If parallel reviews conflict, prioritize security-engineer > zen codereview mcp tool > specialists
+- If code-reviewer using `mcp__zen__codereview` fails, fall back to individual specialist reviews
+- If parallel reviews conflict, prioritize security-engineer > code-reviewer (using `mcp__zen__codereview`) > specialists
 
 ### **Performance Optimizations**
 
-- Skip redundant specialist reviews when zen codereview mcp tool covers the same areas
+- Skip redundant specialist reviews when code-reviewer using `mcp__zen__codereview` covers the same areas
 - Consolidate similar review findings to avoid duplicate tasks
 
 ### **Quality Assurance**
 
 - All TIER 3 reviews must complete successfully before marking task complete
 - Security-engineer approval is mandatory for all code changes
-- zen precommit mcp tool validation required before any commits
+- `mcp__zen__precommit` tool validation required before any commits
