@@ -4,14 +4,17 @@
 
 2. **Automated Setup Phase** - Using ToDoWrite create a list that includes the following steps:
 
-   ## **TIER 1: Automated Agent Selection & Context Preparation** *(Sequential - Foundation Layer)*
+   ## **TIER 1: Agent Selection & Context Preparation** *(Sequential - Foundation Layer)*
 
-   - **Auto-Agent Selection**: Determine the most domain-relevant agent using these automated rules:
-     * **Code Implementation**: `rust-specialist`, `debug-specialist`, `performance-engineer` (prioritize by file type and complexity)
-     * **Architecture & Design**: `systems-architect` (for structural decisions, system design)
-     * **Security**: `security-engineer` (for authentication, data handling, cryptography)
-     * **Testing**: `test-specialist` (for test implementation, coverage analysis)
-     * **Fallback**: Use search-specialist to analyze task requirements if no clear match
+   - **Thoughtful Agent Selection**: Determine the most domain-relevant agent by:
+     * Analyzing the specific task requirements and domain
+     * Reviewing what agents are actually available to the current project
+     * Considering the agent's expertise match to the task needs
+     * Prioritizing technical implementation and domain expert agents for code changes
+     * Prioritizing architectural agents for design decisions
+     * Prioritizing security-engineer for security concerns
+     * Prioritizing test-specialist for testing tasks
+     * Keeping in mind project scope, goals, and end use-case
      * Read existing prompt from `specs/$1/task-prompts/` or create new one if missing
 
    - **Context Research**: Research whether existing technology/libraries solve this task (search-specialist for discovery)
@@ -85,7 +88,7 @@
 - Collect all parallel results before moving to next phase
 
 ### **Automation Fallbacks**
-- If automated agent selection is unclear, use search-specialist for task analysis
+- If agent selection is unclear, use search-specialist for task analysis
 - If zen codereview fails, fall back to individual specialist reviews
 - If parallel reviews conflict, prioritize security-engineer > zen codereview > specialists
 
