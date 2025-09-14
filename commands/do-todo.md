@@ -19,5 +19,5 @@
     - A step for tasking code-reviewer with doing quality gates for the change using the zen codereview tool. Add tasks to docs/00-project/TODO.md for any issues raised, if one doesn't already exist. When deciding to add a task keep in mind the project scope, goals, and end-use case.
     - A step for getting approval from Jerry to move forward.
 3. Carry out the steps in the ToDoWrite list.
-4. Assess whether any tasks added to docs/00-project/TODO.md are outside of the scope, goals, and end use-case of the project.
+4. Assess whether any tasks added to docs/00-project/TODO.md are outside of the scope, goals, and end use-case of the project. Refer to docs/00-project/plan.md for guidance on the project.
 5. Check off the item in `docs/00-project/TODO.md` when it is completed. Items with children, should only be marked complete when all items nested below them are marked complete.
