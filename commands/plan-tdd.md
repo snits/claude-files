@@ -108,6 +108,7 @@ Automated prompt generation using agent-specific templates:
 - debug-specialist: Debugging context, log analysis, trace setup
 - security-engineer: Threat model, security requirements, validation
 - Context injection: Project state, dependencies, test requirements
+- **SCOPE CONSTRAINTS**: Include PROJECT SCALE CONTEXT and YAGNI/DRY principles in all generated prompts
 ```
 
 #### 3.3 Execution Pipeline Configuration

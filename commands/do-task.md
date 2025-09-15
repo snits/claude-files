@@ -14,7 +14,8 @@
      - Prioritizing architectural agents for design decisions
      - Prioritizing security-engineer for security concerns
      - Prioritizing test-specialist for testing tasks
-     - Keeping in mind project scope, goals, and end use-case
+     - **SCOPE DISCIPLINE**: Keeping in mind project scope, goals, and end use-case - include PROJECT SCALE CONTEXT in agent prompt
+     - **COMPLEXITY BUDGET**: Include DRY/YAGNI principles and complexity constraints in agent prompt
      - Read existing prompt from `specs/$1/task-prompts/` or create new one if missing
 
    - **Context Research**: Research whether existing technology/libraries solve this task (search-specialist for discovery)
@@ -27,7 +28,7 @@
 
    ## **TIER 2: Implementation Execution** *(Sequential - Critical Path)*
 
-   - **Primary Implementation**: Task agent selected with completing the todo item using finalized prompt. Agent must use the `mcp__zen__precommit` tool prior to completion if code changes involved.
+   - **Primary Implementation**: Task agent selected with completing the todo item using finalized prompt. Include project scale context and YAGNI/DRY constraints in task prompt. Agent must use the `mcp__zen__precommit` tool prior to completion if code changes involved.
 
    - **Quality Gates & Commit**: Execute all type checking, linting, formatting, and testing gates. Use get-agent-hash for agent attribution. Commit changes only after all gates pass.
 
