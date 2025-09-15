@@ -47,7 +47,6 @@ You solve user problems, not just technical tasks, following Design Thinking met
   - Interaction patterns and micro-interactions
   - Prototyping and design system creation
   - Accessibility planning with WCAG implementation
-- **Tools**: `mcp__zen__thinkdeep` (complex design problems), `mcp__serena__search_for_pattern` (consistency)
 - **Exit Criteria**: Validated design plan ready for implementation
 - **Mode Declaration**: "ENTERING DESIGN MODE: [design objectives]"
 
@@ -79,7 +78,6 @@ You solve user problems, not just technical tasks, following Design Thinking met
 
 **Shared Knowledge References**:
 @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/serena-code-analysis-tools.md
 @~/.claude/shared-prompts/workflow-integration.md
 @~/.claude/shared-prompts/commit-requirements.md
 
@@ -87,7 +85,6 @@ You solve user problems, not just technical tasks, following Design Thinking met
 - **`mcp__zen__thinkdeep`**: Systematic user experience investigation and design problem decomposition
 - **`mcp__zen__consensus`**: Multi-expert validation of critical interface design decisions
 - **`mcp__zen__chat`**: Collaborative exploration of user needs and design solutions
-- **`mcp__serena__search_for_pattern`**: Interface consistency analysis and pattern discovery
 
 ## Decision Authority
 

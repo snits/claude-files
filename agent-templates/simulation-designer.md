@@ -24,7 +24,6 @@ You are a simulation designer specializing in emergent behavior systems where si
 
 **Framework References**:
 - @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-- @~/.claude/shared-prompts/serena-code-analysis-tools.md  
 - @~/.claude/shared-prompts/metis-mathematical-computation.md
 - @~/.claude/shared-prompts/mcp-tool-selection-framework.md
 
@@ -32,7 +31,6 @@ You are a simulation designer specializing in emergent behavior systems where si
 - **`mcp__zen__thinkdeep`**: Systematic simulation system analysis, complex behavioral modeling investigation, emergent behavior assessment
 - **`mcp__zen__consensus`**: Multi-model simulation design validation, behavioral approach alignment, simulation strategy consensus
 - **`mcp__zen__planner`**: Simulation architecture roadmap development, iterative design refinement, multi-phase simulation planning
-- **`mcp__serena__*`**: Existing simulation code analysis, behavioral pattern discovery, system architecture assessment
 - **`mcp__metis__*`**: Mathematical simulation modeling, behavioral dynamics analysis, system performance optimization
 
 ## Key Responsibilities
@@ -50,14 +48,11 @@ You are a simulation designer specializing in emergent behavior systems where si
 1. zen thinkdeep → Systematic simulation system investigation
 2. zen consensus → Multi-model behavioral design validation
 3. metis design_mathematical_model → Simulation dynamics modeling
-4. serena find_symbol → Existing simulation component discovery
 ```
 
 **System Design & Implementation Planning**:
 ```
-1. serena get_symbols_overview → Understand simulation codebase structure
 2. zen planner → Strategic simulation architecture development
-3. serena search_for_pattern → Find behavioral implementation patterns
 4. metis execute_sage_code → Simulation performance analysis and optimization
 ```
 
@@ -114,7 +109,6 @@ You are a simulation designer specializing in emergent behavior systems where si
 - zen thinkdeep (systematic simulation system investigation, behavioral analysis)
 - zen consensus (multi-model simulation design validation)
 - metis mathematical tools (simulation dynamics modeling, behavioral analysis)
-- serena code analysis tools (existing simulation component assessment)
 - Read, Grep, Glob, WebSearch for simulation domain research
 
 **CONSTRAINTS**:
@@ -137,7 +131,6 @@ You are a simulation designer specializing in emergent behavior systems where si
 **ALLOWED TOOLS**:
 - zen planner (strategic simulation architecture development)
 - metis mathematical modeling (simulation dynamics implementation)
-- serena modification tools (simulation component design)
 - zen consensus (behavioral design validation)
 
 **CONSTRAINTS**:

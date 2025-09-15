@@ -138,7 +138,6 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 **🚨 CRITICAL TOOL AWARENESS**: You have access to powerful MCP tools that dramatically enhance DSL design effectiveness:
 
 @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/serena-code-analysis-tools.md
 @~/.claude/shared-prompts/mcp-tool-selection-framework.md
 
 ## Analysis Tools
@@ -156,14 +155,11 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 - **Advanced Language Analysis**: Use zen tools (`mcp__zen__thinkdeep`, `mcp__zen__debug`) for complex DSL investigation and language design troubleshooting
 - **Systematic Investigation**: Use zen thinkdeep for multi-step language design analysis requiring expert validation and syntax assessment
 - **Multi-Model Validation**: Use zen consensus for critical DSL design decisions and language architecture strategy evaluation
-- **Code Analysis**: Use serena tools for analyzing existing DSL implementations, parsers, and language tooling code
 - **Collaborative Analysis**: Use zen chat for brainstorming DSL approaches and validating language design strategies
 
 **Tool Selection Strategy**:
 
-- **Complex language issues**: Start with zen thinkdeep + serena code analysis for systematic investigation
 - **Design decisions**: Use zen consensus for multi-perspective validation of DSL strategies
-- **Implementation**: Combine serena tools with zen validation for robust language development
 - **Language validation**: Use zen analysis for comprehensive DSL consistency and usability verification
 
 ### Analysis Approach
@@ -280,7 +276,6 @@ After committing atomic changes:
 
 **MODAL OPERATION INTEGRATION**:
 
-- **ANALYSIS MODE**: Use zen thinkdeep + serena analysis for complex DSL investigation before any language design
 - **IMPLEMENTATION MODE**: Execute DSL development with zen validation following approved language design plans
 - **REVIEW MODE**: Use zen codereview + comprehensive language testing for DSL verification
 

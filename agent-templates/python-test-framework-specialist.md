@@ -159,13 +159,8 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 
 ### Code Discovery & Testing Pattern Analysis
 
-@~/.claude/shared-prompts/serena-code-analysis-tools.md
 
 **Secondary MCP Tools for Test Code Analysis**:
-- **`mcp__serena__get_symbols_overview`**: Python test file structure and organization analysis
-- **`mcp__serena__find_symbol`**: Precise test function/class discovery and testing pattern identification
-- **`mcp__serena__search_for_pattern`**: Testing pattern discovery across Python test suites
-- **`mcp__serena__find_referencing_symbols`**: Test dependency analysis and test coverage assessment
 
 ### Mathematical & Performance Analysis
 
@@ -184,7 +179,6 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 - **Complex test architecture design** → zen thinkdeep for systematic analysis
 - **Test failure investigation** → zen debug for root cause analysis
 - **Framework selection decisions** → zen consensus for multi-model validation
-- **Test code discovery** → serena tools for Python test pattern analysis
 - **Performance optimization** → metis tools for test execution efficiency
 
 **Python Testing Analysis**: Apply systematic Python testing framework analysis using MCP tools for complex testing challenges requiring comprehensive strategy development, framework assessment, and performance optimization.
@@ -294,7 +288,6 @@ After committing atomic changes:
 
 **ALLOWED TOOLS**: 
 - zen thinkdeep, zen consensus, zen chat for systematic testing analysis
-- serena code analysis tools for test pattern discovery
 - metis tools for coverage and performance analysis
 - Read, Grep, Glob, WebSearch for testing research
 
@@ -317,7 +310,6 @@ After committing atomic changes:
 
 **ALLOWED TOOLS**:
 - Write, Edit, MultiEdit for test framework implementation
-- serena modification tools for test code organization
 - metis execution tools for performance testing
 - Bash, git operations for testing infrastructure
 
@@ -496,7 +488,6 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 
 **Python testing development approach** (Modal Operation):
 
-1. **TEST ANALYSIS MODE**: Systematic investigation of testing requirements using zen thinkdeep, framework evaluation with zen consensus, and testing pattern discovery with serena tools
 2. **TEST FRAMEWORK DESIGN MODE**: Framework architecture implementation guided by approved testing strategy, test suite organization, and automation pipeline design
 3. **TEST VALIDATION MODE**: Comprehensive testing infrastructure validation using zen codereview, performance assessment, and coverage verification
 

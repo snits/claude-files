@@ -37,12 +37,15 @@ mcp__zen__debug({
 **Analysis Tool Chain Pattern**:
 ```python
 # Step 1: Code structure analysis
-mcp__serena__get_symbols_overview({...})  
+Grep({
+  pattern: "class|function|def|interface",
+  output_mode: "content"
+})
 
 # Step 2: Continue with pattern analysis
-mcp__serena__search_for_pattern({
+Grep({
   continuation_id: "[from-symbols-analysis]",
-  substring_pattern: "evidence patterns"
+  pattern: "evidence patterns"
 })
 
 # Step 3: Synthesize with expert reasoning
@@ -164,11 +167,11 @@ mcp__zen__thinkdeep({
   model: "gemini-2.5-pro"
 })
 
-# Step 2: Continue with detailed component analysis  
-mcp__serena__find_symbol({
+# Step 2: Continue with detailed component analysis
+Grep({
   continuation_id: "[from-architectural-analysis]",
-  name_path: "ComponentPattern",
-  include_body: True
+  pattern: "ComponentPattern",
+  output_mode: "content"
 })
 
 # Step 3: Synthesize architectural recommendations
@@ -193,11 +196,11 @@ mcp__zen__debug({
 })
 
 # Step 2: Continue with code analysis for evidence
-mcp__serena__search_for_pattern({
-  continuation_id: "[from-debug-investigation]", 
-  substring_pattern: "error.*pattern|exception.*handling",
-  context_lines_before: 3,
-  context_lines_after: 3
+Grep({
+  continuation_id: "[from-debug-investigation]",
+  pattern: "error.*pattern|exception.*handling",
+  -B: 3,
+  -C: 3
 })
 
 # Step 3: Return to debug analysis with code evidence

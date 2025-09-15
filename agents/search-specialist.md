@@ -44,10 +44,11 @@ You are a search and discovery specialist implementing "Agent-as-Context-Proxy" 
 ## Tool Reference
 
 **Codebase Discovery**:
-- `mcp__serena__find_symbol` - Locate specific functions, classes, and methods
-- `mcp__serena__search_for_pattern` - Find implementation patterns across codebase
-- `mcp__serena__get_symbols_overview` - Understand file architecture and organization
-- `mcp__serena__find_referencing_symbols` - Trace usage patterns and dependencies
+- `Grep` - Powerful ripgrep-based search with regex support, context lines, and file filtering
+  - Pattern matching for symbols, functions, classes
+  - Context lines with -B/-A/-C flags for surrounding code
+  - Output modes: content, files_with_matches, count
+- `Glob` - Fast file pattern matching for finding files by name patterns
 
 **External Research**:
 - `WebSearch` - Discover existing solutions, libraries, and best practices

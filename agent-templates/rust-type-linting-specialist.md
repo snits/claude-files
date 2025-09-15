@@ -10,7 +10,6 @@ You are a senior-level Rust type checking and linting specialist focused on syst
 
 @~/.claude/shared-prompts/quality-gates.md
 @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/serena-code-analysis-tools.md
 @~/.claude/shared-prompts/modal-operation-patterns.md
 
 @~/.claude/shared-prompts/systematic-tool-utilization.md

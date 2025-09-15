@@ -26,11 +26,6 @@
 
 ### Tier 2: Specialized Domain Tools
 
-**Serena (Code Analysis)**:
-- **Primary Use**: Code exploration, architecture analysis, refactoring support
-- **Selection Criteria**: Codebase interaction required, symbol discovery needed
-- **Integration**: Combine with zen tools for expert code analysis
-
 **Metis (Mathematical)**:
 - **Primary Use**: Mathematical modeling, numerical analysis, scientific computation
 - **Selection Criteria**: Mathematical computation required, modeling needed
@@ -64,18 +59,16 @@
 
 **🔍 Code Analysis & Architecture**:
 ```
-1. serena get_symbols_overview → Understand structure
-2. serena find_symbol → Locate components
-3. zen thinkdeep → Systematic analysis
-4. zen codereview → Expert validation
+1. Use Search tool → Find code patterns and symbols
+2. zen thinkdeep → Systematic analysis
+3. zen codereview → Expert validation
 ```
 
 **🐛 Debugging & Problem Investigation**:
-```  
+```
 1. zen debug → Systematic investigation
-2. serena search_for_pattern → Find evidence
-3. serena find_referencing_symbols → Trace impacts
-4. zen thinkdeep → Root cause analysis (if needed)
+2. Use Search tool → Find evidence and patterns
+3. zen thinkdeep → Root cause analysis (if needed)
 ```
 
 **📊 Mathematical & Data Analysis**:
@@ -106,7 +99,6 @@
 **CRITICAL TOOL AWARENESS**: You have access to powerful MCP tools that can dramatically improve your effectiveness:
 
 @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/serena-code-analysis-tools.md  
 @~/.claude/shared-prompts/metis-mathematical-computation.md (if mathematical domain)
 
 **Tool Selection Strategy**: [Domain-specific guidance for when to use advanced tools]
@@ -117,7 +109,7 @@
 **Embed in Workflow Descriptions**:
 - "For complex problems, START with zen thinkdeep before implementation"
 - "For architectural decisions, use zen consensus to validate approaches"  
-- "For code exploration, begin with serena get_symbols_overview"
+- "For code exploration, use the Search tool"
 - "For mathematical modeling, use metis design_mathematical_model"
 
 ### Task-Triggered Tool Recommendations
@@ -125,9 +117,9 @@
 **Complex Task Indicators → Tool Suggestions**:
 - "Unknown problem domain" → zen thinkdeep
 - "Multiple solution approaches" → zen consensus  
-- "Code architecture analysis" → serena tools + zen codereview
+- "Code architecture analysis" → Search tool + zen codereview
 - "Mathematical problem solving" → metis tools + zen validation
-- "System debugging" → zen debug + serena code analysis
+- "System debugging" → zen debug + Search tool
 
 ## Integration Patterns for Maximum Effectiveness
 
@@ -151,17 +143,16 @@ zen codereview (quality validation)
 
 **Discovery Pattern**:
 ```
-serena get_symbols_overview (structure) →
-serena find_symbol (components) →
+Search tool (find patterns/symbols) →
 zen thinkdeep (analysis) →
-serena modification tools (changes)
+Implementation tools (changes)
 ```
 
 ### Cross-Tool Context Transfer
 
 **Maintain Context Across Tools**:
 - Use `continuation_id` for zen tools to maintain conversation context
-- Reference file paths consistently across serena and zen tools
+- Reference file paths consistently across tools
 - Build on previous analysis in subsequent tool calls
 - Document findings between tool transitions
 
@@ -175,7 +166,7 @@ serena modification tools (changes)
 ## Agent-Specific Implementation Guidance
 
 ### For Technical Implementation Agents
-- **Priority tools**: zen debug, zen codereview, serena code analysis
+- **Priority tools**: zen debug, zen codereview, Search tool
 - **Integration pattern**: Investigation → Analysis → Implementation → Review
 - **Tool awareness**: Proactively suggest zen tools for complex problems
 
@@ -190,7 +181,7 @@ serena modification tools (changes)
 - **Tool awareness**: Combine mathematical computation with expert reasoning
 
 ### For Quality Assurance Agents
-- **Priority tools**: zen codereview, zen precommit, serena analysis tools
+- **Priority tools**: zen codereview, zen precommit, Search tool
 - **Integration pattern**: Analysis → Review → Validation → Documentation
 - **Tool awareness**: Use systematic review workflows for comprehensive coverage
 

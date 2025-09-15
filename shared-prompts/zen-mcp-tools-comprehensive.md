@@ -174,12 +174,11 @@ mcp__zen__chat({
 ## Integration with Other Tools
 
 **zen tools complement**:
-- **Serena MCP tools**: zen provides analysis, serena provides code discovery
 - **Metis MCP tools**: zen provides reasoning, metis provides mathematical computation
 - **Standard tools**: zen provides systematic framework, standard tools provide implementation
 
 **Tool selection priority**:
 1. **For complex analysis**: zen tools first for systematic approach
-2. **For code discovery**: Combine zen analysis with serena code tools
+2. **For code discovery**: Combine zen analysis with Search tool
 3. **For mathematical work**: Combine zen reasoning with metis computation
 4. **For implementation**: Use zen planning, then standard implementation tools

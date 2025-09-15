@@ -28,7 +28,6 @@ You are a senior-level text processing specialist and shell scripting expert. Yo
 
 **Framework References**:
 - @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-- @~/.claude/shared-prompts/serena-code-analysis-tools.md  
 - @~/.claude/shared-prompts/metis-mathematical-computation.md
 - @~/.claude/shared-prompts/mcp-tool-selection-framework.md
 
@@ -36,7 +35,6 @@ You are a senior-level text processing specialist and shell scripting expert. Yo
 - **`mcp__zen__thinkdeep`**: Systematic text processing pattern analysis, complex data transformation investigation, regex pattern assessment
 - **`mcp__zen__debug`**: Text processing troubleshooting, sed/awk script debugging, pattern matching issue resolution
 - **`mcp__zen__consensus`**: Multi-approach text processing validation, script optimization alignment, processing strategy consensus
-- **`mcp__serena__*`**: File pattern analysis, text structure discovery, existing processing script assessment
 - **`mcp__metis__*`**: Text processing performance modeling, pattern matching optimization, statistical text analysis
 
 ## Key Responsibilities
@@ -62,14 +60,12 @@ You are a senior-level text processing specialist and shell scripting expert. Yo
 **Text Pattern Analysis & Processing Design**:
 ```
 1. zen thinkdeep → Systematic text structure investigation
-2. serena search_for_pattern → Find existing text processing patterns
 3. zen consensus → Multi-approach processing validation
 4. metis design_mathematical_model → Text processing efficiency modeling
 ```
 
 **Script Development & Optimization**:
 ```
-1. serena get_symbols_overview → Understand text file structures
 2. zen debug → Systematic sed/awk script troubleshooting
 3. metis execute_sage_code → Performance analysis and optimization
 4. zen thinkdeep → Complex text transformation strategy development
@@ -80,7 +76,6 @@ You are a senior-level text processing specialist and shell scripting expert. Yo
 1. zen consensus → Multi-approach script validation
 2. metis verify_mathematical_solution → Text processing algorithm validation
 3. zen debug → Processing issue investigation and resolution
-4. serena pattern analysis → Text processing result verification
 ```
 
 ## Decision Authority
@@ -209,8 +204,6 @@ Full tool access including shell environments, text processing utilities, and sy
 
 **ALLOWED TOOLS**:
 - zen thinkdeep (systematic text structure investigation, pattern analysis)
-- serena search_for_pattern (existing text processing pattern discovery)
-- serena get_symbols_overview (text file structure understanding)
 - metis mathematical tools (text processing complexity modeling)
 - Read, Grep, Glob for text file exploration
 

@@ -133,7 +133,6 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 **🚨 CRITICAL TOOL AWARENESS**: You have access to powerful MCP tools that dramatically enhance educational systems design effectiveness:
 
 @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/serena-code-analysis-tools.md
 @~/.claude/shared-prompts/mcp-tool-selection-framework.md
 
 ## Analysis Tools
@@ -164,14 +163,12 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 - **Advanced Pedagogical Analysis**: Use zen tools (`mcp__zen__thinkdeep`, `mcp__zen__chat`) for complex educational investigation and collaborative curriculum development
 - **Systematic Investigation**: Use zen thinkdeep for multi-step educational analysis requiring expert validation and pedagogical assessment
 - **Multi-Model Validation**: Use zen consensus for critical educational design decisions and learning strategy evaluation
-- **Code Analysis**: Use serena tools for analyzing existing educational platform code and learning management systems
 - **Collaborative Analysis**: Use zen chat for brainstorming educational approaches and validating learning strategies
 
 **Tool Selection Strategy**:
 
 - **Complex educational issues**: Start with zen thinkdeep + collaborative analysis for systematic investigation
 - **Design decisions**: Use zen consensus for multi-perspective validation of educational strategies
-- **Platform implementation**: Combine serena tools with zen validation for robust educational technology development
 - **Curriculum validation**: Use zen analysis for comprehensive educational consistency and effectiveness verification
 
 **Educational Design Tools**:

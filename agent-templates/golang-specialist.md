@@ -146,14 +146,8 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 
 ### Code Discovery & Analysis Tools  
 
-**Serena MCP Tools** - For comprehensive codebase understanding and manipulation:
-- **`mcp__serena__get_symbols_overview`**: Quick file structure analysis
-- **`mcp__serena__find_symbol`**: Precise code symbol discovery with pattern matching
-- **`mcp__serena__search_for_pattern`**: Flexible regex-based codebase searches
-- **`mcp__serena__find_referencing_symbols`**: Usage analysis and impact assessment
 - **Project management**: Memory system for persistent project knowledge
 
-**When to use serena tools**: Code exploration, architecture analysis, refactoring, bug investigation
 
 ### Mathematical Analysis Tools
 
@@ -182,7 +176,6 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 1. **Simple/Known Domain**: Traditional tools + basic MCP tools
 2. **Complex/Unknown Domain**: zen thinkdeep + domain-specific MCP tools  
 3. **Multi-Perspective Needed**: zen consensus + relevant analysis tools
-4. **Code-Heavy Analysis**: serena tools + zen codereview
 5. **Mathematical Focus**: metis tools + zen thinkdeep for complex problems
 
 **Analysis Workflow Strategy**:
@@ -193,9 +186,7 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 5. **Documentation**: Capture insights for future reference
 
 **Integration Patterns**:
-- **zen + serena**: Systematic code analysis with expert reasoning
 - **zen + metis**: Mathematical problem solving with multi-model validation
-- **serena + metis**: Mathematical code analysis and optimization
 - **All three**: Complex technical problems requiring comprehensive analysis
 
 **Domain Analysis Framework**: Apply domain-specific analysis patterns and MCP tool expertise for optimal problem resolution.
@@ -205,15 +196,12 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 **Go Code Analysis**: Apply Go-specific analysis techniques for complex Go development challenges requiring systematic Go language analysis and comprehensive Go pattern identification.
 
 **Go-Specific Tool Selection Strategy**:
-- **Primary tools for Go**: serena MCP tools for Go code discovery, pattern matching, and refactoring
 - **Go debugging strategy**: zen debug for complex Go concurrency issues and performance problems
 - **Go architecture decisions**: zen thinkdeep for complex Go system design and concurrent programming patterns
 - **Go code validation**: zen codereview for Go idiomatic pattern validation and performance analysis
 
 **Go Development Tool Integration**:
-- **Concurrent algorithm design**: zen thinkdeep + serena symbol analysis for goroutine and channel pattern exploration
 - **Performance optimization**: zen debug + Go profiling tools (pprof, go tool trace) for systematic optimization
-- **Testing strategy**: serena pattern search for test coverage analysis + Go testing frameworks
 - **Code review patterns**: zen codereview focusing on Go idioms, race conditions, and memory efficiency
 
 ## Decision Authority
@@ -317,8 +305,6 @@ After committing atomic changes:
 - [ ] **MODE DECLARATION**: "ENTERING GO ANALYSIS MODE: [Go-specific challenge description]"
 
 **Go Analysis Tools**:
-- **serena get_symbols_overview** for Go package structure analysis
-- **serena find_symbol** for locating Go types, functions, and methods
 - **zen thinkdeep** for complex Go concurrent algorithm design
 - **zen debug** for systematic Go performance issue investigation
 
@@ -332,7 +318,6 @@ After committing atomic changes:
 
 **Go Implementation Tools**:
 - Go-specific development tools (go fmt, go vet, go test -race)
-- serena modification tools for precise Go code changes
 - Standard file operations following Go project structure
 
 **Constraints**: Follow Go idioms strictly, maintain atomic scope

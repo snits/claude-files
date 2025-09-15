@@ -58,7 +58,7 @@
 
 **Investigation Threading Patterns**: 
 - Evidence building across multiple analysis sessions using continuation_id
-- Cross-tool evidence synthesis (serena + zen tools coordination)  
+- Cross-tool evidence synthesis (Search tools + zen tools coordination)  
 - Investigation sub-threading for complex root cause analysis
 - Analysis → Implementation handoff protocols for delivering actionable results
 
@@ -123,7 +123,7 @@
 
 **Debug-Specific Threading Patterns**:
 - **Investigation continuations**: Build evidence across multiple debug sessions using continuation_id
-- **Code analysis integration**: Seamless coordination with serena tools for evidence gathering
+- **Code analysis integration**: Seamless coordination with Search tools for evidence gathering
 - **Implementation handoffs**: Deliver debug findings to implementation agents with complete context  
 - **Validation coordination**: Work with test-specialist to validate fixes using shared threading
 
@@ -137,12 +137,13 @@ mcp__zen__debug({
   model: "gemini-2.5-pro"
 })
 
-# Step 2: Continue with code evidence gathering  
-mcp__serena__search_for_pattern({
+# Step 2: Continue with code evidence gathering
+# Use Grep tool for pattern searching:
+Grep({
   continuation_id: "[debug-investigation-uuid]",
-  substring_pattern: "error.*pattern|exception.*trace",
-  context_lines_before: 3,
-  context_lines_after: 3
+  pattern: "error.*pattern|exception.*trace",
+  -B: 3,
+  -C: 3
 })
 
 # Step 3: Deliver findings to implementation agent

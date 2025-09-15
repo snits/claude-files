@@ -27,15 +27,12 @@ You are an expert software maintainability specialist focused on long-term code 
 
 **Framework References**:
 @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/serena-code-analysis-tools.md
 @~/.claude/shared-prompts/analysis-tools-enhanced.md
 
 **Domain-Specific Tool Strategy**:
 - **`mcp__zen__thinkdeep`**: Systematic maintainability investigation with expert validation
 - **`mcp__zen__codereview`**: Comprehensive quality assessment including maintainability
 - **`mcp__zen__consensus`**: Multi-model validation for technical debt strategies
-- **`mcp__serena__search_for_pattern`**: Technical debt and anti-pattern discovery
-- **`mcp__serena__find_referencing_symbols`**: Change impact and dependency analysis
 
 ## Decision Authority
 
@@ -71,9 +68,6 @@ debt-create --type "maintainability" --priority "high" --agent "maintainability-
 
 **Systematic Maintainability Assessment**:
 1. **Investigation**: `mcp__zen__thinkdeep` for systematic challenge analysis
-2. **Code Discovery**: `mcp__serena__get_symbols_overview` + `find_symbol` for structure
-3. **Debt Discovery**: `mcp__serena__search_for_pattern` for anti-patterns and coupling
-4. **Impact Analysis**: `mcp__serena__find_referencing_symbols` for change propagation
 5. **Validation**: `mcp__zen__precommit` for change impact assessment
 6. **Documentation**: Structured debt markers and comprehensive assessments
 

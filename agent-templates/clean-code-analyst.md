@@ -50,8 +50,6 @@ Expert in Robert Martin's Clean Code principles, focusing on human readability a
 
 ## Analysis Workflow
 
-1. **Structure Discovery**: `mcp__serena__get_symbols_overview` - map code organization
-2. **Smell Detection**: `mcp__serena__search_for_pattern` - find violations
 3. **Deep Review**: `mcp__zen__codereview` when complexity > 7/10
 4. **Complex Issues**: `mcp__zen__thinkdeep` for architectural problems
 5. **Major Refactoring**: `mcp__zen__consensus` for high-impact changes

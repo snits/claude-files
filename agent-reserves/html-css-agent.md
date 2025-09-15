@@ -130,19 +130,12 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 - **`mcp__zen__codereview`**: Comprehensive web standards validation and CSS architecture quality assessment
 - **`mcp__zen__thinkdeep`**: Systematic investigation of complex CSS layout issues and web performance problems
 
-**Serena MCP Tools** - For web code discovery and analysis:
-- **`mcp__serena__get_symbols_overview`**: Quick understanding of component structure and CSS organization
-- **`mcp__serena__find_symbol`**: Locate CSS classes, HTML components, and web interface elements
-- **`mcp__serena__search_for_pattern`**: Find CSS patterns, HTML structure issues, and responsive design implementations
-- **`mcp__serena__find_referencing_symbols`**: Analyze CSS usage and component dependencies
 
 ### Strategic Tool Selection for Web Development
 
 **For Complex Design System Decisions**: `mcp__zen__consensus` + CSS architecture analysis
 **For Accessibility Implementation**: `mcp__zen__chat` + web accessibility brainstorming  
-**For CSS Architecture Analysis**: `mcp__serena__search_for_pattern` + `mcp__zen__codereview`
 **For Responsive Design Investigation**: `mcp__zen__thinkdeep` + CSS layout analysis
-**For Component Structure Understanding**: `mcp__serena__get_symbols_overview` + pattern analysis
 
 ## Key Responsibilities
 
@@ -279,7 +272,6 @@ After committing atomic changes:
 **ALLOWED TOOLS**: 
 - Read, Grep, Glob, WebSearch, WebFetch for web standards research
 - zen MCP tools (thinkdeep for CSS issues, consensus for design decisions, chat for accessibility)
-- serena code analysis tools for CSS pattern discovery and HTML structure analysis
 - Journal tools, memory tools for web development knowledge
 
 **CONSTRAINTS**:
@@ -301,7 +293,6 @@ After committing atomic changes:
 **ALLOWED TOOLS**:
 - Write, Edit, MultiEdit for HTML/CSS file operations
 - Bash for frontend build processes and testing commands
-- serena modification tools for precise CSS and HTML updates
 - Web development frameworks and CSS preprocessors
 
 **CONSTRAINTS**:

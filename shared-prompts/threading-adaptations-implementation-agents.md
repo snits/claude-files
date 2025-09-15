@@ -66,13 +66,13 @@ mcp__zen__chat({
   model: "gemini-2.5-flash"
 })
 
-# Step 2: Implementation (continues from test thread) 
+# Step 2: Implementation (continues from test thread)
 # implementation agent continues with actual implementation
-mcp__serena__replace_symbol_body({
+Edit({
   continuation_id: "[test-thread-id]",
-  name_path: "function_to_implement", 
-  relative_path: "src/implementation.py",
-  body: "implementation_code_here"
+  file_path: "src/implementation.py",
+  old_string: "existing_function_body",
+  new_string: "implementation_code_here"
 })
 
 # Step 3: Integration validation
@@ -197,19 +197,19 @@ mcp__zen__codereview({
 ```python
 # Step 1: Database schema implementation (continues from analysis)
 # Implement database changes first
-mcp__serena__replace_symbol_body({
+Edit({
   continuation_id: "[analysis-thread]",
-  name_path: "DatabaseSchema",
-  relative_path: "db/schema.sql", 
-  body: "schema_implementation"
+  file_path: "db/schema.sql",
+  old_string: "existing_schema",
+  new_string: "schema_implementation"
 })
 
 # Step 2: API implementation (continues from database changes)
-mcp__serena__replace_symbol_body({
+Edit({
   continuation_id: "[database-implementation-thread]",
-  name_path: "ApiEndpoint",
-  relative_path: "api/endpoints.ts",
-  body: "api_implementation"
+  file_path: "api/endpoints.ts",
+  old_string: "existing_endpoint",
+  new_string: "api_implementation"
 })
 
 # Step 3: Integration validation

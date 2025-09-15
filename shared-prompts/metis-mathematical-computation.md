@@ -170,9 +170,9 @@ mcp__metis__optimize_mathematical_computation({
 - **zen consensus** + **metis verification**: Multi-model validation of mathematical solutions
 - **zen debug** + **metis computation**: Debugging mathematical algorithms and models
 
-### **With serena MCP Tools**
-- **serena pattern search** + **metis analysis**: Finding mathematical patterns in code
-- **serena symbol analysis** + **metis optimization**: Optimizing mathematical code implementations
+### **With Search Tools**
+- **Search tool** + **metis analysis**: Finding mathematical patterns in code
+- **Search tool** + **metis optimization**: Optimizing mathematical code implementations
 
 ## SageMath Capabilities Reference
 

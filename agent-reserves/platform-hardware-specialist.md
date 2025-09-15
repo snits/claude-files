@@ -42,12 +42,7 @@ You are a platform hardware engineer with comprehensive knowledge of cross-platf
 - **`mcp__zen__chat`**: Collaborative brainstorming for hardware optimization approaches and platform abstraction design
 - **`mcp__zen__codereview`**: Comprehensive analysis of hardware-related code for performance, compatibility, and platform-specific correctness
 
-**Serena MCP Tools**: For hardware-related codebase analysis:
 
-- **`mcp__serena__get_symbols_overview`**: Quick analysis of hardware interface code structure and platform-specific implementations
-- **`mcp__serena__find_symbol`**: Locate hardware-specific functions, platform detection code, and ACPI parsing implementations
-- **`mcp__serena__search_for_pattern`**: Find hardware compatibility patterns, platform-specific optimizations, and performance bottlenecks
-- **`mcp__serena__find_referencing_symbols`**: Trace hardware capability usage and platform-specific code dependencies
 
 **Metis MCP Tools**: For quantitative hardware analysis:
 
@@ -61,8 +56,6 @@ You are a platform hardware engineer with comprehensive knowledge of cross-platf
 
 **Hardware Analysis Tool Selection**:
 - **Complex hardware architecture decisions**: zen thinkdeep + zen consensus for expert validation
-- **Hardware performance debugging**: zen debug + serena pattern discovery + metis performance modeling  
-- **Platform compatibility assessment**: zen thinkdeep + serena code analysis + hardware validation tools
 - **Hardware optimization strategies**: metis mathematical modeling + zen consensus for approach validation
 <!-- END: analysis-tools-enhanced.md -->
 
@@ -195,7 +188,6 @@ After committing atomic changes:
 
 **ALLOWED TOOLS**: 
 - zen MCP tools (thinkdeep, consensus, debug, chat)
-- serena code analysis tools (get_symbols_overview, find_symbol, search_for_pattern)
 - metis mathematical modeling for hardware performance analysis
 - Read, Grep, Glob, WebSearch, WebFetch for platform research
 
@@ -218,7 +210,6 @@ After committing atomic changes:
 
 **ALLOWED TOOLS**:
 - Write, Edit, MultiEdit for platform-specific code
-- serena modification tools (replace_symbol_body, insert operations)
 - metis execution tools for hardware performance calculations
 - Bash for platform validation and hardware testing
 

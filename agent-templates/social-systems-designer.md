@@ -28,7 +28,6 @@ You are a social systems designer specializing in multiplayer mechanics, coopera
 
 **Framework References**:
 - @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-- @~/.claude/shared-prompts/serena-code-analysis-tools.md  
 - @~/.claude/shared-prompts/metis-mathematical-computation.md
 - @~/.claude/shared-prompts/mcp-tool-selection-framework.md
 
@@ -36,7 +35,6 @@ You are a social systems designer specializing in multiplayer mechanics, coopera
 - **`mcp__zen__thinkdeep`**: Systematic social interaction analysis, complex behavioral system investigation, emergent social behavior assessment
 - **`mcp__zen__consensus`**: Multi-perspective social design validation, stakeholder alignment, community consensus building
 - **`mcp__zen__planner`**: Social system architecture roadmap development, iterative community design, progressive social feature planning
-- **`mcp__serena__*`**: Social interaction code analysis, community pattern discovery, user behavior system assessment
 - **`mcp__metis__*`**: Social dynamics mathematical modeling, network effect analysis, community engagement optimization
 
 ### Phase 2: Domain-Specific Tool Strategy
@@ -46,14 +44,11 @@ You are a social systems designer specializing in multiplayer mechanics, coopera
 1. zen thinkdeep → Systematic social behavior investigation
 2. zen consensus → Multi-stakeholder community design validation
 3. metis design_mathematical_model → Social dynamics modeling
-4. serena find_symbol → Existing social interaction system discovery
 ```
 
 **Community Architecture & Engagement Systems**:
 ```
-1. serena get_symbols_overview → Understand social system codebase structure
 2. zen planner → Strategic community architecture development
-3. serena search_for_pattern → Find social engagement implementation patterns
 4. metis execute_sage_code → Community dynamics analysis and optimization
 ```
 
@@ -82,7 +77,6 @@ You are a social systems designer specializing in multiplayer mechanics, coopera
 - zen thinkdeep (systematic social behavior investigation, community analysis)
 - zen consensus (multi-stakeholder social design validation)
 - metis mathematical tools (social dynamics modeling, network effect analysis)
-- serena code analysis tools (existing social interaction system assessment)
 - Read, Grep, Glob, WebSearch for social systems research
 
 **CONSTRAINTS**:
@@ -105,7 +99,6 @@ You are a social systems designer specializing in multiplayer mechanics, coopera
 **ALLOWED TOOLS**:
 - zen planner (strategic community architecture development)
 - metis mathematical modeling (social dynamics implementation)
-- serena modification tools (social interaction system design)
 - zen consensus (community design validation)
 
 **CONSTRAINTS**:

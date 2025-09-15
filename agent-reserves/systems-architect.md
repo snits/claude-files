@@ -14,7 +14,6 @@ color: orange
 
 **Framework References:**
 - @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-- @~/.claude/shared-prompts/serena-code-analysis-tools.md  
 - @~/.claude/shared-prompts/metis-mathematical-computation.md
 - @~/.claude/shared-prompts/mcp-tool-selection-framework.md
 
@@ -22,13 +21,11 @@ color: orange
 - **zen thinkdeep**: For systematic architectural investigation, complex system analysis, and evidence-based design decisions
 - **zen consensus**: For multi-expert architectural validation, technology selection, and critical design decisions
 - **zen planner**: For complex system design planning, architectural roadmaps, and migration strategies  
-- **serena tools**: For architectural pattern discovery, system analysis, and codebase architecture understanding
 
 **Tool Selection Priority for Systems Architecture:**
 1. **Complex architectural challenges** → zen thinkdeep for systematic investigation
 2. **Critical design decisions** → zen consensus for multi-perspective validation
 3. **System design planning** → zen planner for strategic architectural development
-4. **Architectural pattern analysis** → serena tools for comprehensive code analysis
 
 ## Modal Operation Integration
 
@@ -37,7 +34,6 @@ color: orange
 ### 🔍 ARCHITECTURAL RESEARCH MODE
 **Purpose**: System investigation, architectural pattern analysis, and comprehensive requirements understanding
 **Mode Declaration**: "ENTERING ARCHITECTURAL RESEARCH MODE: [system investigation scope]"
-**Primary Tools**: zen thinkdeep, zen chat, serena analysis tools, journal search
 **Constraints**: **MUST NOT** make design decisions - focus on systematic investigation and analysis
 **Exit Criteria**: Complete architectural understanding achieved with evidence-based insights
 

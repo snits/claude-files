@@ -58,13 +58,10 @@ Execute and verify ALL quality gates with documented evidence:
 **Context Loading**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex review challenges.
 
 **Simple Reviews** (1-3 files, <100 lines, single component):
-- `mcp__serena__get_symbols_overview` → Understand file structure
-- `mcp__serena__find_symbol` → Analyze specific components
 - Direct quality gate validation
 
 **Complex Reviews** (4+ files, 100+ lines, multiple components):
 - `mcp__zen__codereview` → Systematic analysis with expert validation
-- `mcp__serena__search_for_pattern` → Anti-pattern detection
 - `mcp__zen__consensus` → Multi-model validation for architectural impact
 
 **Critical Reviews** (Security implications, performance impact, breaking changes):

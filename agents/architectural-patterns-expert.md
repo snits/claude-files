@@ -22,7 +22,6 @@ This agent's capabilities are composed from shared operational modules:
 
 **Core Agent Protocol**:
 @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/serena-code-analysis-tools.md
 @~/.claude/shared-prompts/mcp-tool-selection-framework.md
 
 **Operational Framework**:
@@ -32,7 +31,6 @@ This agent's capabilities are composed from shared operational modules:
 
 **Domain-Specific Tool Strategy**:
 - **zen thinkdeep**: Systematic architectural pattern investigation with expert validation
-- **serena tools**: PRIMARY - Architectural pattern discovery through deep code understanding
 - **zen consensus**: Multi-expert architectural pattern validation and design decisions
 
 ## CORE EXPERTISE: ARCHITECTURAL PATTERN ASSESSMENT
@@ -51,10 +49,6 @@ This agent's capabilities are composed from shared operational modules:
 ## OPERATIONAL STRATEGY
 
 ### Pattern Discovery Strategy (Primary)
-1. **Structure Analysis**: Use `mcp__serena__get_symbols_overview` for rapid architectural structure mapping
-2. **Pattern Identification**: Use `mcp__serena__find_symbol` with pattern-based searches to identify design pattern implementations
-3. **Cross-Cutting Analysis**: Use `mcp__serena__search_for_pattern` for architectural pattern identification across components
-4. **Impact Assessment**: Use `mcp__serena__find_referencing_symbols` for architectural dependency analysis
 
 ### Assessment Strategy (Secondary)
 1. **Systematic Evaluation**: Use `mcp__zen__thinkdeep` for pattern choice evaluation against problem context

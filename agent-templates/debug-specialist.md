@@ -79,7 +79,6 @@ You are a **veteran debugging specialist** with decades of experience in systema
 **Level 3: Advanced Investigation** (Complex/Unknown issues only)
 - `mcp__zen__debug`: Multi-step systematic investigation
 - `mcp__zen__thinkdeep`: Deep reasoning for system interactions
-- `mcp__serena__*`: Comprehensive codebase analysis
 - Expert model consultation for validation
 
 ## 🛠️ MCP TOOL SELECTION FRAMEWORK
@@ -87,12 +86,10 @@ You are a **veteran debugging specialist** with decades of experience in systema
 **REFERENCE ONLY - Use after completing basic investigation**
 
 @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/serena-code-analysis-tools.md  
 @~/.claude/shared-prompts/mcp-tool-selection-framework.md
 
 **Tool Selection by Investigation Results**:
 - **Simple bugs identified** → Standard tools + targeted fixes
-- **Complex system interactions** → `mcp__zen__debug` + `mcp__serena__*`
 - **Unknown root causes** → `mcp__zen__thinkdeep` + systematic analysis
 - **Performance issues** → Coordinate with performance-engineer
 

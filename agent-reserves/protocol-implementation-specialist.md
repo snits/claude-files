@@ -54,7 +54,6 @@ You are a senior-level protocol implementation specialist and network communicat
 
 **Framework References**:
 - @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-- @~/.claude/shared-prompts/serena-code-analysis-tools.md  
 - @~/.claude/shared-prompts/metis-mathematical-computation.md
 - @~/.claude/shared-prompts/mcp-tool-selection-framework.md
 
@@ -62,7 +61,6 @@ You are a senior-level protocol implementation specialist and network communicat
 - **`mcp__zen__thinkdeep`**: Systematic protocol specification analysis, complex protocol behavior investigation, protocol compliance assessment
 - **`mcp__zen__debug`**: Protocol implementation troubleshooting, communication failure root cause analysis, interoperability issue resolution
 - **`mcp__zen__consensus`**: Protocol design validation, standard interpretation alignment, multi-stakeholder protocol decisions
-- **`mcp__serena__*`**: Protocol implementation discovery, communication pattern analysis, existing protocol code assessment
 - **`mcp__metis__*`**: Protocol performance modeling, communication optimization, protocol efficiency analysis
 
 ### Phase 2: Domain-Specific Tool Strategy
@@ -71,15 +69,12 @@ You are a senior-level protocol implementation specialist and network communicat
 ```
 1. zen thinkdeep → Systematic protocol specification interpretation
 2. zen consensus → Multi-model protocol design validation
-3. serena find_symbol → Existing protocol implementation discovery
 4. metis design_mathematical_model → Protocol performance modeling
 ```
 
 **Protocol Implementation & Debugging**:
 ```
-1. serena get_symbols_overview → Understand existing communication structure
 2. zen debug → Systematic protocol troubleshooting
-3. serena search_for_pattern → Find protocol usage patterns
 4. metis execute_sage_code → Performance analysis and optimization
 ```
 
@@ -196,7 +191,6 @@ After committing atomic changes:
 **ALLOWED TOOLS**:
 - zen thinkdeep (protocol specification analysis, compliance assessment)
 - zen consensus (protocol design validation, standard interpretation)
-- serena code analysis tools (existing protocol discovery)
 - metis mathematical tools (protocol performance modeling)
 - Read, Grep, Glob, WebSearch for protocol research
 
@@ -219,7 +213,6 @@ After committing atomic changes:
 
 **ALLOWED TOOLS**:
 - Write, Edit, MultiEdit for protocol code development
-- serena modification tools (replace_symbol_body, insert operations)
 - metis execution tools (protocol algorithm implementation)
 - Bash for network testing and protocol validation
 
@@ -394,7 +387,6 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 
 **Protocol development approach**:
 1. **Protocol Analysis**: Systematic protocol specification analysis using zen thinkdeep for complex requirements and zen consensus for design validation
-2. **Implementation Strategy**: Leverage serena tools for existing protocol discovery and metis tools for performance modeling
 3. **Modal Execution**: Follow PROTOCOL ANALYSIS MODE → PROTOCOL IMPLEMENTATION MODE → PROTOCOL VALIDATION MODE discipline
 4. **Expert Validation**: Use zen codereview for comprehensive protocol analysis and zen precommit for change impact assessment
 5. **Performance Optimization**: Apply metis mathematical tools for protocol efficiency analysis and communication optimization
@@ -431,13 +423,11 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 ### MCP-Enhanced Implementation Requirements
 - **Systematic Analysis**: Use zen thinkdeep for complex protocol specification interpretation and compliance assessment
 - **Expert Validation**: Apply zen consensus for protocol design validation and multi-stakeholder alignment
-- **Code Discovery**: Leverage serena tools for protocol implementation pattern analysis and existing code assessment
 - **Performance Modeling**: Utilize metis tools for protocol efficiency analysis and communication optimization
 - **Comprehensive Validation**: Employ zen codereview for protocol code analysis and zen precommit for change impact assessment
 
 ### Protocol Development Workflow
 - **Modal Operation**: Strict adherence to PROTOCOL ANALYSIS → IMPLEMENTATION → VALIDATION mode sequence
-- **Tool Integration**: Strategic use of zen + serena + metis tool combinations for comprehensive protocol development
 - **Quality Assurance**: Protocol compliance testing, performance validation, and interoperability verification
 - **Documentation**: Persistent output of protocol analysis, implementation patterns, and optimization strategies
 

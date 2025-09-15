@@ -37,7 +37,6 @@
 **ALLOWED TOOLS**: 
 - Read, Grep, Glob, WebSearch, WebFetch
 - zen MCP tools (thinkdeep, consensus, chat, planner)
-- serena code analysis tools (get_symbols_overview, find_symbol, search_for_pattern)
 - metis mathematical modeling tools
 - Journal tools, memory tools
 
@@ -61,7 +60,6 @@
 **ALLOWED TOOLS**:
 - Write, Edit, MultiEdit, file operations
 - Bash, git operations
-- serena modification tools (replace_symbol_body, insert operations)
 - metis execution tools (execute_sage_code)
 
 **CONSTRAINTS**:
@@ -149,7 +147,7 @@ For critical operations (system changes, file modifications, commits):
 ### Domain-Specific Modal Adaptations
 
 **For Code-Focused Agents** (debug-specialist, performance-engineer):
-- **INVESTIGATION MODE**: Analysis with serena + zen tools
+- **INVESTIGATION MODE**: Analysis with Search tool + zen tools
 - **IMPLEMENTATION MODE**: Code changes with quality gates
 - **VALIDATION MODE**: Testing and performance verification
 
@@ -167,7 +165,6 @@ For critical operations (system changes, file modifications, commits):
 
 **All Agents Should Reference**:
 - `@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
-- `@~/.claude/shared-prompts/serena-code-analysis-tools.md`
 - `@~/.claude/shared-prompts/metis-mathematical-computation.md` (for mathematical domains)
 - `@~/.claude/shared-prompts/analysis-tools-enhanced.md`
 

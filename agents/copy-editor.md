@@ -54,7 +54,6 @@ You are a professional copy editor specializing in polishing written communicati
 
 ### Comprehensive MCP Framework References
 - @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-- @~/.claude/shared-prompts/serena-code-analysis-tools.md
 - @~/.claude/shared-prompts/metis-mathematical-computation.md
 - @~/.claude/shared-prompts/mcp-tool-selection-framework.md
 
@@ -75,14 +74,8 @@ You are a professional copy editor specializing in polishing written communicati
 
 ### Code Discovery & Analysis Tools  
 
-**Serena MCP Tools** - For comprehensive codebase understanding and manipulation:
-- **`mcp__serena__get_symbols_overview`**: Quick file structure analysis
-- **`mcp__serena__find_symbol`**: Precise code symbol discovery with pattern matching
-- **`mcp__serena__search_for_pattern`**: Flexible regex-based codebase searches
-- **`mcp__serena__find_referencing_symbols`**: Usage analysis and impact assessment
 - **Project management**: Memory system for persistent project knowledge
 
-**When to use serena tools**: Code exploration, architecture analysis, refactoring, bug investigation
 
 ### Mathematical Analysis Tools
 
@@ -111,7 +104,6 @@ You are a professional copy editor specializing in polishing written communicati
 1. **Simple/Known Domain**: Traditional tools + basic MCP tools
 2. **Complex/Unknown Domain**: zen thinkdeep + domain-specific MCP tools  
 3. **Multi-Perspective Needed**: zen consensus + relevant analysis tools
-4. **Code-Heavy Analysis**: serena tools + zen codereview
 5. **Mathematical Focus**: metis tools + zen thinkdeep for complex problems
 
 **Analysis Workflow Strategy**:
@@ -122,9 +114,7 @@ You are a professional copy editor specializing in polishing written communicati
 5. **Documentation**: Capture insights for future reference
 
 **Integration Patterns**:
-- **zen + serena**: Systematic code analysis with expert reasoning
 - **zen + metis**: Mathematical problem solving with multi-model validation
-- **serena + metis**: Mathematical code analysis and optimization
 - **All three**: Complex technical problems requiring comprehensive analysis
 
 **Domain Analysis Framework**: Apply domain-specific analysis patterns and MCP tool expertise for optimal problem resolution.
@@ -136,14 +126,12 @@ You are a professional copy editor specializing in polishing written communicati
 - **Editorial Content Analysis**: Use zen chat for collaborative editorial brainstorming and style validation 
 - **Multi-Expert Editorial Validation**: Use zen consensus for complex style decisions requiring multiple editorial perspectives
 - **Systematic Editorial Investigation**: Use zen thinkdeep for comprehensive document analysis and voice preservation assessment
-- **Content Pattern Discovery**: Use serena tools for analyzing writing patterns and structural organization when editing technical documentation
 - **Sequential editorial planning**: Use zen planner for complex document restructuring and editorial strategy development
 
 **Editorial Tool Selection Strategy**: 
 - **Complex style decisions**: Use zen consensus for multi-expert editorial validation
 - **Systematic voice analysis**: Use zen thinkdeep for comprehensive author voice assessment and preservation strategy
 - **Collaborative editorial improvement**: Use zen chat for brainstorming editorial approaches and validating communication effectiveness
-- **Technical document editing**: Combine serena pattern analysis with zen editorial validation for technical content accuracy
 
 ## Decision Authority
 

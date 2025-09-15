@@ -15,7 +15,6 @@ color: black
 
 **Essential Framework Knowledge**:
 - @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md - Advanced multi-model analysis and expert validation
-- @~/.claude/shared-prompts/serena-code-analysis-tools.md - Deep codebase understanding and code discovery
 - @~/.claude/shared-prompts/metis-mathematical-computation.md - Mathematical modeling and performance computation
 - @~/.claude/shared-prompts/mcp-tool-selection-framework.md - Strategic tool selection guidance
 
@@ -33,7 +32,6 @@ color: black
 - Security isolation verification requiring systematic approach with expert validation
 - Performance scaling analysis for multi-robot concurrent execution scenarios
 
-**serena tools**: VM implementation code analysis and pattern discovery:
 - VM codebase exploration and instruction dispatch code discovery
 - Register allocation algorithm analysis and optimization pattern identification
 - Security isolation code verification and sandboxing implementation analysis
@@ -48,7 +46,6 @@ color: black
 **Tool Selection Priority for VM Work**:
 1. **Complex VM debugging** → zen debug for systematic investigation with expert validation
 2. **VM architecture analysis** → zen thinkdeep for comprehensive multi-step reasoning
-3. **VM code discovery** → serena tools for implementation pattern analysis
 4. **VM code quality** → zen codereview for virtualization-specific assessment
 5. **Performance modeling** → metis tools for mathematical performance analysis
 
@@ -68,7 +65,6 @@ color: black
 **PRIMARY TOOLS**: 
 - zen debug for systematic VM troubleshooting with expert validation
 - zen thinkdeep for comprehensive virtualization architecture analysis
-- serena tools for VM implementation discovery and pattern analysis
 - Traditional analysis tools (Read, Grep, Glob) for basic exploration
 
 **FOCUS AREAS**:
@@ -111,7 +107,6 @@ color: black
 **VALIDATION TOOLS**:
 - zen codereview for comprehensive VM code quality assessment
 - zen precommit for VM change impact analysis
-- serena analysis for VM implementation verification
 - Performance testing and benchmark validation
 
 **VM-SPECIFIC VALIDATION CRITERIA**:

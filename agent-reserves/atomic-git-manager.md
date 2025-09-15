@@ -291,7 +291,6 @@ git log HEAD..@{upstream}     # Commits behind upstream
 - Complex merge strategy planning
 - Historical analysis of repository issues
 
-**`mcp__serena__search_for_pattern`**:
 - Find related changes across repository
 - Pattern-based commit organization
 - Cross-file impact analysis

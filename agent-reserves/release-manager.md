@@ -116,7 +116,6 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 
 ### Framework References
 - **Comprehensive MCP Tool Guidance**: @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-- **Code Analysis Capabilities**: @~/.claude/shared-prompts/serena-code-analysis-tools.md  
 - **Mathematical Computation**: @~/.claude/shared-prompts/metis-mathematical-computation.md
 - **Strategic Tool Selection**: @~/.claude/shared-prompts/mcp-tool-selection-framework.md
 
@@ -141,7 +140,6 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 
 **Secondary MCP Tools**:
 
-**serena tools** - Release Artifact Analysis & Deployment Pattern Discovery
 - **Use for**: Release artifact analysis, deployment configuration discovery, release pattern assessment, deployment dependency analysis
 - **Integration**: Combine with zen tools for comprehensive release artifact understanding and deployment impact analysis
 
@@ -155,14 +153,12 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 ```
 1. zen planner → Strategic release planning and milestone development
 2. zen consensus → Stakeholder validation of release strategies  
-3. serena tools → Release artifact and dependency analysis
 4. metis tools → Capacity planning and performance modeling
 ```
 
 **DEPLOYMENT RISK ASSESSMENT** (Use zen thinkdeep + domain tools):
 ```
 1. zen thinkdeep → Systematic risk investigation
-2. serena search patterns → Find deployment risk patterns  
 3. metis modeling → Performance impact analysis
 4. zen consensus → Risk mitigation strategy validation (if needed)
 ```
@@ -171,7 +167,6 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 ```
 1. zen planner → Multi-team coordination planning
 2. zen consensus → Cross-team alignment validation
-3. serena project analysis → Release artifact coordination
 4. zen thinkdeep → Complex coordination issue resolution (if needed)
 ```
 
@@ -248,7 +243,6 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 **PRIMARY TOOLS**: 
 - zen planner for strategic release planning and multi-phase coordination
 - zen consensus for stakeholder alignment on release strategies
-- serena tools for release artifact analysis and dependency discovery
 - metis tools for capacity planning and performance modeling
 
 **ACTIVITIES**:

@@ -16,7 +16,6 @@ color: yellow
 
 **📋 ANALYSIS MODE**: Investigate API design, analyze interfaces, discover patterns
 - **CONSTRAINT**: MUST NOT modify code
-- **TOOLS**: serena pattern discovery + zen expert analysis
 
 **🔧 IMPLEMENTATION MODE**: Execute approved API design changes
 - **CONSTRAINT**: Follow approved plan precisely
@@ -32,11 +31,9 @@ Senior-level API design specialist creating intuitive, consistent, maintainable 
 
 **Framework References**:
 @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/serena-code-analysis-tools.md
 @~/.claude/shared-prompts/mcp-tool-selection-framework.md
 
 **API Analysis Strategy**:
-1. **serena tools** → Pattern discovery + structure analysis
 2. **zen tools** → Expert validation + systematic investigation
 3. **Integration** → Combine pattern discovery with expert reasoning
 
@@ -60,7 +57,6 @@ Senior-level API design specialist creating intuitive, consistent, maintainable 
 
 @~/.claude/shared-prompts/analysis-tools-enhanced.md
 
-**API Design Analysis**: Systematic interface evaluation emphasizing pattern discovery (serena tools) combined with expert validation (zen tools) for comprehensive design assessment.
 
 ## Decision Authority
 

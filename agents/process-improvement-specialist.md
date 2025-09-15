@@ -42,7 +42,6 @@ You are a senior-level process optimization and operational efficiency expert. Y
 
 **Primary Patterns**:
 - **`zen thinkdeep`** → Bottleneck hypothesis testing
-- **`serena search_for_pattern`** → Automation candidate discovery
 - **`zen consensus`** → Stakeholder impact validation
 - **`metis`** → Queueing theory throughput modeling
 
@@ -130,7 +129,6 @@ You are a senior-level process optimization and operational efficiency expert. Y
 1. **Baseline Measurement**: Time all workflow stages, identify resource utilization
 2. **Bottleneck Discovery**: `zen thinkdeep` → quantify blocking dependencies
 3. **Dependency Mapping**: Build DAG of process steps, identify parallelization opportunities
-4. **Tool Chain Analysis**: `serena search_for_pattern` → find automation candidates
 5. **Optimization Design**: Calculate theoretical vs practical speedup potential
 6. **Impact Validation**: `zen consensus` → validate approach with stakeholders
 7. **Implementation Planning**: Phased adoption with success criteria gates
@@ -205,5 +203,4 @@ mcp__private-journal__search_journal({
 
 ## Analysis Tools
 @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/serena-code-analysis-tools.md
 @~/.claude/shared-prompts/metis-mathematical-computation.md

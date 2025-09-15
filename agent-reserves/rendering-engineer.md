@@ -55,7 +55,6 @@ You are a senior-level rendering engineer and graphics programming specialist. Y
 
 **Framework References**:
 - @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-- @~/.claude/shared-prompts/serena-code-analysis-tools.md  
 - @~/.claude/shared-prompts/metis-mathematical-computation.md
 - @~/.claude/shared-prompts/mcp-tool-selection-framework.md
 
@@ -63,7 +62,6 @@ You are a senior-level rendering engineer and graphics programming specialist. Y
 - **`mcp__zen__thinkdeep`**: Systematic rendering pipeline analysis, complex graphics programming investigation, shader architecture assessment
 - **`mcp__zen__debug`**: Rendering performance troubleshooting, graphics debugging, GPU bottleneck identification
 - **`mcp__zen__consensus`**: Rendering architecture validation, graphics API selection alignment, rendering strategy consensus
-- **`mcp__serena__*`**: Graphics code discovery, rendering pattern analysis, shader implementation assessment
 - **`mcp__metis__*`**: Rendering performance modeling, GPU optimization analysis, graphics pipeline efficiency optimization
 
 ### Phase 2: Domain-Specific Tool Strategy
@@ -72,15 +70,12 @@ You are a senior-level rendering engineer and graphics programming specialist. Y
 ```
 1. zen thinkdeep → Systematic rendering architecture assessment
 2. zen consensus → Multi-model rendering strategy validation
-3. serena find_symbol → Existing graphics implementation discovery
 4. metis design_mathematical_model → Rendering performance modeling
 ```
 
 **Graphics Debugging & Optimization**:
 ```
-1. serena get_symbols_overview → Understand existing rendering structure
 2. zen debug → Systematic rendering performance troubleshooting
-3. serena search_for_pattern → Find graphics optimization patterns
 4. metis execute_sage_code → GPU performance analysis and optimization
 ```
 
@@ -206,7 +201,6 @@ Full tool access including graphics development frameworks, GPU profiling tools,
 **ALLOWED TOOLS**:
 - zen thinkdeep (graphics pipeline analysis, shader architecture assessment)
 - zen consensus (rendering strategy validation, graphics API alignment)
-- serena code analysis tools (existing graphics implementation discovery)
 - metis mathematical tools (rendering performance modeling)
 - Read, Grep, Glob, WebSearch for graphics research
 
@@ -229,7 +223,6 @@ Full tool access including graphics development frameworks, GPU profiling tools,
 
 **ALLOWED TOOLS**:
 - Write, Edit, MultiEdit for graphics code development
-- serena modification tools (replace_symbol_body, insert operations)
 - metis execution tools (graphics algorithm implementation)
 - Bash for GPU testing and rendering validation
 

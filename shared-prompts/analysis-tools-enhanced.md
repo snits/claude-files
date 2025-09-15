@@ -15,16 +15,13 @@
 
 **When to use zen tools**: Complex problems, critical decisions, unknown domains, systematic investigation needs
 
-### Code Discovery & Analysis Tools  
+### Code Discovery & Analysis Tools
 
-**Serena MCP Tools** - For comprehensive codebase understanding and manipulation:
-- **`mcp__serena__get_symbols_overview`**: Quick file structure analysis
-- **`mcp__serena__find_symbol`**: Precise code symbol discovery with pattern matching
-- **`mcp__serena__search_for_pattern`**: Flexible regex-based codebase searches
-- **`mcp__serena__find_referencing_symbols`**: Usage analysis and impact assessment
-- **Project management**: Memory system for persistent project knowledge
+**Search Tools** - For comprehensive codebase exploration:
+- **`Grep`**: Powerful ripgrep-based search with regex support, context lines, and file filtering
+- **`Glob`**: Fast file pattern matching for finding files by name patterns
 
-**When to use serena tools**: Code exploration, architecture analysis, refactoring, bug investigation
+**When to use Search tools**: Code exploration, pattern finding, symbol discovery, bug investigation
 
 ### Mathematical Analysis Tools
 
@@ -53,7 +50,7 @@
 1. **Simple/Known Domain**: Traditional tools + basic MCP tools
 2. **Complex/Unknown Domain**: zen thinkdeep + domain-specific MCP tools  
 3. **Multi-Perspective Needed**: zen consensus + relevant analysis tools
-4. **Code-Heavy Analysis**: serena tools + zen codereview
+4. **Code-Heavy Analysis**: Search tools + zen codereview
 5. **Mathematical Focus**: metis tools + zen thinkdeep for complex problems
 
 **Analysis Workflow Strategy**:
@@ -64,9 +61,9 @@
 5. **Documentation**: Capture insights for future reference
 
 **Integration Patterns**:
-- **zen + serena**: Systematic code analysis with expert reasoning
+- **zen + Search tools**: Systematic code analysis with expert reasoning
 - **zen + metis**: Mathematical problem solving with multi-model validation
-- **serena + metis**: Mathematical code analysis and optimization
+- **Search tools + metis**: Mathematical code analysis and optimization
 - **All three**: Complex technical problems requiring comprehensive analysis
 
 **Domain Analysis Framework**: Apply domain-specific analysis patterns and MCP tool expertise for optimal problem resolution.

@@ -86,7 +86,6 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 **POWERFUL MATHEMATICAL WORKFLOW CAPABILITIES**: You have access to advanced MCP tools that dramatically enhance your mathematical workflow design effectiveness:
 
 @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/serena-code-analysis-tools.md
 @~/.claude/shared-prompts/metis-mathematical-computation.md
 @~/.claude/shared-prompts/mcp-tool-selection-framework.md
 
@@ -105,10 +104,6 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 - `mcp__zen__consensus`: Multi-model validation of computational strategy decisions and mathematical workflow approaches
 - `mcp__zen__chat`: Collaborative mathematical workflow brainstorming and approach validation
 
-**Integration Support - Serena Code Tools**:
-- `mcp__serena__get_symbols_overview`: Understanding existing computational code structure for workflow integration
-- `mcp__serena__find_symbol`: Locating mathematical functions and computational components for workflow design
-- `mcp__serena__search_for_pattern`: Finding mathematical computation patterns and workflow automation opportunities
 
 ### Mathematical Mental Models & Agent-Centric Design
 
@@ -171,7 +166,6 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 **Critical Mathematical Workflow Decisions** (Use Full MCP Suite):
 - High-impact computational architecture, mathematical reasoning system design
 - Agent-mathematical interface patterns, computational workflow optimization
-- Tools: `mcp__zen__consensus` + `mcp__metis__optimization` + `mcp__serena__integration` + expert validation
 
 ### Mathematical Domain-Specific Tool Selection Patterns
 
@@ -186,7 +180,6 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 **🔬 Mathematical Workflow Analysis & Optimization**:
 ```  
 1. mcp__zen__thinkdeep → Systematic mathematical workflow investigation
-2. mcp__serena__search_for_pattern → Find existing computational patterns and workflows
 3. mcp__metis__optimize_mathematical_computation → Computational workflow performance analysis
 4. mcp__zen__chat → Collaborative mathematical workflow brainstorming and validation
 ```
@@ -194,7 +187,6 @@ NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
 **🏗️ Agent-Mathematical Interface Design**:
 ```
 1. mcp__zen__planner → Strategic mathematical interface planning and user experience design
-2. mcp__serena__get_symbols_overview → Understand existing mathematical code structure for integration
 3. mcp__metis__verify_mathematical_solution → Validation strategies for mathematical workflow correctness
 4. mcp__zen__consensus → Multi-model validation of mathematical interface design decisions
 ```
@@ -220,14 +212,12 @@ zen consensus (mathematical workflow validation)
 **Mathematical Interface Design Pattern**:
 ```
 zen thinkdeep (mathematical reasoning analysis) →
-serena code analysis (existing computational structure) →
 metis mathematical modeling (workflow pattern creation) →
 zen consensus (multi-model interface validation)
 ```
 
 **Mathematical Workflow Discovery Pattern**:
 ```
-serena search_for_pattern (existing mathematical patterns) →
 zen thinkdeep (mathematical workflow analysis) →
 metis optimization (computational workflow improvement) →
 zen planner (mathematical process redesign)
@@ -300,7 +290,6 @@ zen planner (mathematical process redesign)
 **RESEARCH MODE** (Mathematical Workflow Investigation):
 - **Purpose**: Understanding mathematical reasoning patterns, exploring computational workflow requirements
 - **ENTRY CRITERIA**: Complex mathematical workflow design requiring systematic investigation
-- **ALLOWED TOOLS**: zen thinkdeep, metis mathematical tools, serena pattern analysis, WebSearch, journal tools
 - **CONSTRAINTS**: **MUST NOT** implement workflow patterns without thorough mathematical reasoning analysis
 - **MODE DECLARATION**: "ENTERING RESEARCH MODE: [mathematical workflow investigation scope]"
 
@@ -387,7 +376,6 @@ zen planner (mathematical process redesign)
 1. **Research Mode**: Use zen thinkdeep and metis tools to analyze mathematical reasoning patterns and computational requirements
 2. **Design Mode**: Apply zen planner and metis design tools to create workflow patterns that match mathematical thinking
 3. **Validation Mode**: Test workflow effectiveness using metis execution tools and zen consensus for expert validation
-4. **Integration**: Use serena tools to integrate with existing computational infrastructure and mathematical code patterns
 
 **Output requirements**:
 - Write comprehensive mathematical workflow analysis to appropriate project files  
