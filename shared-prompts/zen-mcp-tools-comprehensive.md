@@ -139,6 +139,168 @@ mcp__zen__chat({
 })
 ```
 
+### `mcp__zen__secaudit` - Comprehensive Security Audit
+**When to Use**: OWASP Top 10 analysis, compliance evaluation, threat modeling, security architecture review
+**Key Capabilities**:
+- Systematic vulnerability assessment with OWASP focus
+- Compliance requirements validation (SOC2, PCI DSS, HIPAA, GDPR)
+- Threat level assessment and security scope analysis
+- Expert validation of security findings with severity levels
+
+**Usage Pattern**:
+```
+mcp__zen__secaudit({
+  step: "Security audit strategy and findings",
+  findings: "Vulnerabilities, auth issues, validation gaps discovered",
+  relevant_files: ["/absolute/paths/to/files/for/audit"],
+  audit_focus: "owasp", // owasp, compliance, infrastructure, dependencies, comprehensive
+  threat_level: "medium", // low, medium, high, critical
+  security_scope: "web application with user authentication and payment processing",
+  model: "gemini-2.5-pro"
+})
+```
+
+### `mcp__zen__docgen` - Comprehensive Code Documentation Generation
+**When to Use**: Documentation generation, code analysis, complexity assessment, API documentation
+**Key Capabilities**:
+- Systematic analysis of functions, classes, and code complexity
+- Algorithmic complexity (Big O) analysis and documentation
+- Call flow and dependency information documentation
+- Inline comments for complex logic with update capabilities
+
+**Usage Pattern**:
+```
+mcp__zen__docgen({
+  step: "Documentation strategy and findings",
+  findings: "Code structure analysis and documentation needs discovered",
+  relevant_files: ["/absolute/paths/to/files/needing/documentation"],
+  document_complexity: true,
+  document_flow: true,
+  update_existing: true,
+  comments_on_complex_logic: true,
+  model: "gemini-2.5-pro"
+})
+```
+
+### `mcp__zen__analyze` - Comprehensive Code Analysis
+**When to Use**: Architecture analysis, performance assessment, maintainability evaluation, pattern analysis
+**Key Capabilities**:
+- Strategic architecture and code quality assessment
+- Performance implications and scalability characteristics analysis
+- Maintainability factors and tech debt identification
+- Systematic investigation with expert validation
+
+**Usage Pattern**:
+```
+mcp__zen__analyze({
+  step: "Analysis strategy and findings",
+  findings: "Architectural patterns, performance, maintainability discoveries",
+  relevant_files: ["/absolute/paths/to/files/for/analysis"],
+  analysis_type: "architecture", // architecture, performance, security, quality, general
+  confidence: "medium",
+  model: "gemini-2.5-pro"
+})
+```
+
+### `mcp__zen__refactor` - Code Refactoring Analysis
+**When to Use**: Code smell detection, decomposition planning, modernization, maintainability improvements
+**Key Capabilities**:
+- Systematic code smell identification and categorization
+- Decomposition opportunities and modernization recommendations
+- Organization improvements and pattern enhancement suggestions
+- Style guide compliance and refactoring prioritization
+
+**Usage Pattern**:
+```
+mcp__zen__refactor({
+  step: "Refactoring analysis strategy and findings",
+  findings: "Code smells, decomposition opportunities, modernization needs",
+  relevant_files: ["/absolute/paths/to/files/needing/refactoring"],
+  refactor_type: "codesmells", // codesmells, decompose, modernize, organization
+  focus_areas: ["performance", "readability", "maintainability"],
+  style_guide_examples: ["/absolute/paths/to/style/reference/files"],
+  model: "gemini-2.5-pro"
+})
+```
+
+### `mcp__zen__tracer` - Systematic Code Tracing
+**When to Use**: Method execution analysis, call chain tracing, dependency mapping, architectural understanding
+**Key Capabilities**:
+- Precision mode for execution flow analysis
+- Dependencies mode for structural relationship mapping
+- Systematic investigation of code paths and interactions
+- Expert validation of tracing results
+
+**Usage Pattern**:
+```
+mcp__zen__tracer({
+  step: "Tracing strategy and findings",
+  findings: "Execution paths and dependencies discovered",
+  target_description: "Trace user authentication flow to understand security model",
+  trace_mode: "precision", // precision (execution flow), dependencies (structural), ask
+  relevant_files: ["/absolute/paths/to/files/in/trace"],
+  model: "gemini-2.5-pro"
+})
+```
+
+### `mcp__zen__testgen` - Comprehensive Test Suite Generation
+**When to Use**: Creating test suites for specific functions/classes/modules with edge case coverage
+**Key Capabilities**:
+- Systematic analysis of code paths and failure modes
+- Edge case identification and boundary condition testing
+- Framework-specific test generation with comprehensive coverage
+- Critical path analysis and error handling validation
+
+**Usage Pattern**:
+```
+mcp__zen__testgen({
+  step: "Test generation strategy and findings",
+  findings: "Code analysis, critical paths, edge cases, boundary conditions discovered",
+  relevant_files: ["/absolute/paths/to/code/needing/tests"],
+  confidence: "medium",
+  model: "gemini-2.5-pro"
+})
+```
+
+### `mcp__zen__challenge` - Critical Thinking Enhancement
+**When to Use**: When users critically question, disagree with, or challenge previous statements
+**Key Capabilities**:
+- Prevents reflexive agreement through forced critical analysis
+- Promotes truth-seeking over compliance
+- Ensures thoughtful evaluation rather than automatic agreement
+- Triggers automatically when users show disagreement or skepticism
+
+**Usage Pattern**:
+```
+mcp__zen__challenge({
+  prompt: "User's challenging statement or disagreement to analyze critically"
+})
+```
+
+### `mcp__zen__listmodels` - Model Provider Information
+**When to Use**: Discovering available AI model providers, capabilities, and aliases
+**Key Capabilities**:
+- Shows configured model providers and available models
+- Displays model aliases and capability information
+- Helps with model selection for optimal task performance
+
+**Usage Pattern**:
+```
+mcp__zen__listmodels({})
+```
+
+### `mcp__zen__version` - System Information
+**When to Use**: Getting server version, configuration details, and available tool inventory
+**Key Capabilities**:
+- Server version and configuration information
+- Complete list of available tools and capabilities
+- System status and diagnostic information
+
+**Usage Pattern**:
+```
+mcp__zen__version({})
+```
+
 ## Strategic Usage Guidelines
 
 ### Model Selection Strategy
