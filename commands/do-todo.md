@@ -16,7 +16,7 @@
      - Prioritizing test-specialist for testing tasks
      - **SCOPE DISCIPLINE**: Keeping in mind project scope, goals, and end use-case - include PROJECT SCALE CONTEXT in agent prompt
      - **COMPLEXITY BUDGET**: Include DRY/YAGNI principles and complexity constraints in agent prompt
-     - Read existing prompt from `docs/00-project/tdd-prompts/` or create new one if missing
+     - Read existing prompt from `docs/00-project/task-prompts/` or create new one if missing
 
    - **Context Research**: Research whether existing technology/libraries solve this task (search-specialist for discovery)
 
@@ -24,7 +24,7 @@
      - Walk through thought process step-by-step
      - Request any missing information needed
      - **One iteration only** - refine prompt immediately based on feedback, then proceed
-     - Update finalized prompt in `docs/00-project/tdd-prompts/`
+     - Update finalized prompt in `docs/00-project/task-prompts/`
 
    ## **TIER 2: Implementation Execution** *(Sequential - Critical Path)*
 

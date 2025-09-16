@@ -5,12 +5,33 @@ ALL projects MUST have unit tests, integration tests, AND end-to-end tests. The 
 
 ## Testing Requirements
 - Tests MUST comprehensively cover ALL functionality
-- TDD workflow is mandatory (see workflow-integration.md)
+- Project-appropriate testing methodology required (see workflow-integration.md for methodology selection)
 - YOU MUST NEVER write tests that "test" mocked behavior. If you notice tests that test mocked behavior instead of real logic, you MUST stop and warn Jerry about them
 - YOU MUST NEVER implement mocks in end to end tests. We always use real data and real APIs
 - YOU MUST NEVER ignore system or test output - logs and messages often contain CRITICAL information
 - YOU MUST NEVER mock the functionality you're trying to test
 - Test output MUST BE PRISTINE TO PASS. If logs are expected to contain errors, these MUST be captured and tested
+
+## Testing Methodology Selection
+
+**METHODOLOGY ASSESSMENT**: Select testing approach based on project characteristics:
+- **Classical TDD**: Well-defined requirements, clear specifications
+- **Discovery Testing**: Exploratory projects, evolving requirements
+- **Integration-First**: API-heavy, integration-focused systems
+- **Characterization Testing**: Legacy systems, refactoring projects
+- **End-to-End First**: UI/UX focused, user workflow validation priority
+
+**SELECTION CRITERIA**:
+- Problem clarity and requirement stability
+- Integration complexity and external dependencies
+- Legacy constraints and existing codebase maturity
+- Risk tolerance and project timeline
+
+**NON-NEGOTIABLE REGARDLESS OF METHODOLOGY**:
+- Real functionality testing (never mock system under test)
+- Comprehensive coverage (unit + integration + end-to-end)
+- Pristine test output (all tests pass cleanly)
+- test-specialist approval before commits
 
 ## Quality Assurance Integration
 

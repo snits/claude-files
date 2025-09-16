@@ -1,4 +1,4 @@
-# Optimized Project Planning & TDD Prompt Generation Workflow
+# Optimized Project Planning & Testing Strategy Workflow
 
 ## Overview
 
@@ -100,14 +100,15 @@ Automated TODO.md generation with:
 - Clear dependency tracking and completion criteria
 ```
 
-#### 3.2 TDD Prompt Template Population
+#### 3.2 Testing Strategy Template Population
 
 ```
 Automated prompt generation using agent-specific templates:
+- test-specialist: Methodology selection, coverage requirements, quality gates
 - rust-specialist: Cargo setup, testing patterns, error handling
 - debug-specialist: Debugging context, log analysis, trace setup
 - security-engineer: Threat model, security requirements, validation
-- Context injection: Project state, dependencies, test requirements
+- Context injection: Project state, dependencies, methodology choice rationale
 - **SCOPE CONSTRAINTS**: Include PROJECT SCALE CONTEXT and YAGNI/DRY principles in all generated prompts
 ```
 
@@ -125,7 +126,7 @@ Configure handoff to do-todo.md workflow:
 
 - [ ] docs/00-project/plan.md with complete project blueprint
 - [ ] docs/00-project/TODO.md with agent assignments
-- [ ] docs/00-project/tdd-prompts/ directory with templated prompts
+- [ ] docs/00-project/task-prompts/ directory with methodology-specific templated prompts
 - [ ] Execution pipeline configured for seamless handoff
 
 ## Quality Safeguards

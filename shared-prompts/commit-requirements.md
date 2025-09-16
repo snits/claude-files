@@ -72,14 +72,22 @@ Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)
 - **No exceptions**: Agents MUST NOT be omitted from attribution, even for minor contributions
 - The Model doesn't need an attribution like this. It already gets an attribution via the Co-Authored-by line.
 
-### Development Workflow (TDD Required)
+### Development Workflow (Project-Appropriate Testing)
 
+**METHODOLOGY SELECTION**: Choose testing approach based on project characteristics (see testing-standards.md for guidance)
+
+**UNIVERSAL WORKFLOW REQUIREMENTS** (regardless of methodology):
 1. **Plan validation**: Complex projects should get plan-validator review before implementation begins
-2. Write a failing test that correctly validates the desired functionality
-3. Run the test to confirm it fails as expected
-4. Write ONLY enough code to make the failing test pass
-5. **COMMIT ATOMIC CHANGE** (following Checkpoint C)
-6. Run the test to confirm success
-7. Refactor if needed while keeping tests green
-8. **REQUEST CODE-REVIEWER REVIEW** of commit series
-9. Document any patterns, insights, or lessons learned
+2. **Test coverage**: Ensure comprehensive test coverage using project-appropriate methodology
+3. **Quality validation**: All tests must pass and validate real functionality (never mock system under test)
+4. **COMMIT ATOMIC CHANGE** (following Checkpoint C)
+5. **test-specialist approval**: Verify methodology appropriateness and coverage completeness
+6. **Refactoring**: Improve code while maintaining test coverage and pristine output
+7. **REQUEST CODE-REVIEWER REVIEW** of commit series
+8. **Documentation**: Record methodology choice rationale and lessons learned
+
+**METHODOLOGY-SPECIFIC ADAPTATIONS**:
+- **Classical TDD**: Red → Green → Refactor cycle with failing tests first
+- **Discovery Testing**: Write tests as understanding develops, focus on real functionality
+- **Integration-First**: Prioritize integration tests, then unit tests
+- **Legacy/Characterization**: Document existing behavior, then improve with test coverage
