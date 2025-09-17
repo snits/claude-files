@@ -20,10 +20,11 @@
 
    - **Context Research**: Research whether existing technology/libraries solve this task (search-specialist for discovery)
 
-   - **Single-Round Prompt Validation**: Task selected agent to validate prompt sufficiency with requirements:
+   - **Iterative Prompt Refinement**: Task selected agent to validate prompt sufficiency with requirements:
      - Walk through thought process step-by-step
      - Request any missing information needed
-     - **One iteration only** - refine prompt immediately based on feedback, then proceed
+     - **Up to 3 iterations maximum** - refine prompt based on feedback, gathering improvement suggestions
+     - Stop early if agent confirms prompt is sufficient
      - Update finalized prompt in `docs/00-project/task-prompts/`
 
    ## **TIER 2: Implementation Execution** *(Sequential - Critical Path)*
@@ -41,26 +42,11 @@
    ├── code-reviewer (using `mcp__zen__codereview`) → Comprehensive quality gates analysis
    ├── security-engineer → Security impact assessment
    └── test-specialist → Testing coverage validation
-
-   // Specialized Reviews (Execute Based on Change Type)
-   ├── clean-code-analyst → Code structure review (if code changes)
-   ├── solid-principles-assessor → SOLID compliance (if code changes)
-   ├── architectural-patterns-expert → Pattern compliance (if design changes)
-   ├── maintainability-assessor → Long-term maintainability (if complex changes)
-   ├── api-design-expert → API design review (if interface changes)
-   └── documentation-assessor → Documentation review (if docs changed)
    ```
 
    **Review Consolidation Rules**:
-   - If code-reviewer using `mcp__zen__codereview` identifies issues covered by specialist reviews, skip the corresponding specialist review. This requires the `mcp__zen__codereview` tool use to tag findings with the relevant domain (e.g., `[api-design]`, `[security]`).
    - Add tasks to `docs/00-project/TODO.md` for any issues raised (avoid duplicates)
-
-   **Automated Review Selection**: Determine which specialist reviews to include:
-   - **Code changes** → clean-code-analyst, solid-principles-assessor, maintainability-assessor
-   - **API/Interface changes** → api-design-expert
-   - **Architecture changes** → architectural-patterns-expert
-   - **Documentation changes** → documentation-assessor
-   - **All changes** → code-reviewer (using `mcp__zen__codereview`), security-engineer, test-specialist (always execute)
+   - Consolidate similar findings across the three core reviewers
 
    ## **TIER 4: Human Approval Gate** *(Sequential - Final Validation)*
 
@@ -97,13 +83,13 @@
 ### **Automation Fallbacks**
 
 - If agent selection is unclear, use search-specialist for task analysis
-- If code-reviewer using `mcp__zen__codereview` fails, fall back to individual specialist reviews
-- If parallel reviews conflict, prioritize security-engineer > code-reviewer (using `mcp__zen__codereview`) > specialists
+- If code-reviewer using `mcp__zen__codereview` fails, retry once before proceeding
+- If parallel reviews conflict, prioritize security-engineer > code-reviewer (using `mcp__zen__codereview`) > test-specialist
 
 ### **Performance Optimizations**
 
-- Skip redundant specialist reviews when code-reviewer using `mcp__zen__codereview` covers the same areas
 - Consolidate similar review findings to avoid duplicate tasks
+- Execute all three core reviews in parallel for maximum efficiency
 
 ### **Quality Assurance**
 
