@@ -1,0 +1,60 @@
+#!/bin/bash
+
+# Token count estimator using OpenAI's tiktoken
+# Usage: tokens <file>
+# Example: tokens ~/my-file.md
+
+if [ $# -eq 0 ]; then
+    echo "Usage: tokens <file>"
+    echo "Example: tokens ~/my-file.md"
+    exit 1
+fi
+
+if [ ! -f "$1" ]; then
+    echo "Error: File '$1' not found"
+    exit 1
+fi
+
+# Try different Python locations for cross-platform compatibility
+PYTHON_CMD=""
+if [ -f ~/.local/venv/bin/python3 ]; then
+    PYTHON_CMD=~/.local/venv/bin/python3
+elif [ -f ~/.local/venv/tiktoken/bin/python3 ]; then
+    PYTHON_CMD=~/.local/venv/tiktoken/bin/python3
+else
+    echo "Error: Python virtual environment not found"
+    exit 1
+fi
+
+# Use tiktoken to get accurate token count
+$PYTHON_CMD -c "
+import tiktoken
+import sys
+
+try:
+    # Use cl100k_base encoding (GPT-4, GPT-3.5-turbo)
+    enc = tiktoken.get_encoding('cl100k_base')
+    
+    with open('$1', 'r', encoding='utf-8') as f:
+        content = f.read()
+    
+    tokens = enc.encode(content)
+    token_count = len(tokens)
+    
+    print(f'File: $1')
+    print(f'Tokens: {token_count:,}')
+    
+    # Add context for common model limits
+    if token_count < 8000:
+        print('✅ Fits in most model contexts')
+    elif token_count < 32000:
+        print('⚠️  Large context - consider chunking')
+    elif token_count < 128000:
+        print('🚨 Very large - may hit context limits')
+    else:
+        print('❌ Exceeds most context windows')
+        
+except Exception as e:
+    print(f'Error: {e}', file=sys.stderr)
+    sys.exit(1)
+"
