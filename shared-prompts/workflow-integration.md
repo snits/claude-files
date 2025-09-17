@@ -7,12 +7,16 @@ These checkpoints MUST be completed in sequence. Failure to complete any checkpo
 
 ### Checkpoint A: TASK INITIATION
 **BEFORE starting ANY coding task:**
-- [ ] Systematic Tool Utilization Checklist completed (steps 0-5: Solution exists?, Context gathering, Problem decomposition, Domain expertise, Task coordination)
-- [ ] Git status is clean (no uncommitted changes) 
+- [ ] 🔍 **JOURNAL CONTEXT SEARCH** (MANDATORY):
+  - Try: `mcp__private-journal__search_journal` for similar problems/patterns
+  - Fallback: `mcp__private-journal__list_recent_entries` (last 7 days) if search fails
+  - Look for: Prior solutions, patterns that worked/failed, user preferences, technical gotchas
+- [ ] Systematic Tool Utilization Checklist completed (remaining steps)
+- [ ] Git status is clean (no uncommitted changes)
 - [ ] Create feature branch: `git checkout -b feature/task-description`
 - [ ] Confirm task scope is atomic (single logical change)
 - [ ] TodoWrite task created with clear acceptance criteria
-- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint A and am ready to begin implementation"
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed journal search and Checkpoint A, ready to begin implementation"
 
 ### Checkpoint B: IMPLEMENTATION COMPLETE  
 **BEFORE committing (developer quality gates for individual commits):**
@@ -30,8 +34,13 @@ These checkpoints MUST be completed in sequence. Failure to complete any checkpo
 - [ ] Atomic scope verified (single logical change)
 - [ ] Commit message drafted with clear scope boundaries
 - [ ] Security-engineer approval obtained (if security-relevant changes)
+- [ ] 📝 **JOURNAL REFLECTION** (MANDATORY): Use `mcp__private-journal__process_thoughts`
+  - `technical_insights`: Patterns discovered, what worked/didn't work
+  - `project_notes`: Project-specific learnings, architectural decisions, gotchas
+  - `user_context`: User collaboration insights, communication patterns
+  - `feelings`: Honest reflections - challenges, victories, surprises
 - [ ] TodoWrite task marked complete
-- [ ] **EXPLICIT CONFIRMATION**: "I have completed Checkpoint C and am ready to commit"
+- [ ] **EXPLICIT CONFIRMATION**: "I have completed journal reflection and Checkpoint C, ready to commit"
 
 ### TESTING METHODOLOGY SELECTION GUIDANCE
 
