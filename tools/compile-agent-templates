@@ -1,0 +1,364 @@
+#!/bin/bash
+
+# ABOUTME: Compiles agent templates with @references into final standalone agent files
+# ABOUTME: Processes templates from ~/.claude/agent-templates/ and outputs to ~/.claude/agent-reserves/
+
+set -euo pipefail
+
+# Configuration
+CLAUDE_DIR="$HOME/.claude"
+TEMPLATES_DIR="$CLAUDE_DIR/agent-templates"
+SHARED_PROMPTS_DIR="$CLAUDE_DIR/shared-prompts"
+RESERVES_DIR="$CLAUDE_DIR/agent-reserves"
+TEMP_DIR=$(mktemp -d)
+
+# Color codes for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Logging functions
+log_info() { echo -e "${BLUE}[INFO]${NC} $1" >&2; }
+log_warn() { echo -e "${YELLOW}[WARN]${NC} $1" >&2; }
+log_error() { echo -e "${RED}[ERROR]${NC} $1" >&2; }
+log_success() { echo -e "${GREEN}[SUCCESS]${NC} $1" >&2; }
+
+# Cleanup function
+cleanup() {
+  rm -rf "$TEMP_DIR"
+}
+trap cleanup EXIT
+
+# Usage information
+usage() {
+  cat <<EOF
+Usage: compile-agent-templates [OPTIONS] [TEMPLATE_NAME]
+
+Compiles agent templates with @references into standalone agent files.
+
+OPTIONS:
+    --check     Validate templates without compiling
+    --force     Force recompile even if unchanged  
+    --help      Show this help message
+
+ARGUMENTS:
+    TEMPLATE_NAME   Compile specific template (without .md extension)
+                   If not specified, compiles all templates
+
+EXAMPLES:
+    compile-agent-templates                    # Compile all templates
+    compile-agent-templates code-reviewer      # Compile specific template
+    compile-agent-templates --check           # Validate all templates
+
+DIRECTORIES:
+    Templates: $TEMPLATES_DIR
+    Output:    $RESERVES_DIR
+    Shared:    $SHARED_PROMPTS_DIR
+EOF
+}
+
+# AWK script for template compilation
+create_compilation_awk_script() {
+  cat >"$TEMP_DIR/compile.awk" <<'EOF'
+BEGIN {
+    template_file = ENVIRON["TEMPLATE_FILE"]
+    shared_prompts_dir = ENVIRON["SHARED_PROMPTS_DIR"]
+    error_count = 0
+    reference_count = 0
+}
+
+# Process @reference lines
+/^@~\/.claude\/shared-prompts\// {
+    reference_count++
+    
+    # Extract filename from @~/.claude/shared-prompts/filename.md
+    reference_line = $0
+    gsub(/^@~\/\.claude\/shared-prompts\//, "", $0)
+    filename = shared_prompts_dir "/" $0
+    
+    # Check if file exists and is readable
+    if ((getline test_line < filename) < 0) {
+        printf "[ERROR] Referenced file not found or not readable: %s\n", filename > "/dev/stderr"
+        printf "[ERROR] Referenced in template: %s\n", template_file > "/dev/stderr"
+        printf "[ERROR] Reference line: %s\n", reference_line > "/dev/stderr"
+        error_count++
+        close(filename)
+        next
+    }
+    close(filename)
+    
+    # Extract just the filename for attribution
+    split(filename, path_parts, "/")
+    short_filename = path_parts[length(path_parts)]
+    
+    # Insert source attribution header
+    printf "\n<!-- BEGIN: %s -->\n", short_filename
+    
+    # Read and include file content
+    while ((getline line < filename) > 0) {
+        print line
+    }
+    close(filename)
+    
+    # Insert source attribution footer
+    printf "<!-- END: %s -->\n\n", short_filename
+    next
+}
+
+# Pass through all other lines unchanged
+{ print }
+
+END {
+    if (error_count > 0) {
+        printf "[ERROR] Template compilation failed with %d errors\n", error_count > "/dev/stderr"
+        exit 1
+    }
+    if (reference_count > 0) {
+        printf "[INFO] Successfully processed %d references\n", reference_count > "/dev/stderr"
+    }
+}
+EOF
+}
+
+# Validate directory structure
+validate_directories() {
+  local missing_dirs=()
+
+  [[ ! -d "$CLAUDE_DIR" ]] && missing_dirs+=("$CLAUDE_DIR")
+  [[ ! -d "$TEMPLATES_DIR" ]] && missing_dirs+=("$TEMPLATES_DIR")
+  [[ ! -d "$SHARED_PROMPTS_DIR" ]] && missing_dirs+=("$SHARED_PROMPTS_DIR")
+
+  if [[ ${#missing_dirs[@]} -gt 0 ]]; then
+    log_error "Missing required directories:"
+    printf '%s\n' "${missing_dirs[@]}" | sed 's/^/  - /'
+    return 1
+  fi
+
+  # Create reserves directory if it doesn't exist
+  if [[ ! -d "$RESERVES_DIR" ]]; then
+    log_info "Creating output directory: $RESERVES_DIR"
+    mkdir -p "$RESERVES_DIR"
+  fi
+
+  return 0
+}
+
+# Check if template has any @references
+has_references() {
+  local template_file="$1"
+  grep -q '^@~/.claude/shared-prompts/' "$template_file"
+}
+
+# Validate a single template
+validate_template() {
+  local template_file="$1"
+  local template_name="$2"
+  local validation_errors=0
+
+  log_info "Validating template: $template_name"
+
+  # Check if template has @references
+  if ! has_references "$template_file"; then
+    log_warn "Template '$template_name' has no @references - will be copied as-is"
+    return 0
+  fi
+
+  # Extract and validate all references
+  while IFS= read -r reference_line; do
+    if [[ $reference_line =~ ^@~/.claude/shared-prompts/(.+)$ ]]; then
+      local referenced_file="$SHARED_PROMPTS_DIR/${BASH_REMATCH[1]}"
+
+      if [[ ! -f "$referenced_file" ]]; then
+        log_error "Referenced file not found: $referenced_file"
+        log_error "  Referenced in: $template_file"
+        log_error "  Reference line: $reference_line"
+        ((validation_errors++))
+      elif [[ ! -r "$referenced_file" ]]; then
+        log_error "Referenced file not readable: $referenced_file"
+        ((validation_errors++))
+      fi
+    else
+      log_warn "Malformed reference in $template_name: $reference_line"
+    fi
+  done < <(grep '^@~/.claude/shared-prompts/' "$template_file" || true)
+
+  return $validation_errors
+}
+
+# Compile a single template
+compile_template() {
+  local template_file="$1"
+  local template_name="$2"
+  local output_file="$RESERVES_DIR/$template_name.md"
+  local temp_output="$TEMP_DIR/$template_name.md"
+
+  log_info "Compiling template: $template_name"
+
+  # First validate the template
+  if ! validate_template "$template_file" "$template_name"; then
+    log_error "Validation failed for template: $template_name"
+    return 1
+  fi
+
+  # Check if template has @references
+  if ! has_references "$template_file"; then
+    log_info "Template '$template_name' has no @references, copying directly"
+    cp "$template_file" "$temp_output"
+  else
+    # Compile with AWK script
+    export TEMPLATE_FILE="$template_file"
+    export SHARED_PROMPTS_DIR="$SHARED_PROMPTS_DIR"
+
+    if ! awk -f "$TEMP_DIR/compile.awk" "$template_file" >"$temp_output" 2>&1; then
+      log_error "Compilation failed for template: $template_name"
+      return 1
+    fi
+  fi
+
+  # Add compilation header to output file
+  {
+    cat "$temp_output"
+    echo ""
+    echo "<!-- COMPILED AGENT: Generated from $template_name template -->"
+    echo "<!-- Generated at: $(date -u +%Y-%m-%dT%H:%M:%SZ) -->"
+    echo "<!-- Source template: $template_file -->"
+  } >"$output_file"
+
+  log_success "Compiled: $template_name -> $output_file"
+  return 0
+}
+
+# Main compilation function
+compile_templates() {
+  local specific_template="$1"
+  local check_only="${2:-false}"
+  local compiled_count=0
+  local failed_count=0
+
+  # Create AWK compilation script
+  create_compilation_awk_script
+
+  # Process templates
+  if [[ -n "$specific_template" ]]; then
+    # Compile specific template
+    local template_file="$TEMPLATES_DIR/$specific_template.md"
+
+    if [[ ! -f "$template_file" ]]; then
+      log_error "Template not found: $template_file"
+      return 1
+    fi
+
+    if [[ "$check_only" == "true" ]]; then
+      if validate_template "$template_file" "$specific_template"; then
+        log_success "Template validation passed: $specific_template"
+        ((compiled_count++))
+      else
+        log_error "Template validation failed: $specific_template"
+        ((failed_count++))
+      fi
+    else
+      if compile_template "$template_file" "$specific_template"; then
+        ((compiled_count++))
+      else
+        ((failed_count++))
+      fi
+    fi
+  else
+    # Process all templates
+    local template_files=("$TEMPLATES_DIR"/*.md)
+
+    if [[ ${#template_files[@]} -eq 1 && ! -f "${template_files[0]}" ]]; then
+      log_warn "No template files found in: $TEMPLATES_DIR"
+      return 0
+    fi
+
+    for template_file in "${template_files[@]}"; do
+      [[ ! -f "$template_file" ]] && continue
+
+      local template_name
+      template_name=$(basename "$template_file" .md)
+
+      if [[ "$check_only" == "true" ]]; then
+        if validate_template "$template_file" "$template_name"; then
+          log_success "Validation passed: $template_name"
+          ((compiled_count++))
+        else
+          log_error "Validation failed: $template_name"
+          ((failed_count++))
+        fi
+      else
+        if compile_template "$template_file" "$template_name"; then
+          ((compiled_count++))
+        else
+          ((failed_count++))
+        fi
+      fi
+    done
+  fi
+
+  # Report results
+  if [[ "$check_only" == "true" ]]; then
+    log_info "Validation complete: $compiled_count passed, $failed_count failed"
+  else
+    log_info "Compilation complete: $compiled_count compiled, $failed_count failed"
+  fi
+
+  return $failed_count
+}
+
+# Parse command line arguments
+main() {
+  local check_only=false
+  local force_recompile=false
+  local specific_template=""
+
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --check)
+      check_only=true
+      shift
+      ;;
+    --force)
+      force_recompile=true
+      shift
+      ;;
+    --help)
+      usage
+      exit 0
+      ;;
+    -*)
+      log_error "Unknown option: $1"
+      usage
+      exit 1
+      ;;
+    *)
+      if [[ -n "$specific_template" ]]; then
+        log_error "Multiple template names specified: $specific_template, $1"
+        usage
+        exit 1
+      fi
+      specific_template="$1"
+      shift
+      ;;
+    esac
+  done
+
+  # Validate environment
+  if ! validate_directories; then
+    log_error "Environment validation failed"
+    exit 1
+  fi
+
+  # Run compilation
+  if compile_templates "$specific_template" "$check_only"; then
+    exit 0
+  else
+    exit 1
+  fi
+}
+
+# Run main function with all arguments
+main "$@"
+
