@@ -42,7 +42,7 @@ List all currently active agents for the current project (global + project-speci
 
 📁 PROJECT AGENTS (2 active):
 ├── database-specialist: Database architecture and optimization expert
-└── search-specialist: Vector search and information retrieval expert
+└── api-design-expert: Expert API design specialist for interface consistency
 
 💡 Use '/agent-browse' to discover more agents
 💡 Use '/agent-deploy AGENT_NAME' to add agents to current project

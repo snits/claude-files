@@ -18,7 +18,7 @@
      - **COMPLEXITY BUDGET**: Include DRY/YAGNI principles and complexity constraints in agent prompt
      - Read existing prompt from `specs/$1/task-prompts/` or create new one if missing
 
-   - **Context Research**: Research whether existing technology/libraries solve this task (search-specialist for discovery)
+   - **Context Research**: Research whether existing technology/libraries solve this task (web-search-researcher for external solutions, codebase-pattern-finder for existing patterns)
 
    - **Iterative Prompt Refinement**: Task selected agent to validate prompt sufficiency with requirements:
      - Walk through thought process step-by-step
@@ -77,7 +77,7 @@
 
 ### **Automation Fallbacks**
 
-- If agent selection is unclear, use search-specialist for task analysis
+- If agent selection is unclear, use codebase-analyzer for task analysis
 - If code-reviewer using `mcp__zen__codereview` fails, retry once before proceeding
 - If parallel reviews conflict, prioritize security-engineer > code-reviewer (using `mcp__zen__codereview`) > test-specialist
 

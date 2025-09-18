@@ -21,7 +21,7 @@ planner-agent (using `mcp__zen__planner`) → High-level project architecture an
 #### 1.2 Technology Discovery *(Critical: Execute BEFORE detailed planning)*
 
 ```
-search-specialist → Technology landscape analysis
+web-search-researcher → Technology landscape analysis
 - Research existing solutions for each major component
 - Document build vs buy vs integrate decisions
 - Create technology recommendation matrix

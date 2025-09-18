@@ -26,6 +26,16 @@
 
 ### Tier 2: Specialized Domain Tools
 
+**Humanlayer (Discovery & Analysis)**:
+- **codebase-locator**: Fast file/component discovery across codebase
+- **codebase-analyzer**: Detailed implementation analysis
+- **codebase-pattern-finder**: Find usage examples and patterns
+- **web-search-researcher**: External documentation and modern info
+- **thoughts-locator**: Internal documentation discovery
+- **thoughts-analyzer**: Deep research analysis
+- **Selection Criteria**: Discovery tasks, pattern finding, research needs
+- **Integration**: Use for discovery → zen tools for analysis
+
 **Metis (Mathematical)**:
 - **Primary Use**: Mathematical modeling, numerical analysis, scientific computation
 - **Selection Criteria**: Mathematical computation required, modeling needed
@@ -59,16 +69,18 @@
 
 **🔍 Code Analysis & Architecture**:
 ```
-1. Use Search tool → Find code patterns and symbols
-2. zen thinkdeep → Systematic analysis
-3. zen codereview → Expert validation
+1. codebase-locator → Find relevant files
+2. codebase-analyzer → Detailed implementation analysis
+3. zen thinkdeep → Systematic analysis
+4. zen codereview → Expert validation
 ```
 
 **🐛 Debugging & Problem Investigation**:
 ```
 1. zen debug → Systematic investigation
-2. Use Search tool → Find evidence and patterns
-3. zen thinkdeep → Root cause analysis (if needed)
+2. codebase-pattern-finder → Find similar implementations
+3. codebase-analyzer → Understand implementation details
+4. zen thinkdeep → Root cause analysis (if needed)
 ```
 
 **📊 Mathematical & Data Analysis**:
@@ -99,6 +111,7 @@
 **CRITICAL TOOL AWARENESS**: You have access to powerful MCP tools that can dramatically improve your effectiveness:
 
 @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
+@~/.claude/shared-prompts/humanlayer-discovery-agents.md (for discovery tasks)
 @~/.claude/shared-prompts/metis-mathematical-computation.md (if mathematical domain)
 
 **Tool Selection Strategy**: [Domain-specific guidance for when to use advanced tools]
@@ -108,18 +121,24 @@
 
 **Embed in Workflow Descriptions**:
 - "For complex problems, START with zen thinkdeep before implementation"
-- "For architectural decisions, use zen consensus to validate approaches"  
-- "For code exploration, use the Search tool"
+- "For architectural decisions, use zen consensus to validate approaches"
+- "For code discovery, use codebase-locator for files, codebase-analyzer for details"
+- "For pattern finding, use codebase-pattern-finder for concrete examples"
+- "For external research, use web-search-researcher for modern documentation"
 - "For mathematical modeling, use metis design_mathematical_model"
 
 ### Task-Triggered Tool Recommendations
 
 **Complex Task Indicators → Tool Suggestions**:
 - "Unknown problem domain" → zen thinkdeep
-- "Multiple solution approaches" → zen consensus  
-- "Code architecture analysis" → Search tool + zen codereview
+- "Multiple solution approaches" → zen consensus
+- "Need to find files" → codebase-locator
+- "Need implementation details" → codebase-analyzer
+- "Need usage examples" → codebase-pattern-finder
+- "Need modern docs" → web-search-researcher
+- "Code architecture analysis" → codebase-analyzer + zen codereview
 - "Mathematical problem solving" → metis tools + zen validation
-- "System debugging" → zen debug + Search tool
+- "System debugging" → zen debug + codebase-pattern-finder
 
 ## Integration Patterns for Maximum Effectiveness
 
@@ -143,7 +162,9 @@ zen codereview (quality validation)
 
 **Discovery Pattern**:
 ```
-Search tool (find patterns/symbols) →
+codebase-locator (find files) →
+codebase-analyzer (understand implementation) →
+codebase-pattern-finder (find examples) →
 zen thinkdeep (analysis) →
 Implementation tools (changes)
 ```
