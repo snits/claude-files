@@ -50,7 +50,7 @@ After reading the task assess whether or not the task should be decomposed into 
    ```
 
    **Review Consolidation Rules**:
-   - Task project-manager to assess the scope of, properly prioritize, and add tasks to `specs/$1/tasks.md` for any issues raised (avoid duplicates)
+   - Task project-manager to assess the scope of, properly prioritize, and add tasks to `specs/$1/tasks.md` for any issues raised (avoid duplicates). Include PROJECT SCALE CONTEXT when tasking project-manager.
    - Consolidate similar findings across the three core reviewers
 
 3. **Execution Phase**: Carry out the steps in the ToDoWrite list using the Tiered Parallel Pipeline:

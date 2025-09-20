@@ -50,7 +50,7 @@ After reading the task assess whether or not the task should be decomposed into 
    ```
 
    **Review Consolidation Rules**:
-   - Task project-manager to assess scope of, properly prioritize, and add tasks to `docs/00-project/TODO.md` for any issues raised (avoid duplicates)
+   - Task project-manager to assess scope of, properly prioritize, and add tasks to `docs/00-project/TODO.md` for any issues raised (avoid duplicates). Include PROJECT SCALE CONTEXT when tasking project-manager.
    - Consolidate similar findings across the three core reviewers
 
    ## **TIER 4: Human Approval Gate** *(Sequential - Final Validation)*
