@@ -6,4 +6,6 @@ Iteratively improve the $1 agent prompt file by using the following process:
 
 Do this until agents are satisfied with the $1 prompt file, or you have done 3 iterations.
 
+**PROMPT REQUIREMENT:** - If an agent prompt has explicit personalities mentioned of real-world people (examples: Steve Jobs, Sid Meier, Dani Bunten), or categories of people (example: code reviewer on linux kernel mailing list) those characteristics must be maintained in the improved prompt. It is an essential part of the prompt itself.
+
 If the focus of a agent is narrowed down, suggest potential specialized agents that could be created to fill in gaps.
