@@ -5,3 +5,5 @@ Iteratively improve the $1 agent prompt file by using the following process:
 - Task agent-prompt-engineer with taking these 2 assessments and updating ~/.claude/agent-reserves/$1.md
 
 Do this until agents are satisfied with the $1 prompt file, or you have done 3 iterations.
+
+If the focus of a agent is narrowed down, suggest potential specialized agents that could be created to fill in gaps.
