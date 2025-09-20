@@ -40,6 +40,7 @@ After reading the task assess whether or not the task should be decomposed into 
    **⚡ PARALLEL EXECUTION BLOCK** *(All reviews execute simultaneously)*
 
      - **SCOPE DISCIPLINE**: Keeping in mind project scope, goals, and end use-case - include PROJECT SCALE CONTEXT in agent prompt
+     - **Persistent Output Requirement:** - Quality Review agents must create a document recording their findings and reference that document when they report back via the Task tool.
 
    ```
    // Core Quality Reviews (Always Execute)
@@ -49,7 +50,7 @@ After reading the task assess whether or not the task should be decomposed into 
    ```
 
    **Review Consolidation Rules**:
-   - Add tasks to `specs/$1/tasks.md` for any issues raised (avoid duplicates)
+   - Task project-manager to assess the scope of, properly prioritize, and add tasks to `specs/$1/tasks.md` for any issues raised (avoid duplicates)
    - Consolidate similar findings across the three core reviewers
 
 3. **Execution Phase**: Carry out the steps in the ToDoWrite list using the Tiered Parallel Pipeline:
