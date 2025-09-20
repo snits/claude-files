@@ -39,6 +39,8 @@ After reading the task assess whether or not the task should be decomposed into 
 
    **⚡ PARALLEL EXECUTION BLOCK** *(All reviews execute simultaneously)*
 
+     - **SCOPE DISCIPLINE**: Keeping in mind project scope, goals, and end use-case - include PROJECT SCALE CONTEXT in agent prompt
+
    ```
    // Core Quality Reviews (Always Execute)
    ├── code-reviewer (using `mcp__zen__codereview`) → Comprehensive quality gates analysis

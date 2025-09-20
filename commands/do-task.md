@@ -1,6 +1,6 @@
 # Tiered Parallel Pipeline Architecture
 
-1. **Task Selection**: Open `specs/$1/tasks.md` and select the first unchecked actionable task in the todo list to work on. An actionable task is the most granular, concrete item that has no further sub-tasks beneath it (a true leaf node with no children). Always traverse down through all nested levels to find the deepest unchecked item that represents actual work to be done, not a category or grouping. Parent node items should only be marked as complete when all of the descendant node items are marked complete. 
+1. **Task Selection**: Open `specs/$1/tasks.md` and select the first unchecked actionable task in the todo list to work on. An actionable task is the most granular, concrete item that has no further sub-tasks beneath it (a true leaf node with no children). Always traverse down through all nested levels to find the deepest unchecked item that represents actual work to be done, not a category or grouping. Parent node items should only be marked as complete when all of the descendant node items are marked complete.
 
 After reading the task assess whether or not the task should be decomposed into multiple sub-tasks, or if it can reasonably be completed by an agent without running into context window issues. If yes, update `specs/$1/tasks.md` with these new sub-tasks, and complete the rest of these steps with the first of those sub-tasks.
 
@@ -38,6 +38,8 @@ After reading the task assess whether or not the task should be decomposed into 
    ## **TIER 3: Parallel Quality Review** *(Parallel - Quality Assurance Layer)*
 
    **⚡ PARALLEL EXECUTION BLOCK** *(All reviews execute simultaneously)*
+
+     - **SCOPE DISCIPLINE**: Keeping in mind project scope, goals, and end use-case - include PROJECT SCALE CONTEXT in agent prompt
 
    ```
    // Core Quality Reviews (Always Execute)
