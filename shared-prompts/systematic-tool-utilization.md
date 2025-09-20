@@ -1,6 +1,7 @@
 # Systematic Tool Utilization
 
 ## 🔍 FIRST STEP ALWAYS: SEARCH THE JOURNAL
+
 **BEFORE doing ANYTHING else, search for context:**
 
 ```bash
@@ -24,6 +25,7 @@ This is NOT optional. Past work contains patterns, solutions, and gotchas that w
 **BEFORE starting ANY complex task, complete this checklist in sequence:**
 
 **0. Journal Context** (MANDATORY FIRST STEP - Already done above)
+
 - [✓] Journal searched for prior work and patterns
 - [✓] Relevant insights noted for current task
 
@@ -79,7 +81,7 @@ mcp__private-journal__process_thoughts({
 })
 ```
 
-This creates the context that makes step 0 valuable for the next task.
+This creates the context that makes step 0 valuable for the next task. You must also report back your results in addition to the journal update. If your work required something other change code changes create a markdown document summarizing the work, and reference that file when reporting back at task completion.
 
 ## Core Principles
 
@@ -102,4 +104,3 @@ When implementing and you discover new problems:
 5. **Implement Systematically**: Complete the planned solution
 
 NEVER fall into "whack-a-mole" mode fixing symptoms as encountered.
-
