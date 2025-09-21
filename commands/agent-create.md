@@ -55,6 +55,7 @@ Task agent-prompt-engineer with creating a new agent prompt file in ~/.claude/ag
      - `[agent role and expertise description]` → domain expertise
      - `[specific domain/capabilities]` → key capabilities
      - Fill in Core Expertise, Key Responsibilities, and other sections
+     - Do not include code samples. The agent likely already knows them if you did.
    - **IMPORTANT**: Leave PROJECT-SPECIFIC-COMMANDS section with template placeholders
      - Keep `[project-specific-typecheck-command]` format in protected tags
      - Do NOT replace with actual commands (this happens during agent-deploy)
