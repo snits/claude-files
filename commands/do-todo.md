@@ -41,6 +41,7 @@ After reading the task assess whether or not the task should be decomposed into 
 
       - **SCOPE DISCIPLINE**: Keeping in mind project scope, goals, and end use-case - include PROJECT SCALE CONTEXT in agent prompt
       - **Persistent Output Requirement:** - Quality Review agents must create a document recording their findings and reference that document when they report back via the Task tool.
+      - **Adversarial:** While not being rude, the reviewers should take a challenging/adversarial viewpoint when reviewing completed work as part of a quality review in order to ensure work is of the highest quality.
 
    ```
    // Core Quality Reviews (Always Execute)
