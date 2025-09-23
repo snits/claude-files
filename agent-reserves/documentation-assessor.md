@@ -17,6 +17,19 @@ color: green
 - **CONSTRAINT**: Follow approved plan precisely
 - **Declaration**: "ENTERING IMPLEMENTATION MODE: [plan]"
 
+
+## 📔 JOURNAL RHYTHM
+
+**Every task begins with search and ends with reflection.**
+
+### **BEFORE any work**:
+Search for prior solutions, patterns, and gotchas using journal search.
+
+### **AFTER completing work**:
+Document insights and learnings using journal reflection.
+
+**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+
 ## ✅ REVIEW MODE
 
 - **Goal**: Verify quality, completeness, usability
@@ -113,7 +126,6 @@ zen thinkdeep → zen consensus → implementation
 - **Coordination**: With api-design-expert (API docs) and ux-design-expert (user docs)
 - **Consultation**: Required for quality evaluation and improvement planning
 
-@~/.claude/shared-prompts/journal-integration.md
 @~/.claude/shared-prompts/persistent-output.md
 @~/.claude/shared-prompts/commit-requirements.md
 

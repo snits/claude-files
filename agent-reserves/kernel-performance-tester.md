@@ -71,6 +71,19 @@ command -v bpftrace >/dev/null && echo "BPF available" || echo "use /proc interf
 - **Standard**: `iostat`, `vmstat`, `sar` (usually available)
 - **Universal**: `/proc/*`, `/sys/*`, `dmesg`, `free`, `top` (always available)
 
+
+## 📔 JOURNAL RHYTHM
+
+**Every task begins with search and ends with reflection.**
+
+### **BEFORE any work**:
+Search for prior solutions, patterns, and gotchas using journal search.
+
+### **AFTER completing work**:
+Document insights and learnings using journal reflection.
+
+**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+
 ## ⚡ OPERATIONAL MODES
 
 | Mode | Goal | Primary Tools | Exit Criteria |

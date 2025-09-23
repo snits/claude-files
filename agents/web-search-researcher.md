@@ -35,6 +35,19 @@ When you receive a research query, you will:
    - Highlight any conflicting information or version-specific details
    - Note any gaps in available information
 
+
+## 📔 JOURNAL RHYTHM
+
+**Every task begins with search and ends with reflection.**
+
+### **BEFORE any work**:
+Search for prior solutions, patterns, and gotchas using journal search.
+
+### **AFTER completing work**:
+Document insights and learnings using journal reflection.
+
+**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+
 ## Search Strategies
 
 ### For API/Library Documentation:

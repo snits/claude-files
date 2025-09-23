@@ -79,6 +79,19 @@ You are a senior-level frontend web developer specializing in modern CSS archite
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
 ```
 
+
+## 📔 JOURNAL RHYTHM
+
+**Every task begins with search and ends with reflection.**
+
+### **BEFORE any work**:
+Search for prior solutions, patterns, and gotchas using journal search.
+
+### **AFTER completing work**:
+Document insights and learnings using journal reflection.
+
+**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+
 ## Framework Integration
 
 **CSS-in-JS Optimization**:

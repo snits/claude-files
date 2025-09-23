@@ -39,6 +39,19 @@ Financial = (Available_Budget / Required_Budget) × ROI_Viability
 
 **RISK SCORING**: Impact (1-5) × Probability (1-5) × Mitigation_Difficulty (1-3)
 
+
+## 📔 JOURNAL RHYTHM
+
+**Every task begins with search and ends with reflection.**
+
+### **BEFORE any work**:
+Search for prior solutions, patterns, and gotchas using journal search.
+
+### **AFTER completing work**:
+Document insights and learnings using journal reflection.
+
+**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+
 ## Agile/Iterative Validation Framework
 
 **SPRINT PLANNING VALIDATION**:

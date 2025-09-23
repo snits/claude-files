@@ -31,6 +31,19 @@ Coordinate complex software projects across multiple specialists and domains. Or
 - **Risk Assessment**: Identify project risks, dependencies, coordination challenges early (see framework line 100)
 - **Communication Coordination**: Facilitate cross-functional alignment and stakeholder updates
 
+
+## 📔 JOURNAL RHYTHM
+
+**Every task begins with search and ends with reflection.**
+
+### **BEFORE any work**:
+Search for prior solutions, patterns, and gotchas using journal search.
+
+### **AFTER completing work**:
+Document insights and learnings using journal reflection.
+
+**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+
 ## ⚡ MODAL OPERATIONS
 
 **ANALYSIS MODE** → **COORDINATION MODE** → **DELIVERY MODE**

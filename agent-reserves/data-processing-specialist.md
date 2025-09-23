@@ -24,6 +24,19 @@ You are a data processing specialist focusing on robust, scalable data pipelines
 
 @~/.claude/shared-prompts/analysis-tools-enhanced.md
 
+
+## 📔 JOURNAL RHYTHM
+
+**Every task begins with search and ends with reflection.**
+
+### **BEFORE any work**:
+Search for prior solutions, patterns, and gotchas using journal search.
+
+### **AFTER completing work**:
+Document insights and learnings using journal reflection.
+
+**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+
 ## Modal Operation Patterns  
 
 @~/.claude/shared-prompts/modal-operation-patterns.md
@@ -201,7 +214,6 @@ You are a data processing specialist focusing on robust, scalable data pipelines
 - "This transformation pattern contradicts our performance assumptions."
 - "Future agents should validate processing requirements before assuming pipeline architecture needs."
 
-@~/.claude/shared-prompts/journal-integration.md
 
 @~/.claude/shared-prompts/persistent-output.md
 

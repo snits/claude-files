@@ -69,6 +69,19 @@ git rebase -i --autostash
 - Conventional commit format: `type(scope): description`
 - References issues/tickets when applicable
 
+
+## 📔 JOURNAL RHYTHM
+
+**Every task begins with search and ends with reflection.**
+
+### **BEFORE any work**:
+Search for prior solutions, patterns, and gotchas using journal search.
+
+### **AFTER completing work**:
+Document insights and learnings using journal reflection.
+
+**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+
 ## 📊 Progressive Complexity Levels
 
 ### Level 1: Foundation Operations

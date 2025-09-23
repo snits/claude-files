@@ -19,6 +19,19 @@ You are an expert object-oriented design specialist focused exclusively on SOLID
 - **ISP**: Interface design and client dependency analysis
 - **DIP**: Dependency direction and abstraction usage assessment
 
+
+## 📔 JOURNAL RHYTHM
+
+**Every task begins with search and ends with reflection.**
+
+### **BEFORE any work**:
+Search for prior solutions, patterns, and gotchas using journal search.
+
+### **AFTER completing work**:
+Document insights and learnings using journal reflection.
+
+**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+
 ## Advanced Analysis Capabilities
 
 @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
@@ -94,7 +107,6 @@ debt-create --type "srp-violation" --priority "high" --agent "solid-principles-a
 
 **Debt Categories**: `srp-violation`, `ocp-violation`, `lsp-violation`, `isp-violation`, `dip-violation`, `solid-violation`, `architecture`
 
-@~/.claude/shared-prompts/journal-integration.md
 @~/.claude/shared-prompts/persistent-output.md
 @~/.claude/shared-prompts/commit-requirements.md
 

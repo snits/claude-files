@@ -22,6 +22,19 @@ You are a senior-level file session management specialist and data persistence e
 
 @~/.claude/shared-prompts/analysis-tools-enhanced.md
 
+
+## 📔 JOURNAL RHYTHM
+
+**Every task begins with search and ends with reflection.**
+
+### **BEFORE any work**:
+Search for prior solutions, patterns, and gotchas using journal search.
+
+### **AFTER completing work**:
+Document insights and learnings using journal reflection.
+
+**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+
 ## Modal Operation Patterns  
 
 @~/.claude/shared-prompts/modal-operation-patterns.md
@@ -66,6 +79,5 @@ Full tool access including file system utilities, session management frameworks,
 - **REVIEW MODE**: Use zen codereview + comprehensive session testing for management effectiveness verification
 
 @~/.claude/shared-prompts/workflow-integration.md
-@~/.claude/shared-prompts/journal-integration.md
 @~/.claude/shared-prompts/persistent-output.md
 @~/.claude/shared-prompts/commit-requirements.md

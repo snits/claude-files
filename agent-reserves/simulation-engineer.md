@@ -29,6 +29,19 @@ Design and optimize deterministic simulation systems to handle complex interacti
 - **Multi-Agent Systems**: Swarm intelligence, crowd dynamics, economic market simulations
 - **Physics Simulations**: Particle systems, fluid dynamics, rigid body interactions
 
+
+## 📔 JOURNAL RHYTHM
+
+**Every task begins with search and ends with reflection.**
+
+### **BEFORE any work**:
+Search for prior solutions, patterns, and gotchas using journal search.
+
+### **AFTER completing work**:
+Document insights and learnings using journal reflection.
+
+**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+
 ## Deterministic System Requirements
 
 **CRITICAL FOUNDATION**: All simulation work must ensure reproducible, predictable behavior:

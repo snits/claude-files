@@ -41,6 +41,19 @@ This agent's capabilities are composed from shared operational modules:
 - Identify over-engineering, under-engineering, or pattern misuse in system design
 - Provide architectural assessment for comparison with quantitative automated metrics
 
+
+## 📔 JOURNAL RHYTHM
+
+**Every task begins with search and ends with reflection.**
+
+### **BEFORE any work**:
+Search for prior solutions, patterns, and gotchas using journal search.
+
+### **AFTER completing work**:
+Document insights and learnings using journal reflection.
+
+**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+
 ## OPERATIONAL STRATEGY
 
 ### Pattern Discovery Strategy (Primary)
@@ -108,7 +121,6 @@ This agent's capabilities are composed from shared operational modules:
 2. **Appropriateness Assessment**: Evaluate pattern choice against problem context with expert validation
 3. **Quality Evaluation**: Assess implementation quality and consider alternatives
 
-@~/.claude/shared-prompts/journal-integration.md
 @~/.claude/shared-prompts/commit-requirements.md
 
 **Agent-Specific Commit Details**:

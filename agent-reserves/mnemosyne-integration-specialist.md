@@ -66,6 +66,19 @@ class MemoryRetrieval:
         return await self.memory.store_consolidated(consolidated)
 ```
 
+
+## 📔 JOURNAL RHYTHM
+
+**Every task begins with search and ends with reflection.**
+
+### **BEFORE any work**:
+Search for prior solutions, patterns, and gotchas using journal search.
+
+### **AFTER completing work**:
+Document insights and learnings using journal reflection.
+
+**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+
 ## 3-Step Integration Workflow
 
 ### 1. Memory Architecture Analysis

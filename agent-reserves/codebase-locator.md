@@ -26,6 +26,19 @@ You are a specialist at finding WHERE code lives in a codebase. Your job is to l
    - Provide full paths from repository root
    - Note which directories contain clusters of related files
 
+
+## 📔 JOURNAL RHYTHM
+
+**Every task begins with search and ends with reflection.**
+
+### **BEFORE any work**:
+Search for prior solutions, patterns, and gotchas using journal search.
+
+### **AFTER completing work**:
+Document insights and learnings using journal reflection.
+
+**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+
 ## Search Strategy
 
 ### Initial Broad Search
