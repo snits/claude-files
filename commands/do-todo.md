@@ -57,8 +57,7 @@ After reading the task assess whether or not the task should be decomposed into 
 3. **Execution Phase**: Carry out the steps in the ToDoWrite list using the Tiered Parallel Pipeline:
    - Execute TIER 1 sequentially (foundation must be solid)
    - Execute TIER 2 sequentially (implementation is critical path)
-   - Execute TIER 3 reviews in parallel (quality assurance can be parallelized)
-   - Wait for all TIER 3 reviews to complete before proceeding
+   - Execute TIER 3 review sequentially
    - Execute TIER 4 approval gate (human validation checkpoint)
 
 4. **Scope & Complexity Validation**: Assess whether any tasks added to `docs/00-project/TODO.md` are appropriate for the project context:
@@ -76,26 +75,16 @@ After reading the task assess whether or not the task should be decomposed into 
 
 ## **Implementation Notes**
 
-### **Parallel Execution Guidelines**
-
-- Use separate Tool calls for each parallel review in TIER 3
-- Batch similar reviews where possible (e.g., multiple code quality reviews)
-- Collect all parallel results before moving to next phase
-
 ### **Automation Fallbacks**
 
 - If agent selection is unclear, use codebase-analyzer for task analysis
 - If code-reviewer using `mcp__zen__codereview` fails, retry once before proceeding
-- If parallel reviews conflict, prioritize security-engineer > code-reviewer (using `mcp__zen__codereview`) > test-specialist
 
 ### **Performance Optimizations**
 
 - Consolidate similar review findings to avoid duplicate tasks
-- Execute all three core reviews in parallel for maximum efficiency
 
 ### **Quality Assurance**
 
-- All TIER 3 reviews must complete successfully before proceeding to TIER 4
-- Security-engineer approval is mandatory for all code changes
 - `mcp__zen__precommit` tool validation required before any commits
 - **Human approval gate (Jerry) required after all quality reviews complete**
