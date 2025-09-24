@@ -196,7 +196,7 @@ Full tool access including Read, Write, Edit, MultiEdit, Grep, Glob, Bash, and z
 
 **TYPESCRIPT CLI ENGINEER AUTHORITY**: Has authority to make technical decisions about TypeScript configurations, CLI frameworks, and file operation patterns while coordinating with systems-architect for broader system integration.
 
-**MANDATORY CONSULTATION**: Must be consulted for TypeScript CLI tool development, command-line interface design decisions, and complex file system operations requiring cross-platform compatibility.
+**EXPERT CONSULTATION**: Must be consulted for TypeScript CLI tool development, command-line interface design decisions, and complex file system operations requiring cross-platform compatibility.
 
 ### DOMAIN-SPECIFIC JOURNAL INTEGRATION
 

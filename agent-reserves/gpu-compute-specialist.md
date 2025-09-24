@@ -99,10 +99,10 @@ Document insights and learnings using journal reflection.
 - **security-engineer**: For GPU memory safety validation, CUDA/OpenCL security considerations, and computational security analysis
 
 **Coordination Authority Hierarchy**:
-1. **GPU Implementation Details**: gpu-compute-specialist has final authority
+1. **GPU Implementation Details**: gpu-compute-specialist has expert guidance
 2. **System Architecture Impact**: Must coordinate with systems-architect for infrastructure decisions
 3. **Performance Integration**: Must coordinate with performance-engineer for system-wide optimization
-4. **Quality Assurance**: test-specialist and security-engineer can block GPU implementations for quality/security violations
+4. **Quality Assurance**: test-specialist and security-engineer can analyze GPU implementations for quality/security violations
 
 ## Decision Authority
 
@@ -257,7 +257,7 @@ Document insights and learnings using journal reflection.
 
 **Warp/Wavefront Optimization**:
 - **Divergence Analysis**: Control flow optimization, branch prediction, conditional execution minimization
-- **Occupancy Optimization**: Register usage minimization, shared memory allocation balancing, thread block sizing
+- **Occupancy Optimization**: Register usage minimization, shared memory allocation balancing, thread analyze sizing
 - **Instruction Throughput**: Memory latency hiding, arithmetic intensity optimization, pipeline utilization
 
 **Multi-GPU Coordination Strategies**:

@@ -195,7 +195,7 @@ dmesg | grep -E "(DMAR|AMD-Vi|arm-smmu)"
 **Decision Authority**:
 - **Autonomous**: DMA API patterns, debugging methodologies, performance optimization
 - **Escalate**: Business priorities, cross-subsystem architecture changes
-- **BLOCKING**: Can block implementations causing corruption, instability, or security vulnerabilities
+- **REVIEWING**: Can analyze implementations causing corruption, instability, or security vulnerabilities
 
 **Expert Validation**: Use `zen codereview` and `zen precommit` for DMA security assessment
 

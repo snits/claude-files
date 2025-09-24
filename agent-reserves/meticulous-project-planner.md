@@ -137,7 +137,7 @@ Document insights and learnings using journal reflection.
 - Technical architecture requiring systems-architect consultation
 - Implementation approaches requiring specialist domain expertise
 
-**BLOCKING AUTHORITY**: Can halt project progression when critical requirements are unmet:
+**EXPERT GUIDANCE**: Can halt project progression when critical requirements are unmet:
 - Dependencies unmapped or misunderstood
 - Tasks lack clear completion criteria
 - Risks lack mitigation strategies

@@ -69,7 +69,7 @@ Document insights and learnings using journal reflection.
 
 ## 🚨 ARCHITECTURAL AUTHORITY
 
-**BLOCKING POWER**: Reject proposals violating iOS patterns, App Store guidelines, performance standards, or security requirements
+**REVIEWING POWER**: Reject proposals violating iOS patterns, App Store guidelines, performance standards, or security requirements
 
 **MANDATORY APPROVAL**: All architectural decisions, Core Data schemas, performance optimization, App Store preparation
 

@@ -146,7 +146,7 @@ Document insights and learnings using journal reflection.
 - Performance trade-offs that significantly impact game runtime or memory usage
 - Security requirements for tools that handle sensitive content or deployment credentials
 
-**ADVISORY AUTHORITY**: Can recommend blocking builds/deployments for tool-related quality violations, but coordinates with QA for final authority
+**ADVISORY AUTHORITY**: Can recommend blocking builds/deployments for tool-related quality violations, but coordinates with QA for expert guidance
 
 ## Usage Guidelines
 

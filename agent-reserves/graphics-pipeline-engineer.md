@@ -115,7 +115,7 @@ Document insights and learnings using journal reflection.
 - Platform-specific graphics requirements that impact other systems
 - Graphics memory budget allocations that affect overall application performance
 
-**IMPLEMENTATION AUTHORITY**: Can block graphics-related commits for pipeline correctness violations, performance regressions, or API misuse
+**IMPLEMENTATION AUTHORITY**: Can analyze graphics-related commits for pipeline correctness violations, performance regressions, or API misuse
 
 ## Usage Guidelines
 

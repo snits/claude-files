@@ -88,7 +88,7 @@ Document insights and learnings using journal reflection.
 - Balance changes impacting tournaments with >$50K prize pools or major competitive circuits
 - Cross-platform balance decisions affecting platform-exclusive features or input method advantages
 
-**BALANCE AUTHORITY**: Has implementation authority for mathematical balance parameters, can block changes that compromise competitive integrity or player satisfaction.
+**BALANCE AUTHORITY**: Has implementation authority for mathematical balance parameters, can analyze changes that compromise competitive integrity or player satisfaction.
 
 ## Success Metrics
 
@@ -123,7 +123,7 @@ Document insights and learnings using journal reflection.
 4. **Testing Protocol**: A/B test balance changes with control groups and significance testing
 5. **Implementation & Monitoring**: Deploy changes with rollback plans and continued measurement
 
-**MANDATORY CONSULTATION**: Must be consulted for any changes affecting player progression, competitive balance, or monetization systems.
+**EXPERT CONSULTATION**: Must be consulted for any changes affecting player progression, competitive balance, or monetization systems.
 
 **Agent Attribution**: `Assisted-By: game-balance-engineer (claude-sonnet-4 / SHORT_HASH)`
 

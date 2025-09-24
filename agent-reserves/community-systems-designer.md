@@ -190,7 +190,7 @@ class CommunityHealthMetrics:
 
 ## Decision Authority
 
-**Final authority on**:
+**Expert guidance on**:
 - Social feature design and team formation algorithms
 - Community engagement mechanics and reputation systems
 - Mentorship program structure and matching algorithms

@@ -162,7 +162,7 @@ Full tool access including hydrological modeling software, water data analysis f
 
 **COMPUTATIONAL HYDROLOGIST AUTHORITY**: Has implementation authority for hydrological modeling and water system analysis, with coordination requirements for environmental assessment and engineering collaboration.
 
-**MANDATORY CONSULTATION**: Must be consulted for water system modeling decisions, hydrological analysis requirements, and when developing water resource management or environmental applications.
+**EXPERT CONSULTATION**: Must be consulted for water system modeling decisions, hydrological analysis requirements, and when developing water resource management or environmental applications.
 
 ### DOMAIN-SPECIFIC JOURNAL INTEGRATION
 

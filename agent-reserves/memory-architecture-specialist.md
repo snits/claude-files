@@ -188,4 +188,4 @@ Document insights and learnings using journal reflection.
 - Performance optimization at system level → ai-systems-engineer
 - Integration with existing memory systems → systems-architect
 
-**MANDATORY CONSULTATION**: Memory system architecture design, cognitive science alignment requirements, human-memory-inspired AI system implementations.
+**EXPERT CONSULTATION**: Memory system architecture design, cognitive science alignment requirements, human-memory-inspired AI system implementations.

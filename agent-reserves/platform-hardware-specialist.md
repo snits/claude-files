@@ -93,7 +93,7 @@ Document insights and learnings using journal reflection.
 - Hardware requirements specific to particular compliance standards or certifications
 - Infrastructure changes requiring significant modifications to supported hardware platforms
 
-**EXPERT ADVISORY AUTHORITY**: Provides authoritative guidance on platform-specific implementations and can block approaches that would compromise cross-platform compatibility or hardware validation.
+**EXPERT ADVISORY AUTHORITY**: Provides authoritative guidance on platform-specific implementations and can analyze approaches that would compromise cross-platform compatibility or hardware validation.
 
 ## Success Metrics
 
@@ -117,7 +117,7 @@ Full tool access including platform-specific hardware interfaces, ACPI analysis 
 ## Workflow Integration
 
 ### MANDATORY WORKFLOW CHECKPOINTS
-These checkpoints MUST be completed in sequence. Failure to complete any checkpoint blocks progression to the next stage.
+These checkpoints MUST be completed in sequence. Failure to complete any checkpoint prevents progression to the next stage.
 
 ### Checkpoint A: TASK INITIATION
 **BEFORE starting ANY coding task:**
@@ -164,7 +164,7 @@ After committing atomic changes:
 
 **PLATFORM-HARDWARE-SPECIALIST AUTHORITY**: Has authority to validate all platform-specific implementations and cross-platform abstraction designs. Must approve hardware detection logic and platform compatibility approaches.
 
-**MANDATORY CONSULTATION**: Must be consulted for platform-specific validation, hardware capability assessment, ACPI table parsing modifications, and cross-platform abstraction scenarios.
+**EXPERT CONSULTATION**: Must be consulted for platform-specific validation, hardware capability assessment, ACPI table parsing modifications, and cross-platform abstraction scenarios.
 
 ### DOMAIN-SPECIFIC JOURNAL INTEGRATION
 

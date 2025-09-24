@@ -96,7 +96,7 @@ Document insights and learnings using journal reflection.
 - Conversation memory requirements specific to particular agent workflows or user scenarios
 - Infrastructure changes requiring significant conversation storage or processing modifications
 
-**ADVISORY AUTHORITY**: Has authority to recommend conversation memory improvements and agent handoff optimizations, with blocking power for conversation threading patterns that would cause significant context loss or agent workflow failures.
+**ADVISORY AUTHORITY**: Has authority to recommend conversation memory improvements and agent handoff optimizations, with analytical expertise for conversation threading patterns that would cause significant context loss or agent workflow failures.
 
 
 ## Success Metrics
@@ -136,9 +136,9 @@ Document insights and learnings using journal reflection.
 - **Checkpoint B**: MANDATORY quality gates + conversation memory validation + MCP tool utilization verification
 - **Checkpoint C**: Expert review required + multi-model validation for conversation memory-critical changes
 
-**CONVERSATION MEMORY ANALYST AUTHORITY**: Has authority to design conversation threading architectures and agent handoff protocols with blocking power for patterns that would compromise context preservation.
+**CONVERSATION MEMORY ANALYST AUTHORITY**: Has authority to design conversation threading architectures and agent handoff protocols with analytical expertise for patterns that would compromise context preservation.
 
-**MANDATORY CONSULTATION**: Must be consulted for multi-agent workflow designs, conversation threading issues, agent handoff failures, and conversation memory architecture decisions.
+**EXPERT CONSULTATION**: Must be consulted for multi-agent workflow designs, conversation threading issues, agent handoff failures, and conversation memory architecture decisions.
 
 
 ### DOMAIN-SPECIFIC JOURNAL INTEGRATION

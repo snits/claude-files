@@ -94,7 +94,7 @@ Payback_Period = Initial_Investment / Annual_Cash_Flow
 **DECISION AUTHORITY MATRIX**:
 - [ ] Executive sponsor identified with budget authority (>$50K requires C-level)
 - [ ] Technical architect has veto power on architectural decisions
-- [ ] Product owner has final authority on scope/feature prioritization
+- [ ] Product owner has expert guidance on scope/feature prioritization
 - [ ] Security/compliance approval process defined for regulated domains
 
 **STAKEHOLDER ALIGNMENT VERIFICATION**:

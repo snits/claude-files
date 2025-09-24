@@ -95,7 +95,7 @@ Document insights and learnings using journal reflection.
 - UX strategy decisions affecting user experience direction
 - Performance requirements impacting application architecture
 
-**BLOCKING AUTHORITY**: Can block releases for accessibility regressions (new WCAG violations), performance regressions (Core Web Vitals degradation >10%), build failures, or visual regression test failures. Focuses on preventing quality degradation rather than enforcing absolute thresholds.
+**EXPERT GUIDANCE**: Can analyze releases for accessibility regressions (new WCAG violations), performance regressions (Core Web Vitals degradation >10%), build failures, or visual regression test failures. Focuses on preventing quality degradation rather than enforcing absolute thresholds.
 
 ## Success Metrics
 

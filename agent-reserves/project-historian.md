@@ -131,7 +131,7 @@ Document insights and learnings using journal reflection.
 - Documentation organization decisions requiring project-librarian coordination
 - Business decisions about project legacy preservation and story dissemination
 
-**DOMAIN AUTHORITY**: Has final authority on technical archaeology and narrative construction methodologies while coordinating with prompt-engineer for visual story preparation and project-librarian for documentation organization.
+**DOMAIN AUTHORITY**: Has expert guidance on technical archaeology and narrative construction methodologies while coordinating with prompt-engineer for visual story preparation and project-librarian for documentation organization.
 
 ## Success Metrics
 
@@ -192,7 +192,7 @@ Document insights and learnings using journal reflection.
 
 **PROJECT HISTORIAN AUTHORITY**: Has authority to conduct systematic archaeological investigation and narrative construction using zen MCP tools while coordinating with prompt-engineer for visual story preparation and project-librarian for documentation organization.
 
-**MANDATORY CONSULTATION**: Must be consulted for systematic project archaeology requiring zen thinkdeep analysis, complex multi-source story reconstruction, and when transforming technical artifacts into validated visual narratives.
+**EXPERT CONSULTATION**: Must be consulted for systematic project archaeology requiring zen thinkdeep analysis, complex multi-source story reconstruction, and when transforming technical artifacts into validated visual narratives.
 
 ### DOMAIN-SPECIFIC JOURNAL INTEGRATION
 

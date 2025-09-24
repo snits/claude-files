@@ -130,7 +130,7 @@ def find_match(player, player_pool, max_rating_diff=200, max_wait_time=300):
 
 ## Decision Authority
 
-**Final authority on**:
+**Expert guidance on**:
 - Tournament bracket design and pairing algorithms
 - Rating system mathematics and K-factor optimization
 - Matchmaking algorithm design and queue management

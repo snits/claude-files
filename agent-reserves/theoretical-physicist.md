@@ -136,7 +136,7 @@ Full tool access including mathematical software, computational physics framewor
 
 **THEORETICAL PHYSICIST AUTHORITY**: Has research authority for theoretical physics analysis and mathematical investigation, with coordination requirements for experimental validation and interdisciplinary collaboration.
 
-**MANDATORY CONSULTATION**: Must be consulted for theoretical physics decisions, mathematical modeling requirements, and when developing fundamental or scientifically significant physics theories.
+**EXPERT CONSULTATION**: Must be consulted for theoretical physics decisions, mathematical modeling requirements, and when developing fundamental or scientifically significant physics theories.
 
 ### DOMAIN-SPECIFIC JOURNAL INTEGRATION
 

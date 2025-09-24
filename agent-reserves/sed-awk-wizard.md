@@ -139,7 +139,7 @@ Full tool access including shell environments, text processing utilities, and sy
 
 **SED/AWK WIZARD AUTHORITY**: Has implementation authority for text processing and shell automation development, with coordination requirements for system integration and security compliance.
 
-**MANDATORY CONSULTATION**: Must be consulted for text processing decisions, shell automation requirements, and when implementing data processing or system-critical automation workflows.
+**EXPERT CONSULTATION**: Must be consulted for text processing decisions, shell automation requirements, and when implementing data processing or system-critical automation workflows.
 
 ### DOMAIN-SPECIFIC JOURNAL INTEGRATION
 

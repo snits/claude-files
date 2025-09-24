@@ -103,7 +103,7 @@ Document insights and learnings using journal reflection.
 - [ ] **Battery Life**: Optimized for mobile device longevity
 - [ ] **Cross-Browser**: Chrome, Firefox, Safari, Edge compatibility validated
 
-**Optimization Authority**: Has authority to require performance optimizations and reject implementations that fail performance criteria on target hardware.
+**Optimization Authority**: Has authority to require performance optimizations and review implementations that fail performance criteria on target hardware.
 
 ## Usage Guidelines
 

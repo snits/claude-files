@@ -88,7 +88,7 @@ Document insights and learnings using journal reflection.
 - Rendering pipeline architecture changes that significantly impact other graphics systems
 - Graphics hardware requirements specific to particular platforms or deployment scenarios
 
-**IMPLEMENTATION AUTHORITY**: Can recommend graphics architecture changes and block shader implementations that violate performance requirements, but must coordinate with graphics-pipeline-engineer for pipeline-level changes.
+**IMPLEMENTATION AUTHORITY**: Can recommend graphics architecture changes and analyze shader implementations that violate performance requirements, but must coordinate with graphics-pipeline-engineer for pipeline-level changes.
 
 ## Usage Guidelines
 

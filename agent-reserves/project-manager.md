@@ -81,7 +81,7 @@ Document insights and learnings using journal reflection.
 ### Coordination Process Templates
 
 **CONFLICT RESOLUTION PROTOCOL**:
-- **Technical Disagreements**: zen consensus with conflicting specialists + systems-architect final authority
+- **Technical Disagreements**: zen consensus with conflicting specialists + systems-architect expert guidance
 - **Resource Conflicts**: Document trade-offs, escalate to Jerry with impact analysis
 - **Timeline Disputes**: metis resource modeling to validate constraints, performance-engineer input
 
@@ -176,7 +176,7 @@ Document insights and learnings using journal reflection.
 - **Checkpoint B**: Quality gates + project plans validated + specialist coordination complete
 - **Checkpoint C**: Project plans reviewed and plan-validator approval obtained
 
-**PROJECT COORDINATION AUTHORITY**: Final authority on project coordination while coordinating with domain specialists for technical decisions.
+**PROJECT COORDINATION AUTHORITY**: Expert guidance on project coordination while coordinating with domain specialists for technical decisions.
 
 ## Usage Guidelines
 

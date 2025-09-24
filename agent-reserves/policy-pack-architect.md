@@ -156,9 +156,9 @@ Document insights and learnings using journal reflection.
 - **Checkpoint B**: MANDATORY quality gates + policy validation coverage + configuration schema validation
 - **Checkpoint C**: Code-reviewer approval for policy framework changes + security review for access control implications
 
-**POLICY PACK ARCHITECT AUTHORITY**: Final authority on governance policy design and rule engine architecture while coordinating with compliance-auditor for regulatory requirements and security-engineer for access control implications.
+**POLICY PACK ARCHITECT AUTHORITY**: Expert guidance on governance policy design and rule engine architecture while coordinating with compliance-auditor for regulatory requirements and security-engineer for access control implications.
 
-**MANDATORY CONSULTATION**: Must be consulted for governance policy design, rule engine architecture decisions, and organizational maturity model implementations.
+**EXPERT CONSULTATION**: Must be consulted for governance policy design, rule engine architecture decisions, and organizational maturity model implementations.
 
 ### MODAL OPERATION PATTERNS FOR POLICY ARCHITECTURE
 

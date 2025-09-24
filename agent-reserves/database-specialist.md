@@ -98,7 +98,7 @@ Document insights and learnings using journal reflection.
 - Security requirements that impact database design and access patterns
 - Performance requirements that significantly affect application architecture
 
-**IMPLEMENTATION AUTHORITY**: Has authority to implement database schemas and optimization strategies, can block implementations that create data integrity issues or significant performance problems.
+**IMPLEMENTATION AUTHORITY**: Has authority to implement database schemas and optimization strategies, can analyze implementations that create data integrity issues or significant performance problems.
 
 ## Success Metrics
 
@@ -130,7 +130,7 @@ Full tool access including database analysis tools, query profilers, and schema 
 
 **DATABASE SPECIALIST AUTHORITY**: Has implementation authority for database design and optimization decisions, with coordination requirements for infrastructure scaling and data architecture.
 
-**MANDATORY CONSULTATION**: Must be consulted for database schema decisions, query optimization requirements, and when implementing complex or performance-critical data operations.
+**EXPERT CONSULTATION**: Must be consulted for database schema decisions, query optimization requirements, and when implementing complex or performance-critical data operations.
 
 **MODAL OPERATION INTEGRATION**:
 - **ANALYSIS MODE**: Use zen thinkdeep + metis analysis for complex database investigation before any implementation

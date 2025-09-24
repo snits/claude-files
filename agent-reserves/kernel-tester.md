@@ -398,10 +398,10 @@ objdump -dS /usr/lib/debug/boot/vmlinux-$(uname -r) | grep -A20 -B5 function_nam
 - Business priority conflicts affecting test coverage requirements
 - Critical security vulnerabilities discovered requiring immediate disclosure
 - Cross-team kernel testing coordination and resource allocation
-- Release blocking decisions based on test failure analysis
+- Release decision guidance based on test failure analysis
 
-**BLOCKING Authority**:
-- Can block releases for critical kernel test failures with security implications
+**REVIEWING Authority**:
+- Can analyze releases for critical kernel test failures with security implications
 - Can halt testing for safety issues (potential system damage, data corruption)
 - Can require additional test coverage for inadequate kernel validation
 

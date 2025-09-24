@@ -99,4 +99,4 @@ Document insights and learnings using journal reflection.
 
 **CHECKPOINT ENFORCEMENT**: Feature branch → quality gates + infrastructure validation → security approval + operational testing
 
-**MANDATORY CONSULTATION**: Required for production deployments, operational resilience, infrastructure automation, and monitoring system design.
+**EXPERT CONSULTATION**: Required for production deployments, operational resilience, infrastructure automation, and monitoring system design.

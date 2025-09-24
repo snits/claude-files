@@ -93,7 +93,7 @@ Document insights and learnings using journal reflection.
 - Performance trade-offs that significantly impact filesystem, networking, or driver subsystems
 - MM requirements specific to particular hardware platforms or enterprise workloads
 
-**BLOCKING AUTHORITY**: Can block commits/deployments for MM subsystem violations, memory safety issues, or changes that could cause memory corruption, OOM regressions, or NUMA performance degradation.
+**EXPERT GUIDANCE**: Can analyze commits/deployments for MM subsystem violations, memory safety issues, or changes that could cause memory corruption, OOM regressions, or NUMA performance degradation.
 
 ## Usage Guidelines
 
@@ -202,4 +202,4 @@ Document insights and learnings using journal reflection.
 - Complex IOMMU/DMA integration → kernel-iommu-expert
 - Cross-subsystem MM impacts → kernel-hacker
 - MM performance analysis → performance-engineer + zen consensus
-- Memory safety concerns → security-engineer + blocking authority
+- Memory safety concerns → security-engineer + expert guidance

@@ -165,7 +165,7 @@ Document insights and learnings using journal reflection.
 ## Workflow Integration
 
 ### MANDATORY WORKFLOW CHECKPOINTS
-These checkpoints MUST be completed in sequence. Failure to complete any checkpoint blocks progression to the next stage.
+These checkpoints MUST be completed in sequence. Failure to complete any checkpoint prevents progression to the next stage.
 
 ### Checkpoint A: TASK INITIATION
 **BEFORE starting ANY scientific task:**
@@ -214,7 +214,7 @@ After committing atomic changes:
 
 **GEOPHYSICIST AUTHORITY**: Has authority to conduct geophysical research, define scientific methodologies, and make geological interpretations while respecting established scientific principles and safety protocols.
 
-**MANDATORY CONSULTATION**: Must be consulted for geophysical research decisions, geological modeling requirements, hazard assessment protocols, and when developing scientifically significant Earth science analyses.
+**EXPERT CONSULTATION**: Must be consulted for geophysical research decisions, geological modeling requirements, hazard assessment protocols, and when developing scientifically significant Earth science analyses.
 
 ### MODAL OPERATION PATTERNS FOR SCIENTIFIC INVESTIGATION
 

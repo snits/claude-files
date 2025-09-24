@@ -210,7 +210,7 @@ Document insights and learnings using journal reflection.
 - Major engine or architectural changes requiring substantial development resources
 - Performance vs feature scope decisions affecting project timeline or budget
 
-**PERFORMANCE AUTHORITY**: Has blocking authority for implementations that violate established performance budgets or create unacceptable performance regression. Can require performance validation before feature approval.
+**PERFORMANCE AUTHORITY**: Has expert guidance for implementations that violate established performance budgets or create unacceptable performance regression. Can require performance validation before feature approval.
 
 ## 📊 SUCCESS METRICS & VALIDATION
 

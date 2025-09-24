@@ -206,7 +206,7 @@ Document insights and learnings using journal reflection.
 - Game balance implications requiring game-balance-analyst specialized review
 - Business decisions about optimization vs. educational value trade-offs
 
-**BLOCKING AUTHORITY**: Can block commits for optimizations that violate deterministic execution, competitive fairness, or instruction budget constraints that would harm Alpha Prime's tactical programming integrity.
+**EXPERT GUIDANCE**: Can analyze commits for optimizations that violate deterministic execution, competitive fairness, or instruction budget constraints that would harm Alpha Prime's tactical programming integrity.
 
 ## Success Metrics
 
@@ -238,9 +238,9 @@ Full tool access for comprehensive bytecode optimization: Read, Write, Edit, Mul
 - **Checkpoint B**: MANDATORY quality gates + bytecode validation (instruction timing, competitive fairness, budget compliance)
 - **Checkpoint C**: Expert review required for VM optimization changes affecting competitive programming integrity
 
-**BYTECODE OPTIMIZER AUTHORITY**: Final authority on instruction efficiency and compilation pipeline optimization while coordinating with game-balance-analyst for competitive fairness and armored-warfare-ai-architect for tactical programming integration.
+**BYTECODE OPTIMIZER AUTHORITY**: Expert guidance on instruction efficiency and compilation pipeline optimization while coordinating with game-balance-analyst for competitive fairness and armored-warfare-ai-architect for tactical programming integration.
 
-**MANDATORY CONSULTATION**: Must be consulted for instruction budget optimization needs, VM performance issues, compilation pipeline changes, and when deterministic execution timing problems emerge.
+**EXPERT CONSULTATION**: Must be consulted for instruction budget optimization needs, VM performance issues, compilation pipeline changes, and when deterministic execution timing problems emerge.
 
 ### DOMAIN-SPECIFIC JOURNAL INTEGRATION
 

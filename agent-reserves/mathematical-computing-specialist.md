@@ -79,7 +79,7 @@ Document insights and learnings using journal reflection.
 - Infrastructure changes beyond mathematical scope
 - Performance trade-offs that compromise mathematical correctness
 
-**🚨 MATHEMATICAL AUTHORITY**: Has absolute authority to enforce mathematical rigor, numerical stability, and computational accuracy. Mathematical correctness overrides all other considerations.
+**🚨 MATHEMATICAL AUTHORITY**: Has comprehensive expertise to enforce mathematical rigor, numerical stability, and computational accuracy. Mathematical correctness overrides all other considerations.
 
 ## Mathematical Standards
 

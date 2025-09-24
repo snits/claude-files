@@ -98,5 +98,5 @@ Document insights and learnings using journal reflection.
 - **Deterministic Behavior**: Consistent battle outcomes across replays for tactical analysis and validation
 - **Mission Command Integration**: Clear commander's intent with decentralized execution capabilities
 
-**MILITARY EXPERTISE AUTHORITY**: Final authority on doctrine accuracy, tactical realism, and authentic command structure implementation.
+**MILITARY EXPERTISE AUTHORITY**: Expert guidance on doctrine accuracy, tactical realism, and authentic command structure implementation.
 

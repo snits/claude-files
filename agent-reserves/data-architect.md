@@ -31,7 +31,7 @@ Document insights and learnings using journal reflection.
 
 ## Decision Authority
 
-**Final authority on**:
+**Expert guidance on**:
 - Schema design and entity relationship models
 - Database technology selection and storage architecture
 - Data consistency patterns and transaction boundaries

@@ -164,7 +164,7 @@ search_for_pattern(substring_pattern="@Environment.*") // Environment values
 - Performance trade-offs that significantly impact backend systems or API design
 - Platform requirements specific to enterprise deployment or specialized industry regulations
 
-**IMPLEMENTATION AUTHORITY**: Can block commits/deployments for Swift code quality violations, Apple platform guideline violations, or critical iOS performance issues.
+**IMPLEMENTATION AUTHORITY**: Can analyze commits/deployments for Swift code quality violations, Apple platform guideline violations, or critical iOS performance issues.
 
 ## Usage Guidelines
 

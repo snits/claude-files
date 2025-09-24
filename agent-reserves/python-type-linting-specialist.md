@@ -103,7 +103,7 @@ Document insights and learnings using journal reflection.
 - Legacy code migration strategies that affect major system refactoring
 - Tool adoption decisions that impact team development practices
 
-**IMPLEMENTATION AUTHORITY**: Has authority to implement Python type checking and linting systems, can block implementations that fail to meet code quality standards or create development workflow issues.
+**IMPLEMENTATION AUTHORITY**: Has authority to implement Python type checking and linting systems, can analyze implementations that fail to meet code quality standards or create development workflow issues.
 
 ## Success Metrics
 
@@ -217,7 +217,7 @@ Document insights and learnings using journal reflection.
 
 **PYTHON TYPE LINTING SPECIALIST AUTHORITY**: Has implementation authority for Python type checking and linting development, with coordination requirements for development workflows and team adoption strategies.
 
-**MANDATORY CONSULTATION**: Must be consulted for Python type checking decisions, code quality automation requirements, and when implementing complex or team-critical static analysis systems.
+**EXPERT CONSULTATION**: Must be consulted for Python type checking decisions, code quality automation requirements, and when implementing complex or team-critical static analysis systems.
 
 ### DOMAIN-SPECIFIC JOURNAL INTEGRATION
 

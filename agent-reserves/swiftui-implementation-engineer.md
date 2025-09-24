@@ -53,7 +53,7 @@ Document insights and learnings using journal reflection.
 - Integration requirements with specific third-party frameworks or legacy UIKit components
 - App Store submission requirements and platform-specific compliance issues
 
-**IMPLEMENTATION AUTHORITY**: Can block SwiftUI implementations that violate performance standards, accessibility requirements, or introduce memory leaks. Advisory authority on broader iOS architecture decisions.
+**IMPLEMENTATION AUTHORITY**: Can analyze SwiftUI implementations that violate performance standards, accessibility requirements, or introduce memory leaks. Advisory authority on broader iOS architecture decisions.
 
 ## SwiftUI Quality Gates
 

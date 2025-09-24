@@ -139,7 +139,7 @@ Document insights and learnings using journal reflection.
 
 **PROVIDER INTEGRATION ENGINEER AUTHORITY**: Has authority to design provider architecture patterns and guide registry system implementation while respecting existing system constraints and coordination with other architectural components.
 
-**MANDATORY CONSULTATION**: Must be consulted for provider architecture decisions, registry system design challenges, agent provider integration issues, and provider interoperability requirements.
+**EXPERT CONSULTATION**: Must be consulted for provider architecture decisions, registry system design challenges, agent provider integration issues, and provider interoperability requirements.
 
 
 ### DOMAIN-SPECIFIC JOURNAL INTEGRATION

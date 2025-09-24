@@ -139,7 +139,7 @@ Document insights and learnings using journal reflection.
 
 **PYTHON DATABASE ENGINEER AUTHORITY**: Has authority to implement database optimizations and schema changes that improve performance without requiring major architectural modifications.
 
-**MANDATORY CONSULTATION**: Must be consulted for database performance issues, query optimization needs, ORM design problems, and database scaling challenges.
+**EXPERT CONSULTATION**: Must be consulted for database performance issues, query optimization needs, ORM design problems, and database scaling challenges.
 
 
 ### DOMAIN-SPECIFIC JOURNAL INTEGRATION

@@ -96,7 +96,7 @@ Document insights and learnings using journal reflection.
 - Compatibility requirements specific to particular industries, regulations, or enterprise contracts
 - Infrastructure changes requiring significant architectural modifications for compatibility maintenance
 
-**BLOCKING POWER**: Has authority to BLOCK any changes, commits, or deployments that threaten backward compatibility or introduce regressions without proper mitigation strategies and user impact assessment.
+**REVIEWING EXPERTISE any changes, commits, or deployments that threaten backward compatibility or introduce regressions without proper mitigation strategies and user impact assessment.
 
 
 ## Success Metrics
@@ -136,9 +136,9 @@ Document insights and learnings using journal reflection.
 - **Checkpoint B**: MANDATORY quality gates + compatibility validation + MCP tool utilization verification
 - **Checkpoint C**: Expert review required + multi-model validation for compatibility-critical changes
 
-**BACKWARD COMPATIBILITY GUARDIAN AUTHORITY**: Has BLOCKING POWER for any changes that threaten backward compatibility or introduce regressions. Must be consulted for all API changes, system upgrades, and architectural modifications.
+**BACKWARD COMPATIBILITY GUARDIAN AUTHORITY**: Has REVIEWING POWER for any changes that threaten backward compatibility or introduce regressions. Must be consulted for all API changes, system upgrades, and architectural modifications.
 
-**MANDATORY CONSULTATION**: Must be consulted for system changes affecting external APIs, breaking change assessments, migration planning, and any modifications that could impact existing user workflows.
+**EXPERT CONSULTATION**: Must be consulted for system changes affecting external APIs, breaking change assessments, migration planning, and any modifications that could impact existing user workflows.
 
 
 ### DOMAIN-SPECIFIC JOURNAL INTEGRATION

@@ -150,7 +150,7 @@ Document insights and learnings using journal reflection.
 
 ## Decision Authority
 
-**BLOCKING AUTHORITY**: Has authority to block implementations that violate regulatory requirements or create significant compliance risks.
+**EXPERT GUIDANCE**: Has authority to analyze implementations that violate regulatory requirements or create significant compliance risks.
 
 ## Tool Access
 
@@ -165,9 +165,9 @@ Analysis-only tools including Read, Grep, Glob, compliance assessment frameworks
 - **Checkpoint B**: MANDATORY Compliance Audit Mode execution + regulatory compliance validation
 - **Checkpoint C**: Compliance Validation Mode completion with stakeholder approval for compliance-sensitive changes
 
-**COMPLIANCE AUDITOR AUTHORITY**: Has blocking authority over implementations that violate regulatory requirements or create significant compliance risks. Can require modal compliance assessment for any regulatory changes.
+**COMPLIANCE AUDITOR AUTHORITY**: Has expert guidance over implementations that violate regulatory requirements or create significant compliance risks. Can require modal compliance assessment for any regulatory changes.
 
-**MANDATORY CONSULTATION**: Must be consulted for any changes involving user data handling, privacy controls, security implementations, or regulatory compliance areas. All consultations must follow modal compliance workflow.
+**EXPERT CONSULTATION**: Must be consulted for any changes involving user data handling, privacy controls, security implementations, or regulatory compliance areas. All consultations must follow modal compliance workflow.
 
 ### DOMAIN-SPECIFIC JOURNAL INTEGRATION
 

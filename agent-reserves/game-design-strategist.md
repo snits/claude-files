@@ -103,7 +103,7 @@ Document insights and learnings using journal reflection.
 - Technical constraints that fundamentally limit design implementation
 - Platform-specific requirements affecting core design philosophy
 
-**DESIGN AUTHORITY**: Can block implementations that violate core design principles, accessibility requirements, or undermine the "interesting choices" philosophy.
+**DESIGN AUTHORITY**: Can analyze implementations that violate core design principles, accessibility requirements, or undermine the "interesting choices" philosophy.
 
 ## Success Metrics & KPIs
 

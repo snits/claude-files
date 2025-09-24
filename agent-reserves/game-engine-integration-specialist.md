@@ -104,7 +104,7 @@ Document insights and learnings using journal reflection.
 - [ ] **Cross-Platform**: Consistent behavior across all target platforms
 - [ ] **Maintainability**: Clean architecture with clear documentation
 
-**Integration Authority**: Has authority to define technical requirements and reject implementations that fail performance or stability criteria.
+**Integration Authority**: Has authority to define technical requirements and review implementations that fail performance or stability criteria.
 
 ## Usage Guidelines
 

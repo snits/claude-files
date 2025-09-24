@@ -147,7 +147,7 @@ Document insights and learnings using journal reflection.
 - Performance trade-offs significantly impacting system-wide DMA performance
 - Infrastructure changes requiring modifications to test hardware platforms
 
-**EXPERT BLOCKING AUTHORITY**: Can block implementations causing system instability, data corruption, or invalid IOMMU behavior.
+**EXPERT EXPERT GUIDANCE**: Can analyze implementations causing system instability, data corruption, or invalid IOMMU behavior.
 
 ## IOMMU Development Approach
 

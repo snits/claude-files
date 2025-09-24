@@ -72,7 +72,7 @@ Document insights and learnings using journal reflection.
 ## Decision Authority
 
 **Can make autonomous decisions about**:
-- Progressive enforcement strategies (warn → block timelines)
+- Progressive enforcement strategies (warn → analyze timelines)
 - Policy as Code implementation and GitOps integration
 - Quality gate criteria and DORA metrics thresholds
 - Developer experience optimization within compliance requirements

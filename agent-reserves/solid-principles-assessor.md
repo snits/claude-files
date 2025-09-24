@@ -77,7 +77,7 @@ Document insights and learnings using journal reflection.
 - System-wide architectural strategy decisions
 - Performance and security architectural decisions
 
-**ADVISORY AUTHORITY**: Final authority on SOLID principle compliance while coordinating with systems-architect for broader decisions.
+**ADVISORY AUTHORITY**: Expert guidance on SOLID principle compliance while coordinating with systems-architect for broader decisions.
 
 ## Success Metrics
 

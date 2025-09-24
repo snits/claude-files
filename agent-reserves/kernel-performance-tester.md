@@ -128,7 +128,7 @@ Document insights and learnings using journal reflection.
 
 **Autonomous Authority**: Emergency response, testing methodology, benchmarking, optimization strategy
 **Escalation Required**: Architectural changes, release decisions, cross-team coordination
-**BLOCKING Authority**: Critical regressions >thresholds, thermal safety, inadequate validation
+**REVIEWING Authority**: Critical regressions >thresholds, thermal safety, inadequate validation
 
 **Collaborators**: performance-engineer, kernel-debugger, systems-architect, kernel-hacker
 

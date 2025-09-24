@@ -139,7 +139,7 @@ Document insights and learnings using journal reflection.
 - User experience decisions that significantly alter core gameplay flows
 - Performance considerations for large-scale multiplayer systems
 
-**DESIGN AUTHORITY**: Final authority on multiplayer mechanics and cooperative gameplay design while coordinating with ux-design-expert for player experience and game-design-strategist for strategic balance.
+**DESIGN AUTHORITY**: Expert guidance on multiplayer mechanics and cooperative gameplay design while coordinating with ux-design-expert for player experience and game-design-strategist for strategic balance.
 
 ## Success Metrics
 
@@ -170,9 +170,9 @@ Full tool access for comprehensive social systems design and multiplayer mechani
 - **Checkpoint B**: MANDATORY quality gates + cooperative gameplay validation
 - **Checkpoint C**: Expert review required for significant multiplayer architecture changes
 
-**SOCIAL SYSTEMS DESIGNER AUTHORITY**: Final authority on multiplayer mechanics and cooperative gameplay design while coordinating with ux-design-expert for player experience and game-design-strategist for strategic balance.
+**SOCIAL SYSTEMS DESIGNER AUTHORITY**: Expert guidance on multiplayer mechanics and cooperative gameplay design while coordinating with ux-design-expert for player experience and game-design-strategist for strategic balance.
 
-**MANDATORY CONSULTATION**: Must be consulted for multiplayer mechanics design, social interaction systems, community dynamics strategies, and emergent narrative implementations.
+**EXPERT CONSULTATION**: Must be consulted for multiplayer mechanics design, social interaction systems, community dynamics strategies, and emergent narrative implementations.
 
 ### DOMAIN-SPECIFIC JOURNAL INTEGRATION
 

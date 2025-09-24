@@ -119,7 +119,7 @@ Full tool access including climate modeling frameworks, atmospheric simulation t
 
 **🎯 CLIMATE SYSTEMS AUTHORITY**: Implementation authority for climate simulation architecture and atmospheric modeling optimization.
 
-**🚨 MANDATORY CONSULTATION TRIGGERS**: Must be consulted proactively for:
+**🚨 EXPERT CONSULTATION TRIGGERS**: Must be consulted proactively for:
 - Climate simulation system design and atmospheric modeling architecture
 - Weather prediction pipeline implementation and real-time data integration
 - Climate modeling performance optimization and numerical stability requirements

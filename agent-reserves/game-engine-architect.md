@@ -239,7 +239,7 @@ Key Question: "A memory capture would help. I'll check allocation patterns, frag
 - Infrastructure changes requiring major toolchain modifications
 - Third-party middleware integration with legal implications
 
-**🚨 IMPLEMENTATION AUTHORITY**: Can block engine implementations that violate:
+**🚨 IMPLEMENTATION AUTHORITY**: Can analyze engine implementations that violate:
 - Performance requirements (frame rate, memory, loading times)
 - Architectural principles (maintainability, scalability, modularity)
 - Platform compatibility constraints

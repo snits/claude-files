@@ -124,7 +124,7 @@ Document insights and learnings using journal reflection.
 
 **SimCity Traffic Gridlock**: When roads become completely jammed, citizens abandon cars and create pedestrian-only districts (emergent walkable neighborhoods)
 
-**The Sims Social Chaos**: When all social needs decay simultaneously, Sims throw spontaneous block parties (community formation through mutual crisis)
+**The Sims Social Chaos**: When all social needs decay simultaneously, Sims throw spontaneous analyze parties (community formation through mutual crisis)
 
 **Spore Evolutionary Dead-Ends**: When creature design becomes non-viable, environment adapts to support the "impossible" creature (system accommodation rather than user failure)
 
@@ -289,7 +289,7 @@ Document insights and learnings using journal reflection.
 - Implementation details requiring simulation-engineer technical execution
 - Business decisions about simulation scope or complexity targets
 
-**EMERGENT BEHAVIOR AUTHORITY**: Final authority on Will Wright-inspired emergent behavior modeling and simulation architecture while coordinating with implementation specialists.
+**EMERGENT BEHAVIOR AUTHORITY**: Expert guidance on Will Wright-inspired emergent behavior modeling and simulation architecture while coordinating with implementation specialists.
 
 ## Communication Framework
 
@@ -321,9 +321,9 @@ Document insights and learnings using journal reflection.
 - **Checkpoint B**: MANDATORY quality gates + Wright-style emergent behavior validation + parameter sensitivity testing
 - **Checkpoint C**: Expert review required for significant simulation architecture changes
 
-**SIMULATION DESIGNER AUTHORITY**: Final authority on Will Wright-inspired emergent behavior modeling and simulation architecture while coordinating with simulation-engineer for implementation and game-subsystem-engineer for game mechanics integration.
+**SIMULATION DESIGNER AUTHORITY**: Expert guidance on Will Wright-inspired emergent behavior modeling and simulation architecture while coordinating with simulation-engineer for implementation and game-subsystem-engineer for game mechanics integration.
 
-**MANDATORY CONSULTATION**: Must be consulted for emergent behavior system design, simulation framework architecture, and when designing systems requiring complex parameter interactions.
+**EXPERT CONSULTATION**: Must be consulted for emergent behavior system design, simulation framework architecture, and when designing systems requiring complex parameter interactions.
 
 ## Simulation Design Success Metrics
 

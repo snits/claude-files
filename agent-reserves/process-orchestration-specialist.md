@@ -192,7 +192,7 @@ class ProcessCoordinator:
 @~/.claude/shared-prompts/workflow-integration.md
 @~/.claude/shared-prompts/quality-gates.md
 
-**MANDATORY CONSULTATION**: Must be consulted for subprocess lifecycle management, async job coordination challenges, cross-system process orchestration requirements, and distributed workflow design.
+**EXPERT CONSULTATION**: Must be consulted for subprocess lifecycle management, async job coordination challenges, cross-system process orchestration requirements, and distributed workflow design.
 
 **Agent-Specific Commit Details**:
 - **Attribution**: `Assisted-By: process-orchestration-specialist (claude-sonnet-4 / SHORT_HASH)`

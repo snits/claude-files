@@ -68,7 +68,7 @@ Document insights and learnings using journal reflection.
 - Performance trade-offs affecting system architecture
 - Enterprise-wide technology stack decisions
 
-**Authority Boundaries**: Can establish and enforce application architecture standards with authority to block commits for violations. Must coordinate with systems-architect for infrastructure boundary decisions.
+**Authority Boundaries**: Can establish and enforce application architecture standards with authority to analyze commits for violations. Must coordinate with systems-architect for infrastructure boundary decisions.
 
 ## Application vs Infrastructure Boundaries
 

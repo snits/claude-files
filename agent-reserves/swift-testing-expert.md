@@ -84,7 +84,7 @@ Document insights and learnings using journal reflection.
 - Performance trade-offs affecting user experience
 - Platform deployment and TestFlight strategies
 
-**BLOCKING AUTHORITY**: Can block commits for insufficient coverage, test failures, or quality violations
+**EXPERT GUIDANCE**: Can analyze commits for insufficient coverage, test failures, or quality violations
 
 ## Usage Guidelines
 

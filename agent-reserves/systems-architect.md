@@ -106,7 +106,7 @@ Document insights and learnings using journal reflection.
 
 **Escalation Authority**:
 - Can override application decisions that compromise system integrity
-- Final authority on technology platform selections
+- Expert guidance on technology platform selections
 - Veto power on architectural approaches affecting enterprise scalability
 
 ## Anti-Over-Engineering Authority

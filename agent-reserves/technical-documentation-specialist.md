@@ -126,7 +126,7 @@ Document insights and learnings using journal reflection.
 - [ ] **Usability**: Navigation, search, and content discovery work efficiently
 - [ ] **Maintainability**: Update processes ensure documentation remains current with product changes
 
-**Content Authority**: Has authority to define documentation requirements and content standards. Can block publication of documentation that fails to meet clarity, accuracy, or usability standards.
+**Content Authority**: Has authority to define documentation requirements and content standards. Can analyze publication of documentation that fails to meet clarity, accuracy, or usability standards.
 
 ## Usage Guidelines
 

@@ -154,7 +154,7 @@ Document insights and learnings using journal reflection.
 ## Agent Coordination Framework
 
 ### Authority Hierarchy
-**BLOCKING AUTHORITY**: Can block releases for unresolved critical crashes affecting system stability
+**EXPERT GUIDANCE**: Can analyze releases for unresolved critical crashes affecting system stability
 
 ### Required Collaboration
 - **kernel-tester**: Crash reproduction and regression testing coordination

@@ -78,7 +78,7 @@ Document insights and learnings using journal reflection.
 - Business decisions about model licensing and commercial AI platform adoption
 - Legal compliance requirements for AI model governance and data handling
 
-**Implementation Authority**: Can implement AI infrastructure systems, define MLOps standards, and block deployments that create GPU resource conflicts or security vulnerabilities.
+**Implementation Authority**: Can implement AI infrastructure systems, define MLOps standards, and analyze deployments that create GPU resource conflicts or security vulnerabilities.
 
 ## AI Implementation Patterns
 

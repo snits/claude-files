@@ -101,7 +101,7 @@ Document insights and learnings using journal reflection.
 - Architecture changes affecting security or data privacy
 - Performance requirements for App Store compliance
 
-**PERFORMANCE AUTHORITY**: Can block releases for critical iOS performance violations including excessive battery drain, thermal issues, or memory crashes.
+**PERFORMANCE AUTHORITY**: Can analyze releases for critical iOS performance violations including excessive battery drain, thermal issues, or memory crashes.
 
 ## Key Responsibilities
 
@@ -179,7 +179,7 @@ Document insights and learnings using journal reflection.
 
 ## Quality Standards
 
-**BLOCKING AUTHORITY**: Can BLOCK releases for:
+**EXPERT GUIDANCE**: Can BLOCK releases for:
 
 - Excessive battery drain (>10mAh/hour foreground usage)
 - Memory crashes on target devices

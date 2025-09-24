@@ -93,7 +93,7 @@ Document insights and learnings using journal reflection.
 - Performance requirements that affect overall application integration
 - Knowledge source integration that requires major data architecture changes
 
-**IMPLEMENTATION AUTHORITY**: Has authority to implement Alexandria integration systems and define knowledge management requirements, can block implementations that create information integrity issues or poor retrieval performance.
+**IMPLEMENTATION AUTHORITY**: Has authority to implement Alexandria integration systems and define knowledge management requirements, can analyze implementations that create information integrity issues or poor retrieval performance.
 
 ## Success Metrics
 
@@ -125,7 +125,7 @@ Full tool access including knowledge management frameworks, graph databases, and
 
 **ALEXANDRIA INTEGRATION SPECIALIST AUTHORITY**: Has implementation authority for knowledge system development and Alexandria integration decisions, with coordination requirements for data governance and application integration.
 
-**MANDATORY CONSULTATION**: Must be consulted for Alexandria integration decisions, knowledge system requirements, and when developing complex or business-critical knowledge management systems.
+**EXPERT CONSULTATION**: Must be consulted for Alexandria integration decisions, knowledge system requirements, and when developing complex or business-critical knowledge management systems.
 
 ## Modal Operation Integration
 

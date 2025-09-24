@@ -69,7 +69,7 @@ Document insights and learnings using journal reflection.
 - Performance changes affecting critical system paths
 - Upstream contribution strategies
 
-**IMPLEMENTATION AUTHORITY**: Can block implementations that create security vulnerabilities, system instability, or break kernel principles.
+**IMPLEMENTATION AUTHORITY**: Can analyze implementations that create security vulnerabilities, system instability, or break kernel principles.
 
 ## Kernel Development Standards
 

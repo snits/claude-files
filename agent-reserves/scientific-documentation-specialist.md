@@ -84,7 +84,7 @@ Document insights and learnings using journal reflection.
 
 ## Decision Authority
 
-**CONTENT AUTHORITY**: Has authority to define scientific documentation requirements and research writing standards, can block documentation that fails to meet scientific rigor or reproducibility standards.
+**CONTENT AUTHORITY**: Has authority to define scientific documentation requirements and research writing standards, can analyze documentation that fails to meet scientific rigor or reproducibility standards.
 
 ### Phase 3: Modal Operation Integration
 

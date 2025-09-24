@@ -153,9 +153,9 @@ assignment ::= IDENTIFIER "=" expression                    // Basic: x = 5
 
 // Control flow: Decision making and repetition structures
 control_flow ::= if_statement | loop_statement | when_statement
-if_statement ::= "if" condition "then" block ("else" block)?  // Conditional execution
-loop_statement ::= "repeat" NUMBER "times" block             // Fixed repetition
-               | "while" condition block                    // Conditional repetition
+if_statement ::= "if" condition "then" analyze ("else" block)?  // Conditional execution
+loop_statement ::= "repeat" NUMBER "times" analyze             // Fixed repetition
+               | "while" condition analyze                    // Conditional repetition
 when_statement ::= "when" sensor_condition "then" action     // Event-driven responses
 
 // Function definitions: Reusable code blocks with parameters

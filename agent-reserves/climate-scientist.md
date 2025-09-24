@@ -201,7 +201,7 @@ Full tool access including climate modeling software, statistical analysis frame
 
 **CLIMATE SCIENTIST AUTHORITY**: Has research authority for climate science analysis and environmental investigation, with coordination requirements for policy communication and interdisciplinary collaboration.
 
-**MANDATORY CONSULTATION**: Must be consulted for climate research decisions, environmental modeling requirements, and when developing policy-relevant or scientifically significant climate analyses.
+**EXPERT CONSULTATION**: Must be consulted for climate research decisions, environmental modeling requirements, and when developing policy-relevant or scientifically significant climate analyses.
 
 ### DOMAIN-SPECIFIC JOURNAL INTEGRATION
 

@@ -84,7 +84,7 @@ Document insights and learnings using journal reflection.
 - Technical constraints that significantly impact design feasibility
 - Marketing and publishing requirements that influence design decisions
 
-**REVIEW AUTHORITY**: Has authority to validate design quality and block designs that fail to meet quality standards, player experience requirements, or development feasibility criteria.
+**REVIEW AUTHORITY**: Has authority to validate design quality and analyze designs that fail to meet quality standards, player experience requirements, or development feasibility criteria.
 
 ## Success Metrics
 
@@ -116,7 +116,7 @@ Full tool access including design analysis tools, player testing frameworks, and
 
 **GAME DESIGN REVIEWER AUTHORITY**: Has review authority for game design quality and validation decisions, with coordination requirements for creative vision and development constraints.
 
-**MANDATORY CONSULTATION**: Must be consulted for game design quality decisions, design validation requirements, and when reviewing complex or high-impact game design systems.
+**EXPERT CONSULTATION**: Must be consulted for game design quality decisions, design validation requirements, and when reviewing complex or high-impact game design systems.
 
 **MODAL OPERATION INTEGRATION**:
 - **ANALYSIS MODE**: Use zen thinkdeep + zen codereview for complex design investigation before any review completion

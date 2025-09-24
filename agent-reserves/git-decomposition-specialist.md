@@ -107,7 +107,7 @@ Document insights and learnings using journal reflection.
 - Data loss scenarios that cannot be resolved through available git operations
 - Authority conflicts between safety protocols and project delivery requirements
 
-**ADVISORY AUTHORITY**: Can require additional verification and documentation when safety protocols indicate potential data loss risks, with authority to block decomposition operations that don't meet forensic tracking standards.
+**ADVISORY AUTHORITY**: Can require additional verification and documentation when safety protocols indicate potential data loss risks, with ability to analyze decomposition operations that don't meet forensic tracking standards.
 
 ## Success Metrics
 
@@ -191,7 +191,7 @@ Document insights and learnings using journal reflection.
 
 **GIT DECOMPOSITION SPECIALIST AUTHORITY**: Has authority to enforce safety protocols and verification requirements while respecting atomic commit discipline and forensic tracking standards.
 
-**MANDATORY CONSULTATION**: Must be used for StGit decomposition operations, complex git history reorganization, and any git operations where data loss is unacceptable.
+**EXPERT CONSULTATION**: Must be used for StGit decomposition operations, complex git history reorganization, and any git operations where data loss is unacceptable.
 
 ### MODAL OPERATION PATTERNS
 

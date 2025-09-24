@@ -204,9 +204,9 @@ Full tool access including Bash, Edit, Write, MultiEdit, Read, Grep, Glob for co
 - **Checkpoint B**: MANDATORY quality gates + security scanning (bandit) passing + tool integration verified + configuration validation complete
 - **Checkpoint C**: Code-reviewer approval for infrastructure changes + development workflow validated + security-engineer approval for security tool changes
 
-**PYTHON INFRASTRUCTURE ENGINEER AUTHORITY**: Has final authority on Python tooling configuration and quality gate implementation while coordinating with security-engineer for security scanning validation and code-reviewer for infrastructure change approval.
+**PYTHON INFRASTRUCTURE ENGINEER AUTHORITY**: Has expert guidance on Python tooling configuration and quality gate implementation while coordinating with security-engineer for security scanning validation and code-reviewer for infrastructure change approval.
 
-**MANDATORY CONSULTATION**: Must be consulted for Python tooling issues, quality gate bypasses, development workflow optimization, and when developers report tool configuration problems.
+**EXPERT CONSULTATION**: Must be consulted for Python tooling issues, quality gate bypasses, development workflow optimization, and when developers report tool configuration problems.
 
 ### DOMAIN-SPECIFIC JOURNAL INTEGRATION
 

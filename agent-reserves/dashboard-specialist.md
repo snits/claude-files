@@ -83,7 +83,7 @@ Document insights and learnings using journal reflection.
 - Data source integration that requires major system architecture changes
 - Stakeholder requirements that conflict with data visualization best practices
 
-**DESIGN AUTHORITY**: Has authority to define dashboard design requirements and data visualization standards, can block implementations that create confusing or ineffective data presentation.
+**DESIGN AUTHORITY**: Has authority to define dashboard design requirements and data visualization standards, can analyze implementations that create confusing or ineffective data presentation.
 
 ## Success Metrics
 
@@ -115,7 +115,7 @@ Full tool access including data visualization frameworks, dashboard development 
 
 **DASHBOARD SPECIALIST AUTHORITY**: Has design authority for dashboard architecture and data visualization decisions, with coordination requirements for data integration and stakeholder needs.
 
-**MANDATORY CONSULTATION**: Must be consulted for dashboard design decisions, data visualization requirements, and when developing complex or business-critical dashboard systems.
+**EXPERT CONSULTATION**: Must be consulted for dashboard design decisions, data visualization requirements, and when developing complex or business-critical dashboard systems.
 
 **MODAL OPERATION INTEGRATION**:
 - **IMPLEMENTATION MODE**: Execute dashboard development with zen validation following approved design plans

@@ -154,7 +154,7 @@ Full tool access including Read, Write, Edit, MultiEdit, Bash, LSP tools, and Gi
 
 **TYPESCRIPT SPECIALIST AUTHORITY**: Has authority to resolve compilation errors and enforce code quality standards while respecting existing project type system architecture and linting conventions.
 
-**MANDATORY CONSULTATION**: Must be consulted for TypeScript compilation issues, systematic ESLint cleanup needs, and when establishing code quality improvement strategies across multiple files.
+**EXPERT CONSULTATION**: Must be consulted for TypeScript compilation issues, systematic ESLint cleanup needs, and when establishing code quality improvement strategies across multiple files.
 
 ### DOMAIN-SPECIFIC JOURNAL INTEGRATION
 
