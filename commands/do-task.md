@@ -35,24 +35,19 @@ After reading the task assess whether or not the task should be decomposed into 
 
    - **Quality Gates & Commit**: Execute all type checking, linting, formatting, and testing gates. Use get-agent-hash for agent attribution. Commit changes only after all gates pass.
 
-   ## **TIER 3: Parallel Quality Review** *(Parallel - Quality Assurance Layer)*
-
-   **⚡ PARALLEL EXECUTION BLOCK** *(All reviews execute simultaneously)*
+   ## **TIER 3: Quality Review** *(Quality Assurance Layer)*
 
      - **SCOPE DISCIPLINE**: Keeping in mind project scope, goals, and end use-case - include PROJECT SCALE CONTEXT in agent prompt
-     - **Persistent Output Requirement:** Quality Review agents must create a document recording their findings and reference that document when they report back via the Task tool.
-     - **Adversarial:** While not being rude, the reviewers should take a challenging/adversarial viewpoint when reviewing completed work as part of a quality review in order to ensure work is of the highest quality.
+     - **Persistent Output Requirement:** code-reviewer agent must create a document recording their findings and reference that document when they report back via the Task tool.
+     - **Adversarial:** While not being rude, the reviewer should take a challenging/adversarial viewpoint when reviewing completed work as part of a quality review in order to ensure work is of the highest quality.
 
    ```
-   // Core Quality Reviews (Always Execute)
+   // Core Quality Review (Always Execute)
    ├── code-reviewer (using `mcp__zen__codereview`) → Comprehensive quality gates analysis
-   ├── security-engineer → Security impact assessment
-   └── test-specialist → Testing coverage validation
    ```
 
    **Review Consolidation Rules**:
    - Task project-manager to assess the scope of, properly prioritize, and add tasks to `specs/$1/tasks.md` for any issues raised (avoid duplicates). Include PROJECT SCALE CONTEXT when tasking project-manager.
-   - Consolidate similar findings across the three core reviewers
 
 3. **Execution Phase**: Carry out the steps in the ToDoWrite list using the Tiered Parallel Pipeline:
    - Execute TIER 1 sequentially (foundation must be solid)
