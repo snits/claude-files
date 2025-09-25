@@ -33,9 +33,9 @@ After reading the task assess whether or not the task should be decomposed into 
 
    - **Primary Implementation**: Task agent selected with completing the todo item using finalized prompt. Include project scale context and YAGNI/DRY constraints in task prompt. Agent must use the `mcp__zen__precommit` tool prior to completion if code changes involved.
 
-   - **Quality Gates & Commit**: Execute all type checking, linting, formatting, and testing gates. Use get-agent-hash for agent attribution. Commit changes only after all gates pass.
+   - **Quality Gates**: Execute all type checking, linting, formatting, and testing gates.
 
-   ## **TIER 3: Quality Review** *(Quality Assurance Layer)*
+   ## **TIER 3: Quality Review and Task Consolidation** *(Quality Assurance Layer)*
 
       - **SCOPE DISCIPLINE**: Keeping in mind project scope, goals, and end use-case - include PROJECT SCALE CONTEXT in agent prompt
       - **Persistent Output Requirement:** - code-reviewer agent must create a document recording their findings and reference that document when they report back via the Task tool.
@@ -50,14 +50,16 @@ After reading the task assess whether or not the task should be decomposed into 
    - Task project-orchestrator to assess scope of, properly prioritize, and add tasks to `docs/00-project/TODO.md` for any issues raised (avoid duplicates). Include PROJECT SCALE CONTEXT when tasking project-orchestrator.
    - Consolidate similar findings across the three core reviewers
 
-   ## **TIER 4: Human Approval Gate** *(Sequential - Final Validation)*
+   ## **TIER 4: Commit the changes and Human Approval Gate** *(Sequential - Final Validation)*
 
-   - **Jerry Approval**: Get approval from Jerry to move forward with the completed implementation and quality reviews.
+    - Commit the changes. Use get-agent-hash for agent attribution. Commit changes only after all gates pass.
+
+    - **Jerry Approval**: Get approval from Jerry to move forward with the completed implementation and quality reviews.
 
 3. **Execution Phase**: Carry out the steps in the ToDoWrite list using the Tiered Parallel Pipeline:
    - Execute TIER 1 sequentially (foundation must be solid)
    - Execute TIER 2 sequentially (implementation is critical path)
-   - Execute TIER 3 review sequentially
+   - Execute TIER 3 review sequentially and consolidate reviews
    - Execute TIER 4 approval gate (human validation checkpoint)
 
 4. **Scope & Complexity Validation**: Assess whether any tasks added to `docs/00-project/TODO.md` are appropriate for the project context:
