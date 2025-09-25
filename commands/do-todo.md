@@ -14,7 +14,7 @@ After reading the task assess whether or not the task should be decomposed into 
      - Considering the agent's expertise match to the task needs
      - Prioritizing technical implementation and domain expert agents for code changes
      - Prioritizing architectural agents for design decisions
-     - Prioritizing security-engineer for security concerns
+     - Prioritizing security-auditor for security concerns
      - Prioritizing test-specialist for testing tasks
      - **SCOPE DISCIPLINE**: Keeping in mind project scope, goals, and end use-case - include PROJECT SCALE CONTEXT in agent prompt
      - **COMPLEXITY BUDGET**: Include DRY/YAGNI principles and complexity constraints in agent prompt

@@ -107,7 +107,7 @@ Automated prompt generation using agent-specific templates:
 - test-specialist: Methodology selection, coverage requirements, quality gates
 - rust-specialist: Cargo setup, testing patterns, error handling
 - debug-specialist: Debugging context, log analysis, trace setup
-- security-engineer: Threat model, security requirements, validation
+- security-auditor: Threat model, security requirements, validation
 - Context injection: Project state, dependencies, methodology choice rationale
 - **SCOPE CONSTRAINTS**: Include PROJECT SCALE CONTEXT and YAGNI/DRY principles in all generated prompts
 ```
