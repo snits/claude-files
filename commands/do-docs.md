@@ -5,7 +5,8 @@ I would like you to documentation using the process below for the following task
 ## Task sizing
 
 - Given the above, first decide if the task should be broken up into multiple tasks. Task the codebase-analyzer agent to give you
-  an idea of what you are working with codebase wise if needed.
+  an idea of what you are working with codebase wise if needed. Before proceeding, ask Jerry any questions if there is any information you feel you
+  need to do the task. Before responding, walk Jerry through your thought process step-by-step.
    
 ## ToDoWrite setup
 
@@ -24,7 +25,7 @@ I would like you to documentation using the process below for the following task
 
 2. Generate a prompt for context research for the task. Iteratively refine the research prompt  with the codebase-analyzer agent (max 3 times)
    until the codebase-analyzer agent is satisfied with the prompt. The prompt must include a work product requirement of generating a
-   markdown report of the research results.
+   report as markdown file of the research results.
 
 3. Task the codebase-analyzer agent with the prompt from step 2.
 
