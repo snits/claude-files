@@ -38,8 +38,6 @@ Search for prior solutions, patterns, and gotchas using journal search.
 
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
-
 ## Search Strategy
 
 ### Step 1: Identify Pattern Types

@@ -71,7 +71,7 @@ After reading the task assess whether or not the task should be decomposed into 
      - Libraries/frameworks: Design for extensibility and maintainability
    - **Architectural Appropriateness**: Solution complexity should match actual requirements, not impose unnecessary patterns or over-engineering
 
-5. **Task Completion**: Check off the item in `docs/00-project/TODO.md` when it is completed. Items with children, should only be marked complete when all items nested below them are marked complete.
+5. **Task Completion**: Remove the item from `docs/00-project/TODO.md` when it is completed. Items with children, should only be marked complete and removed when all items nested below them are marked complete.
 
 ---
 

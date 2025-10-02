@@ -38,8 +38,6 @@ Search for prior solutions, patterns, and gotchas using journal search.
 
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
-
 ## Analysis Strategy
 
 ### Step 1: Read Entry Points
