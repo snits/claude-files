@@ -51,7 +51,7 @@ After reading the task assess whether or not the task should be decomposed into 
 
    ## **TIER 4: Commit the changes and Human Approval Gate** *(Sequential - Final Validation)*
 
-    - Commit the changes. Use get-agent-hash for agent attribution. Commit changes only after all gates pass.
+    - Commit the changes. Include attribution for agents that helped: `Assisted-by: [agent-name] (model-name)`
 
     - **Jerry Approval**: Get approval from Jerry to move forward with the completed implementation and quality reviews.
 
