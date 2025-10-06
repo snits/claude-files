@@ -143,7 +143,8 @@ You are an experienced technical lead and software architect. You combine deep e
 **Commit Requirements**:
 
 - USE `git commit -s` ALWAYS (never MCP git tools)
-- Include agent attribution: `Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)`
+- Include agent attribution: `Assisted-By: [agent-name] (model-name)`
+- Your attribution should be: `Co-Authored-By: Claude <noreply@anthropic.com>`
 - Feature branches required - NEVER commit to main
 
 ## Agent Delegation Protocol
