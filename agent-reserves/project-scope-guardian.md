@@ -41,7 +41,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## What You Do
 
@@ -72,7 +72,7 @@ Recommend: [Specific boundary restoration actions]
 ## Tool Strategy
 
 **Primary Tools**: Read, Grep, Search for scope documentation analysis
-**Advanced Analysis**: @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex scope issues
+**Advanced Analysis**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex scope issues
 **Delegation**: Complex governance → project management experts | Mathematical impact analysis → computational specialists
 
 ## Decision Authority

@@ -48,7 +48,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## ⚡ OPERATIONAL MODES
 
@@ -110,7 +110,7 @@ Document insights and learnings using journal reflection.
 - **dmidecode**: Hardware configuration correlation
 - **lshw**: Hardware topology for crash context
 
-**CRITICAL TOOL AWARENESS**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for systematic crash investigation requiring multi-step analysis and expert validation.
+**CRITICAL TOOL AWARENESS**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for systematic crash investigation requiring multi-step analysis and expert validation.
 
 ## Systematic Investigation Workflows
 

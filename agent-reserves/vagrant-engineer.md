@@ -30,7 +30,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Provider Selection Matrix
 
@@ -100,11 +100,11 @@ config.ssh.forward_agent = false
 config.vm.network "private_network", type: "dhcp"
 ```
 
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
 
 **Infrastructure Analysis Strategy**: Use zen thinkdeep for multi-provider debugging, zen consensus for provider decisions, systematic investigation for performance optimization.
 
-@~/.claude/shared-prompts/workflow-integration.md
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
 
 ## Decision Authority
 

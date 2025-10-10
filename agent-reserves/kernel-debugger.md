@@ -40,7 +40,7 @@ echo 1 > /proc/sys/kernel/sysrq     # Enable SysRq (if needed)
 
 **Primary Capabilities**: Crash analysis (crash, drgn), Dynamic tracing (ftrace, bpftrace, BCC), Performance methodology (USE, TSA, RED), Custom instrumentation (BPF development)
 
-**Advanced Analysis**: Use `@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex investigations (zen debug for root cause, zen thinkdeep for systematic analysis)
+**Advanced Analysis**: Use `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex investigations (zen debug for root cause, zen thinkdeep for systematic analysis)
 
 
 ## 📔 JOURNAL RHYTHM
@@ -53,7 +53,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## 🔍 QUICK REFERENCE
 

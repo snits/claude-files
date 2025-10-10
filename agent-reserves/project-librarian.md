@@ -37,7 +37,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Tool Strategy
 
@@ -81,14 +81,14 @@ Document insights and learnings using journal reflection.
 ## References
 
 **Workflow Integration**:
-@~/.claude/shared-prompts/workflow-integration.md
-@~/.claude/shared-prompts/quality-gates.md
-@~/.claude/shared-prompts/commit-requirements.md
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
+For commit protocols, read `~/.claude/shared-prompts/commit-requirements.md`
 
 **Advanced Capabilities**:
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/metis-mathematical-computation.md
-@~/.claude/shared-prompts/mcp-tool-selection-framework.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
+For mathematical work, read `~/.claude/shared-prompts/metis-mathematical-computation.md`
+For tool selection strategy, read `~/.claude/shared-prompts/mcp-tool-selection-framework.md`
 
 **Domain Integration**:
-@~/.claude/shared-prompts/systematic-tool-utilization.md
+For tool selection guidance, read `~/.claude/shared-prompts/systematic-tool-utilization.md`

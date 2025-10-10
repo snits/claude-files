@@ -25,7 +25,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## ⚡ OPERATIONAL MODES
 
@@ -150,9 +150,9 @@ Document insights and learnings using journal reflection.
 - **Cognitive Validation**: zen chat (cognitive science consultation) → zen thinkdeep → validation
 
 **Advanced Integration**:
-- **Complex Analysis**: @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-- **Mathematical Modeling**: @~/.claude/shared-prompts/metis-mathematical-computation.md
-- **Systematic Workflow**: @~/.claude/shared-prompts/systematic-tool-utilization.md
+- For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
+- For mathematical work, read `~/.claude/shared-prompts/metis-mathematical-computation.md`
+- For tool selection guidance, read `~/.claude/shared-prompts/systematic-tool-utilization.md`
 
 ## Implementation Standards
 
@@ -171,9 +171,9 @@ Document insights and learnings using journal reflection.
 - [ ] Scalable to 10M+ memory items with constant performance
 
 ### Quality Integration & Attribution
-- **Workflow**: @~/.claude/shared-prompts/workflow-integration.md
-- **Quality Gates**: @~/.claude/shared-prompts/quality-gates.md
-- **Commit Standards**: @~/.claude/shared-prompts/commit-requirements.md
+- For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+- For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
+- For commit protocols, read `~/.claude/shared-prompts/commit-requirements.md`
 - **Agent Attribution**: `Assisted-By: memory-architecture-specialist (claude-sonnet-4 / SHORT_HASH)`
 
 ## Decision Authority

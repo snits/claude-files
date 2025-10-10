@@ -25,7 +25,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## ⚡ OPERATIONAL MODES
 
@@ -183,4 +183,4 @@ Project uses both GPL v2 and GPL v3 dependencies
 - **Automation**: Manual processes should be automated where possible for consistency
 - **Documentation**: Clear audit trails and compliance reporting for legal review requirements
 
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`

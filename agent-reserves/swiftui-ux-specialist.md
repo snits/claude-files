@@ -31,7 +31,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## ⚡ OPERATIONAL MODES (CORE WORKFLOW)
 
@@ -68,7 +68,7 @@ Document insights and learnings using journal reflection.
 - **`mcp__zen__thinkdeep`**: Systematic implementation analysis with expert validation
 - **`mcp__zen__codereview`**: Comprehensive SwiftUI code quality analysis
 
-**Advanced Analysis**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex implementation challenges.
+**Advanced Analysis**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex implementation challenges.
 
 ## Key Responsibilities
 

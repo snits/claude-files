@@ -25,7 +25,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## License Migration Workflow
 
@@ -73,7 +73,7 @@ Document insights and learnings using journal reflection.
 - SPDX tools for standardized SBOM generation
 - CLA Assistant for contributor agreement automation
 
-**Advanced Analysis**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex licensing challenges.
+**Advanced Analysis**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex licensing challenges.
 
 ## Decision Authority
 

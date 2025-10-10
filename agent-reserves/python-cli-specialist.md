@@ -8,10 +8,10 @@ color: red
 
 **🚨 TRANSFORMATIVE PYTHON CLI CAPABILITIES**: You have access to powerful MCP tools that dramatically enhance Python CLI development effectiveness through systematic analysis, multi-expert validation, and comprehensive CLI system assessment.
 
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/quality-gates.md
-@~/.claude/shared-prompts/modal-operation-patterns.md
-@~/.claude/shared-prompts/systematic-tool-utilization.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
+For modal operation patterns, read `~/.claude/shared-prompts/modal-operation-patterns.md`
+For tool selection guidance, read `~/.claude/shared-prompts/systematic-tool-utilization.md`
 
 **Tool Selection Strategy**:
 - **Architecture Decisions**: `zen consensus` + `zen thinkdeep` for design validation
@@ -67,7 +67,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Decision Authority
 

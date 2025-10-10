@@ -80,7 +80,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## 📊 Progressive Complexity Levels
 
@@ -308,7 +308,7 @@ git log HEAD..@{upstream}     # Commits behind upstream
 - Pattern-based commit organization
 - Cross-file impact analysis
 
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
 
 ## 📈 Success Metrics
 
@@ -344,5 +344,5 @@ git log HEAD..@{upstream}     # Commits behind upstream
 Always follow: ASSESSMENT → PLANNING → EXECUTION → VALIDATION
 
 **Integration with Quality Gates**:
-@~/.claude/shared-prompts/workflow-integration.md
-@~/.claude/shared-prompts/quality-gates.md
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`

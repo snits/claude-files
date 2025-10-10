@@ -16,8 +16,8 @@
 
 **CRITICAL THREADING CAPABILITIES**: You have access to sophisticated conversation threading for multi-agent workflows:
 
-@~/.claude/shared-prompts/conversation-threading-agents.md
-@~/.claude/shared-prompts/threading-adaptations-[agent-category]-agents.md
+Read ~/.claude/shared-prompts/conversation-threading-agents.md to learn more about agent conversation threading
+Read ~/.claude/shared-prompts/threading-adaptations-[agent-category]-agents.md  for agents in [agent-category]
 
 **[Agent-Specific Threading Guidance]**: [Domain-specific patterns and examples]
 ```
@@ -53,8 +53,8 @@
 
 **ANALYSIS THREADING CAPABILITIES**: You have access to sophisticated multi-agent investigation capabilities:
 
-@~/.claude/shared-prompts/conversation-threading-agents.md
-@~/.claude/shared-prompts/threading-adaptations-analysis-agents.md
+Read ~/.claude/shared-prompts/conversation-threading-agents.md
+Read ~/.claude/shared-prompts/threading-adaptations-analysis-agents.md
 
 **Investigation Threading Patterns**: 
 - Evidence building across multiple analysis sessions using continuation_id
@@ -75,8 +75,8 @@
 
 **IMPLEMENTATION THREADING CAPABILITIES**: You have access to sophisticated change coordination:
 
-@~/.claude/shared-prompts/conversation-threading-agents.md  
-@~/.claude/shared-prompts/threading-adaptations-implementation-agents.md
+~/.claude/shared-prompts/conversation-threading-agents.md  
+~/.claude/shared-prompts/threading-adaptations-implementation-agents.md
 
 **Implementation Threading Patterns**:
 - Analysis → Implementation continuations using continuation_id from analysis agents
@@ -97,8 +97,8 @@
 
 **QUALITY THREADING CAPABILITIES**: You have access to sophisticated validation coordination:
 
-@~/.claude/shared-prompts/conversation-threading-agents.md
-@~/.claude/shared-prompts/threading-adaptations-quality-agents.md
+Read ~/.claude/shared-prompts/conversation-threading-agents.md
+Read ~/.claude/shared-prompts/threading-adaptations-quality-agents.md
 
 **Quality Threading Patterns**:
 - Implementation → Quality continuations using continuation_id from implementation agents
@@ -118,8 +118,8 @@
 
 **DEBUG THREADING CAPABILITIES**: Sophisticated multi-agent investigation coordination:
 
-@~/.claude/shared-prompts/conversation-threading-agents.md
-@~/.claude/shared-prompts/threading-adaptations-analysis-agents.md
+Read ~/.claude/shared-prompts/conversation-threading-agents.md
+Read ~/.claude/shared-prompts/threading-adaptations-analysis-agents.md
 
 **Debug-Specific Threading Patterns**:
 - **Investigation continuations**: Build evidence across multiple debug sessions using continuation_id
@@ -157,8 +157,8 @@ Grep({
 
 **ARCHITECTURE THREADING CAPABILITIES**: Sophisticated multi-agent architectural decision making:
 
-@~/.claude/shared-prompts/conversation-threading-agents.md
-@~/.claude/shared-prompts/threading-adaptations-analysis-agents.md
+Read ~/.claude/shared-prompts/conversation-threading-agents.md
+Read ~/.claude/shared-prompts/threading-adaptations-analysis-agents.md
 
 **Architecture-Specific Threading Patterns**:
 - **Multi-perspective consensus**: Use zen consensus for critical architectural decisions
@@ -195,8 +195,8 @@ mcp__zen__consensus({
 
 **CODE REVIEW THREADING CAPABILITIES**: Sophisticated implementation quality coordination:
 
-@~/.claude/shared-prompts/conversation-threading-agents.md
-@~/.claude/shared-prompts/threading-adaptations-quality-agents.md
+Read ~/.claude/shared-prompts/conversation-threading-agents.md
+Read ~/.claude/shared-prompts/threading-adaptations-quality-agents.md
 
 **Code Review Threading Patterns**:
 - **Implementation continuations**: Continue from implementation threads to maintain change context
@@ -228,8 +228,8 @@ mcp__zen__codereview({
 
 **TEST THREADING CAPABILITIES**: Sophisticated test development and validation coordination:
 
-@~/.claude/shared-prompts/conversation-threading-agents.md
-@~/.claude/shared-prompts/threading-adaptations-quality-agents.md
+Read ~/.claude/shared-prompts/conversation-threading-agents.md
+Read ~/.claude/shared-prompts/threading-adaptations-quality-agents.md
 
 **Test-Specific Threading Patterns**:
 - **TDD workflow integration**: Coordinate with implementation agents for test-first development

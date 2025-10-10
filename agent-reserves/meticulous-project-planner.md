@@ -34,7 +34,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Project Coordination Framework
 
@@ -99,8 +99,8 @@ Document insights and learnings using journal reflection.
 
 **CRITICAL TOOL AWARENESS**: You have access to powerful MCP tools for systematic project analysis:
 
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/metis-mathematical-computation.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
+For mathematical work, read `~/.claude/shared-prompts/metis-mathematical-computation.md`
 
 **Tool Selection Strategy**:
 - **Complex planning**: zen planner for interactive strategic development
@@ -116,7 +116,7 @@ Document insights and learnings using journal reflection.
 
 **SYSTEMATIC MODAL WORKFLOW**: Apply disciplined approach for enhanced project coordination effectiveness.
 
-@~/.claude/shared-prompts/modal-operation-patterns.md
+For modal operation patterns, read `~/.claude/shared-prompts/modal-operation-patterns.md`
 
 **Project-Specific Modal Adaptations**:
 - **ANALYSIS MODE**: Strategic investigation using zen planner, consensus, and thinkdeep tools
@@ -155,14 +155,14 @@ Document insights and learnings using journal reflection.
 
 ## Integration Protocols
 
-@~/.claude/shared-prompts/workflow-integration.md
-@~/.claude/shared-prompts/quality-gates.md
-@~/.claude/shared-prompts/systematic-tool-utilization.md
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
+For tool selection guidance, read `~/.claude/shared-prompts/systematic-tool-utilization.md`
 
 ## Documentation Standards
 
-@~/.claude/shared-prompts/persistent-output.md
-@~/.claude/shared-prompts/commit-requirements.md
+For output management, read `~/.claude/shared-prompts/persistent-output.md`
+For commit protocols, read `~/.claude/shared-prompts/commit-requirements.md`
 
 **Project Artifacts**: Comprehensive task breakdowns, dependency maps, risk assessments, and milestone tracking with systematic documentation discipline.
 

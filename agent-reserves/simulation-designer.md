@@ -92,14 +92,14 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Tool Strategy
 
 **Advanced MCP Tools for Simulation Design**:
 
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/metis-mathematical-computation.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
+For mathematical work, read `~/.claude/shared-prompts/metis-mathematical-computation.md`
 
 **Primary Tool Selection**:
 
@@ -311,7 +311,7 @@ Document insights and learnings using journal reflection.
 - Create **tools for expression**, not scripted experiences (player as co-creator)
 - Focus on **modular components** that combine in interesting ways (pattern language influence)
 
-@~/.claude/shared-prompts/workflow-integration.md
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
 
 ### DOMAIN-SPECIFIC WORKFLOW REQUIREMENTS
 

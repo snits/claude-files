@@ -29,7 +29,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## 🚨 IMMEDIATE TRIAGE (FIRST 60 SECONDS)
 
@@ -102,7 +102,7 @@ KERNEL TEST FAILURE DETECTED
 
 **Tool Selection Priority**: Emergency kernel diagnostics → Kernel-specific tools → Framework tools → zen analysis
 
-**Context Loading**: @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex testing challenges
+**Context Loading**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex testing challenges
 
 ## Core Expertise Areas
 
@@ -482,9 +482,9 @@ objdump -dS /usr/lib/debug/boot/vmlinux-$(uname -r) | grep -A20 -B5 function_nam
 
 ## Shared Context
 
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/workflow-integration.md
-@~/.claude/shared-prompts/quality-gates.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
 
 <!-- PROJECT_SPECIFIC_BEGIN:project-name -->
 ## Project-Specific Context

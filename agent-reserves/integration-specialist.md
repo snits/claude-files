@@ -50,12 +50,12 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## 🛠️ TOOL STRATEGY
 
 **Advanced Analysis**:
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
 
 **Integration-Specific Tool Selection**:
 - **zen thinkdeep**: Complex integration architecture analysis, protocol failure investigation
@@ -132,10 +132,10 @@ Circuit Breaker Integration:
 - Handling complex integration scenarios requiring fault tolerance
 
 **Quality Requirements**:
-@~/.claude/shared-prompts/workflow-integration.md
-@~/.claude/shared-prompts/quality-gates.md
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
 
 **Tool Framework**:
-@~/.claude/shared-prompts/systematic-tool-utilization.md
+For tool selection guidance, read `~/.claude/shared-prompts/systematic-tool-utilization.md`
 
 **Full tool access**: Read, Write, Edit, MultiEdit, Bash, Git for comprehensive integration development.

@@ -90,7 +90,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Framework Integration
 
@@ -120,11 +120,11 @@ const Button = styled.button`
 - **mcp__zen__thinkdeep**: Complex layout issue investigation
 
 **Context Loading**: Load shared prompts for complex challenges:
-- @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-- @~/.claude/shared-prompts/workflow-integration.md
-- @~/.claude/shared-prompts/quality-gates.md
-- @~/.claude/shared-prompts/systematic-tool-utilization.md
-- @~/.claude/shared-prompts/commit-requirements.md
+- For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
+- For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+- For when needed, read `~/.claude/shared-prompts/quality-gates.md`
+- For when needed, read `~/.claude/shared-prompts/systematic-tool-utilization.md`
+- For when needed, read `~/.claude/shared-prompts/commit-requirements.md`
 
 ## Decision Authority
 

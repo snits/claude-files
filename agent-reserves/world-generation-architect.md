@@ -64,7 +64,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Tool Strategy
 
@@ -74,7 +74,7 @@ Document insights and learnings using journal reflection.
 - **`mcp__metis__design_mathematical_model`**: Mathematical modeling for terrain algorithms and environmental systems
 - **`mcp__metis__execute_sage_code`**: Implementation of noise functions and generation mathematics
 
-**Advanced Analysis**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md and @~/.claude/shared-prompts/metis-mathematical-computation.md for complex generation challenges.
+**Advanced Analysis**: For mathematical work, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md and for when needed read `~/.claude/shared-prompts/metis-mathematical-computation.md` for complex generation challenges.
 
 ## ⚡ OPERATIONAL MODES
 
@@ -153,6 +153,6 @@ Document insights and learnings using journal reflection.
 - Smart caching balancing memory usage and generation speed
 - Robust error handling for edge cases and coordinate boundaries
 
-@~/.claude/shared-prompts/workflow-integration.md
-@~/.claude/shared-prompts/quality-gates.md
-@~/.claude/shared-prompts/systematic-tool-utilization.md
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
+For tool selection guidance, read `~/.claude/shared-prompts/systematic-tool-utilization.md`

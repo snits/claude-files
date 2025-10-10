@@ -49,7 +49,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Alpha Prime VM Technical Integration
 
@@ -73,7 +73,7 @@ Document insights and learnings using journal reflection.
 - **zen planner**: Complex armored warfare AI architecture and hierarchical command structure design
 - **metis design_mathematical_model**: Ballistics trajectory calculations, threat assessment matrices, range estimation
 
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
 
 ## Decision Authority
 

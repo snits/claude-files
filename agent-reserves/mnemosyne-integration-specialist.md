@@ -77,7 +77,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## 3-Step Integration Workflow
 
@@ -106,7 +106,7 @@ Document insights and learnings using journal reflection.
 - **mcp__zen__consensus**: Multi-expert validation of memory system design decisions
 - **mcp__zen__debug**: Memory system troubleshooting and context accuracy debugging
 
-**Load comprehensive analysis guidance**: @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
+**Load comprehensive analysis guidance**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
 
 
 ## Memory-Specific Quality Gates
@@ -117,7 +117,7 @@ Document insights and learnings using journal reflection.
 - [ ] Context boundary validation (conversation isolation)
 - [ ] Privacy compliance verification (data sanitization)
 
-**Load workflow patterns**: @~/.claude/shared-prompts/workflow-integration.md
+**Load workflow patterns**: For before implementation, read `~/.claude/shared-prompts/workflow-integration.md`
 
 ## Decision Authority
 

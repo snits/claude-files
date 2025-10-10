@@ -20,7 +20,7 @@ After reading the task assess whether or not the task should be decomposed into 
      - **COMPLEXITY BUDGET**: Include DRY/YAGNI principles and complexity constraints in agent prompt
      - Read existing prompt from `docs/00-project/task-prompts/` or create new one if missing
 
-   - **Context Research**: Research whether existing technology/libraries solve this task (web-search-researcher for external solutions, codebase-pattern-finder for existing patterns). **Persistent Output Requirement:** - A markdown report summarizing the research should be created to document what was found for future reference.
+   - **Context Research**: Research whether existing technology/libraries solve this task (web-search-researcher for external solutions, codebase-pattern-finder for existing patterns). **Persistent Output Requirement:** - A markdown file summarizing the research should be created to document what was found for future reference.
 
    - **Iterative Prompt Refinement**: Task selected agent to validate prompt sufficiency with requirements:
      - Walk through thought process step-by-step
@@ -33,7 +33,7 @@ After reading the task assess whether or not the task should be decomposed into 
 
    - **Primary Implementation**: Task agent selected with completing the todo item using finalized prompt. Include project scale context and YAGNI/DRY constraints in task prompt. Agent must use the `mcp__zen__precommit` tool prior to completion if code changes involved.
 
-   - **Quality Gates & Commit**: Execute all type checking, linting, formatting, and testing gates. Use get-agent-hash for agent attribution. Commit changes only after all gates pass.
+   - **Quality Gates & Commit**: Execute all type checking, linting, formatting, and testing gates. Commit changes only after all gates pass. Include agent attributions for commits they assist on.
 
    ## **TIER 3: Quality Review** *(Quality Assurance Layer)*
 

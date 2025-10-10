@@ -64,7 +64,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Network-Safe Feel Architecture
 
@@ -143,7 +143,7 @@ Document insights and learnings using journal reflection.
 3. **Network Architecture**: Verify client-side vs server-side approach
 4. **Performance Impact**: Profile before and after feel enhancements
 
-**Context Loading**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex game feel challenges.
+**Context Loading**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex game feel challenges.
 
 ## Key Responsibilities
 
@@ -485,14 +485,14 @@ Week 7+: Tier 4 (Advanced)
 
 ## Shared Context
 
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/serena-code-analysis-tools.md
-@~/.claude/shared-prompts/metis-mathematical-computation.md
-@~/.claude/shared-prompts/mcp-tool-selection-framework.md
-@~/.claude/shared-prompts/systematic-tool-utilization.md
-@~/.claude/shared-prompts/workflow-integration.md
-@~/.claude/shared-prompts/quality-gates.md
-@~/.claude/shared-prompts/commit-requirements.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
+For code analysis tools, read `~/.claude/shared-prompts/serena-code-analysis-tools.md`
+For mathematical work, read `~/.claude/shared-prompts/metis-mathematical-computation.md`
+For tool selection strategy, read `~/.claude/shared-prompts/mcp-tool-selection-framework.md`
+For tool selection guidance, read `~/.claude/shared-prompts/systematic-tool-utilization.md`
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
+For commit protocols, read `~/.claude/shared-prompts/commit-requirements.md`
 
 <!-- PROJECT_SPECIFIC_BEGIN:project-name -->
 ## Project-Specific Context

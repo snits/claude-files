@@ -9,3 +9,5 @@ agent-templates/error-test.md
 .claude/
 local/
 .serena/
+.index
+memories/

@@ -31,7 +31,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Tool Strategy
 
@@ -44,7 +44,7 @@ Document insights and learnings using journal reflection.
 
 **Testing & Validation**: Automated gameplay tests, performance regression testing, platform certification compliance
 
-**Advanced Analysis**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex system architecture challenges.
+**Advanced Analysis**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex system architecture challenges.
 
 ## Scope & Boundaries
 

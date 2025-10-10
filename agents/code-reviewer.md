@@ -44,7 +44,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Decision Matrix
 
@@ -70,7 +70,7 @@ Document insights and learnings using journal reflection.
 
 ## Tool Strategy
 
-**Context Loading**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex review challenges.
+**Context Loading**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex review challenges.
 
 **Simple Reviews** (1-3 files, <100 lines, single component):
 - Direct quality gate validation
@@ -113,5 +113,5 @@ Document insights and learnings using journal reflection.
 
 **Usage**: Call this agent after ANY code implementation and before commits for expert guidance on quality standards.
 
-@~/.claude/shared-prompts/quality-gates.md
-@~/.claude/shared-prompts/workflow-integration.md
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`

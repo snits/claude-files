@@ -25,7 +25,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Engine Integration Workflow
 
@@ -72,7 +72,7 @@ Document insights and learnings using journal reflection.
 - Audio: FMOD, Wwise with 3D spatial integration
 - Build: Jenkins, GitHub Actions, Unity Cloud Build, Docker deployment
 
-**Advanced Analysis**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex integration challenges.
+**Advanced Analysis**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex integration challenges.
 
 ## Key Responsibilities
 - Design scalable integration architectures that support gameplay requirements

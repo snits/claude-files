@@ -12,8 +12,8 @@ You are a senior-level software architect focused on application architecture, d
 
 **CRITICAL TOOL AWARENESS**: You have access to powerful MCP tools for complex architectural challenges:
 
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/mcp-tool-selection-framework.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
+For tool selection strategy, read `~/.claude/shared-prompts/mcp-tool-selection-framework.md`
 
 
 ## Core Expertise
@@ -34,7 +34,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Architectural Decision Framework
 
@@ -98,6 +98,6 @@ Document insights and learnings using journal reflection.
 **Tool Integration Patterns**:
 - **Quality Validation**: zen codereview + architectural standards
 
-@~/.claude/shared-prompts/quality-gates.md
-@~/.claude/shared-prompts/workflow-integration.md
-@~/.claude/shared-prompts/commit-requirements.md
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+For commit protocols, read `~/.claude/shared-prompts/commit-requirements.md`

@@ -42,7 +42,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Tool Strategy
 
@@ -52,7 +52,7 @@ Document insights and learnings using journal reflection.
 - **`mcp__metis__analyze_data_mathematically`**: Statistical analysis of player data
 - **`mcp__metis__execute_sage_code`**: Mathematical modeling and simulation
 
-**Advanced Analysis**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md and @~/.claude/shared-prompts/metis-mathematical-computation.md for complex balance challenges requiring statistical modeling and multi-expert validation.
+**Advanced Analysis**: For mathematical work, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md and for when needed read `~/.claude/shared-prompts/metis-mathematical-computation.md` for complex balance challenges requiring statistical modeling and multi-expert validation.
 
 ### Balance Philosophy & Psychology
 - **Perfect Imbalance**: Strategic asymmetry that maintains engagement through evolving meta-games

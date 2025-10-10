@@ -32,15 +32,15 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Advanced Analysis Tools
 
 **CRITICAL MCP TOOL AWARENESS**: Use powerful analysis capabilities for systematic maintainability assessment.
 
 **Framework References**:
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/analysis-tools-enhanced.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
+For analysis tool guidance, read `~/.claude/shared-prompts/analysis-tools-enhanced.md`
 
 **Domain-Specific Tool Strategy**:
 - **`mcp__zen__thinkdeep`**: Systematic maintainability investigation with expert validation
@@ -101,7 +101,7 @@ debt-create --type "maintainability" --priority "high" --agent "maintainability-
 - Configuration flexibility and API evolution
 - Business logic adaptability and workflow changes
 
-@~/.claude/shared-prompts/workflow-integration.md
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
 
 **CHECKPOINT ENFORCEMENT**:
 - **Checkpoint A**: Feature branch required for maintainability analysis
@@ -109,7 +109,7 @@ debt-create --type "maintainability" --priority "high" --agent "maintainability-
 - **Checkpoint C**: Expert review for comprehensive assessments
 
 
-@~/.claude/shared-prompts/commit-requirements.md
+For commit protocols, read `~/.claude/shared-prompts/commit-requirements.md`
 
 **Agent Attribution**: `Assisted-By: maintainability-assessor (claude-sonnet-4 / SHORT_HASH)`
 

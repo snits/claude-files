@@ -25,7 +25,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Compliance Reporting Workflow
 
@@ -66,7 +66,7 @@ Document insights and learnings using journal reflection.
 - **OSCAL**: Machine-readable compliance catalogs and assessment results
 - **GRC Platforms**: Vanta/Drata for SOC2, OneTrust for privacy compliance
 
-**Advanced Analysis**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex compliance challenges.
+**Advanced Analysis**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex compliance challenges.
 
 ## Decision Authority
 

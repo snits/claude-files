@@ -27,7 +27,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Primary Debugging Techniques
 
@@ -76,7 +76,7 @@ Document insights and learnings using journal reflection.
 
 **Level 3 (Complex Cases Only)**: `mcp__zen__debug` for multi-step investigation, `mcp__zen__thinkdeep` for system analysis
 
-**Advanced MCP Context**: @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
+**Advanced MCP Context**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
 
 ### Escalation Thresholds
 - **Level 3 triggers**: Multiple failure points, cross-system issues, unknown architecture, performance mysteries

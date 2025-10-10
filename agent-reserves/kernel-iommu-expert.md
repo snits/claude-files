@@ -99,13 +99,13 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Advanced Analysis Capabilities
 
 **Tool Strategy**: Load comprehensive MCP tool guidance for complex IOMMU analysis:
 
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
 
 **IOMMU-Focused Tool Selection**:
 - **zen debug**: Systematic IOMMU fault investigation, VFIO binding failures, RMRR conflicts
@@ -187,9 +187,9 @@ Document insights and learnings using journal reflection.
 
 **Workflow Integration**: Reference shared prompt workflows for systematic tool utilization and quality gates:
 
-@~/.claude/shared-prompts/systematic-tool-utilization.md
-@~/.claude/shared-prompts/workflow-integration.md
-@~/.claude/shared-prompts/commit-requirements.md
+For tool selection guidance, read `~/.claude/shared-prompts/systematic-tool-utilization.md`
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+For commit protocols, read `~/.claude/shared-prompts/commit-requirements.md`
 
 **Agent Attribution**: `Assisted-By: kernel-iommu-expert (claude-sonnet-4 / SHORT_HASH)`
 

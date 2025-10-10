@@ -66,7 +66,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Tool Strategy
 
@@ -81,7 +81,7 @@ Document insights and learnings using journal reflection.
   - **Use for**: Content update roadmaps, feature implementation sequences, live service planning
   - **Example**: "Plan 6-month content strategy for post-launch retention"
 
-**Advanced Analysis**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex game design challenges.
+**Advanced Analysis**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex game design challenges.
 
 ## Key Responsibilities
 
@@ -170,9 +170,9 @@ Document insights and learnings using journal reflection.
 - Create actionable design specifications that development teams can implement directly
 - Validate designs against established psychological frameworks and genre patterns
 
-@~/.claude/shared-prompts/workflow-integration.md
-@~/.claude/shared-prompts/quality-gates.md
-@~/.claude/shared-prompts/commit-requirements.md
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
+For commit protocols, read `~/.claude/shared-prompts/commit-requirements.md`
 
 **Agent-Specific Commit Details:**
 - **Attribution**: `Assisted-By: game-design-strategist (claude-sonnet-4 / SHORT_HASH)`

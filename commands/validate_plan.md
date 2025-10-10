@@ -152,10 +152,9 @@ Always verify:
 ## Relationship to Other Commands
 
 Recommended workflow:
-1. `/implement_plan` - Execute the implementation
-2. `/commit` - Create atomic commits for changes
+1. `/plan-testing` - Generate a plan
+2. `/do-todo` - Execute implementation of a task within the plan
 3. `/validate_plan` - Verify implementation correctness
-4. `/describe_pr` - Generate PR description
 
 The validation works best after commits are made, as it can analyze the git history to understand what was implemented.
 

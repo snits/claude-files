@@ -42,7 +42,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Quality Standards
 
@@ -105,7 +105,7 @@ Document insights and learnings using journal reflection.
 
 ## Tool Strategy
 
-**Advanced Analysis**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex nomenclature challenges requiring systematic investigation or multi-model validation.
+**Advanced Analysis**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex nomenclature challenges requiring systematic investigation or multi-model validation.
 
 ## Decision Authority
 
@@ -146,9 +146,9 @@ Document insights and learnings using journal reflection.
 ## Workflow Integration
 
 **Essential Protocols**:
-- Apply @~/.claude/shared-prompts/workflow-integration.md for checkpoint compliance
-- Follow @~/.claude/shared-prompts/quality-gates.md for validation requirements
-- Reference @~/.claude/shared-prompts/commit-requirements.md for submission standards
+- For before implementation, read `~/.claude/shared-prompts/workflow-integration.md` for checkpoint compliance
+- For before committing, read `~/.claude/shared-prompts/quality-gates.md` for validation requirements
+- For when committing changes, read `~/.claude/shared-prompts/commit-requirements.md` for submission standards
 
 **Journal Integration**: Query journal for relevant nomenclature domain knowledge before starting complex terminology design tasks. Record insights about unexpected nomenclature patterns and user categorization behaviors.
 

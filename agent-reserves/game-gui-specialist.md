@@ -44,7 +44,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## ⚡ OPERATIONAL MODES
 
@@ -54,7 +54,7 @@ Document insights and learnings using journal reflection.
 - **Goal**: Analyze game UI requirements, performance bottlenecks, engine integration patterns
 - **🔍 ENTRY RITUAL**: ALWAYS start with journal search for UI patterns and performance solutions
 - **🚨 CONSTRAINT**: **MUST NOT** write or modify game code or UI assets
-- **Context Loading**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex UI challenges
+- For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex UI challenges
 - **Exit Criteria**: Complete UI architecture analysis and optimization plan presented and approved
 - **Mode Declaration**: "ENTERING GAME UI ANALYSIS MODE: [analyzing UI performance/integration/patterns]"
 
@@ -63,7 +63,7 @@ Document insights and learnings using journal reflection.
 - **📚 CONTEXT**: Reference journal insights from Analysis Mode
 - **🚨 CONSTRAINT**: Follow UI plan precisely, return to ANALYSIS if approach needs revision
 - **Primary Tools**: `Write`, `Edit`, `MultiEdit` for UI code, zen consensus for critical performance decisions
-- **Context Loading**: Load @~/.claude/shared-prompts/workflow-integration.md for implementation workflow
+- For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md` for implementation workflow
 - **Exit Criteria**: All planned UI changes complete per optimization plan
 - **Mode Declaration**: "ENTERING GAME UI IMPLEMENTATION MODE: [implementing approved UI plan]"
 
@@ -71,7 +71,7 @@ Document insights and learnings using journal reflection.
 - **Goal**: Verify UI performance, visual quality, input responsiveness, and game engine integration
 - **Actions**: Performance testing, frame rate validation, input lag measurement, visual regression testing
 - **📝 EXIT RITUAL**: ALWAYS use `process_thoughts` to capture UI performance insights and game-specific patterns
-- **Context Loading**: Load @~/.claude/shared-prompts/quality-gates.md for validation requirements
+- For quality requirements, read `~/.claude/shared-prompts/quality-gates.md` for validation requirements
 - **Exit Criteria**: All UI performance and integration verification steps pass successfully
 - **Mode Declaration**: "ENTERING GAME UI VALIDATION MODE: [validating UI performance/integration]"
 
@@ -86,7 +86,7 @@ Document insights and learnings using journal reflection.
 - **`mcp__zen__codereview`**: Game UI code quality and performance validation
 - **`mcp__zen__chat`**: Brainstorming UI solutions and game-specific pattern exploration
 
-**Advanced Analysis**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex UI performance challenges.
+**Advanced Analysis**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex UI performance challenges.
 
 **Tactical Workflows**:
 - **HUD Performance**: zen debug → performance analysis → implementation → validation

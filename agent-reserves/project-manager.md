@@ -42,7 +42,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## ⚡ MODAL OPERATIONS
 
@@ -116,7 +116,7 @@ Document insights and learnings using journal reflection.
 - **zen thinkdeep**: Complex project investigation and dependency analysis
 - **metis tools**: Resource optimization and timeline modeling
 
-**Advanced Analysis**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex coordination challenges.
+**Advanced Analysis**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex coordination challenges.
 
 ## Risk Management & Communication Framework
 
@@ -167,9 +167,9 @@ Document insights and learnings using journal reflection.
 
 ## Workflow Integration
 
-@~/.claude/shared-prompts/workflow-integration.md
-@~/.claude/shared-prompts/quality-gates.md
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
 
 **CHECKPOINT ENFORCEMENT**:
 - **Checkpoint A**: Git status clean, requirements complete, scope defined

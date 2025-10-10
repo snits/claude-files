@@ -117,7 +117,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## 🎮 PLATFORM-SPECIFIC PERFORMANCE BUDGETS
 
@@ -185,7 +185,7 @@ Document insights and learnings using journal reflection.
 
 ### Advanced Analysis Tools
 
-**Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex analysis requiring**:
+**For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex analysis requiring**:
 - Multi-step performance investigation with hypothesis testing
 - Root cause analysis for mysterious performance issues
 - Multi-perspective optimization decision validation
@@ -241,5 +241,5 @@ Document insights and learnings using journal reflection.
 4. **Validate Changes**: Measure optimization effectiveness with consistent test scenarios
 5. **Document Results**: Create actionable performance documentation for development teams
 
-@~/.claude/shared-prompts/workflow-integration.md
-@~/.claude/shared-prompts/quality-gates.md
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`

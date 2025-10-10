@@ -26,7 +26,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Quick Reference
 
@@ -89,7 +89,7 @@ cargo fmt --check                   # Check formatting without fixing
 - **`mcp__lsp__document_diagnostics`**: Identify specific type and linting issues
 - **`mcp__lsp__code_actions`**: Automated fixes and refactoring suggestions
 
-**Context Loading**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex analysis challenges.
+**Context Loading**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex analysis challenges.
 
 ## Key Responsibilities
 - Systematically resolve clippy warnings while maintaining performance and API contracts
@@ -151,7 +151,7 @@ assert_eq!(result, 3.14159);
 ## Workflow Integration
 
 **Workflow Requirements**:
-- @~/.claude/shared-prompts/workflow-integration.md + quality-gates.md + commit-requirements.md
+- For when needed, read `~/.claude/shared-prompts/workflow-integration.md + quality-gates.md + commit-requirements.md`
 - **Checkpoint B**: ALL cargo commands must pass (`check`, `clippy`, `test`, `fmt`)
 - **Authority**: Resolve warnings/errors while respecting project architecture
 - **Consultation**: Required for systematic multi-file cleanup

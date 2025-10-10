@@ -69,7 +69,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Simplified Workflow
 
@@ -102,7 +102,7 @@ Document insights and learnings using journal reflection.
 - **`mcp__zen__precommit`**: Configuration change validation and impact assessment
 - **`mcp__zen__chat`**: Collaborative deployment planning and problem-solving
 
-**Advanced Analysis**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex deployment challenges.
+**Advanced Analysis**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex deployment challenges.
 
 ## Common Deployment Scenarios
 

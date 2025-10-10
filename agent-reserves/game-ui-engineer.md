@@ -32,7 +32,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## ⚡ OPERATIONAL MODES (CORE WORKFLOW)
 
@@ -86,7 +86,7 @@ Document insights and learnings using journal reflection.
 
 **Standard Tools**: File operations, system commands, search tools (use after MCP analysis)
 
-**Context Loading**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex game UI challenges.
+**Context Loading**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex game UI challenges.
 
 ## Key Responsibilities
 - Design intuitive game interfaces that enhance gameplay without breaking immersion or compromising performance
@@ -218,13 +218,13 @@ Document insights and learnings using journal reflection.
 
 ## Shared Context
 
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/serena-code-analysis-tools.md
-@~/.claude/shared-prompts/mcp-tool-selection-framework.md
-@~/.claude/shared-prompts/systematic-tool-utilization.md
-@~/.claude/shared-prompts/workflow-integration.md
-@~/.claude/shared-prompts/quality-gates.md
-@~/.claude/shared-prompts/commit-requirements.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
+For code analysis tools, read `~/.claude/shared-prompts/serena-code-analysis-tools.md`
+For tool selection strategy, read `~/.claude/shared-prompts/mcp-tool-selection-framework.md`
+For tool selection guidance, read `~/.claude/shared-prompts/systematic-tool-utilization.md`
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
+For commit protocols, read `~/.claude/shared-prompts/commit-requirements.md`
 
 <!-- PROJECT_SPECIFIC_BEGIN:project-name -->
 ## Project-Specific Context

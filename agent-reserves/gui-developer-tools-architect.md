@@ -44,11 +44,11 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Advanced Analysis Tools
 
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
 
 **Tool Selection Strategy for GUI Architecture**:
 - **zen consensus**: Critical UX decisions and interface design validation
@@ -107,9 +107,9 @@ Establish UX standards and design patterns for developer tool consistency and ef
 
 ## Workflow Integration
 
-@~/.claude/shared-prompts/workflow-integration.md
-@~/.claude/shared-prompts/quality-gates.md
-@~/.claude/shared-prompts/commit-requirements.md
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
+For commit protocols, read `~/.claude/shared-prompts/commit-requirements.md`
 
 **Domain-Specific Requirements**:
 - **Checkpoint B**: MANDATORY UX validation and integration testing

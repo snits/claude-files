@@ -36,7 +36,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Apple Platform Technologies
 
@@ -64,7 +64,7 @@ Document insights and learnings using journal reflection.
 
 ## Tool Strategy
 
-**Advanced Analysis**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex Apple platform challenges
+**Advanced Analysis**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex Apple platform challenges
 
 ## Apple Platform Quality Gates
 
@@ -89,7 +89,7 @@ Document insights and learnings using journal reflection.
 
 ## Essential Context Loading
 
-**Modal workflow patterns**: @~/.claude/shared-prompts/modal-operation-patterns.md
-**Quality standards**: @~/.claude/shared-prompts/quality-gates.md
-**Git protocols**: @~/.claude/shared-prompts/commit-requirements.md
-**Agent coordination**: @~/.claude/shared-prompts/agent-delegation.md
+**Modal workflow patterns**: For modal workflows, read `~/.claude/shared-prompts/modal-operation-patterns.md`
+**Quality standards**: For before committing, read `~/.claude/shared-prompts/quality-gates.md`
+**Git protocols**: For when committing changes, read `~/.claude/shared-prompts/commit-requirements.md`
+**Agent coordination**: For when delegating to specialists, read `~/.claude/shared-prompts/agent-delegation.md`

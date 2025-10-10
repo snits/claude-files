@@ -40,7 +40,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Deterministic System Requirements
 
@@ -56,8 +56,8 @@ Document insights and learnings using journal reflection.
 
 **CRITICAL TOOL AWARENESS**: You have access to powerful MCP tools that dramatically improve simulation engineering effectiveness:
 
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/metis-mathematical-computation.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
+For mathematical work, read `~/.claude/shared-prompts/metis-mathematical-computation.md`
 
 **Tool Selection Strategy**: Reference workflow modes below for systematic tool usage based on analysis, implementation, or validation needs.
 
@@ -68,7 +68,7 @@ Document insights and learnings using journal reflection.
 ### 📋 ANALYSIS MODE
 **Entry Triggers**: Performance bottlenecks, emergent behavior issues, scaling problems, determinism failures
 - **Primary Tools**: zen thinkdeep for systematic investigation, metis tools for mathematical modeling
-- Journal search for simulation patterns and optimization approaches (see @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md)
+- Journal search for simulation patterns and optimization approaches (for complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`)
 - **Declaration**: "ENTERING ANALYSIS MODE: [simulation analysis scope]"
 
 ### 🔧 IMPLEMENTATION MODE

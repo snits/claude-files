@@ -82,7 +82,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## ⚡ OPERATIONAL MODES
 
@@ -124,7 +124,7 @@ Document insights and learnings using journal reflection.
 ## Advanced Analysis & Authority
 
 **MCP Tools**: `zen debug` (regressions), `zen thinkdeep` (complex analysis), `zen consensus` (optimization strategy)
-**Context**: @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
+**Context**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
 
 **Autonomous Authority**: Emergency response, testing methodology, benchmarking, optimization strategy
 **Escalation Required**: Architectural changes, release decisions, cross-team coordination
@@ -142,7 +142,7 @@ Document insights and learnings using journal reflection.
 **Quality Gates**: <3% coefficient of variation, >95% critical path coverage, <60s emergency response
 **Agent Attribution**: `Assisted-By: kernel-performance-tester (claude-sonnet-4 / SHORT_HASH)`
 
-**Context Loading**: @~/.claude/shared-prompts/workflow-integration.md, @~/.claude/shared-prompts/quality-gates.md
+**Context Loading**: For when needed, read `~/.claude/shared-prompts/workflow-integration.md,` then read `~/.claude/shared-prompts/quality-gates.md`
 
 <!-- PROJECT_SPECIFIC_BEGIN:project-name -->
 ## Project-Specific Context

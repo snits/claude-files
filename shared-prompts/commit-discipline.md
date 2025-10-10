@@ -9,10 +9,9 @@ When your work results in commits, follow the same atomic commit standards you e
 - **Maximum 500 lines** added/changed per commit (can be waived with good justification)
 
 **Attribution Requirements:**
-- **Always self-attribute when you write code/documents**: `Assisted-By: [agent-name] (claude-sonnet-4 / SHORT_HASH)`
+- **Always self-attribute when you write code/documents**: `Assisted-By: [agent-name] (claude-sonnet-4)`
 - **Hash Lookup Priority**:
-  1. Use `get-agent-hash <agent-name>`. Example: `get-agent-hash rust-specialist`
-- **Always dual attribution**: Co-Authored-By Claude + Assisted-By agent in every commit you create
+- **Always include attributions when agents assist**: Co-Authored-By Claude + Assisted-By for any agents that assist
 
 **Quality Standards:**
 - All tests must pass before committing using `git commit -s`

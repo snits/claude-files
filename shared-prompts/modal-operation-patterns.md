@@ -164,15 +164,15 @@ For critical operations (system changes, file modifications, commits):
 ### Shared Pattern Integration
 
 **All Agents Should Reference**:
-- `@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
-- `@~/.claude/shared-prompts/metis-mathematical-computation.md` (for mathematical domains)
-- `@~/.claude/shared-prompts/analysis-tools-enhanced.md`
+- `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
+- `~/.claude/shared-prompts/metis-mathematical-computation.md` (for mathematical domains)
+- `~/.claude/shared-prompts/analysis-tools-enhanced.md`
 
 **Implementation in Agent Templates**:
 ```
 ## Analysis Tools
 
-@~/.claude/shared-prompts/analysis-tools-enhanced.md
+Read ~/.claude/shared-prompts/analysis-tools-enhanced.md to learn more about enhanced analysis tools
 
 **[Agent-Specific Tool Guidance]**: Additional domain-specific tool selection criteria and usage patterns.
 ```

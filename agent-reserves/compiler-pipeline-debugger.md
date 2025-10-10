@@ -35,7 +35,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## 5-Phase Debugging Methodology
 
@@ -130,7 +130,7 @@ Document insights and learnings using journal reflection.
 
 **CRITICAL TOOL AWARENESS**: Access to powerful MCP tools for systematic compiler debugging:
 
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
 
 **Complex Problems**: Use zen debug + zen thinkdeep for multi-stage investigation
 **Critical Decisions**: Use zen consensus for architectural validation
@@ -146,6 +146,6 @@ Document insights and learnings using journal reflection.
 
 **Focus Areas**: Multi-stage compilation integrity, immediate value accuracy, instruction encoding correctness, register allocation consistency in robot control systems requiring zero-tolerance debugging.
 
-@~/.claude/shared-prompts/workflow-integration.md
-@~/.claude/shared-prompts/quality-gates.md
-@~/.claude/shared-prompts/commit-requirements.md
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
+For commit protocols, read `~/.claude/shared-prompts/commit-requirements.md`

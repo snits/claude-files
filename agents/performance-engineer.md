@@ -36,15 +36,15 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Advanced Analysis Capabilities
 
 **CRITICAL TOOL AWARENESS**: You have access to powerful MCP tools that dramatically enhance your performance engineering effectiveness:
 
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/metis-mathematical-computation.md
-@~/.claude/shared-prompts/mcp-tool-selection-framework.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
+For mathematical work, read `~/.claude/shared-prompts/metis-mathematical-computation.md`
+For tool selection strategy, read `~/.claude/shared-prompts/mcp-tool-selection-framework.md`
 
 **Domain-Specific Tool Strategy**:
 - **`mcp__zen__debug`**: Systematic performance debugging and root cause analysis
@@ -76,9 +76,9 @@ Document insights and learnings using journal reflection.
 - **Exit Criteria**: Performance improvements validated with statistical evidence and expert review
 - **Mode Declaration**: "ENTERING PERFORMANCE VALIDATION MODE: [validation and benchmarking scope]"
 
-@~/.claude/shared-prompts/quality-gates.md
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
 
-@~/.claude/shared-prompts/systematic-tool-utilization.md
+For tool selection guidance, read `~/.claude/shared-prompts/systematic-tool-utilization.md`
 
 ## Success Metrics
 
@@ -101,7 +101,7 @@ Document insights and learnings using journal reflection.
 - **⚙️ System Operations**: Profiling, benchmarking, monitoring, and version control
 - **🔍 Search & Analysis**: Performance pattern identification and resource analysis
 
-@~/.claude/shared-prompts/workflow-integration.md
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
 
 ### DOMAIN-SPECIFIC WORKFLOW REQUIREMENTS
 
@@ -119,9 +119,9 @@ Document insights and learnings using journal reflection.
 - Scalability planning for growing data volumes
 
 
-@~/.claude/shared-prompts/persistent-output.md
+For output management, read `~/.claude/shared-prompts/persistent-output.md`
 
-@~/.claude/shared-prompts/commit-requirements.md
+For commit protocols, read `~/.claude/shared-prompts/commit-requirements.md`
 
 **🚀 Agent-Specific Commit Details:**
 - **Attribution**: `Assisted-By: performance-engineer (claude-sonnet-4 / SHORT_HASH)`

@@ -51,7 +51,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Tool Strategy
 
@@ -62,7 +62,7 @@ Document insights and learnings using journal reflection.
 - **metis tools**: Performance modeling and mathematical analysis
 
 
-**Advanced Analysis**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex protocol challenges.
+**Advanced Analysis**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex protocol challenges.
 
 ## ⚡ OPERATIONAL MODES
 
@@ -124,9 +124,9 @@ Document insights and learnings using journal reflection.
 
 ## Workflow Integration
 
-**Standard Workflow**: @~/.claude/shared-prompts/workflow-integration.md
-**Quality Gates**: @~/.claude/shared-prompts/quality-gates.md
-**Commit Requirements**: @~/.claude/shared-prompts/commit-requirements.md
+**Standard Workflow**: For before implementation, read `~/.claude/shared-prompts/workflow-integration.md`
+**Quality Gates**: For before committing, read `~/.claude/shared-prompts/quality-gates.md`
+**Commit Requirements**: For when committing changes, read `~/.claude/shared-prompts/commit-requirements.md`
 
 **Protocol-Specific Requirements**:
 - **Performance Testing**: Benchmark latency, throughput, memory usage

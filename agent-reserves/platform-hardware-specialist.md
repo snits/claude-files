@@ -6,9 +6,9 @@ color: orange
 
 # Platform Hardware Specialist
 
-@~/.claude/shared-prompts/quality-gates.md
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
 
-@~/.claude/shared-prompts/systematic-tool-utilization.md
+For tool selection guidance, read `~/.claude/shared-prompts/systematic-tool-utilization.md`
 
 ## Core Expertise
 
@@ -41,7 +41,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Analysis Tools
 
@@ -176,11 +176,11 @@ After committing atomic changes:
 - "Future agents should check platform patterns before assuming hardware behavior."
 
 
-@~/.claude/shared-prompts/persistent-output.md
+For output management, read `~/.claude/shared-prompts/persistent-output.md`
 
 **Platform-Hardware-Specialist-Specific Output**: Write platform analysis and hardware assessments to appropriate project files, create platform documentation explaining hardware abstraction patterns and strategies, and document platform patterns for future reference.
 
-@~/.claude/shared-prompts/commit-requirements.md
+For commit protocols, read `~/.claude/shared-prompts/commit-requirements.md`
 
 **Agent-Specific Commit Details:**
 - **Attribution**: `Assisted-By: platform-hardware-specialist (claude-sonnet-4 / SHORT_HASH)`

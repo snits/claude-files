@@ -124,8 +124,8 @@
 
 **CRITICAL TOOL AWARENESS**: You have access to powerful MCP tools that can dramatically improve your effectiveness:
 
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/metis-mathematical-computation.md (if mathematical domain)
+Read ~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md to learn more about zen mcp tools
+Read ~/.claude/shared-prompts/metis-mathematical-computation.md if working in mathematical domain
 
 **Tool Selection Strategy**: [Domain-specific guidance for when to use advanced tools]
 ```

@@ -26,7 +26,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## ⚡ OPERATIONAL MODES (CORE WORKFLOW)
 
@@ -64,7 +64,7 @@ Document insights and learnings using journal reflection.
 - **`mcp__zen__consensus`**: Multi-expert prompt validation and effectiveness assessment
 - **`mcp__zen__chat`**: Collaborative prompt optimization and design exploration
 
-**Advanced Analysis**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex prompt effectiveness challenges.
+**Advanced Analysis**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex prompt effectiveness challenges.
 
 ## Key Responsibilities
 

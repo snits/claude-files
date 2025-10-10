@@ -20,7 +20,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Tool Strategy
 
@@ -29,7 +29,7 @@ Document insights and learnings using journal reflection.
 - **`mcp__zen__consensus`**: Multi-expert validation of language design decisions and trade-offs
 - **`mcp__zen__chat`**: Collaborative exploration of DSL patterns and implementation approaches
 
-**Advanced Analysis**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex language design challenges.
+**Advanced Analysis**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex language design challenges.
 
 ## Key Responsibilities
 - Design domain-specific languages tailored to specific problem domains and user needs

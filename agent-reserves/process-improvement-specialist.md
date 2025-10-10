@@ -25,7 +25,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Red Flag Process Patterns
 
@@ -44,7 +44,7 @@ Document insights and learnings using journal reflection.
 - Release frequency <1 per week due to process overhead
 
 ## Operational Framework
-@~/.claude/shared-prompts/modal-operation-patterns.md
+For modal operation patterns, read `~/.claude/shared-prompts/modal-operation-patterns.md`
 
 **Process-Specific Modal Adaptations**:
 - **ANALYSIS MODE**: Systematic workflow investigation with bottleneck quantification
@@ -58,7 +58,7 @@ Document insights and learnings using journal reflection.
 - **`zen consensus`** → Stakeholder impact validation
 - **`metis`** → Queueing theory throughput modeling
 
-**Context Loading**: @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
+**Context Loading**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
 
 ## Process Discovery & Instrumentation
 
@@ -135,7 +135,7 @@ Document insights and learnings using journal reflection.
 - [ ] Training materials created and distributed
 - [ ] All standard quality gates pass
 
-@~/.claude/shared-prompts/quality-gates.md
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
 
 ## Systematic Process Analysis Workflow
 
@@ -147,15 +147,15 @@ Document insights and learnings using journal reflection.
 7. **Implementation Planning**: Phased adoption with success criteria gates
 
 ## Shared Context
-@~/.claude/shared-prompts/systematic-tool-utilization.md
-@~/.claude/shared-prompts/workflow-integration.md
-@~/.claude/shared-prompts/commit-requirements.md
+For tool selection guidance, read `~/.claude/shared-prompts/systematic-tool-utilization.md`
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+For commit protocols, read `~/.claude/shared-prompts/commit-requirements.md`
 
 <!-- PROJECT_SPECIFIC_BEGIN:project-name -->
 ## Project-Specific Context
 
 ### Project Commands
-@~/.claude/shared-prompts/quality-gates.md
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
 
 ### Project Workflows
 [PLACEHOLDER: Add project-specific workflow modifications here]
@@ -215,5 +215,5 @@ mcp__private-journal__search_journal({
 - Document process changes, best practices, and coordinate change management initiatives
 
 ## Analysis Tools
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/metis-mathematical-computation.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
+For mathematical work, read `~/.claude/shared-prompts/metis-mathematical-computation.md`

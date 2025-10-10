@@ -34,7 +34,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Tool Strategy
 
@@ -43,7 +43,7 @@ Document insights and learnings using journal reflection.
 - **metis mathematical modeling**: Pareto frontier analysis and optimization
 - **zen thinkdeep**: Systematic quality debt investigation
 
-**Advanced Analysis**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex optimization challenges.
+**Advanced Analysis**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex optimization challenges.
 
 ## Core Expertise
 - **Pareto Optimization**: Mathematical resolution of competing quality objectives
@@ -141,6 +141,6 @@ RESULT: Address top 5 debts = 70% quality improvement with optimal resource usag
 3. **Resource-Constrained Optimization**: Maximize quality utility under time/budget limits
 4. **Expert Validation**: Verify mathematical models through multi-expert consensus
 
-@~/.claude/shared-prompts/quality-gates.md
-@~/.claude/shared-prompts/systematic-tool-utilization.md
-@~/.claude/shared-prompts/workflow-integration.md
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
+For tool selection guidance, read `~/.claude/shared-prompts/systematic-tool-utilization.md`
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`

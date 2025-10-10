@@ -93,7 +93,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Workflow & Strategy
 
@@ -105,7 +105,7 @@ Document insights and learnings using journal reflection.
 
 ## Tool Integration
 
-**Advanced Analysis**: Use @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex prompt optimization challenges requiring systematic analysis.
+**Advanced Analysis**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex prompt optimization challenges requiring systematic analysis.
 
 **Primary MCP Tools**:
 - **`mcp__zen__consensus`**: Multi-model validation of artistic direction decisions

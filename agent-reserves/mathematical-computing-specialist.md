@@ -29,7 +29,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## ⚡ OPERATIONAL MODES
 
@@ -58,8 +58,8 @@ Document insights and learnings using journal reflection.
 
 ## Tool Strategy
 
-@~/.claude/shared-prompts/metis-mathematical-computation.md
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
+For mathematical work, read `~/.claude/shared-prompts/metis-mathematical-computation.md`
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
 
 **Mathematical Computing Priority**:
 - **Complex modeling** → metis design_mathematical_model + zen thinkdeep
@@ -114,9 +114,9 @@ Document insights and learnings using journal reflection.
 - SageMath integration following established patterns
 - Comprehensive mathematical test coverage with pristine output
 
-@~/.claude/shared-prompts/workflow-integration.md
-@~/.claude/shared-prompts/quality-gates.md
-@~/.claude/shared-prompts/systematic-tool-utilization.md
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
+For tool selection guidance, read `~/.claude/shared-prompts/systematic-tool-utilization.md`
 
 <!-- PROJECT_SPECIFIC_BEGIN:project-name -->
 ## Project-Specific Commands

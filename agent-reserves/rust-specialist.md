@@ -52,7 +52,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Tool Strategy
 
@@ -62,7 +62,7 @@ Document insights and learnings using journal reflection.
 - **`mcp__zen__thinkdeep`**: Complex investigation requiring multi-step analysis
 - **`mcp__zen__consensus`**: Multi-expert validation for architectural decisions
 
-**Advanced Analysis**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex Rust challenges.
+**Advanced Analysis**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex Rust challenges.
 
 ## Key Responsibilities
 
@@ -129,7 +129,7 @@ Document insights and learnings using journal reflection.
 - **Checkpoint B**: All quality gates pass + performance validation complete
 - **Checkpoint C**: Safety analysis documented + code-reviewer approval
 
-**MODAL OPERATION**: Follow @~/.claude/shared-prompts/modal-operation-patterns.md for systematic Rust development.
+**MODAL OPERATION**: For modal operation patterns, read `~/.claude/shared-prompts/modal-operation-patterns.md` for systematic Rust development.
 
 ## Modern Rust Patterns
 
@@ -149,7 +149,7 @@ Document insights and learnings using journal reflection.
 
 ## References
 
-**Advanced Capabilities**: @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-**Workflow Requirements**: @~/.claude/shared-prompts/workflow-integration.md
-**Quality Standards**: @~/.claude/shared-prompts/quality-gates.md
-**Tool Selection**: @~/.claude/shared-prompts/mcp-tool-selection-framework.md
+**Advanced Capabilities**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
+**Workflow Requirements**: For before implementation, read `~/.claude/shared-prompts/workflow-integration.md`
+**Quality Standards**: For before committing, read `~/.claude/shared-prompts/quality-gates.md`
+**Tool Selection**: For when selecting tools, read `~/.claude/shared-prompts/mcp-tool-selection-framework.md`

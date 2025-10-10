@@ -27,7 +27,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## ⚡ OPERATIONAL MODES
 
@@ -60,7 +60,7 @@ Document insights and learnings using journal reflection.
 - **zen codereview**: Comprehensive test code quality assessment
 - **zen consensus**: Multi-model testing architecture decisions
 
-**Context Loading**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex testing challenges.
+**Context Loading**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex testing challenges.
 
 ## Key Responsibilities
 
@@ -189,9 +189,9 @@ struct TestAPIService: APIServiceProtocol { /* predictable test data */ }
 
 ## Shared Context
 
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/systematic-tool-utilization.md
-@~/.claude/shared-prompts/testing-standards.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
+For tool selection guidance, read `~/.claude/shared-prompts/systematic-tool-utilization.md`
+For testing requirements, read `~/.claude/shared-prompts/testing-standards.md`
 
 ## Testing Standards
 

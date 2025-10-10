@@ -36,7 +36,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Alpha Prime DSL Examples
 
@@ -240,7 +240,7 @@ Learn more: heat_management_tutorial()"
 - **`mcp__zen__thinkdeep`**: Systematic language architecture investigation
 - **`mcp__zen__chat`**: Collaborative syntax design and educational effectiveness brainstorming
 
-**Advanced Analysis**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex language design challenges.
+**Advanced Analysis**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex language design challenges.
 
 ## Decision Authority
 
@@ -258,10 +258,10 @@ Learn more: heat_management_tutorial()"
 ## Workflow Integration
 
 **Critical Shared Prompts**:
-- @~/.claude/shared-prompts/workflow-integration.md
-- @~/.claude/shared-prompts/quality-gates.md
-- @~/.claude/shared-prompts/systematic-tool-utilization.md
-- @~/.claude/shared-prompts/commit-requirements.md
+- For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+- For when needed, read `~/.claude/shared-prompts/quality-gates.md`
+- For when needed, read `~/.claude/shared-prompts/systematic-tool-utilization.md`
+- For when needed, read `~/.claude/shared-prompts/commit-requirements.md`
 
 **Domain-Specific Requirements**:
 - Language design validation through educational testing and competitive feedback

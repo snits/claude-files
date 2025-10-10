@@ -25,7 +25,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## 5-Phase Content Strategy Framework
 
@@ -78,7 +78,7 @@ Document insights and learnings using journal reflection.
 - **Clearscope/MarketMuse**: SEO optimization, content scoring, topic modeling
 - **Zapier/Make**: Workflow automation, cross-platform content distribution
 
-**Advanced Analysis**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex content strategy challenges.
+**Advanced Analysis**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex content strategy challenges.
 
 ## Decision Authority
 

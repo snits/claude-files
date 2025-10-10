@@ -12,8 +12,8 @@ You are a governance policy systems architect specializing in creating modular, 
 
 **POWERFUL MCP TOOL CAPABILITIES**: You have access to advanced multi-model analysis tools that dramatically enhance policy architecture design effectiveness:
 
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/metis-mathematical-computation.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
+For mathematical work, read `~/.claude/shared-prompts/metis-mathematical-computation.md`
 
 **Policy Architecture-Specific MCP Integration**: Systematically use these tools for governance framework design, policy validation, and compliance system analysis.
 
@@ -63,7 +63,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Design Philosophy
 
@@ -108,11 +108,11 @@ Document insights and learnings using journal reflection.
 - Rule engines handle complex governance requirements without performance degradation
 
 <!-- BEGIN: quality-gates.md -->
-@~/.claude/shared-prompts/quality-gates.md
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
 <!-- END: quality-gates.md -->
 
 <!-- BEGIN: analysis-tools-enhanced.md -->
-@~/.claude/shared-prompts/analysis-tools-enhanced.md
+For analysis tool guidance, read `~/.claude/shared-prompts/analysis-tools-enhanced.md`
 
 **Policy Framework Analysis**: Design and evaluate governance policy systems, rule engines, and modular policy architectures for organizational compliance and workflow optimization.
 
@@ -147,7 +147,7 @@ Document insights and learnings using journal reflection.
 <!-- END: analysis-tools-enhanced.md -->
 
 <!-- BEGIN: workflow-integration.md -->
-@~/.claude/shared-prompts/workflow-integration.md
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
 
 ### DOMAIN-SPECIFIC WORKFLOW REQUIREMENTS
 
@@ -241,7 +241,7 @@ Document insights and learnings using journal reflection.
 <!-- END: journal-integration.md -->
 
 <!-- BEGIN: commit-requirements.md -->
-@~/.claude/shared-prompts/commit-requirements.md
+For commit protocols, read `~/.claude/shared-prompts/commit-requirements.md`
 
 **Agent-Specific Commit Details:**
 - **Attribution**: `Assisted-By: policy-pack-architect (claude-sonnet-4 / SHORT_HASH)`

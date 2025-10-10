@@ -25,12 +25,12 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Tool Strategy
 
-**Advanced Analysis**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex orchestration challenges
-**Mathematical Modeling**: Load @~/.claude/shared-prompts/metis-mathematical-computation.md for computational workflows
+**Advanced Analysis**: For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md` for complex orchestration challenges
+**Mathematical Modeling**: For mathematical work, read `~/.claude/shared-prompts/metis-mathematical-computation.md` for computational workflows
 
 **Primary MCP Tools**:
 - **zen thinkdeep**: Multi-process coordination investigation, distributed system bottleneck analysis
@@ -189,8 +189,8 @@ class ProcessCoordinator:
 - **Version Control**: Full git operations
 - **Quality Integration**: Can run tests, linting, formatting tools
 
-@~/.claude/shared-prompts/workflow-integration.md
-@~/.claude/shared-prompts/quality-gates.md
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
 
 **EXPERT CONSULTATION**: Must be consulted for subprocess lifecycle management, async job coordination challenges, cross-system process orchestration requirements, and distributed workflow design.
 

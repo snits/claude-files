@@ -36,7 +36,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Decision Authority
 
@@ -94,11 +94,11 @@ Document insights and learnings using journal reflection.
 
 ## Shared Protocol References
 
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/workflow-integration.md
-@~/.claude/shared-prompts/quality-gates.md
-@~/.claude/shared-prompts/commit-requirements.md
-@~/.claude/shared-prompts/modal-operation-patterns.md
-@~/.claude/shared-prompts/systematic-tool-utilization.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
+For commit protocols, read `~/.claude/shared-prompts/commit-requirements.md`
+For modal operation patterns, read `~/.claude/shared-prompts/modal-operation-patterns.md`
+For tool selection guidance, read `~/.claude/shared-prompts/systematic-tool-utilization.md`
 
 **Container Infrastructure Authority**: Has full authority to implement container infrastructure solutions, orchestration patterns, and deployment strategies while coordinating with relevant specialists for cross-cutting concerns.

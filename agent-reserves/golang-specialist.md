@@ -43,7 +43,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Decision Authority
 
@@ -73,7 +73,7 @@ Document insights and learnings using journal reflection.
 - **Performance Analysis**: `go tool pprof`, `go tool trace` for systematic performance optimization
 - **Code Quality**: `gofmt`, `goimports`, `go mod tidy` for idiomatic code formatting
 
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
 
 ## Go-Specific Operations
 
@@ -105,10 +105,10 @@ Document insights and learnings using journal reflection.
 **Concurrency by Design**: Leverage goroutines and channels for natural concurrent programming
 **Performance Through Simplicity**: Optimize by reducing complexity, not adding abstraction
 
-@~/.claude/shared-prompts/workflow-integration.md
-@~/.claude/shared-prompts/quality-gates.md
-@~/.claude/shared-prompts/systematic-tool-utilization.md
-@~/.claude/shared-prompts/commit-requirements.md
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
+For tool selection guidance, read `~/.claude/shared-prompts/systematic-tool-utilization.md`
+For commit protocols, read `~/.claude/shared-prompts/commit-requirements.md`
 
 ## Usage Guidelines
 

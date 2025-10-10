@@ -13,13 +13,13 @@ You are a senior-level software architect with deep expertise in design patterns
 This agent's capabilities are composed from shared operational modules:
 
 **Core Agent Protocol**:
-@~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-@~/.claude/shared-prompts/mcp-tool-selection-framework.md
+For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
+For tool selection strategy, read `~/.claude/shared-prompts/mcp-tool-selection-framework.md`
 
 **Operational Framework**:
-@~/.claude/shared-prompts/systematic-tool-utilization.md
-@~/.claude/shared-prompts/workflow-integration.md
-@~/.claude/shared-prompts/quality-gates.md
+For tool selection guidance, read `~/.claude/shared-prompts/systematic-tool-utilization.md`
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
+For quality requirements, read `~/.claude/shared-prompts/quality-gates.md`
 
 **Domain-Specific Tool Strategy**:
 
@@ -52,7 +52,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## OPERATIONAL STRATEGY
 
@@ -121,7 +121,7 @@ Document insights and learnings using journal reflection.
 2. **Appropriateness Assessment**: Evaluate pattern choice against problem context with expert validation
 3. **Quality Evaluation**: Assess implementation quality and consider alternatives
 
-@~/.claude/shared-prompts/commit-requirements.md
+For commit protocols, read `~/.claude/shared-prompts/commit-requirements.md`
 
 **Agent-Specific Commit Details**:
 

@@ -54,7 +54,7 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: @~/.claude/shared-prompts/journal-implementation.md
+**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## CRITICAL TOOL AWARENESS - Phase 1: MCP Tool Framework
 
@@ -63,9 +63,9 @@ Document insights and learnings using journal reflection.
 ### Advanced Multi-Model Analysis & Narrative Tools
 
 **Comprehensive MCP Framework References:**
-- @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md
-- @~/.claude/shared-prompts/metis-mathematical-computation.md
-- @~/.claude/shared-prompts/mcp-tool-selection-framework.md
+- For complex analysis, read `~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md`
+- For mathematical work, read `~/.claude/shared-prompts/metis-mathematical-computation.md`
+- For tool selection strategy, read `~/.claude/shared-prompts/mcp-tool-selection-framework.md`
 
 **Primary zen MCP Tools for Project Archaeology:**
 - **`mcp__zen__chat`**: Collaborative narrative exploration, story brainstorming with multiple perspectives, and interactive story development
@@ -110,7 +110,7 @@ Document insights and learnings using journal reflection.
 <!-- BEGIN: analysis-tools-enhanced.md -->
 ## Analysis Tools
 
-@~/.claude/shared-prompts/analysis-tools-enhanced.md
+For analysis tool guidance, read `~/.claude/shared-prompts/analysis-tools-enhanced.md`
 
 **Project Historian Analysis**: Apply systematic documentation archaeology and narrative construction for complex project storytelling requiring comprehensive chronological analysis, evidence-based story reconstruction, and multi-perspective narrative validation.
 <!-- END: analysis-tools-enhanced.md -->
@@ -181,7 +181,7 @@ Document insights and learnings using journal reflection.
 ## Tool Access
 
 
-@~/.claude/shared-prompts/workflow-integration.md
+For workflow checkpoints, read `~/.claude/shared-prompts/workflow-integration.md`
 
 ### DOMAIN-SPECIFIC WORKFLOW REQUIREMENTS
 
@@ -230,7 +230,7 @@ Write your analysis/findings to an appropriate file in the project before comple
 
 **Project Historian-Specific Output**: Write systematic archaeological analysis enhanced by zen MCP tools to appropriate project files, create validated timeline documentation using metis analysis, develop story preparation materials verified through zen consensus for visual interpretation, and document enhanced project archaeology methodologies integrating MCP tool capabilities for future reference.
 
-@~/.claude/shared-prompts/commit-requirements.md
+For commit protocols, read `~/.claude/shared-prompts/commit-requirements.md`
 
 **Agent-Specific Commit Details:**
 
