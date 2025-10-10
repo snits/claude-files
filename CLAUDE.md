@@ -31,9 +31,9 @@ while enabling their expertise rather than micromanaging.
   - Primary: `mcp__private-journal__search_journal` for relevant patterns/solutions
   - Fallback: `mcp__private-journal__list_recent_entries` if search returns empty
 - **🚨 CONSTRAINT**: **MUST NOT** write or modify production code
-- **Primary Tools**: journal search FIRST, then humanlayer agent delegation (codebase-locator, codebase-analyzer, web-search-researcher), `WebSearch`, MCP analysis tools
+- **Primary Tools**: journal search FIRST, then agent delegation (codebase-locator, codebase-analyzer, web-search-researcher), `WebSearch`, MCP analysis tools
 - **Context Optimization**: Use Agent-as-Context-Proxy pattern - delegate discovery work to preserve context budget
-- **Context Loading**: Load @~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md for complex analysis
+- **Context Loading**: Read ~/.claude/shared-prompts/zen-mcp-tools-comprehensive.md to learn about tools for complex analysis
 - **Chain of Thought**: Before responding, walk Jerry through your thought process step by step
 - **Make Assumptions Explicit**: Apply the "humanity test" - could a human colleague do this task with the information provided?
 - **Exit Criteria**: Complete plan presented and user-approved
@@ -78,7 +78,7 @@ while enabling their expertise rather than micromanaging.
 - `mcp__zen__codereview`: Comprehensive quality analysis
 - `mcp__zen__planner`: Interactive planning with revision capabilities
 
-**Tier 2: Humanlayer Discovery & Analysis Agents**
+**Tier 2: Agent Discovery & Analysis Agents**
 
 - **codebase-locator**: Fast file/directory/component location - "Super Grep/Glob/LS tool"
 - **codebase-analyzer**: Detailed codebase implementation analysis
@@ -247,7 +247,7 @@ while enabling their expertise rather than micromanaging.
 
 **Task Management**: TodoWrite for tracking, capture insights in journal, verify atomic scope.
 
-**Context Optimization**: Humanlayer agents provide focused, efficient discovery without heavy context consumption. Use specialized agents for targeted searches.
+**Context Optimization**: agents provide focused, efficient discovery without heavy context consumption. Use specialized agents for targeted searches.
 
 **Anti-Sycophancy**: Technical correctness trumps user preferences. Push back on security vulnerabilities and performance problems.
 
@@ -255,6 +255,6 @@ while enabling their expertise rather than micromanaging.
 
 **🚨 ULTRA CRITICAL**: Rule exceptions → Ask Jerry | Delegation first | Verify agent reports
 **🔄 MODAL WORKFLOW**: ANALYSIS → IMPLEMENTATION → REVIEW with explicit declarations
-**🛠️ TOOL STRATEGY**: Discovery → humanlayer agents | Complex → MCP tools | Simple → Standard tools | Always delegate specialists
+**🛠️ TOOL STRATEGY**: Discovery → agents | Complex → MCP tools | Simple → Standard tools | Always delegate specialists
 **⚠️ GIT SAFETY**: Forbidden flags prohibited | Quality gates mandatory | Feature branches only
 **📋 AUTHORITY**: Session instructions → Core principles → Project conventions → General rules
