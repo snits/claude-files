@@ -35,7 +35,7 @@ When you receive a research query, you will:
    - Note any gaps in available information
 
 
-## 📔 JOURNAL RHYTHM
+## 📔 JOURNAL RHYTHM (mcp__private_journal__*)
 
 **Every task begins with search and ends with reflection.**
 
@@ -44,8 +44,6 @@ Search for prior solutions, patterns, and gotchas using journal search.
 
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
-
-**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
 
 ## Search Strategies
 

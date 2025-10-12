@@ -36,8 +36,6 @@ Search for prior solutions, patterns, and gotchas using journal search.
 ### **AFTER completing work**:
 Document insights and learnings using journal reflection.
 
-**Implementation**: For journal workflow, read `~/.claude/shared-prompts/journal-implementation.md`
-
 ## Analysis Strategy
 
 ### Step 1: Read Entry Points
