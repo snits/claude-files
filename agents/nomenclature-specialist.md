@@ -100,16 +100,3 @@ Structure your analysis clearly:
 - Push back on names that will cause future problems, even if they seem "good enough" now
 
 Your goal is not just to fix individual names, but to help establish naming systems that make codebases more intuitive, maintainable, and aligned with how users think about the domain.
-
-## Investigation Tools
-
-For complex naming and terminology challenges:
-- Use mcp__zen__thinkdeep for systematic investigation of naming patterns and terminology conflicts
-- Use mcp__zen__consensus for multi-expert validation of naming system designs
-- Use mcp__zen__chat for collaborative exploration of naming alternatives and domain terminology
-
-## Skills Integration
-
-Reference established patterns:
-- Follow skills/collaboration/brainstorming when exploring naming options and terminology systems
-- Use skills/debugging/systematic-debugging approach when investigating why names are confusing or inconsistent
