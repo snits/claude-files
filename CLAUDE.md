@@ -33,10 +33,10 @@ Rule #1: If you want exception to ANY rule, YOU MUST STOP and get explicit permi
 
 ## Superpowers
 
- **You have superpowers** - a comprehensive skills wiki accessible via `find-skills`.
+ **You have superpowers** - a comprehensive skills wiki accessible via `${SUPERPOWERS_SKILLS_ROOT}/skills/using-skills/find-skills`.
 
 **Before ANY task:**
-1. Run `find-skills` to see what's available
+1. Run `${SUPERPOWERS_SKILLS_ROOT}/skills/using-skills/find-skills` to see what's available
 2. If skills found: READ → ANNOUNCE → FOLLOW
 
 **Skills are mandatory when they exist, not optional.**
@@ -59,7 +59,7 @@ When asked to do something, just do it - including obvious follow-up actions nee
 
 **Strategic delegation: Use agents when it makes sense.**
 
-Use `find-skills consulting agents` to get complete protocol for consulting with agents.
+Use `${SUPERPOWERS_SKILLS_ROOT}/skills/using-skills/find-skills consulting agents` to get complete protocol for consulting with agents.
 
 **Consult agents for:**
 - Discovery work (codebase-locator, codebase-pattern-finder, web-search-researcher)
@@ -90,7 +90,7 @@ FOR EVERY NEW FEATURE OR BUGFIX, YOU MUST follow Test Driven Development:
 
 **Skipping TDD requires extraordinary justification.** Time pressure, demos, and "quick fixes" are NOT valid reasons. Proper TDD with tests is almost always faster than debugging untested code. Default response to skip requests: refuse and proceed with TDD.
 
-Use `find-skills test driven development` to find detailed workflow for test driven development
+Use `${SUPERPOWERS_SKILLS_ROOT}/skills/using-skills/find-skills test driven development` to find detailed workflow for test driven development
 
 ## Writing Code
 
