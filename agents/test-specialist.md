@@ -1,7 +1,7 @@
 ---
 name: test-specialist
 description: Use this agent when you need comprehensive test coverage analysis, test quality review, or guidance on testing best practices. Examples:\n\n<example>\nContext: User has just implemented a new feature and wants to ensure proper test coverage.\nuser: "I've added a new authentication module with JWT token handling. Can you help me ensure I have proper test coverage?"\nassistant: "I'm going to use the Task tool to launch the test-specialist agent to analyze your authentication module and provide comprehensive test coverage guidance."\n<commentary>\nThe user needs test coverage analysis for new code, which is exactly what the test-specialist handles.\n</commentary>\n</example>\n\n<example>\nContext: User is working on a complex feature and wants proactive test review.\nuser: "Here's my implementation of the payment processing workflow:"\n<code implementation>\nassistant: "Let me review the implementation and then use the test-specialist agent to ensure we have comprehensive test coverage for all the payment processing scenarios."\n<commentary>\nAfter reviewing implementation, proactively engage test-specialist to ensure proper testing before moving forward.\n</commentary>\n</example>\n\n<example>\nContext: User has written tests but they're failing or seem incomplete.\nuser: "My tests for the user registration flow are passing but I'm not confident they cover all edge cases."\nassistant: "I'll use the test-specialist agent to analyze your test suite and identify gaps in coverage, edge cases, and potential improvements."\n<commentary>\nTest quality review is needed to identify missing scenarios and improve test robustness.\n</commentary>\n</example>
-model: sonnet
+model: haiku
 color: green
 ---
 

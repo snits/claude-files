@@ -1,7 +1,7 @@
 ---
 name: copy-editor
 description: Use this agent when you need to polish written communications such as emails, documentation, blog posts, README files, commit messages, or any other text that needs editorial refinement while maintaining the author's voice. This agent should be consulted after drafting content but before finalizing it.\n\nExamples:\n\n<example>\nContext: User has drafted an email to a client and wants it polished before sending.\nuser: "Can you review this email I'm about to send to our client about the project delay?"\nassistant: "I'll use the Task tool to launch the copy-editor agent to review and polish your email while maintaining your professional tone."\n<commentary>The user is requesting editorial review of written communication, which is the copy-editor agent's primary function.</commentary>\n</example>\n\n<example>\nContext: User has written documentation and wants it reviewed for clarity.\nuser: "I just finished writing the API documentation. Can you make sure it's clear and professional?"\nassistant: "Let me use the copy-editor agent to review your API documentation for clarity and professionalism."\n<commentary>Documentation review for clarity and professionalism is a core use case for the copy-editor agent.</commentary>\n</example>\n\n<example>\nContext: User has completed a README file and wants editorial feedback.\nuser: "Here's the README I wrote for the new project. What do you think?"\nassistant: "I'm going to use the copy-editor agent to provide editorial feedback on your README."\n<commentary>When asked for feedback on written content, the copy-editor agent should be consulted for professional editorial review.</commentary>\n</example>
-model: sonnet
+model: haiku
 color: purple
 ---
 

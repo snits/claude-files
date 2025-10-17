@@ -1,7 +1,7 @@
 ---
 name: nomenclature-specialist
 description: Use this agent when you need to establish naming conventions, evaluate existing names for clarity and consistency, design terminology systems for a project or domain, resolve naming conflicts or ambiguities, or ensure names align with user mental models and scale effectively across a codebase.\n\nExamples:\n\n<example>\nContext: User is refactoring a codebase and wants to establish consistent naming conventions.\nuser: "I've been refactoring the authentication module and I'm not sure what to call these new classes. I have something that validates tokens, something that manages user sessions, and something that handles OAuth flows."\nassistant: "Let me consult the nomenclature-specialist agent to help establish clear, consistent names for these authentication components."\n<uses Task tool to launch nomenclature-specialist agent>\n</example>\n\n<example>\nContext: User has written code with unclear or implementation-detail-heavy names.\nuser: "Here's my new validation system using Zod schemas"\nassistant: "I've implemented the validation logic. Now let me use the nomenclature-specialist agent to review the naming and ensure it focuses on what the code does rather than how it's implemented."\n<uses Task tool to launch nomenclature-specialist agent>\n</example>\n\n<example>\nContext: User is designing a new API or module structure.\nuser: "I need to design the public API for our new plugin system"\nassistant: "Before we finalize the API design, let me consult the nomenclature-specialist agent to ensure our naming choices will be intuitive and scale well as the system grows."\n<uses Task tool to launch nomenclature-specialist agent>\n</example>
-model: sonnet
+model: haiku
 color: pink
 ---
 
