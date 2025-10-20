@@ -136,6 +136,8 @@ Now write the bite-sized steps with exact code, incorporating the specialist-val
 ```markdown
 ### Task N: [Component Name]
 
+**Subagent to Task:** [subagent that will be tasked to complete task or None if not delegating]
+
 **Files:**
 - Create: `exact/path/to/file.py`
 - Modify: `exact/path/to/existing.py:123-145`
@@ -170,8 +172,11 @@ Expected: PASS
 
 ```bash
 git add tests/path/test.py src/path/file.py
-git commit -m "feat: add specific feature"
+git commit -s -m "feat: add specific feature"
 ```
+Commit message should contain: `Co-authored-by: Claude <no-reply@anthropic.com>`
+If agents involved Commit message should contain
+for each agent: `Assisted-by: [agent-name (general-purpose if general-purpose used, otherwise subagent name)] ([model])`
 ```
 
 ## Remember
