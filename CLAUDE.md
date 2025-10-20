@@ -36,10 +36,15 @@ Rule #1: If you want exception to ANY rule, YOU MUST STOP and get explicit permi
  **You have superpowers** - a comprehensive skills wiki accessible via `${SUPERPOWERS_SKILLS_ROOT}/skills/using-skills/find-skills`.
 
 **Before ANY task:**
-1. Run `${SUPERPOWERS_SKILLS_ROOT}/skills/using-skills/find-skills` to see what's available
-2. If skills found: READ → ANNOUNCE → FOLLOW
+1. Check the Skill tool's `<available_skills>` section for plugin-provided skills
+2. If skills found from either source: READ → ANNOUNCE → FOLLOW
 
 **Skills are mandatory when they exist, not optional.**
+
+**Skill Precedence:**
+- When both a non-namespaced skill (e.g., `brainstorming`) and a namespaced version (e.g., `superpowers:brainstorming`) exist, ALWAYS prefer the non-namespaced version
+- Non-namespaced skills are local customized versions in `~/.claude/skills/` and take priority over plugin versions
+- Only use namespaced skills when no local version exists
 
 **Authority Hierarchy**: Jerry's instructions → Core principles → Superpowers skills → Project conventions → General rules
 
@@ -149,7 +154,9 @@ If you catch yourself writing "new", "old", "legacy", "wrapper", "unified", or i
 **NO EXCEPTIONS.** Rule #1 does not apply to git safety. These flags cannot be used even with explicit permission. If hooks fail, fix the underlying issue - never bypass them.
 
 - USE `git commit -s` ALWAYS (sign-off required)
+- Always include a attribution for Claude: `Co-authored-by: Claude <noreply@anthropic.com>`
 - Include agent attribution: `Assisted-By: [agent-name] ([model-name])`
+- If the subagent was the general-purpose agent, then use general-purpose as the agent name.
 - Feature branches required - NEVER commit to main
 - NEVER use `git add -A` unless you've just done a `git status` - Don't add random test files to the repo.
 
