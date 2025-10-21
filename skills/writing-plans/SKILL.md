@@ -1,6 +1,6 @@
 ---
 name: writing-plans
-description: Use when design is complete and you need detailed implementation tasks for engineers with zero codebase context - creates comprehensive implementation plans with exact file paths, complete code examples, and verification steps assuming engineer has minimal domain knowledge
+description: Use when design is complete and you need detailed implementation tasks validated by domain experts - consults specialists (database, architecture, security, performance, etc.) to validate technical approach, then creates comprehensive implementation plans with exact file paths, complete code examples, and verification steps
 ---
 
 # Writing Plans
@@ -42,7 +42,23 @@ See `consultants:consulting-agents` for full protocol.
 
 **After discovery, before writing detailed tasks:**
 
-For each major task in the plan, validate the approach with the appropriate domain specialist.
+**When specialist validation is needed:**
+- Database schema changes, migrations, or query optimization
+- Async processing, pipelines, or distributed systems
+- Security-sensitive code (auth, payments, PII handling, API keys)
+- Performance-critical paths (high-traffic APIs, real-time processing)
+- Complex architecture changes (new patterns, major refactors)
+- Non-trivial testing strategy
+
+**When you can skip specialist validation:**
+- Straightforward cleanup (deleting files, removing dead code)
+- Simple CRUD operations following existing patterns
+- Obvious bug fixes with clear solutions
+- Documentation-only changes
+
+**If skipping:** Briefly explain why (e.g., "This is cleanup work with no technical decisions to validate").
+
+**If needed:** For each major task in the plan, validate the approach with the appropriate domain specialist.
 
 **1. Identify the right specialist:**
 
@@ -136,7 +152,7 @@ Now write the bite-sized steps with exact code, incorporating the specialist-val
 ```markdown
 ### Task N: [Component Name]
 
-**Subagent to Task:** [subagent that will be tasked to complete task or None if not delegating]
+**Subagent to Task:** [subagent that will be tasked to complete task or general-purpose if you plan to task general-purpose]
 
 **Files:**
 - Create: `exact/path/to/file.py`

@@ -42,9 +42,12 @@ Rule #1: If you want exception to ANY rule, YOU MUST STOP and get explicit permi
 **Skills are mandatory when they exist, not optional.**
 
 **Skill Precedence:**
-- When both a non-namespaced skill (e.g., `brainstorming`) and a namespaced version (e.g., `superpowers:brainstorming`) exist, ALWAYS prefer the non-namespaced version
-- Non-namespaced skills are local customized versions in `~/.claude/skills/` and take priority over plugin versions
-- Only use namespaced skills when no local version exists
+- Non-namespaced skills in `~/.claude/skills/` are local customized versions and ALWAYS take priority over plugin versions
+- **Before invoking ANY namespaced skill (e.g., `superpowers:brainstorming`):**
+  1. Check if non-namespaced version exists: `ls ~/.claude/skills/[skill-name]/`
+  2. If exists → Use Skill tool with non-namespaced name (e.g., `brainstorming`)
+  3. If not exists → Use Skill tool with namespaced name (e.g., `superpowers:brainstorming`)
+- Example: Before invoking `superpowers:brainstorming`, run `ls ~/.claude/skills/brainstorming/` to check for local version
 
 **Authority Hierarchy**: Jerry's instructions → Core principles → Superpowers skills → Project conventions → General rules
 
