@@ -78,17 +78,38 @@ Task tool (code-reviewer):
 
 **Code reviewer returns:** Strengths, Issues (Critical/Important/Minor), Assessment
 
-### 4. Apply Review Feedback
+### 4. Apply Review Feedback and Verify Fixes
 
 **If issues found:**
 - Fix Critical issues immediately
 - Fix Important issues before next task
 - Note Minor issues
 
-**Dispatch follow-up subagent if needed:**
+**Dispatch follow-up subagent to apply fixes:**
 ```
 "Fix issues from code review: [list issues]"
 ```
+
+**Re-dispatch code-reviewer to verify fixes resolved the issues:**
+```
+Task tool (code-reviewer):
+  Use template at requesting-code-review/code-reviewer.md
+
+  WHAT_WAS_IMPLEMENTED: [from fix subagent's report]
+  PLAN_OR_REQUIREMENTS: Original code review issues
+  BASE_SHA: [commit before fixes]
+  HEAD_SHA: [commit after fixes]
+  DESCRIPTION: Verification that fixes resolved code review issues
+```
+
+**If code-reviewer still finds issues:**
+- Dispatch another fix subagent with remaining issues
+- Re-dispatch code-reviewer again
+- Repeat this cycle until code-reviewer confirms no issues remain
+
+**Only proceed to Step 5 when:**
+- Code-reviewer confirms Critical and Important issues are resolved
+- Minor issues can remain (note them for tracking)
 
 ### 5. Mark Complete, Next Task
 
@@ -138,7 +159,10 @@ Reviewer: Strengths: Solid. Issues (Important): Missing progress reporting
 [Dispatch fix subagent]
 Fix subagent: Added progress every 100 conversations
 
-[Verify fix, mark Task 2 complete]
+[Re-dispatch code-reviewer to verify fix]
+Reviewer: Issue resolved, progress reporting now working. No remaining issues.
+
+[Mark Task 2 complete]
 
 ...
 
@@ -169,7 +193,10 @@ Done!
 
 **Never:**
 - Skip code review between tasks
+- Skip re-reviewing after fixes are applied
+- Trust fix subagent reports without code-reviewer verification
 - Proceed with unfixed Critical issues
+- Mark task complete while code-reviewer issues remain
 - Dispatch multiple implementation subagents in parallel (conflicts)
 - Implement without reading plan task
 
