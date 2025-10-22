@@ -18,7 +18,7 @@ Transform rough ideas into fully-formed designs through structured questioning a
 | Phase | Key Activities | Tool Usage | Output |
 |-------|---------------|------------|--------|
 | **1. Understanding** | Ask questions (one at a time) | AskUserQuestion for choices | Purpose, constraints, criteria |
-| **1.5. Domain Experts & Premise** | Identify specialists, validate premise | Task tool for specialist consultation | Validated premise OR simpler alternative |
+| **1.5. Premise Validation** | Validate premise with domain-focused consultation | Task tool for general-purpose consultation | Validated premise OR simpler alternative |
 | **2. Exploration** | Propose 2-3 approaches | AskUserQuestion for approach selection | Architecture options with trade-offs |
 | **3. Design Presentation** | Present in 200-300 word sections | Open-ended questions | Complete design with validation |
 | **4. Design Documentation** | Write design document | writing-clearly-and-concisely skill | Design doc in docs/plans/ |
@@ -32,7 +32,7 @@ Copy this checklist to track progress:
 ```
 Brainstorming Progress:
 - [ ] Phase 1: Understanding (purpose, constraints, criteria gathered)
-- [ ] Phase 1.5: Domain Experts & Premise (specialists identified and consulted, premise validated OR simpler alternative found)
+- [ ] Phase 1.5: Premise Validation (consulted with domain-focused tasks, premise validated OR simpler alternative found)
 - [ ] Phase 2: Exploration (2-3 approaches proposed and evaluated)
 - [ ] Phase 3: Design Presentation (design validated in sections)
 - [ ] Phase 4: Design Documentation (design written to docs/plans/)
@@ -76,72 +76,65 @@ Use Phase 1.5 for **significant features** - skip only for trivial changes.
 - Solutions looking for problems
 - Complexity increases without validated benefit
 
-#### Phase 1.5a: Identify Domain Expertise Needed
+#### Phase 1.5: Premise Validation (REQUIRED)
 
-After Phase 1 understanding, analyze what technical domains the idea touches.
+**Use general-purpose agents with domain-focused task wording** to question the premise.
+
+**Identify consultation needs:**
+
+After Phase 1 understanding, identify what perspectives would challenge the idea effectively.
 
 **Example analysis:**
 ```
 "This involves database schema changes, async background processing, and semantic search"
-"Domains: database design, data pipelines, performance optimization"
-"Needed specialists: database-optimization-specialist, data-pipeline-architect, performance-engineer"
+"Need validation on: database design decisions, data pipeline architecture, performance implications"
+"Will consult general-purpose agents with domain-focused tasks"
 ```
 
-**Present to Jerry:**
-```
-"Based on the idea, I think we need these specialists:
-- [specialist-name]: [why needed for this idea]
-- [specialist-name]: [why needed for this idea]
-
-Should I wait while you create these agents, or do they already exist in the project?"
-```
-
-**Wait for Jerry to:**
-- Create new specialists (using his templates)
-- Point to existing specialists in project or other projects
-- Confirm you can proceed
-
-#### Phase 1.5b: Premise Validation (REQUIRED)
-
-**Use Task tool to consult specialists** identified in 1.5a.
-
-**Specialist mission:** Question the premise, not design implementation.
-
-**Questions specialists MUST address:**
+**Premise validation questions that MUST be addressed:**
 1. **Evidence of need:** What metrics/data show this problem exists?
 2. **Current state:** What's actually failing with current approach?
 3. **Simpler alternatives:** Can we solve this without the proposed complexity?
 4. **Complexity costs:** What's the operational/maintenance burden?
 5. **Success criteria:** How will we know this actually helped?
 
-**Example consultation:**
+**Example consultation (domain-focused task wording):**
 ```
-Task: consultants:architecture-specialist
+Task: general-purpose
 
-"Please evaluate whether we should build [feature description].
+"Evaluate whether we should build [feature description] from a database architecture perspective.
 
 Question the premise:
-- What evidence do we have this is needed?
-- What simpler alternatives exist?
-- What are the complexity costs?
-- How will we measure success?
+- Database design: What evidence shows current schema is inadequate? What simpler schema changes could solve this?
+- Data pipeline: Why async processing vs synchronous? What are the operational costs of async?
+- Semantic search: What's the actual use case? Can simpler full-text search suffice?
+- Complexity cost: What's the maintenance burden of this stack? What breaks when it fails?
+- Success metrics: How will we measure if this actually helped vs added complexity?
 
-Your goal is to challenge the idea, not design it."
+Your goal: Challenge the idea with domain expertise, not design it. Flag when simpler alternatives exist."
 ```
 
-**Incorporate specialist feedback:**
-- If specialists identify fatal flaws → Return to Phase 1 or abandon idea
-- If specialists suggest simpler alternatives → Explore those instead
+**Multiple domain consultations:**
+
+For multi-domain features, dispatch 2-3 general-purpose agents in parallel with different domain focuses:
+```
+- Agent #1: "Evaluate from database/storage perspective: ..."
+- Agent #2: "Evaluate from performance/scalability perspective: ..."
+- Agent #3: "Evaluate from operational/maintenance perspective: ..."
+```
+
+**Incorporate feedback:**
+- If agents identify fatal flaws → Return to Phase 1 or abandon idea
+- If agents suggest simpler alternatives → Explore those instead
 - If premise validated → Document evidence/metrics in design, proceed to Phase 2
 
 **TodoWrite enforcement:**
 
 Add these todos when entering Phase 1.5:
-1. "Identify domain expertise needed for [idea]"
-2. "Consult [specialist-name] for premise validation"
-3. "Incorporate specialist premise feedback"
+1. "Consult general-purpose agent(s) for premise validation on [domains]"
+2. "Incorporate premise feedback (validate evidence, explore simpler alternatives)"
 
-**Output:** Either validated premise with evidence, or return to Phase 1 with specialists' simpler alternatives.
+**Output:** Either validated premise with evidence, or return to Phase 1 with simpler alternatives.
 
 ### Phase 2: Exploration
 
@@ -149,44 +142,44 @@ Add these todos when entering Phase 1.5:
 - Propose 2-3 different approaches
 - For each: Core architecture, trade-offs, complexity assessment
 
-**Step 2: Specialist evaluation (if needed)**
+**Step 2: Domain evaluation (if needed)**
 
-**When specialist evaluation is needed:**
+**When domain evaluation is needed:**
 - Approaches have significant architectural trade-offs (event-driven vs synchronous, storage patterns, concurrency models)
 - Performance, security, or scalability implications differ between options
 - Multiple valid technical solutions with different complexity/benefit profiles
 
-**When you can skip specialist evaluation:**
+**When you can skip domain evaluation:**
 - Approach is straightforward with no architectural decisions
-- Specialists already addressed approach in Phase 1.5b premise validation
+- Phase 1.5 premise validation already addressed approach evaluation
 - Work is cleanup, deletion, or obvious implementation
 
-**If skipping:** Briefly explain why (e.g., "Specialists already validated this in Phase 1.5b" or "No architectural trade-offs to evaluate").
+**If skipping:** Briefly explain why (e.g., "Already validated in Phase 1.5" or "No architectural trade-offs to evaluate").
 
 **If needed:**
-- **Use Task tool** to consult specialists from Phase 1.5a
-- Ask specialists to evaluate technical soundness of each approach
+- **Use Task tool** with general-purpose agents and domain-focused wording
+- Ask agents to evaluate technical soundness of each approach from domain perspective
 - Questions: Performance characteristics, scalability, failure modes, operational complexity
 
-**Example consultation:**
+**Example consultation (domain-focused task wording):**
 ```
-Task: consultants:database-optimization-specialist
+Task: general-purpose
 
-"Please evaluate these 3 database approaches for [feature]:
+"Evaluate these 3 database approaches for [feature] from a database performance and scalability perspective:
 
 Approach A: [description]
 Approach B: [description]
 Approach C: [description]
 
-For each, assess:
-- Query performance characteristics
-- Schema migration complexity
-- Scalability concerns
+For each, assess with database expertise:
+- Query performance: N+1 queries? Index usage? Join complexity?
+- Schema migration: Breaking changes? Data migration cost?
+- Scalability: How does it perform at 10x, 100x, 1000x data volume?
 - Data consistency trade-offs"
 ```
 
 **Step 3: Present evaluated approaches to Jerry**
-- Incorporate specialist feedback into trade-off descriptions
+- Incorporate domain evaluation feedback into trade-off descriptions
 - **Use AskUserQuestion tool** to present approaches as structured choices
 - Ask which approach resonates
 
