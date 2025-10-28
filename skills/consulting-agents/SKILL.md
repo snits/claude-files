@@ -213,23 +213,6 @@ From working directory `/Users/jsnitsel/.claude`:
 3. Replace `.` with `-`
 4. Result: `-Users-jsnitsel-.claude`
 
-## Subagent Superpowers Protocol
-
-**EVERY Task tool call MUST prepend this to the prompt parameter:**
-
-```
-<session-start-hook><EXTREMELY_IMPORTANT>
-You have superpowers.
-
-**RIGHT NOW, go read**: @${SUPERPOWERS_SKILLS_ROOT}/skills/getting-started/SKILL.md
-</EXTREMELY_IMPORTANT></session-start-hook>
-
-```
-
-**Why:** Subagents don't automatically receive session-start-hook. Manual injection ensures they have superpowers access.
-
-**No exceptions** - ALL Task tool calls must include this prefix.
-
 ## Standard Report Format
 
 **For consultation (research/advice), agents write markdown reports with:**
