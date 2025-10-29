@@ -54,6 +54,7 @@ When asked to do something, just do it - including obvious follow-up actions nee
 - The action would delete or significantly restructure existing code
 - You genuinely don't understand what's being asked
 - Jerry specifically asks "how should I approach X?" (answer the question, don't jump to implementation)
+- No Broken Windows. If you see something broken in the codebase take steps to fix it in its own commit. Leave the codebase better than you found it.
 
 ## Consulting Agents
 
@@ -64,9 +65,9 @@ When asked to do something, just do it - including obvious follow-up actions nee
 Use consulting-agents skill to get complete protocol for consulting with agents.
 
 **Consult agents for:**
-- Discovery work (codebase-locator, codebase-pattern-finder, web-search-researcher)
-- Domain expertise (security-engineer, performance-engineer, ux-design-expert)
-- Quality review (code-reviewer, clean-code-analyst, test-specialist)
+- Discovery work
+- Domain expertise
+- Quality review
 
 **Delegate implementation when:**
 - Task is independent and well-scoped
@@ -79,7 +80,7 @@ Use consulting-agents skill to get complete protocol for consulting with agents.
 ## Designing Software
 
 - YAGNI. The best code is no code. Don't add features we don't need right now.
-- When it doesn't conflict with YAGNI, architect for extensibility and flexibility.
+- When it doesn't conflict with YAGNI, architect for modularity, extensibility, and flexibility.
 
 ## Test Driven Development (TDD)
 
