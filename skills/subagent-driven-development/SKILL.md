@@ -7,7 +7,7 @@ description: Use when executing implementation plans with independent tasks in t
 
 Execute plan by dispatching fresh subagent per task, with code review after each.
 
-**Core principle:** Fresh subagent per task + review between tasks = high quality, fast iteration
+**Core principle:** Fresh subagent per task + vetted prompts + review between tasks = high quality, fast iteration
 
 ## Overview
 
@@ -33,36 +33,53 @@ Execute plan by dispatching fresh subagent per task, with code review after each
 
 Read plan file, create TodoWrite with all tasks.
 
-### 2. Execute Task with Subagent
+### 2. Prepare Task Prompt (Vetting Required)
 
 For each task:
 
-**Determine subagent to use:**
-Review the Task tool's available agent types and choose the most appropriate for the task.
-	If no agent seems suitable use the general-purpose agent, or inform the user of the type of agent you would like to use along with a suitable 2-3 sentence prompt to provide the /agents command the subagent's creation.
+**2a. Select the execution agent.**
+- Default to general-purpose; if the task brief specifies a role, include the Role block exactly as written.
+- If no role exists but the task needs a specialized lens, compose one using the Dynamic Role Prompt Composer (seniority + domain focus + mandate).
 
-**Dispatch fresh subagent:**
+**2b. Draft the implementation prompt.**
+- Base it on the task brief from `writing-tasks`.
+- Include acceptance criteria, required tests, deliverables, and reporting expectations.
+- Example scaffold:
+  ```
+  Role: Senior Observability-minded Backend Engineer ensuring resilient rollout.
+  Task: Implement Task 3 from docs/tasks/2024-05-10-feature-task-3.md.
+  Context: <short reminder of system + constraints>
+  Requirements:
+  - ...
+  Tests:
+  - ...
+  Report back with: summary, tests run/results, follow-ups.
+  ```
+
+**2c. Vet the prompt with the agent (max 3 iterations).**
+Initiate a pre-dispatch conversation:
+```
+"I'm planning to task you with the following prompt. Let me know what additional context you need to be successful, or confirm it's ready:
+
+<prompt>
+"
+```
+- Capture requested adjustments (files to link, extra constraints, missing test expectations).
+- Update the prompt and restate until the agent confirms it is sufficient or you reach the third iteration. If still unclear, escalate back to planning.
+
+### 3. Dispatch Implementation Subagent
+
+Once the prompt is validated, send it in a fresh Task tool invocation:
 ```
 Task tool ([subagent]):
   description: "Implement Task N: [task name]"
   prompt: |
-    You are implementing Task N from [plan-file].
-
-    Read that task carefully. Your job is to:
-    1. Implement exactly what the task specifies
-    2. Write tests (following TDD if task says to)
-    3. Verify implementation works
-    4. Commit your work
-    5. Report back
-
-    Work from: [directory]
-
-    Report: What you implemented, what you tested, test results, files changed, any issues
+    <final vetted prompt from Step 2>
 ```
 
-**Subagent reports back** with summary of work.
+**Subagent reports back** with summary of work (implementation, tests, commits, issues).
 
-### 3. Review Subagent's Work
+### 4. Review Subagent's Work
 
 **Dispatch code-reviewer subagent:**
 ```
@@ -78,7 +95,7 @@ Task tool (code-reviewer):
 
 **Code reviewer returns:** Strengths, Issues (Critical/Important/Minor), Assessment
 
-### 4. Apply Review Feedback and Verify Fixes
+### 5. Apply Review Feedback and Verify Fixes
 
 **If issues found:**
 - Fix Critical issues immediately
@@ -107,24 +124,24 @@ Task tool (code-reviewer):
 - Re-dispatch code-reviewer again
 - Repeat this cycle until code-reviewer confirms no issues remain
 
-**Only proceed to Step 5 when:**
+**Only proceed to Step 6 when:**
 - Code-reviewer confirms Critical and Important issues are resolved
 - Minor issues can remain (note them for tracking)
 
-### 5. Mark Complete, Next Task
+### 6. Mark Complete, Next Task
 
 - Mark task as completed in TodoWrite
 - Move to next task
-- Repeat steps 2-5
+- Repeat steps 2-6
 
-### 6. Final Review
+### 7. Final Review
 
 After all tasks complete, dispatch final code-reviewer:
 - Reviews entire implementation
 - Checks all plan requirements met
 - Validates overall architecture
 
-### 7. Complete Development
+### 8. Complete Development
 
 After final review passes:
 - Announce: "I'm using the finishing-a-development-branch skill to complete this work."
@@ -140,6 +157,9 @@ You: I'm using Subagent-Driven Development to execute this plan.
 
 Task 1: Hook installation script
 
+[Draft prompt, vet with agent]
+Agent: Prompt has enough detail, ready to execute.
+
 [Dispatch implementation subagent]
 Subagent: Implemented install-hook with tests, 5/5 passing
 
@@ -149,6 +169,12 @@ Reviewer: Strengths: Good test coverage. Issues: None. Ready.
 [Mark Task 1 complete]
 
 Task 2: Recovery modes
+
+[Draft prompt, vet with agent]
+Agent: Need expected telemetry format before starting.
+
+[Revise prompt with telemetry details, reconfirm readiness]
+Agent: Ready now.
 
 [Dispatch implementation subagent]
 Subagent: Added verify/repair, 8/8 tests passing
@@ -194,6 +220,7 @@ Done!
 **Never:**
 - Skip code review between tasks
 - Skip re-reviewing after fixes are applied
+- Skip prompt vetting (dispatch without agent sign-off)
 - Trust fix subagent reports without code-reviewer verification
 - Proceed with unfixed Critical issues
 - Mark task complete while code-reviewer issues remain

@@ -11,6 +11,8 @@ Transform rough ideas into fully-formed designs through structured questioning a
 
 **Core principle:** Ask questions to understand, explore alternatives, present design incrementally for validation.
 
+**Consult smart:** When a perspective gap appears, compose a Role block (see consulting-agents) and task the general-purpose agent for targeted techniques, architecture patterns, or stack recommendations.
+
 **Announce at start:** "I'm using the brainstorming skill to refine your idea into a design."
 
 ## Quick Reference
@@ -18,12 +20,12 @@ Transform rough ideas into fully-formed designs through structured questioning a
 | Phase | Key Activities | Tool Usage | Output |
 |-------|---------------|------------|--------|
 | **1. Understanding** | Ask questions (one at a time) | AskUserQuestion for choices | Purpose, constraints, criteria |
-| **1.5. Premise Validation** | Validate premise with domain-focused consultation | Task tool for general-purpose consultation | Validated premise OR simpler alternative |
+| **1.5. Consultation & Premise Validation** | Validate premise, gather architecture/tech stack insights | Task tool (general-purpose + optional Role block) | Validated premise, option bank, risk notes |
 | **2. Exploration** | Propose 2-3 approaches | AskUserQuestion for approach selection | Architecture options with trade-offs |
 | **3. Design Presentation** | Present in 200-300 word sections | Open-ended questions | Complete design with validation |
 | **4. Design Documentation** | Write design document | writing-clearly-and-concisely skill | Design doc in docs/plans/ |
 | **5. Worktree Setup** | Set up isolated workspace | using-git-worktrees skill | Ready development environment |
-| **6. Planning Handoff** | Create implementation plan | writing-plans skill | Detailed task breakdown |
+| **6. Planning Handoff** | Create implementation plan | writing-plans skill | Plan + queued task briefs |
 
 ## The Process
 
@@ -32,7 +34,7 @@ Copy this checklist to track progress:
 ```
 Brainstorming Progress:
 - [ ] Phase 1: Understanding (purpose, constraints, criteria gathered)
-- [ ] Phase 1.5: Premise Validation (consulted with domain-focused tasks, premise validated OR simpler alternative found)
+- [ ] Phase 1.5: Consultation & Premise Validation (role-tuned agent inputs captured, premise validated OR alternatives documented)
 - [ ] Phase 2: Exploration (2-3 approaches proposed and evaluated)
 - [ ] Phase 3: Design Presentation (design validated in sections)
 - [ ] Phase 4: Design Documentation (design written to docs/plans/)
@@ -57,7 +59,7 @@ Options:
   - "Cookies" (works with SSR, compatible with older approach)
 ```
 
-### Phase 1.5: Domain Expert Identification & Premise Validation
+### Phase 1.5: Consultation & Premise Validation
 
 **When Phase 1.5 is REQUIRED:**
 
@@ -76,20 +78,24 @@ Use Phase 1.5 for **significant features** - skip only for trivial changes.
 - Solutions looking for problems
 - Complexity increases without validated benefit
 
-#### Phase 1.5: Premise Validation (REQUIRED)
+#### Consultation Workflow (REQUIRED)
 
-**Use general-purpose agents with domain-focused task wording** to question the premise.
+**1. Map the perspectives needed:**
+- Premise pressure test (evidence, alternatives, hidden constraints)
+- Architecture/tech stack recommendations (patterns, algorithms, data stores)
+- Execution risks (observability, operations, rollout)
 
-**Identify consultation needs:**
+**2. Compose Role blocks when the conversation needs a specific lens.**
+Use the Dynamic Role Prompt Composer in `consulting-agents`:
+- Seniority + domain focus + mandate sentence
+- Example: `Role: Principal Data Platform Architect prioritizing operational simplicity and SLA guardrails.`
 
-After Phase 1 understanding, identify what perspectives would challenge the idea effectively.
+**3. Draft the task prompt below the Role block.** Include:
+- What to evaluate or design
+- Current context (Stage, user goals, constraints gathered in Phase 1)
+- Specific questions to answer (see lists below)
 
-**Example analysis:**
-```
-"This involves database schema changes, async background processing, and semantic search"
-"Need validation on: database design decisions, data pipeline architecture, performance implications"
-"Will consult general-purpose agents with domain-focused tasks"
-```
+**4. Run the Task Prompt Iteration Protocol** (max 3 passes) with the chosen agent. Let the agent confirm the prompt has enough detail before dispatching fresh context.
 
 **Premise validation questions that MUST be addressed:**
 1. **Evidence of need:** What metrics/data show this problem exists?
@@ -98,43 +104,35 @@ After Phase 1 understanding, identify what perspectives would challenge the idea
 4. **Complexity costs:** What's the operational/maintenance burden?
 5. **Success criteria:** How will we know this actually helped?
 
-**Example consultation (domain-focused task wording):**
+**Technique & architecture exploration prompts:**
 ```
-Task: general-purpose
-
-"Evaluate whether we should build [feature description] from a database architecture perspective.
-
-Question the premise:
-- Database design: What evidence shows current schema is inadequate? What simpler schema changes could solve this?
-- Data pipeline: Why async processing vs synchronous? What are the operational costs of async?
-- Semantic search: What's the actual use case? Can simpler full-text search suffice?
-- Complexity cost: What's the maintenance burden of this stack? What breaks when it fails?
-- Success metrics: How will we measure if this actually helped vs added complexity?
-
-Your goal: Challenge the idea with domain expertise, not design it. Flag when simpler alternatives exist."
+Role: Principal Frontend Platform Engineer focused on performance + accessibility parity.
+Task: Recommend 2-3 implementation strategies for [feature]. For each, outline:
+- Framework/library choices (and why)
+- Critical components or layers to add
+- Testing + observability hooks needed
+- Risks that need mitigation
 ```
 
-**Multiple domain consultations:**
-
-For multi-domain features, dispatch 2-3 general-purpose agents in parallel with different domain focuses:
+**Parallelize with intent when multiple lenses matter:**
 ```
-- Agent #1: "Evaluate from database/storage perspective: ..."
-- Agent #2: "Evaluate from performance/scalability perspective: ..."
-- Agent #3: "Evaluate from operational/maintenance perspective: ..."
+- Agent #1 (Role: Staff Database Reliability Engineer): "Challenge the premise + data design."
+- Agent #2 (Role: Senior Application Security Reviewer): "Enumerate auth/PII threats."
+- Agent #3 (no role): "Propose simpler alternatives that meet the stated success criteria."
 ```
 
 **Incorporate feedback:**
-- If agents identify fatal flaws → Return to Phase 1 or abandon idea
-- If agents suggest simpler alternatives → Explore those instead
-- If premise validated → Document evidence/metrics in design, proceed to Phase 2
+- If consultations surface fatal flaws → Return to Phase 1 or abandon idea
+- If they suggest simpler alternatives → Explore and compare them in Phase 2
+- If premise validated → Capture the evidence, selected patterns, and risks in your notes before moving on
 
 **TodoWrite enforcement:**
 
 Add these todos when entering Phase 1.5:
-1. "Consult general-purpose agent(s) for premise validation on [domains]"
-2. "Incorporate premise feedback (validate evidence, explore simpler alternatives)"
+1. "Consult agents (with Role blocks where helpful) for premise + architecture validation on [domains]"
+2. "Synthesize consultation findings into design notes (evidence, options, risks)"
 
-**Output:** Either validated premise with evidence, or return to Phase 1 with simpler alternatives.
+**Output:** Validated premise with recorded evidence, plus a bank of viable approaches and risks to carry into Phase 2.
 
 ### Phase 2: Exploration
 
@@ -151,7 +149,7 @@ Add these todos when entering Phase 1.5:
 
 **When you can skip domain evaluation:**
 - Approach is straightforward with no architectural decisions
-- Phase 1.5 premise validation already addressed approach evaluation
+- Phase 1.5 consultation already addressed approach evaluation
 - Work is cleanup, deletion, or obvious implementation
 
 **If skipping:** Briefly explain why (e.g., "Already validated in Phase 1.5" or "No architectural trade-offs to evaluate").
@@ -219,6 +217,7 @@ When your human partner confirms (any affirmative response):
 - Announce: "I'm using the writing-plans skill to create the implementation plan."
 - **REQUIRED SUB-SKILL:** Use writing-plans
 - Create detailed plan in the worktree
+- Queue follow-up: "I'm using the writing-tasks skill to draft the task briefs." Run that skill for each task that needs a brief before execution begins.
 
 ## Question Patterns
 
