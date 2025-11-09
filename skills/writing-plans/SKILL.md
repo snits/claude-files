@@ -7,7 +7,7 @@ description: Use when design is approved and you need a modular, TDD-friendly im
 
 ## Overview
 
-Translate a validated design into an execution-ready plan that balances speed with longevity. Plans list the minimal set of tasks required to hit the goal without cutting quality corners: correct algorithms and data structures, maintainable abstractions, test-first mindset. Every task should be small enough for a focused agent pass yet provide enough context to work independently or in parallel workspaces.
+Translate a validated design into an execution-ready plan that balances speed with longevity. Plans list the minimal set of bite-sized tasks required to hit the goal without cutting quality corners: correct algorithms and data structures, maintainable abstractions, test-first mindset. Every task should be bite-sized for a focused agent to use, but the prompt should provide enough context to work independently or in parallel workspaces.
 
 **Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
 
@@ -34,7 +34,7 @@ Every plan starts with this header (update placeholders):
 ```markdown
 # <Feature Name> Implementation Plan
 
-> **For Claude:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development to execute this plan task-by-task.
+> **For Claude:** REQUIRED SUB-SKILL: Use subagent-driven-development to execute this plan task-by-task.
 
 **Goal:** <Single sentence outcome>
 
@@ -53,13 +53,13 @@ For each task:
 - Use `### Task N: <scope>` as the heading.
 - Provide a two-to-three sentence objective that states the user impact, critical acceptance criteria, and testing expectations.
 - Call out dependencies (e.g., "Depends on Task 1 tracer logging").
-- Reference the detailed brief produced via `writing-tasks`:
+- Generate a prompt using the `writing-tasks` skill, and reference the prompt here:
   ```
-  Task Brief: docs/tasks/<date>-<feature>-task-<n>.md
+  Task Prompt: docs/tasks/<date>-<feature>-task-<n>.md
   ```
 - Mention the preferred execution agent (general-purpose by default; include role guidance if the task will need it).
 
-Keep tasks independent where possible so agents can work in parallel worktrees. If a task only produces a tracer bullet, explicitly note the follow-up expansion tasks.
+Keep tasks bite-sized, and independent where possible so agents can work in parallel worktrees.
 
 ## Modularity, Extensibility, and TDD Checks
 
@@ -90,7 +90,7 @@ Iterate up to three times using the Task Prompt Iteration Protocol until the rev
 
 ## Finalize & Handoff
 
-1. Ensure all tasks reference their future detailed briefs (`writing-tasks`).
+1. Ensure all tasks reference their prompts generated via (`writing-tasks`).
 2. Add a short "Next Steps" section:
    - "Confirm task briefs exist or schedule time to write them."
    - "Decide execution mode (subagent-driven vs executing-plans)."

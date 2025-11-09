@@ -39,14 +39,14 @@ For each task:
 
 **2a. Select the execution agent.**
 - Default to general-purpose; if the task brief specifies a role, include the Role block exactly as written.
-- If no role exists but the task needs a specialized lens, compose one using the Dynamic Role Prompt Composer (seniority + domain focus + mandate).
+- If no role exists but the task needs a specialized lens, compose one consisting of domain focus + mandate.
 
 **2b. Draft the implementation prompt.**
-- Base it on the task brief from `writing-tasks`.
-- Include acceptance criteria, required tests, deliverables, and reporting expectations.
+- Base it on the task prompt from `writing-tasks`.
+- Include acceptance criteria, required tests, deliverables, and reporting expectations. Assume the agent has no context, and provide necessary context for them.
 - Example scaffold:
   ```
-  Role: Senior Observability-minded Backend Engineer ensuring resilient rollout.
+  Role: Observability-minded Backend Engineer ensuring resilient rollout.
   Task: Implement Task 3 from docs/tasks/2024-05-10-feature-task-3.md.
   Context: <short reminder of system + constraints>
   Requirements:

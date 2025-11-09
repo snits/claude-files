@@ -217,7 +217,6 @@ When your human partner confirms (any affirmative response):
 - Announce: "I'm using the writing-plans skill to create the implementation plan."
 - **REQUIRED SUB-SKILL:** Use writing-plans
 - Create detailed plan in the worktree
-- Queue follow-up: "I'm using the writing-tasks skill to draft the task briefs." Run that skill for each task that needs a brief before execution begins.
 
 ## Question Patterns
 
