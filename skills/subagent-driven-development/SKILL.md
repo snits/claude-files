@@ -37,11 +37,16 @@ Read plan file, create TodoWrite with all tasks.
 
 For each task:
 
-**2a. Select the execution agent.**
+**2a. Update task status in beads (if project uses bd).**
+- Check if task has bd issue ID (documented in plan)
+- If yes: `bd start <issue-id>` to mark in progress
+- This tracks progress in the issue system
+
+**2b. Select the execution agent.**
 - Default to general-purpose; if the task brief specifies a role, include the Role block exactly as written.
 - If no role exists but the task needs a specialized lens, compose one consisting of domain focus + mandate.
 
-**2b. Draft the implementation prompt.**
+**2c. Draft the implementation prompt.**
 - Base it on the task prompt from `writing-tasks`.
 - Include acceptance criteria, required tests, deliverables, and reporting expectations. Assume the agent has no context, and provide necessary context for them.
 - Example scaffold:
@@ -56,7 +61,7 @@ For each task:
   Report back with: summary, tests run/results, follow-ups.
   ```
 
-**2c. Vet the prompt with the agent (max 3 iterations).**
+**2d. Vet the prompt with the agent (max 3 iterations).**
 Initiate a pre-dispatch conversation:
 ```
 "I'm planning to task you with the following prompt. Let me know what additional context you need to be successful, or confirm it's ready:
@@ -131,6 +136,7 @@ Task tool (code-reviewer):
 ### 6. Mark Complete, Next Task
 
 - Mark task as completed in TodoWrite
+- **Update beads (if project uses bd):** `bd done <issue-id>` to mark task complete
 - Move to next task
 - Repeat steps 2-6
 

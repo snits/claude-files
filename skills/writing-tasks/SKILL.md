@@ -60,6 +60,20 @@ Role: <If execution benefits from a perspective, define it here using the Dynami
 
 Keep steps atomic (2-5 minutes each) and include concrete code snippets or scaffolding when ambiguity might arise.
 
+## Task Scope Validation
+
+**Before writing a task prompt, verify the task is bite-sized:**
+
+- ✓ Single file or closely related 2-3 files?
+- ✓ One focused change?
+- ✓ 30-90 minute implementation?
+- ✓ Steps fit in 8-12 atomic actions?
+- ✓ ~300 lines of code or less?
+
+**If ANY of these fail, the task is too large.**
+
+**Action:** Return to planning (writing-plans skill) and decompose it into smaller tasks. Do not proceed with writing a prompt for a mega-task - it will fail during execution.
+
 ## Drafting Workflow
 
 1. **Re-state the Objective:** Translate the plan’s task summary into a succinct Goal line that highlights user impact and acceptance criteria.

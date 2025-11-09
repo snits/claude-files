@@ -47,19 +47,49 @@ Every plan starts with this header (update placeholders):
 
 Follow with sections for global considerations (migrations, rollout toggles, monitoring) before listing tasks.
 
-## Task List Structure
+## Task List Structure - MANDATORY WORKFLOW
 
-For each task:
-- Use `### Task N: <scope>` as the heading.
-- Provide a two-to-three sentence objective that states the user impact, critical acceptance criteria, and testing expectations.
-- Call out dependencies (e.g., "Depends on Task 1 tracer logging").
-- Generate a prompt using the `writing-tasks` skill, and reference the prompt here:
-  ```
-  Task Prompt: docs/tasks/<date>-<feature>-task-<n>.md
-  ```
-- Mention the preferred execution agent (general-purpose by default; include role guidance if the task will need it).
+**CRITICAL:** For EACH task, you MUST follow this sequence:
 
-Keep tasks bite-sized, and independent where possible so agents can work in parallel worktrees.
+1. Write task objective (2-3 sentences with user impact, acceptance criteria, testing)
+2. List dependencies (e.g., "Depends on Task 1 tracer logging")
+3. **IMMEDIATELY** use `writing-tasks` skill to generate the prompt file
+4. Reference the generated prompt: `Task Prompt: docs/tasks/<date>-<feature>-task-<n>.md`
+5. Mention preferred execution agent (general-purpose by default; include role guidance if needed)
+6. Move to next task
+
+**DO NOT:**
+- Write all task objectives first, then generate prompts later
+- Defer prompt generation as "optional follow-up work"
+- Reference prompts that don't exist yet
+- Skip prompt generation and mark it as "TODO"
+
+**If you find yourself with task descriptions but no prompt files, STOP - you're doing it wrong.**
+
+Keep tasks bite-sized (see guidelines below), and independent where possible so agents can work in parallel worktrees.
+
+## Task Size Guidelines (Prevent Mega-Tasks)
+
+A properly-sized task should:
+- Modify 1-3 closely related files (not 5+ files across subsystems)
+- Take 30-90 minutes for focused implementation
+- Have ONE primary objective (not "integrate all X")
+- Be independently testable without other tasks
+- Fit in ~300 lines of implementation code
+
+**RED FLAGS - Task is too large if it:**
+- Uses "all" or "each" ("modify all generators", "update each component")
+- Lists 5+ files to modify
+- Has multiple sub-bullets in objective
+- Would take >2 hours to implement
+- Requires touching multiple architectural layers
+
+**When you detect a mega-task:**
+1. STOP immediately
+2. Break into separate tasks (one per file/component/generator)
+3. Update dependencies between new tasks
+4. Generate separate prompt for each
+5. Update task numbering and tracer bullet if needed
 
 ## Modularity, Extensibility, and TDD Checks
 
@@ -91,10 +121,40 @@ Iterate up to three times using the Task Prompt Iteration Protocol until the rev
 ## Finalize & Handoff
 
 1. Ensure all tasks reference their prompts generated via (`writing-tasks`).
-2. Add a short "Next Steps" section:
-   - "Confirm task briefs exist or schedule time to write them."
-   - "Decide execution mode (subagent-driven vs executing-plans)."
-3. Save the plan to `docs/plans/…` and note it in the session scratchpad.
-4. Offer the execution options, reminding that subagent-driven development expects the plan plus task briefs.
+
+2. **Create task issues in beads (bd):**
+
+   If project uses beads (check for AGENTS.md or epic already created), create bd issues for all tasks using the two-phase pattern:
+
+   ```bash
+   # Phase 1: Create all task issues, capture IDs
+   task1_id=$(bd create "Task 1: <scope>" --parent <epic-id> --json | jq -r '.id')
+   task2_id=$(bd create "Task 2: <scope>" --parent <epic-id> --json | jq -r '.id')
+   task3_id=$(bd create "Task 3: <scope>" --parent <epic-id> --json | jq -r '.id')
+   # ... for all N tasks
+
+   # Phase 2: Wire dependencies
+   bd dep add "$task2_id" "$task1_id"  # Task 2 depends on Task 1
+   bd dep add "$task5_id" "$task1_id"  # Task 5 depends on Task 1
+   bd dep add "$task5_id" "$task3_id"  # Task 5 depends on Task 3
+   # ... for all dependencies documented in plan
+   ```
+
+   Then update plan with bd issue IDs:
+   ```markdown
+   ### Task N: <scope>
+   **Beads Issue:** <issue-id>
+   **Task Prompt:** docs/tasks/...
+   ```
+
+   Verify all tasks linked: `bd list --parent <epic-id>`
+
+3. Add a short "Next Steps" section:
+   - "All task prompts generated and bd issues created"
+   - "Decide execution mode (subagent-driven vs executing-plans)"
+
+4. Save the plan to `docs/plans/…` and note it in the session scratchpad.
+
+5. Offer the execution options, reminding that subagent-driven development expects the plan plus task briefs.
 
 A solid plan is composable, review-backed, and easy for agents (or humans) to follow without improvising. Optimize for clarity and correctness—future contributors should thank you for how little they have to guess.

@@ -56,11 +56,9 @@ When asked to do something, just do it - including obvious follow-up actions nee
 - Jerry specifically asks "how should I approach X?" (answer the question, don't jump to implementation)
 - No Broken Windows. If you see something broken in the codebase take steps to fix it in its own commit. Leave the codebase better than you found it.
 
-## Consulting Agents
+## Agent Use (Consulting and Implementation)
 
-**Default: You implement directly.** You write code, make decisions, maintain context.
-
-**Strategic delegation: Use agents when it makes sense.**
+**Strategic delegation: Use agents to help you manage your context window.**
 
 Use consulting-agents skill to get complete protocol for consulting with agents.
 
@@ -69,7 +67,7 @@ Use consulting-agents skill to get complete protocol for consulting with agents.
 - Domain expertise
 - Quality review
 
-**Delegate implementation when:**
+**Delegate implementation agent suggested in plan for tasks:**
 - Task is independent and well-scoped
 - Clear acceptance criteria exist
 - Fresh context is beneficial
@@ -173,13 +171,70 @@ If you catch yourself writing "new", "old", "legacy", "wrapper", "unified", or i
 - You MUST use your TodoWrite tool to keep track of what you're doing
 - You MUST NEVER discard tasks from your TodoWrite todo list without Jerry's explicit approval
 
+## Issue Tracking with Beads (bd)
+
+**ALL project task tracking uses beads (bd), not markdown TODOs.**
+
+See AGENTS.md in project repositories for project-specific beads workflow.
+
+### Creating Issues
+
+```bash
+# Create epic for a phase or major feature
+bd create "Phase 2: Chunk System" -t epic
+
+# Create task linked to epic
+bd create "Task 1: ChunkData implementation" --parent <epic-id>
+```
+
+### Managing Dependencies
+
+**Two-phase pattern for batch task creation:**
+
+```bash
+# Phase 1: Create all tasks, capture IDs
+task1_id=$(bd create "Task 1: ChunkData" --parent <epic-id> --json | jq -r '.id')
+task2_id=$(bd create "Task 2: ChunkCache" --parent <epic-id> --json | jq -r '.id')
+task3_id=$(bd create "Task 3: Coordinates" --parent <epic-id> --json | jq -r '.id')
+
+# Phase 2: Wire dependencies using bd dep add
+bd dep add "$task2_id" "$task1_id"  # Task 2 depends on Task 1
+bd dep add "$task3_id" "$task1_id"  # Task 3 depends on Task 1
+```
+
+**Dependency direction:** `bd dep add FROM TO` means FROM depends on TO
+- `blocks`: FROM blocks TO (FROM is prerequisite)
+- `discovered-from`: TO was discovered from FROM
+- `parent-child`: FROM is parent of TO
+
+**Alternative (simple cases):**
+```bash
+# Set dependencies at creation time (single dependency)
+bd create "Task 2: ChunkCache" --parent <epic-id> --deps blocks:$task1_id
+```
+
+### Status Updates
+
+```bash
+bd start <issue-id>      # Mark in progress
+bd done <issue-id>       # Mark complete
+bd cancel <issue-id>     # Cancel/close without completing
+```
+
+### When to Use bd vs TodoWrite
+
+- **bd issues:** Project-level tasks, epics, features (permanent record, shared tracking)
+- **TodoWrite:** Session-level progress tracking (ephemeral, helps you stay organized during work)
+
+Both can coexist - use TodoWrite to track progress through bd-tracked tasks.
+
 ## Task Priority Discipline (STAY FOCUSED)
 
 **Core problem:** Discovering issues mid-task leads to task switching, incomplete goals, and dual code paths.
 
 **Task insertion rules:**
 - BLOCKING ONLY: Add new tasks mid-stream only if they prevent current progress
-- DEFER BY DEFAULT: All other discoveries go to end of TODO.md or tasks.md
+- DEFER BY DEFAULT: All other discoveries go to journal or create bd issue for later
 - FINISH FIRST: Complete current goal before switching directions
 - NO DUAL PATHS: If you can't finish cleanly, stop and reassess
 
@@ -234,6 +289,10 @@ ENSURE PROJECT CLAUDE.MD HAS SCALE CONTEXT: Every project CLAUDE.md must include
 - Default approach (pragmatic vs enterprise)
 
 MISSING SCALE CONTEXT: If project CLAUDE.md lacks this section, ANNOUNCE "PROJECT SCALE CONTEXT MISSING, ADDING", and ADD IT immediately based on project characteristics.
+
+## Session Handoff
+- Write a short session-handoff.md when ending a session. Delete the old one if it exists.
+- These are ephemeral files, so do not commit the session-handoff.md document to the git repository.
 
 ## Core Principles
 
