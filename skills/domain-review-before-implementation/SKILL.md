@@ -1,6 +1,6 @@
 ---
 name: domain-review-before-implementation
-description: Use when implementing tasks from written briefs or specs, before writing any code - dispatches domain expert to review brief for design flaws, catches 5-10 issues per task that would otherwise become expensive bugs
+description: Use when implementing tasks from written briefs or specs, before writing any code or tasking an agent to implement - dispatches domain expert to review brief for design flaws, catches 5-10 issues per task that would otherwise become expensive bugs.
 ---
 
 # Domain Review Before Implementation
@@ -17,7 +17,7 @@ description: Use when implementing tasks from written briefs or specs, before wr
 NO IMPLEMENTATION WITHOUT DOMAIN REVIEW FIRST
 ```
 
-If you have a written brief, dispatch domain expert before any implementation. No exceptions.
+If you have a written brief, as a separate file or within a larger plan, dispatch domain expert before any implementation. No exceptions.
 
 **Not for:**
 - "Simple additions" (simple briefs hide complex issues)
@@ -72,11 +72,12 @@ Task(subagent_type="general-purpose", prompt=f"""
 **Brief location:** [path to brief]
 
 **Review focus:**
-1. [Domain-specific concerns - e.g., serialization format, data types, security]
+1. [Domain-specific concerns - e.g., serialization format, data types, security, industry standards]
 2. Edge cases and error handling
 3. Performance implications
 4. Best practices compliance
 5. Integration considerations
+6. Coherence with overall plan
 
 **Provide:**
 1. List of issues (Critical/Important/Minor)

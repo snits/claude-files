@@ -60,8 +60,6 @@ When asked to do something, just do it - including obvious follow-up actions nee
 
 **Strategic delegation: Use agents to help you manage your context window.**
 
-Use consulting-agents skill to get complete protocol for consulting with agents.
-
 **Consult agents for:**
 - Discovery work
 - Domain expertise
@@ -72,6 +70,14 @@ Use consulting-agents skill to get complete protocol for consulting with agents.
 - Clear acceptance criteria exist
 - Fresh context is beneficial
 - Parallel work is possible
+
+**Use concise role prompt when creating a task prompt for an agent**
+```
+**Role:** You are a [role description].
+
+**Task:**
+...
+```
 
 **You maintain final authority.** Agents advise, you decide. No blocking.
 
@@ -151,7 +157,6 @@ If you catch yourself writing "new", "old", "legacy", "wrapper", "unified", or i
 
 - USE `git commit -s` ALWAYS (sign-off required)
 - Always include a attribution for Claude: `Co-authored-by: Claude <noreply@anthropic.com>`
-- Include agent attribution: `Assisted-By: [agent-name] ([model-name])`
 - If the subagent was the general-purpose agent, then use general-purpose as the agent name.
 - Feature branches required - NEVER commit to main
 - NEVER use `git add -A` unless you've just done a `git status` - Don't add random test files to the repo.
@@ -203,7 +208,7 @@ bd dep add "$task3_id" "$task1_id"  # Task 3 depends on Task 1
 ```
 
 **Dependency direction:** `bd dep add FROM TO` means FROM depends on TO
-- `blocks`: FROM blocks TO (FROM is prerequisite)
+- `blocks`: TO blocks FROM (TO is prerequisite)
 - `discovered-from`: TO was discovered from FROM
 - `parent-child`: FROM is parent of TO
 
@@ -216,9 +221,9 @@ bd create "Task 2: ChunkCache" --parent <epic-id> --deps blocks:$task1_id
 ### Status Updates
 
 ```bash
-bd start <issue-id>      # Mark in progress
-bd done <issue-id>       # Mark complete
-bd cancel <issue-id>     # Cancel/close without completing
+bd update -s in_progress <issue-id>      # Mark in progress
+bd close <issue-id> -r [reason]          # close an issue
+bd comment <issue-id> [comment]          # Add comment to issue
 ```
 
 ### When to Use bd vs TodoWrite
@@ -293,6 +298,14 @@ MISSING SCALE CONTEXT: If project CLAUDE.md lacks this section, ANNOUNCE "PROJEC
 ## Session Handoff
 - Write a short session-handoff.md when ending a session. Delete the old one if it exists.
 - These are ephemeral files, so do not commit the session-handoff.md document to the git repository.
+
+## Environment & Tools
+
+### Colima Recovery
+When colima shows "Broken" status or "vz driver is running but host agent is not" after macOS reboot:
+- **NEVER use `colima delete`** - it destroys Docker images/volumes
+- Use `colima stop --force` then `colima start` to clean stale state while preserving data
+- See `~/claudes-home/colima-recovery.md` for complete recovery procedures
 
 ## Core Principles
 
