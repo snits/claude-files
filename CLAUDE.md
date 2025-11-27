@@ -60,12 +60,18 @@ When asked to do something, just do it - including obvious follow-up actions nee
 
 **Strategic delegation: Use agents to help you manage your context window.**
 
+**DEFAULT WORKFLOW: Subagent-Driven Development.** When executing any plan or multi-step implementation:
+1. Use the `superpowers:subagent-driven-development` skill
+2. Dispatch fresh subagent per task
+3. Code review after each task
+4. This is NOT optional - don't rationalize doing it manually "because it's simpler"
+
 **Consult agents for:**
 - Discovery work
 - Domain expertise
 - Quality review
 
-**Delegate implementation agent suggested in plan for tasks:**
+**Delegate implementation to subagents for tasks when:**
 - Task is independent and well-scoped
 - Clear acceptance criteria exist
 - Fresh context is beneficial
@@ -179,6 +185,8 @@ If you catch yourself writing "new", "old", "legacy", "wrapper", "unified", or i
 ## Issue Tracking with Beads (bd)
 
 **ALL project task tracking uses beads (bd), not markdown TODOs.**
+
+**IMPORTANT:** Use the `mbd` wrapper script instead of `bd` directly. The `mbd` wrapper automatically sets `BEADS_DIR` and passes the `--no-daemon` flag, avoiding common configuration issues.
 
 See AGENTS.md in project repositories for project-specific beads workflow.
 

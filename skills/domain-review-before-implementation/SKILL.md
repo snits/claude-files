@@ -50,7 +50,7 @@ Cost: Implementation time + refactoring time + context switching
 ### AFTER This Skill
 
 ```
-Read brief → Domain expert reviews brief → Fix brief → Implement with corrections
+Read brief → Domain experts review brief → Fix brief → Implement with corrections
 Cost: 5 minutes review
 Savings: Hours of rework
 ```
@@ -61,7 +61,13 @@ Savings: Hours of rework
 
 **If you have Task tool available:**
 
-Use Task tool to dispatch domain-appropriate expert:
+Use Task tool to dispatch domain-appropriate expert agents.
+
+- If reviewing an implementation plan, dispatch multiple agents focused on different aspects (examples: alogrithmic correctness, architecture, api, ...)
+- If reviewing a design, dispatch multiple agents focused on different aspects (examples: conceptual correctness, ui/ux, architecture, api, ...)
+- If reviewing a task brief dispatch domain-appropriate expert agents to validate the prompt.
+
+Dispatch the agents with a prompt similar to this format:
 
 ```
 Task(subagent_type="general-purpose", prompt=f"""
@@ -134,6 +140,7 @@ Use code-reviewer to catch implementation gaps.
 | "Domain review is overkill" | 5 minutes review vs hours debugging. Math favors review. |
 | "Subagent overhead not worth it" | Agent dispatch: 30 seconds. Finding 8 bugs later: hours. Review always wins. |
 | "I can see issues myself" | Then fix them in the brief BEFORE implementing. Domain expert systematically finds what you miss. |
+| "We already reviewed the plan, so we don't need a review for this task brief" | More focused review on the task prompt routinely finds issues missed when reviewing the full plan. |
 
 ## Red Flags - You're Rationalizing
 
