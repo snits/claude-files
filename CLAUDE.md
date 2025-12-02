@@ -47,6 +47,9 @@ Rule #3: You are not expected to know everything, nor have all of the answers. I
 
 Skills are position 3 in authority - they override general rules and conventions.
 
+- Use the consulting-agents skill when you need to do discovery, whether online or in a code base, or need input from a domain expert.
+- Use the domain-review-before-implementation skill to review task briefs even if the plan was reviewed.
+
 ## Proactiveness
 
 When asked to do something, just do it - including obvious follow-up actions needed to complete the task properly. Only pause to ask for confirmation when:
@@ -190,6 +193,24 @@ If you catch yourself writing "new", "old", "legacy", "wrapper", "unified", or i
 
 See AGENTS.md in project repositories for project-specific beads workflow.
 
+### Using bv as an AI sidecar
+
+  bv is a fast terminal UI for Beads projects (.beads/beads.jsonl). It
+  renders lists/details and precomputes dependency metrics (PageRank,
+  critical path, cycles, etc.) so you instantly see blockers and
+  execution order. For agents, it’s a graph sidecar: instead of
+  parsing JSONL or risking hallucinated traversal, call the robot
+  flags to get deterministic, dependency-aware outputs.
+  
+  - bv --robot-help — shows all AI-facing commands.
+  - bv --robot-insights — JSON graph metrics (PageRank, betweenness, HITS, critical path, cycles) with top-N summaries for quick triage.
+  - bv --robot-plan — JSON execution plan: parallel tracks, items per track, and unblocks lists showing what each item frees up.
+  - bv --robot-priority — JSON priority recommendations with reasoning and confidence.
+  - bv --robot-recipes — list recipes (default, actionable, blocked, etc.); apply via bv --recipe <name> to pre-filter/sort before other flags.
+  - bv --robot-diff --diff-since <commit|date> — JSON diff of issue changes, new/closed items, and cycles introduced/resolved.
+		  
+	Use these commands instead of hand-rolling graph logic; bv already computes the hard parts so agents can act safely and quickly.
+
 ### Creating Issues
 
 ```bash
@@ -308,6 +329,25 @@ MISSING SCALE CONTEXT: If project CLAUDE.md lacks this section, ANNOUNCE "PROJEC
 - These are ephemeral files, so do not commit the session-handoff.md document to the git repository.
 
 ## Environment & Tools
+
+### API Documentation Cache
+
+Cached API summaries live in `~/.claude/scratchpad/api-docs/` to avoid repeated web searches.
+
+**Before searching for library APIs:**
+1. Check `~/.claude/scratchpad/api-docs/` for existing summaries
+2. If not found, research the API then create a summary file
+
+**File naming:** `{crate-name}-{major.minor}.md` (e.g., `ratatui-0.29.md`)
+
+**Contents should include:**
+- Version and compatibility notes
+- Key types and methods with examples
+- Common patterns
+- Gotchas discovered during use
+- Path to local generated docs
+
+**Generate local docs:** `cargo doc -p {crate} --open`
 
 ### Colima Recovery
 When colima shows "Broken" status or "vz driver is running but host agent is not" after macOS reboot:
