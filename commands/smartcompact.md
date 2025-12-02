@@ -2,7 +2,8 @@ Generate a concise, strategic compact string for /compact based on our current c
 
 **Strategic Context Preservation:**
 - Current project status and operational state
-- Key architectural decisions and technical approaches  
+- Repository state: current branch, uncommitted changes, files being worked on
+- Key architectural decisions and technical approaches
 - Active problems being solved and their context
 - Important discoveries and lessons learned
 - Active agent definitions and their established patterns
