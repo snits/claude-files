@@ -63,7 +63,7 @@ Savings: Hours of rework
 
 Use Task tool to dispatch domain-appropriate expert agents.
 
-- If reviewing an implementation plan, dispatch multiple agents focused on different aspects (examples: alogrithmic correctness, architecture, api, ...)
+- If reviewing an implementation plan, dispatch multiple agents focused on different aspects (examples: alogrithmic correctness, architecture, api, tasks properly sized, ...)
 - If reviewing a design, dispatch multiple agents focused on different aspects (examples: conceptual correctness, ui/ux, architecture, api, ...)
 - If reviewing a task brief dispatch domain-appropriate expert agents to validate the prompt.
 
@@ -84,6 +84,7 @@ Task(subagent_type="general-purpose", prompt=f"""
 4. Best practices compliance
 5. Integration considerations
 6. Coherence with overall plan
+7. Task complexity and whether it should be decomposed.
 
 **Provide:**
 1. List of issues (Critical/Important/Minor)

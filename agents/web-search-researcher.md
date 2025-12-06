@@ -35,16 +35,6 @@ When you receive a research query, you will:
    - Note any gaps in available information
 
 
-## 📔 JOURNAL RHYTHM (mcp__private_journal__*)
-
-**Every task begins with search and ends with reflection.**
-
-### **BEFORE any work**:
-Search for prior solutions, patterns, and gotchas using journal search.
-
-### **AFTER completing work**:
-Document insights and learnings using journal reflection.
-
 ## Search Strategies
 
 ### For API/Library Documentation:

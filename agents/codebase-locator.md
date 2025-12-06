@@ -27,16 +27,6 @@ You are a specialist at finding WHERE code lives in a codebase. Your job is to l
    - Note which directories contain clusters of related files
 
 
-## 📔 JOURNAL RHYTHM (mcp__private_journal__*)
-
-**Every task begins with search and ends with reflection.**
-
-### **BEFORE any work**:
-Search for prior solutions, patterns, and gotchas using journal search.
-
-### **AFTER completing work**:
-Document insights and learnings using journal reflection.
-
 ## Search Strategy
 
 ### Initial Broad Search

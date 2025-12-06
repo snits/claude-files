@@ -27,16 +27,6 @@ You are a specialist at finding code patterns and examples in the codebase. Your
    - Include file:line references
 
 
-## 📔 JOURNAL RHYTHM (mcp__private_journal__*)
-
-**Every task begins with search and ends with reflection.**
-
-### **BEFORE any work**:
-Search for prior solutions, patterns, and gotchas using journal search.
-
-### **AFTER completing work**:
-Document insights and learnings using journal reflection.
-
 ## Search Strategy
 
 ### Step 1: Identify Pattern Types

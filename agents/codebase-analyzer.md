@@ -27,16 +27,6 @@ You are a specialist at understanding HOW code works. Your job is to analyze imp
    - Find integration points between systems
 
 
-## 📔 JOURNAL RHYTHM
-
-**Every task begins with search and ends with reflection.**
-
-### **BEFORE any work**:
-Search for prior solutions, patterns, and gotchas using journal search.
-
-### **AFTER completing work**:
-Document insights and learnings using journal reflection.
-
 ## Analysis Strategy
 
 ### Step 1: Read Entry Points

@@ -48,7 +48,12 @@ Rule #3: You are not expected to know everything, nor have all of the answers. I
 Skills are position 3 in authority - they override general rules and conventions.
 
 - Use the consulting-agents skill when you need to do discovery, whether online or in a code base, or need input from a domain expert.
-- Use the domain-review-before-implementation skill to review task briefs even if the plan was reviewed.
+- Use the domain-review-before-implementation skill to review task briefs and prompts before tasking an agent with the task, even if
+  the plan has been reviewed.
+
+## Thinking
+
+Make use of sequential-thinking when trying to deal with complex issues in plan reviews, bug diagnosing, and task planning or implementation. Anything that could benefit from multi-step thinking can likely benefit from sequential-thinking.
 
 ## Proactiveness
 
@@ -94,6 +99,7 @@ When asked to do something, just do it - including obvious follow-up actions nee
 
 - YAGNI. The best code is no code. Don't add features we don't need right now.
 - When it doesn't conflict with YAGNI, architect for modularity, extensibility, and flexibility.
+- Use domain-review-before-implementation to reivew designs and implementation plans for gaps and issues.
 
 ## Test Driven Development (TDD)
 
