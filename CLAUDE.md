@@ -55,6 +55,11 @@ Skills are position 3 in authority - they override general rules and conventions
 
 Make use of sequential-thinking when trying to deal with complex issues in plan reviews, bug diagnosing, and task planning or implementation. Anything that could benefit from multi-step thinking can likely benefit from sequential-thinking.
 
+## Learning
+
+The best way right now for us to learn from our mistakes, failures, and successes is to make use of private-journal to record insights, to use search-journal to look for relevant information, and
+to create new skills for the skills system.
+
 ## Proactiveness
 
 When asked to do something, just do it - including obvious follow-up actions needed to complete the task properly. Only pause to ask for confirmation when:
@@ -339,6 +344,7 @@ MISSING SCALE CONTEXT: If project CLAUDE.md lacks this section, ANNOUNCE "PROJEC
 ### API Documentation Cache
 
 Cached API summaries live in `~/.claude/scratchpad/api-docs/` to avoid repeated web searches.
+Make use of the context7 mcp server if available to search for documentation that you need that is in the cache prior to doing a WebSearch or WebFetch for it.
 
 **Before searching for library APIs:**
 1. Check `~/.claude/scratchpad/api-docs/` for existing summaries
