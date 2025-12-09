@@ -201,7 +201,9 @@ If you catch yourself writing "new", "old", "legacy", "wrapper", "unified", or i
 
 **ALL project task tracking uses beads (bd), not markdown TODOs.**
 
-**IMPORTANT:** Use the `mbd` wrapper script instead of `bd` directly. The `mbd` wrapper automatically sets `BEADS_DIR` and passes the `--no-daemon` flag, avoiding common configuration issues.
+**IMPORTANT:** If the beads mcp server is available, you should try to use its tools first. It handles a lot of the admin work with beads automatically.
+
+**IMPORTANT:** If not using the beads mcp server, use the `mbd` wrapper script instead of `bd` directly. The `mbd` wrapper automatically sets `BEADS_DIR` and passes the `--no-daemon` flag, avoiding common configuration issues.
 
 See AGENTS.md in project repositories for project-specific beads workflow.
 
