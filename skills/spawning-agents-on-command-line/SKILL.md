@@ -1,6 +1,6 @@
 ---
-name: subagents-spawning-agents
-description: Use when subagents need to delegate work but can't use Task tool, or when managing context budget through parallel agent spawning - spawns Claude instances via CLI backgrounding with JSON responses
+name: spawning-agents-on-the-command-line
+description: Use when subagents need to delegate work but can't use Task tool, or when needing to test skills in isolated context - spawns Claude instances via CLI backgrounding with JSON responses
 ---
 
 # Spawning Agents via CLI
