@@ -1,0 +1,415 @@
+---
+name: parallel-agent-orchestration
+description: Use when you have 3+ independent tasks that can run concurrently - dispatches multiple background agents, monitors progress, and coordinates merge/validation. Alternative to sequential subagent-driven-development when speed matters.
+---
+
+# Parallel Agent Orchestration
+
+## Overview
+
+Orchestrate multiple agents working in parallel on independent tasks using background execution. This is manual swarm coordination - you dispatch, monitor, and merge results.
+
+**Use when:** You have 3+ independent tasks that can run concurrently without stepping on each other.
+
+**Announce at start:** "I'm using parallel-agent-orchestration to execute these tasks concurrently."
+
+## When to Use Parallel Execution
+
+**Ideal for:**
+- Independent subtasks (no sequential dependencies)
+- Multi-file changes across different areas
+- Parallel research/exploration
+- Time-sensitive tasks benefiting from concurrency
+
+**Not ideal for:**
+- Tasks with strict sequential dependencies (A must complete before B)
+- Simple single-file changes
+- Tightly coupled changes where agents would conflict
+
+**Sizing rule of thumb:**
+```
+agent_count = ceil(independent_tasks / 2)
+```
+
+| Task scope | Agent count |
+|------------|-------------|
+| Small (1-2 files) | 1-2 agents |
+| Medium (3-10 files) | 3 agents |
+| Large (10+ files) | 5 agents |
+| Massive (full codebase) | 5-10 agents |
+
+**Resource awareness:** Each agent consumes context and compute. Don't spawn more than you need. 10 agents max recommended.
+
+## Pre-Flight Checklist
+
+Before dispatching parallel agents:
+
+1. [ ] Discovery completed (use `consulting-agents` for parallel exploration)
+2. [ ] Tasks are truly independent (no shared file edits)
+3. [ ] Each task has clear scope and acceptance criteria
+4. [ ] Beads configured for worktrees if applicable (`BEADS_NO_DAEMON=1`)
+5. [ ] Plan reviewed (domain-review-before-implementation completed)
+6. [ ] Test suite runs clean before starting
+
+## Dispatch Pattern
+
+### Step 1: Parse Plan into Independent Tasks
+
+From your implementation plan, identify tasks that can run in parallel:
+
+```
+Task 1: Implement auth module (files: src/auth/*)
+Task 2: Implement API endpoints (files: src/api/*)
+Task 3: Implement frontend components (files: src/ui/*)
+```
+
+**Check for conflicts:** If two tasks touch the same files, they CANNOT run in parallel. Either:
+- Merge them into one task
+- Sequence them (run one after the other)
+- Split the file changes more granularly
+
+### Step 2: Dispatch Background Agents
+
+Launch all independent tasks in a SINGLE message with multiple Task tool calls:
+
+```
+Task({
+  subagent_type: "general-purpose",
+  prompt: "**Role:** Implementation engineer\n\n**Task:** [Full task description with file paths, code examples, test requirements]\n\n**Constraints:** Only modify files in src/auth/. Commit when done.",
+  run_in_background: true
+})
+
+Task({
+  subagent_type: "general-purpose",
+  prompt: "**Role:** Implementation engineer\n\n**Task:** [Full task description...]\n\n**Constraints:** Only modify files in src/api/. Commit when done.",
+  run_in_background: true
+})
+
+Task({
+  subagent_type: "general-purpose",
+  prompt: "**Role:** Implementation engineer\n\n**Task:** [Full task description...]\n\n**Constraints:** Only modify files in src/ui/. Commit when done.",
+  run_in_background: true
+})
+```
+
+**Critical prompt elements:**
+- Clear file scope constraints (prevent conflicts)
+- Complete task description (agent has fresh context)
+- Commit instructions (atomic commits per task)
+- Test requirements (run relevant tests)
+
+### Step 3: Monitor Progress
+
+While agents work, you can:
+- Do other lightweight work
+- Check status periodically (non-blocking)
+
+```
+// Non-blocking status check
+AgentOutputTool({ agentId: "agent-1-id", block: false })
+
+// Returns: { status: "running", progress: "..." }
+```
+
+### Step 4: Collect Results
+
+When ready, collect all results:
+
+```
+// Block until each completes (with timeout)
+AgentOutputTool({ agentId: "agent-1-id", block: true, wait_up_to: 300 })
+AgentOutputTool({ agentId: "agent-2-id", block: true, wait_up_to: 300 })
+AgentOutputTool({ agentId: "agent-3-id", block: true, wait_up_to: 300 })
+```
+
+**Result states:**
+- `completed` - Success, review the output
+- `failed` - Check error, may need manual intervention
+- `running` (after timeout) - Still working, wait longer or investigate
+
+### Step 5: Merge and Validate
+
+After all agents complete:
+
+1. **Check for conflicts:**
+   ```bash
+   git status  # Any merge conflicts?
+   git diff    # Review all changes
+   ```
+
+2. **Run full test suite:**
+   ```bash
+   npm test  # or pytest, cargo test, etc.
+   ```
+
+3. **Handle issues:**
+   - Test failures → investigate, fix, or rollback
+   - Merge conflicts → resolve manually
+   - Missing pieces → dispatch follow-up agent
+
+### Coordinator Verification (When Agents Can't Self-Verify)
+
+Agents may not always be able to run tests themselves due to:
+- Permission/path restrictions in sandbox environments
+- Missing dependencies in agent context
+- Test infrastructure not available to subagents
+
+**When this happens:**
+1. Agent reports completion but can't confirm tests pass
+2. **Coordinator MUST run tests** before committing
+3. If tests fail, either fix inline or dispatch targeted fix agent
+
+**Agent prompt adjustment:**
+```
+**Verification:** Attempt to run tests. If you cannot run tests due to permissions
+or environment issues, report your changes and the coordinator will verify.
+```
+
+**Coordinator workflow for unverified changes:**
+```bash
+# After collecting agent results
+git diff                    # Review changes
+go test ./... -v            # Run tests yourself
+# If failures: fix or dispatch fix agent
+# If pass: proceed to commit
+```
+
+### Handling Partial Success
+
+Not all agents will succeed. This is normal. Handle gracefully:
+
+**Triage results:**
+- ✅ Passed + verified → commit immediately
+- ⚠️ Completed but unverified → coordinator verifies, then commit if passing
+- ❌ Failed or has test failures → do NOT commit, track for follow-up
+
+**Commit what works:**
+```bash
+# Stage only passing work (selective, not git add -A)
+git add src/auth/           # Agent 1's work - passed
+git add src/api/            # Agent 2's work - passed
+git commit -m "feat: auth and api modules"
+
+# Leave failing work uncommitted
+# src/ui/ has test failures - tracked for follow-up
+```
+
+**Track failures for follow-up:**
+- Create bd issue for failed agent's work
+- Or dispatch single focused fix agent
+- Don't block successful work on failures
+
+**Key principle:** Partial progress is still progress. Ship what works, fix what doesn't separately.
+
+## Commit Strategy
+
+**Critical decision: Who commits?**
+
+### Option A: Coordinator Commits (Recommended for shared working directory)
+
+Agents make changes but DO NOT commit. Coordinator handles all commits after review.
+
+**Agent prompt includes:**
+```
+**Commit policy:** DO NOT commit your changes. Make all edits, run tests to verify,
+but leave changes uncommitted. The coordinator will review and commit.
+```
+
+**Why:** Prevents agents from accidentally committing each other's uncommitted work via `git add -A`. Coordinator maintains clean commit history.
+
+**Coordinator workflow:**
+1. Collect all agent results
+2. Review changes: `git diff`
+3. Stage selectively: `git add src/auth/` (not `git add -A`)
+4. Commit with clear message attributing the work
+5. Repeat for each agent's changes
+
+### Option B: Agents Commit (Requires worktrees or strict file isolation)
+
+Each agent commits its own work immediately after completion.
+
+**Agent prompt includes:**
+```
+**Commit policy:** After your changes pass tests, commit ONLY the files you modified.
+Use `git add <specific-files>` - NEVER use `git add -A` or `git add .`
+Commit message format: "feat(area): description"
+```
+
+**When safe:**
+- Using git worktrees (each agent has isolated working directory)
+- Strict file scope (agents guaranteed not to overlap)
+
+**When dangerous:**
+- Shared working directory without worktrees
+- Any chance of file overlap
+
+### Option C: Worktree Isolation (Cleanest for true parallelism)
+
+Each agent works in its own git worktree. Commits are isolated, merge happens at end.
+
+**Setup:**
+```bash
+# Create worktrees for each agent
+git worktree add ../agent-1-worktree -b agent-1-work
+git worktree add ../agent-2-worktree -b agent-2-work
+git worktree add ../agent-3-worktree -b agent-3-work
+```
+
+**Agent prompt includes:**
+```
+**Working directory:** /path/to/agent-1-worktree
+**Commit policy:** Commit your changes to branch agent-1-work when complete.
+```
+
+**Coordinator merge workflow:**
+```bash
+# After all agents complete
+git checkout main
+git merge agent-1-work --no-ff -m "feat: auth module from agent 1"
+git merge agent-2-work --no-ff -m "feat: api endpoints from agent 2"
+git merge agent-3-work --no-ff -m "feat: ui components from agent 3"
+
+# Clean up worktrees
+git worktree remove ../agent-1-worktree
+git worktree remove ../agent-2-worktree
+git worktree remove ../agent-3-worktree
+```
+
+### Recommendation
+
+| Scenario | Strategy |
+|----------|----------|
+| Quick parallel tasks, same directory | Option A (coordinator commits) |
+| True isolation needed, complex merge | Option C (worktrees) |
+| Simple, guaranteed no overlap | Option B (agents commit) |
+
+**Default to Option A** unless you have a specific reason for B or C. It's the safest and gives the coordinator full control over commit history.
+
+## Conflict Resolution Protocol
+
+**Same-file edits (shouldn't happen if planned correctly):**
+1. Review both change sets
+2. Manually merge or pick one
+3. Re-run tests
+
+**Test failures after merge:**
+1. Identify which agent's changes broke tests
+2. Either fix inline or dispatch targeted fix agent
+3. All agents pause until resolved
+
+**Agent failure mid-execution:**
+1. Collect partial results if any
+2. Diagnose failure cause
+3. Either retry or complete manually
+
+## Beads Coordination (if using issue tracking)
+
+When agents work in git worktrees:
+
+```bash
+# Environment setup for all agents
+export BEADS_NO_DAEMON=1
+export BEADS_USE_DAEMON=0  # For MCP server
+```
+
+**Recommended:** Coordinator (you) manages all beads state. Agents just report task completion, you update issues:
+
+```bash
+bd --no-daemon update ISSUE-123 --status closed --notes "Completed by parallel agent"
+```
+
+## Integration with Other Skills
+
+**Typical workflow:**
+
+```
+brainstorming
+    ↓
+consulting-agents (discovery - find gaps, explore codebase)
+    ↓
+writing-plans (creates detailed plan from discoveries)
+    ↓
+domain-review-before-implementation (catches design flaws)
+    ↓
+parallel-agent-orchestration (this skill - executes in parallel)
+    ↓
+code-reviewer (final review of merged results)
+```
+
+**Pair with consulting-agents for discovery:** Before using this skill, use `consulting-agents` to dispatch parallel discovery agents. Discovery finds what needs doing (test gaps, missing features, etc.). This skill executes the implementation plan that results from discovery.
+
+**vs subagent-driven-development:**
+- `subagent-driven-development`: Sequential, code review between each task
+- `parallel-agent-orchestration`: Concurrent, merge and review at end
+
+Use parallel when tasks are independent and speed matters. Use sequential when tasks have dependencies or you want tighter review loops.
+
+## Example: Full Workflow
+
+**Scenario:** Implement authentication feature across 3 layers
+
+```
+1. Parse plan:
+   - Task A: Database schema + migrations (src/db/*)
+   - Task B: API endpoints + middleware (src/api/auth/*)
+   - Task C: Frontend login flow (src/ui/auth/*)
+
+   Analysis: All independent, no shared files. Good for parallel.
+
+2. Dispatch (single message, 3 Task calls):
+   - Agent 1 → Task A (run_in_background: true)
+   - Agent 2 → Task B (run_in_background: true)
+   - Agent 3 → Task C (run_in_background: true)
+
+3. Monitor:
+   - Check status every few minutes if curious
+   - Do other work while waiting
+
+4. Collect:
+   - AgentOutputTool for each (block: true)
+   - Review each agent's report
+
+5. Validate:
+   - git status (check for issues)
+   - Run full test suite
+   - Fix any failures
+
+6. Finalize:
+   - Code review of combined changes
+   - Final commit/PR if not already done by agents
+```
+
+## Anti-Patterns
+
+**Don't:**
+- Spawn agents for sequential tasks (wastes resources, causes conflicts)
+- Launch unlimited agents (resource exhaustion)
+- Skip the pre-flight checklist (conflicts will happen)
+- Ignore agent failures (partial state is dangerous)
+- Let agents touch shared files (merge hell)
+
+**Do:**
+- Plan task independence carefully
+- Set reasonable timeouts
+- Handle all failure cases
+- Run tests before AND after
+- Keep coordinator context clean (delegate, don't implement)
+
+## Quick Reference
+
+```
+# Dispatch (in single message)
+Task({ prompt: "...", run_in_background: true })
+Task({ prompt: "...", run_in_background: true })
+Task({ prompt: "...", run_in_background: true })
+
+# Check status (non-blocking)
+AgentOutputTool({ agentId: "...", block: false })
+
+# Collect results (blocking with timeout)
+AgentOutputTool({ agentId: "...", block: true, wait_up_to: 300 })
+
+# Sizing
+agents = ceil(independent_tasks / 2)
+max = 10
+```

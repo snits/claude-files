@@ -1,9 +1,20 @@
 ---
 name: domain-review-before-implementation
-description: Use when implementing tasks from written briefs or specs, before writing any code or tasking an agent to implement - dispatches domain expert to review brief for design flaws, catches 5-10 issues per task that would otherwise become expensive bugs.
+description: BEFORE dispatching any implementation agent or starting to code - if you're about to write "Task(subagent_type=..., prompt=...)" for implementation, or about to implement a plan yourself, STOP and review first. The prompt you're about to send IS a brief - review it for design flaws before the agent implements garbage.
 ---
 
 # Domain Review Before Implementation
+
+## The Trigger
+
+**Use this skill when you're about to:**
+- Dispatch a `Task()` for implementation work
+- Start coding from a plan or task description
+- Send a prompt to a subagent that will write code
+
+**The prompt you write IS the brief.** If you're about to send an implementation agent a task, that task description needs review first.
+
+**Ask yourself:** "Am I about to have code written (by me or an agent)?" If yes → domain review first.
 
 ## Overview
 
