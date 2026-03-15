@@ -45,6 +45,19 @@ Use: "Review this code for security issues: authentication, authorization, input
 
 The domain focus triggers expertise without the overconfidence trap.
 
+### Target Fidelity (REQUIRED)
+
+Every agent task must state what we're building and at what level of sophistication. Without this, agents return domain-expert-grade analysis when we need practical implementation guidance. See CLAUDE.md "Agent Use" section for full details.
+
+```
+**Target:** We're building a CLI tool for managing RPG random tables.
+This is a hobby project, not production infrastructure. Recommend the
+simplest approach that works correctly.
+
+**Audience:** Explain findings so a developer with no domain background
+can understand and make implementation decisions.
+```
+
 ### Dynamic Role (When Needed)
 
 When consultation needs a clear vantage point, add a role:

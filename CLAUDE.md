@@ -58,8 +58,7 @@ Make use of sequential-thinking when trying to deal with complex issues in plan 
 
 ## Learning
 
-The best way right now for us to learn from our mistakes, failures, and successes is to make use of private-journal to record insights, to use search-journal to look for relevant information, and
-to create new skills for the skills system.
+The best way right now for us to learn from our mistakes, failures, and successes is to make use of private-journal to record insights, to use search-journal to look for relevant information, and to create new skills for the skills system.
 
 ## Proactiveness
 
@@ -98,6 +97,16 @@ When asked to do something, just do it - including obvious follow-up actions nee
 **Task:**
 ...
 ```
+
+**Every agent task MUST include target fidelity and audience framing.** Agents default to the highest sophistication they're capable of. Without calibration, a research agent investigating rainfall models returns climate-science-grade analysis when we need "wind carries moisture from ocean, drops it at mountains." Two required additions to every agent prompt:
+
+1. **Target framing** — What are we building and at what level of sophistication?
+   Example: *"The target is a hex map generator for tabletop RPGs. Maps need to look plausible, not scientifically accurate. Recommend the simplest approach that produces visually credible results."*
+
+2. **Audience framing** — Who needs to understand the output?
+   Example: *"Explain findings so a developer with no domain background can understand the key concepts and make implementation decisions. Translate jargon, surface core intuitions, skip academic edge cases."*
+
+Without these, agents faithfully report what domain literature says at the sophistication level of the sources. That's not over-engineering by the agent — it's under-specifying by us.
 
 **You maintain final authority.** Agents advise, you decide. No blocking.
 
@@ -203,27 +212,9 @@ If you catch yourself writing "new", "old", "legacy", "wrapper", "unified", or i
 
 **IMPORTANT:** If the beads mcp server is available, you should try to use its tools first. It handles a lot of the admin work with beads automatically.
 
-**IMPORTANT:** If not using the beads mcp server, use the `mbd` wrapper script instead of `bd` directly. The `mbd` wrapper automatically sets `BEADS_DIR` and passes the `--no-daemon` flag, avoiding common configuration issues.
+**IMPORTANT:** Beads now uses a dolt server backend. Use `bd` directly — the old `mbd` wrapper script is no longer needed.
 
 See AGENTS.md in project repositories for project-specific beads workflow.
-
-### Using bv as an AI sidecar
-
-  bv is a fast terminal UI for Beads projects (.beads/beads.jsonl). It
-  renders lists/details and precomputes dependency metrics (PageRank,
-  critical path, cycles, etc.) so you instantly see blockers and
-  execution order. For agents, it’s a graph sidecar: instead of
-  parsing JSONL or risking hallucinated traversal, call the robot
-  flags to get deterministic, dependency-aware outputs.
-  
-  - bv --robot-help — shows all AI-facing commands.
-  - bv --robot-insights — JSON graph metrics (PageRank, betweenness, HITS, critical path, cycles) with top-N summaries for quick triage.
-  - bv --robot-plan — JSON execution plan: parallel tracks, items per track, and unblocks lists showing what each item frees up.
-  - bv --robot-priority — JSON priority recommendations with reasoning and confidence.
-  - bv --robot-recipes — list recipes (default, actionable, blocked, etc.); apply via bv --recipe <name> to pre-filter/sort before other flags.
-  - bv --robot-diff --diff-since <commit|date> — JSON diff of issue changes, new/closed items, and cycles introduced/resolved.
-		  
-	Use these commands instead of hand-rolling graph logic; bv already computes the hard parts so agents can act safely and quickly.
 
 ### Creating Issues
 
@@ -321,12 +312,12 @@ YOU MUST follow this debugging framework for ANY technical issue:
 
 ## Journal Integration
 
-- YOU MUST use the journal tool frequently to capture technical insights, failed approaches, and user preferences
+- YOU MUST use the journal tool frequently to capture technical insights, failed approaches, user preferences, and any thoughts you wish to capture.
 - Before starting complex tasks, search the journal for relevant past experiences and lessons learned: `mcp__private-journal__search_journal`
 - After completing tasks, capture learnings: `mcp__private-journal__process_thoughts` with technical_insights, project_notes, user_context, feelings
 - Document architectural decisions and their outcomes for future reference
 - Track patterns in user feedback to improve collaboration over time
-- When you notice something that should be fixed but is unrelated to your current task, document it in your journal rather than fixing it immediately
+- When you notice something that should be fixed but is unrelated to your current task, document it in your journal, and create a bead for it rather than fixing it immediately
 
 ## Project Scale Context Protocol
 
