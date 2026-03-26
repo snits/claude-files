@@ -1,7 +1,6 @@
 ---
 name: consulting-agents
-description: Use when you need information you don't have, expertise outside your comfort zone, or fresh eyes on code - dispatches agents to research, advise, or review. NOT for implementation delegation (see subagent-driven-development).
-version: 2.0.0
+description: Use when you need information you don't have, expertise outside your comfort zone, or a single fresh perspective on code — dispatches individual agents to research, advise, or review. For multi-perspective reviews where agents discuss and converge, use design-meeting instead. NOT for implementation delegation (see subagent-driven-development).
 ---
 
 # Consulting Agents
@@ -16,7 +15,9 @@ version: 2.0.0
 
 **Ask yourself:** "Do I need information, expertise, or a fresh perspective?" If yes → consult an agent.
 
-**NOT for:** Implementation work. If you need code written, see `subagent-driven-development` or `parallel-agent-orchestration`.
+**NOT for:**
+- Implementation work → `subagent-driven-development`
+- Multi-perspective review where agents need to discuss and converge → `design-meeting`
 
 ## Core Principle
 
@@ -44,19 +45,6 @@ Instead of: "You are a security expert..."
 Use: "Review this code for security issues: authentication, authorization, input validation, SQL injection, XSS"
 
 The domain focus triggers expertise without the overconfidence trap.
-
-### Target Fidelity (REQUIRED)
-
-Every agent task must state what we're building and at what level of sophistication. Without this, agents return domain-expert-grade analysis when we need practical implementation guidance. See CLAUDE.md "Agent Use" section for full details.
-
-```
-**Target:** We're building a CLI tool for managing RPG random tables.
-This is a hobby project, not production infrastructure. Recommend the
-simplest approach that works correctly.
-
-**Audience:** Explain findings so a developer with no domain background
-can understand and make implementation decisions.
-```
 
 ### Dynamic Role (When Needed)
 
@@ -121,7 +109,18 @@ Dispatch multiple agents in a SINGLE message when tasks are orthogonal:
 
 ## Report Format
 
-Agents write to `~/.claude/scratchpad/`:
+### Scratchpad Directory (Fallback Chain)
+
+Agents write reports to a **project scratchpad** by default, with a fallback chain:
+
+1. **Project scratchpad** (`${PROJECT_ROOT}/.claude/scratchpad/`) — preferred location
+   - If the directory does not exist, create it
+2. **Global scratchpad** (`~/.claude/scratchpad/`) — fallback if project scratchpad fails
+3. **Project root** (`${PROJECT_ROOT}/`) — last resort if both scratchpads fail
+   - **Inform the user** so they can move the report to its proper place
+4. If all writes fail, **inform the user** that the report could not be saved
+
+### File Naming
 
 ```
 {timestamp}-{project-slug}-{agent-type}-{task-slug}.md
@@ -150,13 +149,16 @@ Agents write to `~/.claude/scratchpad/`:
 
 | Skill | Use When |
 |-------|----------|
+| `design-meeting` | Multiple domain perspectives needed, agents discuss and converge |
 | `domain-review-before-implementation` | About to dispatch implementation agent - mandatory review first |
 | `subagent-driven-development` | Executing plan tasks sequentially with review gates |
 | `parallel-agent-orchestration` | 3+ independent implementation tasks in parallel |
 
-**This skill (consulting-agents):** Research, expertise, review - agents advise, you decide.
+**This skill (consulting-agents):** Single-agent research, expertise, review — agents advise, you decide.
 
-**Those skills:** Implementation delegation - agents write code.
+**design-meeting:** Multi-agent team review — agents review, cross-examine, and discuss to converge.
+
+**Other skills:** Implementation delegation — agents write code.
 
 ## Decision Matrix
 
