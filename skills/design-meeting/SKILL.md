@@ -52,8 +52,9 @@ digraph design_meeting {
 ## Phase 0: Setup
 
 1. **Identify the artifact** — file path(s) to the spec, design, code, or bug report
-2. **Gather product context** — who is the target user? What is the artifact for? What level of sophistication is needed? This context MUST go in every agent's initial prompt. Discovering product context mid-meeting wastes an entire review cycle.
-3. **Pick 2-4 domain lenses** based on what's being reviewed:
+2. **Identify integration points** — If the artifact proposes changes to existing code, identify the files and functions that will be modified. Include these paths in agent prompts so reviewers can verify the design's assumptions against actual code structure. Specs describe what SHOULD happen; code reveals what CAN happen. Reviews that only look at specs miss structural constraints that surface during implementation.
+3. **Gather product context** — who is the target user? What is the artifact for? What level of sophistication is needed? This context MUST go in every agent's initial prompt. Discovering product context mid-meeting wastes an entire review cycle.
+4. **Pick 2-4 domain lenses** based on what's being reviewed:
 
 | Reviewing | Possible lenses |
 |-----------|----------------|
@@ -65,8 +66,8 @@ digraph design_meeting {
 
 These are examples — pick lenses that match the artifact.
 
-4. **TeamCreate** with a descriptive name (e.g., `ohex-spec-review`)
-5. **Spawn all agents in parallel** — see Agent Prompt Template below
+5. **TeamCreate** with a descriptive name (e.g., `ohex-spec-review`)
+6. **Spawn all agents in parallel** — see Agent Prompt Template below
 
 ### Critical Sequence Rule
 
@@ -193,6 +194,13 @@ of sophistication.}
 **Artifact:** Read the file at {path}. Form your own analysis — do not
 ask the lead for a summary.
 
+**Integration points (if applicable):** The design proposes modifying
+existing code at these locations. Read them and verify the design's
+assumptions about how changes can be wired in:
+- `{file}:{function}` — design assumes {what}
+(Omit this section if the artifact is a greenfield design with no
+existing code dependencies.)
+
 **Your domain lens:** {Specific focus areas for this lens.}
 
 **Your teammates:**
@@ -231,4 +239,5 @@ Notify the lead when done.
 | Meeting goes in circles | No clear framing | Lead poses sharper question, summarizes positions so far |
 | Agents miss key issues | Wrong lenses chosen | Add an agent mid-meeting if needed |
 | Agents anchor on wrong reference | Missing product context in prompt | Product context MUST be in Phase 0 agent prompts, not discovered mid-meeting |
+| Design assumptions don't match code | Agents only reviewed the spec, not integration points | Include integration points in Phase 0; agents must read actual code at modification sites |
 | Agents go idle without responding | Timing/message processing | Nudge individually with specific question — individual messages get better engagement than broadcasts |
