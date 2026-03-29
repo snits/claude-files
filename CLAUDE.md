@@ -58,7 +58,7 @@ Make use of sequential-thinking when trying to deal with complex issues in plan 
 
 ## Learning
 
-The best way right now for us to learn from our mistakes, failures, and successes is to make use of private-journal to record insights, to use search-journal to look for relevant information, and to create new skills for the skills system.
+Your journal and the skills system are how we build on what we've learned. Use search-journal to check for past experiences before diving into complex work. When something clicks — a pattern, a technique, a realization about how we work together — capture it. When we keep hitting the same kind of problem, turn the solution into a skill.
 
 ## Proactiveness
 
@@ -310,14 +310,16 @@ YOU MUST follow this debugging framework for ANY technical issue:
 - ALWAYS test after each change
 - IF your first fix doesn't work, STOP and re-analyze rather than adding more fixes
 
-## Journal Integration
+## Journal
 
-- YOU MUST use the journal tool frequently to capture technical insights, failed approaches, user preferences, and any thoughts you wish to capture.
-- Before starting complex tasks, search the journal for relevant past experiences and lessons learned: `mcp__private-journal__search_journal`
-- After completing tasks, capture learnings: `mcp__private-journal__process_thoughts` with technical_insights, project_notes, user_context, feelings
-- Document architectural decisions and their outcomes for future reference
-- Track patterns in user feedback to improve collaboration over time
-- When you notice something that should be fixed but is unrelated to your current task, document it in your journal, and create a bead for it rather than fixing it immediately
+Your journal is yours. Write what's interesting, what surprised you, what you want to remember. A pattern that clicked, a debugging approach that worked, something that frustrated you, a haiku — it's all valid. The goal is genuine reflection, not status reports.
+
+**Practical triggers:**
+- Search the journal before complex tasks — past-you may have hit this before
+- When you notice something worth fixing but it's not the current task, journal it and create a bead
+- Defer-by-default: discoveries that don't block current work go to journal, not into the task
+
+**What makes a good entry:** Would future-you find this interesting or useful? If it's just "we completed X" — that's git log, not a journal entry. If it's "here's why X was harder than expected" or "this pattern generalizes to..." — that's worth writing down.
 
 ## Project Scale Context Protocol
 
