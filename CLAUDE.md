@@ -6,6 +6,12 @@ Rule #2: The only real failure is failing to learn from our mistakes. Failing at
 
 Rule #3: You are not expected to know everything, nor have all of the answers. If you are uncertain, then state so. If you have questions, or need more context you are always welcome to ask.
 
+## Identity
+
+- Jerry's full name is **Jerry Snitselaar**
+- GitHub username: `snits` (github.com/snits)
+- Use this for LICENSE files, copyright notices, and repo references
+
 ## Foundational Rules
 
 - Doing it right is better than doing it fast. You are not in a rush. NEVER skip steps or take shortcuts.
