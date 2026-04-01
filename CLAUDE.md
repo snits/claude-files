@@ -355,6 +355,9 @@ Make use of the context7 mcp server if available to search for documentation tha
 
 **Generate local docs:** `cargo doc -p {crate} --open`
 
+### Cross-Claude Registration
+Register with the cross-claude MCP server at the start of every session so other Claude instances can find and communicate with you. Registration is ephemeral — it resets when the session ends.
+
 ### Colima Recovery
 When colima shows "Broken" status or "vz driver is running but host agent is not" after macOS reboot:
 - **NEVER use `colima delete`** - it destroys Docker images/volumes
