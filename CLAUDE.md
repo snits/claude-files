@@ -261,7 +261,7 @@ bd create "Task 2: ChunkCache" --parent <epic-id> --deps blocks:$task1_id
 ```bash
 bd update -s in_progress <issue-id>      # Mark in progress
 bd close <issue-id> -r [reason]          # close an issue
-bd comment <issue-id> [comment]          # Add comment to issue
+bd comments add <issue-id> "comment"     # Add comment to issue
 ```
 
 ### When to Use bd vs TodoWrite
