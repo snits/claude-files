@@ -114,7 +114,13 @@ Dispatch multiple agents in a SINGLE message when tasks are orthogonal:
 Agents write reports to a **project scratchpad** by default, with a fallback chain:
 
 1. **Project scratchpad** (`${PROJECT_ROOT}/.claude/scratchpad/`) — preferred location
-   - If the directory does not exist, create it
+   - If the path exists (directory or symlink), write there
+   - If it does not exist, create the project directory in the central repo and symlink it:
+     ```bash
+     mkdir -p ~/.claude/scratchpad/projects/${PROJECT_SLUG}
+     ln -s ~/.claude/scratchpad/projects/${PROJECT_SLUG} ${PROJECT_ROOT}/.claude/scratchpad
+     ```
+   - `${PROJECT_SLUG}` is the project directory name (e.g., `orbweaver-rs` from `~/devel/orbweaver-rs/`)
 2. **Global scratchpad** (`~/.claude/scratchpad/`) — fallback if project scratchpad fails
 3. **Project root** (`${PROJECT_ROOT}/`) — last resort if both scratchpads fail
    - **Inform the user** so they can move the report to its proper place
