@@ -200,13 +200,15 @@ Agents write reports to a **project scratchpad** by default, with a fallback cha
 
 ## Why Fresh Context + Domain Focus Works
 
-**Experimental finding:** General-purpose agents with domain-focused tasks outperform specialist agents.
+**Observed (limited sample, Fall 2025 kernel CVE work):** In solo discovery tasks, general-purpose agents with domain-focused prompts outperformed specialist-identity agents. The sample was narrow — kernel backporting specifically — and shouldn't be over-generalized.
 
-**Why specialists underperform:**
-1. **Overconfidence trap** - "You are an expert" → commits to role → doesn't use tools → misses things
-2. **Narrow focus** - Specialists focus on "hard problems" → miss systematic concerns
+**Solo agent risk with strong identity:**
+1. **Overconfidence trap** - "You are an expert" → commits to role → skips tool verification
+2. **Narrow focus** - Strong identity → gravitates to "hard problems" → misses systematic concerns
 
-**What works:**
-- Fresh context = clean slate
-- Domain-focused task = triggers expertise without identity baggage
-- No identity claim → agent naturally uncertain → uses tools → catches more
+**But in teams, this changes.** Individual specialist bias gets cancelled out by teammates with different perspectives — the same way code review catches what a single reviewer misses. A specialist who over-commits to their role gets checked by agents approaching the same problem from other angles.
+
+**Practical guidance:**
+- **Solo consultation:** Domain-focused task wording over specialist identity (lower overconfidence risk)
+- **Team/multi-agent work:** Specialist identities are fine — team dynamics correct individual bias
+- **Always:** Fresh context = clean slate, which helps regardless of identity approach
