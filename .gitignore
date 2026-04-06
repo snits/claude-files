@@ -16,3 +16,11 @@ scratchpad/
 agents-archive/
 agents-depot/
 debug/
+tasks/
+backups/
+cache/
+file-history/
+paste-cache/
+plans/
+teams/
+usage-data/
