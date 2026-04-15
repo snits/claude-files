@@ -98,3 +98,49 @@ Response handling:
 After resolution, continue the merge from the next node. Do not abort the whole sync on a single conflict.
 
 If the user aborts (Ctrl+C) mid-prompt, leave files in their current state. Per-file writes are atomic via the Edit tool, so any additions applied before the conflict remain. Report partial completion in the summary: "<project>: aborted at conflict on <path>; N additions applied before abort".
+
+## Sync mode: `local.env.example`
+
+`local.env.example` is documentation, not config. If the template's version differs from the project's (use `cmp` or compare file contents), overwrite the project's with the template's. No merge logic. Increment a "local.env.example overwritten" counter for the summary.
+
+If the project does not have a `local.env.example` at all, copy the template's in.
+
+If the files are identical, no-op.
+
+## Sync mode: `Dockerfile`
+
+The Dockerfile is **not merged** by this skill. Project Dockerfiles can have project-specific package additions (e.g., alexandria adds `postgresql-server pgvector` to the dnf install line) that semantic merge would handle poorly.
+
+Instead, after handling devcontainer.json and local.env.example:
+
+1. Compare the project's Dockerfile to the template's via `diff`. If they differ in any non-whitespace way, add a single-line footnote to the per-project summary:
+
+   ```
+   ! Dockerfile differs from template. Run:
+       diff ~/.claude/scratchpad/devcontainer-template/Dockerfile <project>/.devcontainer/Dockerfile
+   ```
+
+2. If the project has no Dockerfile but the template does, copy the template's in (this is the only Dockerfile write the skill ever performs, and only happens during scaffold mode in practice — sync mode would only encounter this if the project had `.devcontainer/devcontainer.json` but no Dockerfile, which is unusual but valid).
+
+## Per-project summary format
+
+After processing one project, print a summary block:
+
+```
+<project-name>/.devcontainer/devcontainer.json:
+  + N mount(s) added
+  + N env var(s) added (key1, key2, ...)
+  + N postCreateCommand(s) added (key1, key2, ...)
+  ~ N conflict(s) resolved (took template: keyA, keyB; kept project: keyC)
+  ! N conflict(s) skipped (keyD)
+<project-name>/.devcontainer/local.env.example: overwritten   (only if changed)
+<project-name>/.devcontainer/Dockerfile: differs from template (run `diff ...`)   (only if differs)
+```
+
+Skip lines whose count is zero. If everything was a no-op, print:
+
+```
+<project-name>: up to date
+```
+
+Use the project's directory basename (not full path) as `<project-name>` to keep the summary readable.
