@@ -75,3 +75,26 @@ For the `mounts` array specifically, additionally compare entries by their `targ
 - Compute the merged result in memory by walking the structures per the rules above.
 - Use the Edit tool to insert additions one at a time, preserving the project file's overall formatting (indentation, trailing newlines). Do NOT rewrite the entire file via Write — that would lose formatting nuances and any trailing comments.
 - For each addition applied, increment counters for the per-project summary (mounts, env vars, postCreateCommand entries, etc.).
+
+## Conflict prompt
+
+When the merge encounters a value mismatch (object key with different value, mount with same `target=` but different rest, or root scalar that differs), pause and present this prompt to the user, then wait for input:
+
+```
+CONFLICT in <project-name>/.devcontainer/devcontainer.json
+Path: <dotted JSON path, e.g., containerEnv.OPENAI_CHAT_BASE_URL>
+  template: <template's value, JSON-quoted>
+  project:  <project's value, JSON-quoted>
+
+Apply template / keep project / show context / skip? [t/k/c/s]
+```
+
+Response handling:
+- `t` (apply template) — overwrite project's value with template's. Increment "conflicts resolved (took template)" counter.
+- `k` (keep project) — leave project's value unchanged. Increment "conflicts resolved (kept project)" counter.
+- `c` (show context) — print the surrounding 3-5 lines of raw JSON from both files (use `jq` or grep the context window) to help the user decide. Then re-prompt with `[t/k/s]` (no `c` again — single context display per conflict).
+- `s` (skip) — do not modify this entry, but DO NOT count as resolved. Increment "conflicts skipped" counter. The drift remains; the user is opting to deal with it later.
+
+After resolution, continue the merge from the next node. Do not abort the whole sync on a single conflict.
+
+If the user aborts (Ctrl+C) mid-prompt, leave files in their current state. Per-file writes are atomic via the Edit tool, so any additions applied before the conflict remain. Report partial completion in the summary: "<project>: aborted at conflict on <path>; N additions applied before abort".
