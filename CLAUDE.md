@@ -190,7 +190,7 @@ If you catch yourself writing "new", "old", "legacy", "wrapper", "unified", or i
 **NO EXCEPTIONS.** Rule #1 does not apply to git safety. These flags cannot be used even with explicit permission. If hooks fail, fix the underlying issue - never bypass them.
 
 - USE `git commit -s` ALWAYS (sign-off required)
-- Always include a attribution for Claude: `Co-authored-by: Claude <noreply@anthropic.com>`
+- Always include a attribution for Claude: `Assisted-by: Claude:{{MODEL_VERSION}}`, example: "Assisted-by: Claude:claude-opus-4-7"
 - If the subagent was the general-purpose agent, then use general-purpose as the agent name.
 - Feature branches required - NEVER commit to main
 - NEVER use `git add -A` unless you've just done a `git status` - Don't add random test files to the repo.
@@ -270,6 +270,18 @@ bd comments add <issue-id> "comment"     # Add comment to issue
 - **TodoWrite:** Session-level progress tracking (ephemeral, helps you stay organized during work)
 
 Both can coexist - use TodoWrite to track progress through bd-tracked tasks.
+
+### Decision Blockers — File a Bead Before Asking
+
+When mid-task work hits a question whose answer gates further progress (especially before
+dispatching subagents), file a bead FIRST capturing the decision with full context, then add it
+as a blocker on the parent work item. Sessions can end before responses land — the bead keeps
+the question durable, and the next orientation will surface it via `bd ready` instead of losing
+it in a stale transcript.
+
+**Pattern:** Discover a contradiction or missing decision mid-preparation → file a task bead for
+the decision with the options laid out → `bd dep add <parent> <decision-bead>` → then ask the
+user. The in-chat question is a convenience; the bead is the system of record.
 
 ## Task Priority Discipline (STAY FOCUSED)
 
@@ -390,3 +402,6 @@ When colima shows "Broken" status or "vz driver is running but host agent is not
 - DRY, YAGNI, minimal changes, root cause focus, TDD mandatory, match existing style
 - Context optimization: Use specialized agents for targeted searches to preserve context budget
 - Systematic approach: Before implementation, check if solution exists (web-search-researcher, codebase-pattern-finder), gather context (codebase-locator, codebase-analyzer), then proceed
+# graphify
+- **graphify** (`~/.claude/skills/graphify/SKILL.md`) - any input to knowledge graph. Trigger: `/graphify`
+When the user types `/graphify`, invoke the Skill tool with `skill: "graphify"` before doing anything else.
