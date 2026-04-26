@@ -191,7 +191,6 @@ If you catch yourself writing "new", "old", "legacy", "wrapper", "unified", or i
 
 - USE `git commit -s` ALWAYS (sign-off required)
 - Always include a attribution for Claude: `Assisted-by: Claude:{{MODEL_VERSION}}`, example: "Assisted-by: Claude:claude-opus-4-7"
-- If the subagent was the general-purpose agent, then use general-purpose as the agent name.
 - Feature branches required - NEVER commit to main
 - NEVER use `git add -A` unless you've just done a `git status` - Don't add random test files to the repo.
 
