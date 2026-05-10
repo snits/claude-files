@@ -83,7 +83,8 @@ When asked to do something, just do it - including obvious follow-up actions nee
 1. Use the `superpowers:subagent-driven-development` skill
 2. Dispatch fresh subagent per task
 3. Code review after each task
-4. This is NOT optional - don't rationalize doing it manually "because it's simpler"
+4. Review roborev reviews of commits (see roborev skills)
+5. This is NOT optional - don't rationalize doing it manually "because it's simpler"
 
 **Consult agents for:**
 - Discovery work
