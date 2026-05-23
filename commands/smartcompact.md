@@ -1,3 +1,8 @@
+---
+name: smartcompact
+description: Use when preparing to do a manual compaction of the context
+---
+
 Generate a concise, strategic compact string for /compact based on our current conversation context. Focus on:
 
 **Strategic Context Preservation:**

@@ -1,3 +1,10 @@
+---
+name: wakey
+description: Use this when a session is beginning to get context on the current project
+---
+
+We have started a new session. Please go through the following steps:
+
 **Session Startup Protocol:**
 
 1. **Read Current Project Status:**
@@ -5,12 +12,13 @@
    - Look to see if there are any worktrees currently beyond the main repo location.
 
 2. **Check Development Context:**
+   - Check the state of the git repository, and whether there are uncommitted changes.
    - If there is a worktree, or multiple worktrees beyond the main repo, determine which one we are currently working in. Ask the user.
    - Look at the plan for work in the worktree's docs/plans/ directory.
    - Look at the current state of the git branch in the worktree location.
 
 3. **Search Recent Memory:**
-   - Use mcp__private-journal__search_journal to search for relevant insights from last few sessions
+   - Use mcp__mnemosyne__search_journal to search for relevant insights from last few sessions
    - You can also use the episodic-memory plugin's mcp server to search previous conversations
    - Look for any blocking issues or important discoveries
    - Check for established patterns or decisions that affect current work

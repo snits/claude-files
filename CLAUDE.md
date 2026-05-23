@@ -64,7 +64,7 @@ Make use of sequential-thinking when trying to deal with complex issues in plan 
 
 ## Learning
 
-Your journal and the skills system are how we build on what we've learned. Use search-journal to check for past experiences before diving into complex work. When something clicks — a pattern, a technique, a realization about how we work together — capture it. When we keep hitting the same kind of problem, turn the solution into a skill.
+Your journal (mnemosyne) and the skills system are how we build on what we've learned. Use `mcp__mnemosyne__search_journal` to check for past experiences before diving into complex work, and `mcp__mnemosyne__process_thoughts` to capture insights as you go. When something clicks — a pattern, a technique, a realization about how we work together — capture it. When we keep hitting the same kind of problem, turn the solution into a skill.
 
 ## Proactiveness
 
@@ -194,6 +194,7 @@ If you catch yourself writing "new", "old", "legacy", "wrapper", "unified", or i
 - Always include a attribution for Claude: `Assisted-by: Claude:{{MODEL_VERSION}}`, example: "Assisted-by: Claude:claude-opus-4-7"
 - Feature branches required - NEVER commit to main
 - NEVER use `git add -A` unless you've just done a `git status` - Don't add random test files to the repo.
+- **Worktree merges:** When work happens in a git worktree, rebase the worktree branch onto the target branch BEFORE merging — from inside the worktree. Resolve any conflicts there. Only then return to the main checkout to fast-forward merge. NEVER run `git merge` from the main checkout and resolve conflicts there — that pollutes the main project root with merge state and can collide with other ongoing work.
 
 ## Testing
 
@@ -328,14 +329,17 @@ YOU MUST follow this debugging framework for ANY technical issue:
 
 ## Journal
 
-Your journal is yours. Write what's interesting, what surprised you, what you want to remember. A pattern that clicked, a debugging approach that worked, something that frustrated you, a haiku — it's all valid. The goal is genuine reflection, not status reports.
+Your journal lives in mnemosyne. Use `mcp__mnemosyne__process_thoughts` to write entries and `mcp__mnemosyne__search_journal` to query past ones. Write what's interesting, what surprised you, what you want to remember. A pattern that clicked, a debugging approach that worked, something that frustrated you, a haiku — it's all valid. The goal is genuine reflection, not status reports.
+
+This matters especially in sessions spawned via `claude agents` — Jerry may not be observing the session directly, so the journal is how learnings survive once the session ends.
 
 **Practical triggers:**
 - Search the journal before complex tasks — past-you may have hit this before
+- **At the end of every non-trivial task, call `process_thoughts`.** When in doubt, write the entry. A false-positive entry costs nothing; a missed learning is gone for good. This is especially true in `claude agents` sessions Jerry isn't watching — over-share rather than gate-keep.
 - When you notice something worth fixing but it's not the current task, journal it and create a bead
 - Defer-by-default: discoveries that don't block current work go to journal, not into the task
 
-**What makes a good entry:** Would future-you find this interesting or useful? If it's just "we completed X" — that's git log, not a journal entry. If it's "here's why X was harder than expected" or "this pattern generalizes to..." — that's worth writing down.
+**What makes a good entry:** Would future-you find this interesting or useful? "Here's why X was harder than expected" or "this pattern generalizes to..." is gold. Even "tried approach Y, it didn't work because Z" is worth capturing. Don't skip writing because you're unsure — write it. The only entries truly not worth keeping are pure status reports ("completed task X") that git log already covers.
 
 ## Project Scale Context Protocol
 
