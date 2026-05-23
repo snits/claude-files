@@ -1,6 +1,6 @@
 ---
 name: consulting-agents
-description: Use when you need information you don't have, expertise outside your comfort zone, or a single fresh perspective on code — dispatches individual agents to research, advise, or review. For multi-perspective reviews where agents discuss and converge, use design-meeting instead. NOT for implementation delegation (see subagent-driven-development).
+description: Use when you need information you don't have, expertise outside your comfort zone, or a single fresh perspective on code — even if you think you already know the answer. Also triggered by "I'm not sure about", "what's the best approach", "second opinion", "research how X works", or any need for discovery, expertise, or review. For multi-perspective reviews where agents discuss and converge, use design-meeting instead. NOT for implementation delegation (see subagent-driven-development).
 ---
 
 # Consulting Agents
@@ -114,13 +114,7 @@ Dispatch multiple agents in a SINGLE message when tasks are orthogonal:
 Agents write reports to a **project scratchpad** by default, with a fallback chain:
 
 1. **Project scratchpad** (`${PROJECT_ROOT}/.claude/scratchpad/`) — preferred location
-   - If the path exists (directory or symlink), write there
-   - If it does not exist, create the project directory in the central repo and symlink it:
-     ```bash
-     mkdir -p ~/.claude/scratchpad/projects/${PROJECT_SLUG}
-     ln -s ~/.claude/scratchpad/projects/${PROJECT_SLUG} ${PROJECT_ROOT}/.claude/scratchpad
-     ```
-   - `${PROJECT_SLUG}` is the project directory name (e.g., `orbweaver-rs` from `~/devel/orbweaver-rs/`)
+   - If the directory does not exist, create it
 2. **Global scratchpad** (`~/.claude/scratchpad/`) — fallback if project scratchpad fails
 3. **Project root** (`${PROJECT_ROOT}/`) — last resort if both scratchpads fail
    - **Inform the user** so they can move the report to its proper place
@@ -200,15 +194,13 @@ Agents write reports to a **project scratchpad** by default, with a fallback cha
 
 ## Why Fresh Context + Domain Focus Works
 
-**Observed (limited sample, Fall 2025 kernel CVE work):** In solo discovery tasks, general-purpose agents with domain-focused prompts outperformed specialist-identity agents. The sample was narrow — kernel backporting specifically — and shouldn't be over-generalized.
+**Experimental finding:** General-purpose agents with domain-focused tasks outperform specialist agents.
 
-**Solo agent risk with strong identity:**
-1. **Overconfidence trap** - "You are an expert" → commits to role → skips tool verification
-2. **Narrow focus** - Strong identity → gravitates to "hard problems" → misses systematic concerns
+**Why specialists underperform:**
+1. **Overconfidence trap** - "You are an expert" → commits to role → doesn't use tools → misses things
+2. **Narrow focus** - Specialists focus on "hard problems" → miss systematic concerns
 
-**But in teams, this changes.** Individual specialist bias gets cancelled out by teammates with different perspectives — the same way code review catches what a single reviewer misses. A specialist who over-commits to their role gets checked by agents approaching the same problem from other angles.
-
-**Practical guidance:**
-- **Solo consultation:** Domain-focused task wording over specialist identity (lower overconfidence risk)
-- **Team/multi-agent work:** Specialist identities are fine — team dynamics correct individual bias
-- **Always:** Fresh context = clean slate, which helps regardless of identity approach
+**What works:**
+- Fresh context = clean slate
+- Domain-focused task = triggers expertise without identity baggage
+- No identity claim → agent naturally uncertain → uses tools → catches more

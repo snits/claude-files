@@ -1,6 +1,6 @@
 ---
 name: writing-personas
-description: Use when creating, editing, or tuning agent persona/role prompts — especially when personas show overconfidence, attention narrowing, skipped tool use, or domain tunnel vision
+description: Use when creating, editing, or tuning agent persona/role prompts. Also use when an agent seems to "know everything" without using tools, when team discussions are dominated by one voice, when you're evaluating whether a persona adds value over a general-purpose agent with a role line, or when personas show overconfidence, attention narrowing, skipped tool use, or domain tunnel vision.
 ---
 
 # Writing Personas

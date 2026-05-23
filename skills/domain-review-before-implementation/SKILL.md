@@ -1,6 +1,6 @@
 ---
 name: domain-review-before-implementation
-description: BEFORE dispatching any implementation agent or starting to code - if you're about to write "Task(subagent_type=..., prompt=...)" for implementation, or about to implement a plan yourself, STOP and review first. The prompt you're about to send IS a brief - review it for design flaws before the agent implements garbage.
+description: Use when about to dispatch implementation work or start coding from a plan, task brief, or spec. Catches design flaws in the brief before they become bugs in the code. Also triggered by "implement this plan", "start coding", "dispatch implementation agent", or when you recognize the thought "this brief looks straightforward, just implement it." Do NOT activate for code review of already-written code — that's a different skill.
 ---
 
 # Domain Review Before Implementation
@@ -20,7 +20,7 @@ description: BEFORE dispatching any implementation agent or starting to code - i
 
 **Core principle:** Task briefs contain design flaws. Domain experts catch them before implementation, not code reviewers after.
 
-**Real-world data:** Phase 4A Task 16 (RiverGraph serialization) - "straightforward" brief reviewed by domain expert found 8 issues (3 critical type safety bugs, 3 important design gaps, 2 minor improvements). Cost: 5 minutes review. Savings: hours of debugging and refactoring.
+**Real-world data:** A "straightforward serialization" brief reviewed by domain expert found 8 issues (3 critical type safety bugs, 3 important design gaps, 2 minor improvements). Cost: 5 minutes review. Savings: hours of debugging and refactoring.
 
 ## The Iron Law
 
@@ -74,7 +74,7 @@ Savings: Hours of rework
 
 Use Task tool to dispatch domain-appropriate expert agents.
 
-- If reviewing an implementation plan, dispatch multiple agents focused on different aspects (examples: alogrithmic correctness, architecture, api, tasks properly sized, ...)
+- If reviewing an implementation plan, dispatch multiple agents focused on different aspects (examples: algorithmic correctness, architecture, api, tasks properly sized, ...)
 - If reviewing a design, dispatch multiple agents focused on different aspects (examples: conceptual correctness, ui/ux, architecture, api, ...)
 - If reviewing a task brief dispatch domain-appropriate expert agents to validate the prompt.
 
@@ -95,7 +95,7 @@ Task(subagent_type="general-purpose", prompt=f"""
 4. Best practices compliance
 5. Integration considerations
 6. Coherence with overall plan
-7. Task complexity and whether it should be decomposed.
+7. Task complexity and whether it should be decomposed
 
 **Provide:**
 1. List of issues (Critical/Important/Minor)
@@ -226,7 +226,7 @@ Add domain review as first step before parallel execution:
 
 ## Real-World Example
 
-**Task:** "Implement RiverGraph serialization using NumPy npz format"
+**Task:** "Implement data serialization using NumPy npz format"
 
 **Without domain review:**
 - Implement using code from brief
@@ -236,7 +236,7 @@ Add domain review as first step before parallel execution:
 - Missing validation (corrupted files accepted)
 - Refactor for 2+ hours
 
-**With domain review (actual Phase 4A data):**
+**With domain review:**
 - 5 min domain review finds 8 issues
 - Fix in brief before implementing
 - Implementation takes 30 min
