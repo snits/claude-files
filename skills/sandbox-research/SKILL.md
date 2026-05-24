@@ -183,9 +183,12 @@ cp "$LAST_ATTEMPT_DIR/final-verdict.json"        "$VAULT_DIR/final-verdict.json"
 cp "$LAST_ATTEMPT_DIR/machine-artifact.json"     "$VAULT_DIR/final-machine-artifact.json"
 cp "$LAST_ATTEMPT_DIR/evidence-log.md"           "$VAULT_DIR/final-evidence-log.md"
 
-# Index
+# Index. Best-effort: a gen-index failure must NOT strand the cleanup below
+# (which would leave stale ~/research-out dirs); the vault entry is still valid
+# without an index.md.
 ~/.claude/skills/sandbox-research/gen-index.sh "$VAULT_DIR" "$SLUG" "$ATTEMPTS" \
-    > "$VAULT_DIR/index.md"
+    > "$VAULT_DIR/index.md" \
+    || echo "warning: gen-index.sh failed; index.md not written" >&2
 
 # Cleanup now that the vault entry is complete. SAFETY: never use a bare
 # `rm -rf ~/research-out/$SLUG*` glob — an empty/unset $SLUG would expand to

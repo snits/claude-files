@@ -74,7 +74,8 @@ fi
 # Stage brief + index so accepted-partial entries match the normal archive shape.
 [ -f "$LAST/brief.md" ] && cp "$LAST/brief.md" "$VAULT/brief.md"
 if [ -f "$VAULT/brief.md" ] && [ -f "$VAULT/final-machine-artifact.json" ] && [ -f "$VAULT/final-verdict.json" ]; then
-    "$(dirname "$0")/gen-index.sh" "$VAULT" "$SLUG" "${#ATTEMPTS[@]}" > "$VAULT/index.md"
+    "$(dirname "$0")/gen-index.sh" "$VAULT" "$SLUG" "${#ATTEMPTS[@]}" > "$VAULT/index.md" \
+        || echo "accept-partial.sh: warning: gen-index.sh failed, index.md not written" >&2
 fi
 
 # Clean up working dirs.

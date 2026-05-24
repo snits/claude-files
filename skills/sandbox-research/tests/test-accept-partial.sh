@@ -100,6 +100,9 @@ grep -q '"overall": "needs-review"' "$VAULT/$PSLUG/final-verdict.json" \
 grep -q "reason-retry1" "$VAULT/$PSLUG/final-verdict.json" \
     || { echo "FAIL: partial final reason not from retry1"; exit 1; }
 
+[ -f "$VAULT/$PSLUG/brief.md" ] || { echo "FAIL: partial brief.md missing"; exit 1; }
+[ -f "$VAULT/$PSLUG/index.md" ] || { echo "FAIL: partial index.md missing"; exit 1; }
+
 # Working dirs for the partial run must be cleaned up.
 [ ! -d "$RO/$PSLUG" ] || { echo "FAIL: partial original not cleaned"; exit 1; }
 [ ! -d "$RO/${PSLUG}-retry1" ] || { echo "FAIL: partial retry1 not cleaned"; exit 1; }
