@@ -8,6 +8,8 @@
 # Writes index.md to stdout.
 set -euo pipefail
 
+[ -n "${1:-}" ] && [ -n "${2:-}" ] && [ -n "${3:-}" ] || { echo "usage: gen-index.sh <vault-entry-dir> <slug> <attempt-count>" >&2; exit 2; }
+
 DIR="$1"
 SLUG="$2"
 ATTEMPTS="$3"
@@ -20,6 +22,8 @@ for f in "$BRIEF" "$ARTIFACT" "$VERDICT"; do
     [ -r "$f" ] || { echo "gen-index.sh: cannot read $f" >&2; exit 2; }
 done
 
+# Paths are interpolated into the python literals below; safe because callers
+# pass slug-derived paths (sanitized to [a-z0-9-], no quotes/metacharacters).
 python3 <<PYEOF
 import json
 artifact = json.load(open("$ARTIFACT"))

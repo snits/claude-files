@@ -38,7 +38,11 @@ CLAUDE_CMD="${CLAUDE_CMD:-claude -p}"
 # Ask claude for 3 lowercase hyphenated keywords summarizing the task.
 PROMPT="Summarize this research task in exactly 3 lowercase hyphenated keywords. Output ONLY the keywords joined by hyphens, nothing else. Example: 'tokio-worker-stealing'. Task: $TASK"
 
-SUMMARY="$(printf '%s\n' "$PROMPT" | $CLAUDE_CMD 2>/dev/null | head -1 | tr -d '\r' | tr 'A-Z' 'a-z' | tr ' ' '-' | tr -cd 'a-z0-9-' )"
+# claude may exit non-zero on error, or via SIGPIPE when `head -1` closes the
+# pipe early on a successful multi-line response. `|| true` prevents set -e from
+# aborting while preserving any captured first line; the emptiness check below
+# then decides whether to use it or fall back.
+SUMMARY="$(printf '%s\n' "$PROMPT" | $CLAUDE_CMD 2>/dev/null | head -1 | tr -d '\r' | tr 'A-Z' 'a-z' | tr ' ' '-' | tr -cd 'a-z0-9-' )" || true
 
 # Trim to first 30 chars and strip leading/trailing hyphens.
 SUMMARY="${SUMMARY:0:30}"
