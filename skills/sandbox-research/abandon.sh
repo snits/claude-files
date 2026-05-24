@@ -9,9 +9,11 @@ set -euo pipefail
 SLUG="$1"
 [ -n "$SLUG" ] || { echo "usage: abandon.sh <slug>" >&2; exit 2; }
 
-# Refuse to glob if SLUG would resolve to root or be empty after expansion.
+# Slugs are produced by gen-slug.sh and are always [a-z0-9-]. Reject anything
+# else before any rm -rf — this subsumes ../ and / traversal and also blocks
+# '.', glob metacharacters, and whitespace.
 case "$SLUG" in
-    *..*|*/*) echo "abandon.sh: slug must be a simple name" >&2; exit 2;;
+    *[^a-z0-9-]*) echo "abandon.sh: slug must contain only [a-z0-9-]" >&2; exit 2;;
 esac
 
 RO="$HOME/research-out"

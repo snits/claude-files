@@ -13,15 +13,15 @@ set -euo pipefail
 SLUG="$1"
 [ -n "$SLUG" ] || { echo "usage: accept-partial.sh <slug>" >&2; exit 2; }
 
-# Same guard as abandon.sh — this script does rm -rf on derived paths.
+# Slugs are produced by gen-slug.sh and are always [a-z0-9-]. Reject anything
+# else before any rm -rf — this subsumes ../ and / traversal and also blocks
+# '.', glob metacharacters, and whitespace.
 case "$SLUG" in
-    *..*|*/*) echo "accept-partial.sh: slug must be a simple name" >&2; exit 2;;
+    *[^a-z0-9-]*) echo "accept-partial.sh: slug must contain only [a-z0-9-]" >&2; exit 2;;
 esac
 
 RO="$HOME/research-out"
 VAULT="$HOME/.claude/scratchpad/research-vault/$SLUG"
-
-mkdir -p "$VAULT"
 
 # Find all attempt directories (in chronological order: <slug>, <slug>-retry1, <slug>-retry2).
 ATTEMPTS=()
@@ -32,6 +32,8 @@ for suffix in "" "-retry1" "-retry2"; do
 done
 
 [ "${#ATTEMPTS[@]}" -gt 0 ] || { echo "accept-partial.sh: no attempts found for $SLUG" >&2; exit 2; }
+
+mkdir -p "$VAULT"
 
 # Copy each attempt into attempt-N/ subdirs.
 N=1
@@ -52,6 +54,10 @@ LAST="${ATTEMPTS[-1]}"
 # Construct an accept-partial final-verdict.json marked needs-review.
 LAST_VERDICT="$LAST/final-verdict.json"
 if [ -f "$LAST_VERDICT" ]; then
+    # Unquoted PYEOF heredoc: the shell must expand $LAST_VERDICT into the python
+    # source before python runs. Do NOT change to <<'PYEOF' — python would then
+    # receive the literal string "$LAST_VERDICT". Path is slug-derived ([a-z0-9-]),
+    # so the interpolation into the python literal is injection-safe.
     python3 <<PYEOF > "$VAULT/final-verdict.json"
 import json
 v = json.load(open("$LAST_VERDICT"))
