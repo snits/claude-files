@@ -71,6 +71,12 @@ print(json.dumps(v, indent=2))
 PYEOF
 fi
 
+# Stage brief + index so accepted-partial entries match the normal archive shape.
+[ -f "$LAST/brief.md" ] && cp "$LAST/brief.md" "$VAULT/brief.md"
+if [ -f "$VAULT/brief.md" ] && [ -f "$VAULT/final-machine-artifact.json" ] && [ -f "$VAULT/final-verdict.json" ]; then
+    "$(dirname "$0")/gen-index.sh" "$VAULT" "$SLUG" "${#ATTEMPTS[@]}" > "$VAULT/index.md"
+fi
+
 # Clean up working dirs.
 for src in "${ATTEMPTS[@]}"; do
     rm -rf "$src"

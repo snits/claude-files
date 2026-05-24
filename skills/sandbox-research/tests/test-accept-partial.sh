@@ -9,6 +9,9 @@ SLUG="20260502-143000-test-task"
 RO="$HOME/research-out"
 VAULT="$HOME/.claude/scratchpad/research-vault"
 
+# Minimal composed final-verdict shape (as compose.py would produce).
+COMPOSED_VERDICT='{"schema_version":"1.0","composed_at":"2026-05-02T14:36:01-05:00","deterministic":{"version":"1.0","overall":"pass","checks":[]},"semantic":{"version":"1.0","overall":"pass","checks":{}},"overall":"block","reasons":["last reason"]}'
+
 # Set up 3 attempt dirs (original + 2 retries).
 for i in "" "-retry1" "-retry2"; do
     mkdir -p "$RO/${SLUG}${i}"
@@ -17,7 +20,7 @@ for i in "" "-retry1" "-retry2"; do
     echo "evidence" > "$RO/${SLUG}${i}/evidence-log.md"
     echo '{}' > "$RO/${SLUG}${i}/fetch-log.jsonl"
     echo '{"verdict":"pass","checks":[],"reasons":[]}' > "$RO/${SLUG}${i}/verdict.json"
-    echo '{"overall":"block","reasons":["last reason"]}' > "$RO/${SLUG}${i}/final-verdict.json"
+    echo "$COMPOSED_VERDICT" > "$RO/${SLUG}${i}/final-verdict.json"
 done
 
 "$SCRIPT" "$SLUG"
@@ -33,6 +36,12 @@ grep -q '"overall": "needs-review"' "$VAULT/$SLUG/final-verdict.json" \
     || { echo "FAIL: final overall not needs-review"; exit 1; }
 grep -q "accepted by user after 3 blocked attempts" "$VAULT/$SLUG/final-verdict.json" \
     || { echo "FAIL: accepted-by-user reason missing"; exit 1; }
+
+# brief.md and index.md must be present (uniform vault shape).
+[ -f "$VAULT/$SLUG/brief.md" ] || { echo "FAIL: top-level brief.md missing"; exit 1; }
+[ -f "$VAULT/$SLUG/index.md" ] || { echo "FAIL: top-level index.md missing"; exit 1; }
+grep -q "$SLUG" "$VAULT/$SLUG/index.md" \
+    || { echo "FAIL: index.md does not contain the slug"; exit 1; }
 
 # Cleanup should have removed ~/research-out attempts.
 [ ! -d "$RO/$SLUG" ] || { echo "FAIL: original ~/research-out/$SLUG not cleaned"; exit 1; }
@@ -67,11 +76,11 @@ PSLUG="20260502-150000-partial-task"
 for i in "" "-retry1"; do
     mkdir -p "$RO/${PSLUG}${i}"
     echo "brief content $i" > "$RO/${PSLUG}${i}/brief.md"
-    echo "{\"sources\":[],\"findings\":[\"$i\"]}" > "$RO/${PSLUG}${i}/machine-artifact.json"
+    echo "{\"sources\":[],\"findings\":[{\"source_ids\":[],\"summary\":\"finding$i\"}]}" > "$RO/${PSLUG}${i}/machine-artifact.json"
     echo "evidence $i" > "$RO/${PSLUG}${i}/evidence-log.md"
     echo '{}' > "$RO/${PSLUG}${i}/fetch-log.jsonl"
     echo '{"verdict":"pass","checks":[],"reasons":[]}' > "$RO/${PSLUG}${i}/verdict.json"
-    echo "{\"overall\":\"block\",\"reasons\":[\"reason$i\"]}" > "$RO/${PSLUG}${i}/final-verdict.json"
+    echo "{\"schema_version\":\"1.0\",\"composed_at\":\"2026-05-02T14:36:01-05:00\",\"deterministic\":{\"version\":\"1.0\",\"overall\":\"pass\",\"checks\":[]},\"semantic\":{\"version\":\"1.0\",\"overall\":\"pass\",\"checks\":{}},\"overall\":\"block\",\"reasons\":[\"reason$i\"]}" > "$RO/${PSLUG}${i}/final-verdict.json"
 done
 
 "$SCRIPT" "$PSLUG"
@@ -82,7 +91,7 @@ done
 [ -f "$VAULT/$PSLUG/final-verdict.json" ] || { echo "FAIL: partial final-verdict.json missing"; exit 1; }
 
 # Top-level final-* must come from retry1 (the LAST present attempt).
-grep -q '"-retry1"' "$VAULT/$PSLUG/final-machine-artifact.json" \
+grep -q 'retry1' "$VAULT/$PSLUG/final-machine-artifact.json" \
     || { echo "FAIL: partial final-machine-artifact not from retry1"; exit 1; }
 grep -q "evidence -retry1" "$VAULT/$PSLUG/final-evidence-log.md" \
     || { echo "FAIL: partial final-evidence-log not from retry1"; exit 1; }
