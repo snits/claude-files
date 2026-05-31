@@ -194,7 +194,7 @@ If you catch yourself writing "new", "old", "legacy", "wrapper", "unified", or i
 - Always include a attribution for Claude: `Assisted-by: Claude:{{MODEL_VERSION}}`, example: "Assisted-by: Claude:claude-opus-4-7"
 - Feature branches required - NEVER commit to main
 - NEVER use `git add -A` unless you've just done a `git status` - Don't add random test files to the repo.
-- **Worktree merges:** When work happens in a git worktree, rebase the worktree branch onto the target branch BEFORE merging — from inside the worktree. Resolve any conflicts there. Only then return to the main checkout to fast-forward merge. NEVER run `git merge` from the main checkout and resolve conflicts there — that pollutes the main project root with merge state and can collide with other ongoing work.
+- **Worktree merges:** When work happens in a git worktree, rebase the worktree branch onto the target branch BEFORE merging — from inside the worktree. Resolve any conflicts there. Only then return to the main checkout to merge — use `--no-ff` when agents are working in parallel so each branch lands as a distinct merge commit; a fast-forward is fine for sequential work. NEVER run `git merge` from the main checkout and resolve conflicts there — that pollutes the main project root with merge state and can collide with other ongoing work.
 
 ## Testing
 
@@ -382,7 +382,7 @@ Make use of the context7 mcp server if available to search for documentation tha
 The scratchpad (`~/.claude/scratchpad/`) is an agent work product store — research, code reviews, analysis, and investigation notes. It is a git repo with per-project symlinks.
 
 **Where to write:**
-- Project-specific work: `${PROJECT_ROOT}/.claude/scratchpad/` (symlink into central repo)
+- Project-specific work: `${PROJECT_ROOT}/.scratchpad/` (symlink into central repo)
 - Cross-cutting work: `~/.claude/scratchpad/` root
 - Meeting artifacts: `${scratchpad}/meetings/{meeting-name}/`
 

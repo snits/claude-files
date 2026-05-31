@@ -92,7 +92,7 @@ Read artifact → "I already see the issues" → Skip team → Solo review
 
 Each agent reads the artifact through their assigned lens and writes findings to:
 ```
-${PROJECT_ROOT}/.claude/scratchpad/meetings/{team-name}/{agent-name}-review.md
+${PROJECT_ROOT}/.scratchpad/meetings/{team-name}/{agent-name}-review.md
 ```
 
 Report structure:
@@ -120,7 +120,7 @@ Send each agent a message telling them to read the other agents' Phase 1 reports
 
 Each agent writes cross-review notes to:
 ```
-${PROJECT_ROOT}/.claude/scratchpad/meetings/{team-name}/{agent-name}-cross-review.md
+${PROJECT_ROOT}/.scratchpad/meetings/{team-name}/{agent-name}-cross-review.md
 ```
 
 Cross-review structure:
@@ -203,7 +203,7 @@ The handshake exists specifically to prevent this. **No shortcuts.**
 
 Lead writes the final report to:
 ```
-${PROJECT_ROOT}/.claude/scratchpad/meetings/{team-name}/report.md
+${PROJECT_ROOT}/.scratchpad/meetings/{team-name}/report.md
 ```
 
 Report structure:

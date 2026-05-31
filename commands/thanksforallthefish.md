@@ -6,8 +6,8 @@ description: Use when session is ending to capture status, and lessons learned
 This session is ending so do the following:
 
 - mcp__mnemosyne__process_thoughts any feelings, thoughts about our process, and lessons learned in this session.
-- Create `session_{slug}_{timestamp}.md` in .claude/scratchpad/sessions/ with a summary of our session. If
-  `.claude/scratchpad/sessions` directory doesn't exist, create it. Include:
+- Create `session_{slug}_{timestamp}.md` in .scratchpad/sessions/ with a summary of our session. If
+  `.scratchpad/sessions` directory doesn't exist, create it. Include:
   - A brief recap of key actions
   - Efficiency insights
   - Possible process improvements
