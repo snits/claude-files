@@ -25,29 +25,43 @@ description: Use when about to dispatch implementation work or start coding from
 ## The Iron Law
 
 ```
-NO IMPLEMENTATION WITHOUT DOMAIN REVIEW FIRST
+NO IMPLEMENTATION FROM AN UNREVIEWED BRIEF
 ```
 
-If you have a written brief, as a separate file or within a larger plan, dispatch domain expert before any implementation. No exceptions.
+Review coverage is inherited, not re-earned per dispatch:
 
-**Not for:**
-- "Simple additions" (simple briefs hide complex issues)
-- "Just following the steps" (steps may be flawed)
-- "Time pressure" (exactly when you need review most)
-- Don't rationalize. Review means review.
+- **Plan/design level: review is MANDATORY, no exceptions.** Before any
+  implementation begins, the plan or design the briefs derive from gets
+  domain-expert review (in addition to any human review). This is where
+  unimplementable assertions, wrong approaches, and flawed test designs get
+  caught — a good plan review catches per-task flaws because the task briefs
+  ARE the plan's tasks.
+- **Task-brief level: review is CONDITIONAL.** A brief lifted directly from a
+  reviewed plan inherits that review. Dispatch a focused brief review when ANY
+  of these hold:
+  - the brief adds material the reviewed plan doesn't contain, or deviates
+    from it
+  - the task enters a novel or high-risk domain (security, concurrency,
+    serialization, data loss) the plan review didn't examine in depth
+  - there was no plan-level review (ad-hoc task) — then the brief IS the
+    plan, review it
+- **Time pressure is not an exemption** — it's when review pays most.
+
+A capable implementation agent will sometimes catch a brief flaw mid-task and
+deviate with justification. Treat that as the last line of defense, not the
+plan — require agents to report deviations, never to silently absorb them.
 
 ## When to Use
 
 **MANDATORY for:**
-- Any task with a written brief, spec, or implementation plan
-- All tasks in subagent-driven-development workflow
-- Tasks you're about to implement (even if they seem simple)
+- Any plan, spec, or design about to drive implementation
+- Ad-hoc task briefs with no reviewed plan behind them
 
-**Especially critical when:**
-- Brief includes code examples (may have anti-patterns)
+**Dispatch an additional per-brief review when:**
+- Brief includes code examples the plan review didn't see (may have anti-patterns)
 - Specialized domain (serialization, networking, security, concurrency, data modeling)
 - You recognize the pattern (familiarity breeds assumptions)
-- Time pressure (exactly when you need to catch issues early)
+- The brief paraphrases the plan rather than quoting it (paraphrase drift is real)
 
 ## The Pattern
 
@@ -70,9 +84,12 @@ Savings: Hours of rework
 
 ### Step 1: Dispatch Domain Expert
 
-**If you have Task tool available:**
+**If you have the Agent tool available:**
 
-Use Task tool to dispatch domain-appropriate expert agents.
+Use the Agent tool to dispatch domain-appropriate expert agents — project
+personas where the roster has the right lens (pairing complementary lenses,
+e.g. an invariant tracer plus a premise auditor, catches more than two passes
+of the same lens), `general-purpose` with a role line otherwise.
 
 - If reviewing an implementation plan, dispatch multiple agents focused on different aspects (examples: algorithmic correctness, architecture, api, tasks properly sized, ...)
 - If reviewing a design, dispatch multiple agents focused on different aspects (examples: conceptual correctness, ui/ux, architecture, api, ...)
@@ -81,7 +98,7 @@ Use Task tool to dispatch domain-appropriate expert agents.
 Dispatch the agents with a prompt similar to this format:
 
 ```
-Task(subagent_type="general-purpose", prompt=f"""
+Agent(subagent_type="general-purpose", prompt="""
 **Role:** You are a [domain] expert specializing in [specific area].
 
 **Task:** Review this task brief for technical correctness and design flaws.
@@ -149,14 +166,15 @@ Use code-reviewer to catch implementation gaps.
 | "Brief has TDD steps already" | TDD tests the implementation, not the design. Flawed design → passing tests for wrong behavior. |
 | "Not security-critical" | Technical correctness matters everywhere. Type safety bugs, data loss, performance issues affect all code. |
 | "I know this pattern" | Familiarity causes assumptions. Expert finds issues you overlook because "I've done this before." |
-| "Domain review is overkill" | 5 minutes review vs hours debugging. Math favors review. |
-| "Subagent overhead not worth it" | Agent dispatch: 30 seconds. Finding 8 bugs later: hours. Review always wins. |
+| "Domain review is overkill" | Minutes of review vs hours of debugging. The ratio has narrowed with stronger models, but it has not inverted — and the worst flaws (unimplementable designs, wrong approaches) still cost a full implementation cycle. |
 | "I can see issues myself" | Then fix them in the brief BEFORE implementing. Domain expert systematically finds what you miss. |
-| "We already reviewed the plan, so we don't need a review for this task brief" | More focused review on the task prompt routinely finds issues missed when reviewing the full plan. |
+| "We already reviewed the plan, so we don't need a review for this task brief" | True ONLY if the brief is lifted from the reviewed plan without additions. If the brief paraphrases, extends, or deviates — review the delta. |
+| "The implementation agent will catch brief flaws" | Sometimes it will — that's the last line of defense, not the plan. Flaws it absorbs silently become code. |
 
 ## Red Flags - You're Rationalizing
 
-If you think ANY of these thoughts, STOP and dispatch domain expert:
+If the plan behind the brief was never domain-reviewed and you think ANY of
+these thoughts, STOP and dispatch domain expert:
 
 - "Brief is well-specified, just implement it"
 - "This is a standard pattern"
@@ -165,32 +183,29 @@ If you think ANY of these thoughts, STOP and dispatch domain expert:
 - "Domain review for this is overkill"
 - "I'll catch issues during implementation"
 
-**All of these mean: Dispatch domain expert first. No exceptions.**
+**All of these mean: Dispatch domain expert first.** The only legitimate skip
+is documented inheritance: the brief is the reviewed plan's task, verbatim.
 
 ## Integration with Workflows
 
 ### With subagent-driven-development
 
-**CRITICAL:** If you're using subagent-driven-development, you MUST add domain review as mandatory step.
+**CRITICAL:** If you're using subagent-driven-development, domain review of
+the PLAN is a mandatory gate before the first dispatch.
 
-**Original workflow (from that skill):**
 ```
-For each task:
-  1. READ the task from plan
-  2. Dispatch implementation subagent
-  3. Code review
-  4. Fix code review issues
-```
+Before any task dispatch:
+  1. DISPATCH DOMAIN EXPERT(S) to review the plan      ← MANDATORY
+  2. ADDRESS findings, revise plan                     ← MANDATORY
 
-**REQUIRED modification - add domain review FIRST:**
-```
 For each task:
-  1. READ the task from plan
-  2. DISPATCH DOMAIN EXPERT to review task brief  ← MANDATORY
-  3. ADDRESS domain expert issues                 ← MANDATORY
-  4. Dispatch implementation subagent
-  5. Code review
-  6. Fix code review issues
+  3. READ the task from plan
+  4. If the brief deviates from the reviewed plan, is novel/high-risk,
+     or had no plan review: dispatch a focused brief review first
+  5. Dispatch implementation subagent (brief quotes the plan; agent must
+     report any deviations, never absorb them silently)
+  6. Code review
+  7. Fix code review issues
 ```
 
 **Why both reviews:**
@@ -212,17 +227,18 @@ Add domain review as first step before parallel execution:
 
 ## Why This Works
 
-**Prevention vs remediation:**
-- Domain review: 5 min, catches design flaws
-- Implementation: 30 min with flawed brief
-- Debugging: 2+ hours finding root cause
-- Refactoring: 1+ hour fixing architecture
+**Prevention vs remediation.** A review costs minutes; a flawed brief costs an
+implementation cycle plus debugging plus rework. The exact ratio shifts with
+model strength — implementation agents now catch some brief flaws themselves —
+but the asymmetry survives because the worst brief flaws (unimplementable
+assertions, wrong approach, vacuous tests) produce work that *looks* done and
+fails later, which is the most expensive failure shape there is.
 
-**Cost comparison:**
-- With review: 5 + 30 = 35 minutes
-- Without review: 30 + 120 + 60 = 210 minutes
-
-**6× time savings** for 5 minutes of review.
+Worked example from practice: a reviewed implementation plan for a
+determinism-contract branch had two MAJOR flaws caught by plan review — an
+assertion targeting a container with no defined order, and a mutation check
+that was a silent no-op. Each would have burned a full subagent session and
+produced a false-confidence test suite.
 
 ## Real-World Example
 
@@ -252,4 +268,5 @@ Add domain review as first step before parallel execution:
 
 **Domain experts find the lies before they become bugs.**
 
-5 minutes. Every task. No exceptions.
+Every plan, before the first dispatch. Every brief that goes beyond the
+reviewed plan. No silent exceptions.
