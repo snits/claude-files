@@ -31,6 +31,23 @@ Claims are tiered by type. The tier determines what evidence is required and how
 | 3 | **Contextual** — prior art, external refs | "Same root cause as upstream commit 3f6d810" | External reference (URL, ticket, commit hash) with verification context | Misattributes root cause, incorrect backport decisions |
 | 4 | **Reproducer** — does it trigger, under what conditions | "Bug reproduces within 30s on 2-socket EPYC under 98% fill" | Bundle: script, environment, config, output, exit status | Chases unreproducible conditions |
 
+## Proportionality: Two Modes
+
+The no-unsourced-claims rule is constant. Only the bookkeeping ceremony scales
+with the investigation:
+
+| Mode | When | Mechanism |
+|------|------|-----------|
+| **Inline-evidence** | Short, single-session investigations; answers delivered in conversation or a brief writeup | Every claim still carries its evidence — command + output excerpt + file:line — cited inline in the finding itself. No separate ledger file. |
+| **Full ledger** | Formal RCA, multi-session work, anything with an investigation ID, reports others will verify or build on, work that may outlive this context window | The complete `evidence-log.md` protocol below. |
+
+Choosing: if the work has an identifier (ticket, bead, case number), spans
+sessions, or produces a report someone else must verify — full ledger. If
+you're unsure, start inline; **promote to a ledger the moment a causal chain
+emerges** (causal claims need linked evidence entries, and reconstructing them
+later is the exact waste this skill prevents). What never scales down: claims
+without sources, "it appears that," and conclusions from memory.
+
 ## The Evidence Ledger
 
 Maintain an `evidence-log.md` (or `evidence-log-<ID>.md` when an investigation identifier exists) as a structured scratch file during investigation. This is the single source of truth. The report cites ledger entries; it does not contain raw evidence inline.
