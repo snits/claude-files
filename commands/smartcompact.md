@@ -3,27 +3,33 @@ name: smartcompact
 description: Use when preparing to do a manual compaction of the context
 ---
 
-Generate a concise, strategic compact string for /compact based on our current conversation context. Focus on:
+Prepare for compaction by making the summary not matter: flush all
+load-bearing state to durable storage BEFORE the context is compacted.
+Modern compaction summarizes well on its own — do not write summary
+instructions for it. Instead:
 
-**Strategic Context Preservation:**
-- Current project status and operational state
-- Repository state: current branch, uncommitted changes, files being worked on
-- Key architectural decisions and technical approaches
-- Active problems being solved and their context
-- Important discoveries and lessons learned
-- Active agent definitions and their established patterns
-- Current workflow stage (planning/implementation/review/checkpoint status)
-- Recent journal insights relevant to current work
+**1. Flush in-flight state to session-handoff.md**
+Update (or create) the handoff file with anything a fresh context would need
+to continue seamlessly: current task and its stage, running background work
+(task IDs, workflow run IDs, output paths), branch/worktree state, decisions
+made this session that aren't yet recorded elsewhere, and the next action.
+Delete stale entries while there.
 
-**Compress These Details:**
-- Detailed debugging steps and error messages
-- Routine setup and installation processes  
-- Lengthy code examples (keep patterns, compress specifics)
-- Historical context that doesn't inform current work
-- Repetitive tool outputs and status messages
+**2. Journal unjournaled insights**
+If the session produced discoveries, failed approaches, or lessons not yet in
+mnemosyne, call `process_thoughts` now. Conversation context is the only
+place they exist until you do.
 
-**Memory Integration:**
-Search recent journal entries for key insights that should be preserved across context resets, particularly technical discoveries, failed approaches, and established working patterns.
+**3. Audit for conversation-only state**
+Ask: "Is anything load-bearing ONLY in this conversation?" — an agreement
+with Jerry, a path, an ID, a constraint, a half-finished plan. If yes, put it
+in the handoff file, a bead comment, or memory. Beads and `bd prime` survive
+compaction; chat nuance does not.
 
-**Output Format:**
-Provide a concise compact string that Jerry can copy and use directly with /compact, optimized to preserve essential context while efficiently managing token usage and maintaining continuity across sessions.
+**4. Emit a focus hint only if needed**
+If something unusual is in flight that auto-compaction might deprioritize
+(e.g., "a background workflow wf_XXX is running; its notification must be
+acted on"), give Jerry a ONE-LINE focus hint to pass to /compact. Otherwise
+say plain /compact is fine — no curated summary string needed.
+
+Then tell Jerry the flush is done and compaction is safe.
