@@ -19,7 +19,12 @@ All mathematical claims must be backed by computed evidence. No mental math. No 
 - Parameter validation ("at these settings, the value is Z")
 - Unit conversions (KB to MB, pages to bytes, ticks to seconds)
 
-If a number appears in output, a tool produced it. If a claim says "approximately," the exact value was computed first.
+The operative bar: **no uncomputed number lands in a deliverable** — a report,
+a commit message, a design doc, a code constant, a threshold, an answer to the
+user. If a number appears there, a tool produced it. If a claim says
+"approximately," the exact value was computed first. A computed number is also
+*reproducible* — someone else can rerun the computation and check you, which
+no amount of model confidence substitutes for.
 
 ## Units Discipline
 
@@ -93,45 +98,17 @@ print(f"95% CI: ({ci[0]:.2f}, {ci[1]:.2f})")
 '
 ```
 
-### R (Rscript)
-
-For statistical analysis, data exploration, and publication-quality statistics.
+### Other tools (one-liners; reach for these only when python3 + libs fall short)
 
 ```bash
-Rscript -e 'summary(rnorm(1000, mean=3, sd=0.5))'
-
-# Hypothesis testing
-Rscript -e '
-before <- c(21.5, 18.2, 30.1)
-after <- c(7.6, 7.7, 7.5)
-t.test(before, after, paired=TRUE)
-'
+Rscript -e 't.test(c(21.5,18.2,30.1), c(7.6,7.7,7.5), paired=TRUE)'   # R: statistical tests
+octave --eval "x = linspace(0,1,100); trapz(x, x.^2)"                  # Octave: MATLAB-style numerics
+maxima --batch-string="solve(0.12*x = 2.0, x);"                        # Maxima: exact symbolic results
+sage -c 'var("x"); solve(0.12*x - 2.0, x)'                             # SageMath (if installed)
 ```
 
-### GNU Octave
-
-For numerical computing, matrix operations, and MATLAB-compatible analysis.
-
-```bash
-octave --eval "x = linspace(0,1,100); y = x.^2; trapz(x,y)"
-```
-
-### Maxima
-
-For exact symbolic computation, computer algebra, and closed-form solutions.
-
-```bash
-maxima --batch-string="solve(0.12*x = 2.0, x);"
-```
-
-### SageMath (when available)
-
-For advanced algebra, number theory, and combinatorics. Not packaged in Fedora;
-install separately if needed.
-
-```bash
-sage -c 'var("x"); solve(0.12*x - 2.0, x)'
-```
+python3 with numpy/scipy/sympy covers ~95% of real cases; prefer it unless a
+collaborator's workflow or an exact-symbolics need says otherwise.
 
 ### Multi-step analysis or simulation
 
@@ -281,7 +258,7 @@ print(f"  = PGD[0x{l4:x}] PUD[0x{l3:x}] PMD[0x{l2:x}] PTE[0x{l1:x}]")
 
 ## Edge Cases
 
-- **Trivial arithmetic** (1+1, 10/2): Still compute it. The cost is one bash call. The benefit is never being wrong about "trivial" math that turns out to matter. The difference between 92% and 98% fill was 7 GB vs 122 GB of allocation — "trivial" percentage math determined whether the reproducer worked.
+- **Trivial arithmetic** (1+1, 10/2): the rule binds at the deliverable, not in your head — obvious arithmetic used in-flight to decide what to look at next doesn't need a bash call, but the moment a number is going INTO output, compute it. When in doubt, compute: the cost is one bash call, and "trivial" math turns out to matter — the difference between 92% and 98% fill was 7 GB vs 122 GB of allocation, and "trivial" percentage math determined whether the reproducer worked.
 - **Bit shifts**: Never mentally evaluate `1 << N` for N > 4. Compute it. `1 << 21` is not obviously 2097152 and agents regularly get these wrong.
 - **Estimates and ranges**: Compute the bounds. "Between X and Y" requires computing both X and Y.
 - **Citing existing computed results**: If a number was already computed earlier in the conversation and is being referenced, cite where it was computed. Do not re-derive mentally.
