@@ -5,7 +5,7 @@ description: Use when resolving a bead in a project where the user is the mainta
 
 Investigate bead ${1}, and implement using superpowers. For any commits made, review the results
 of the automated roborev reviews, and deal with any relevant findings. Once complete, and reviews
-have passed merge to local main (--no-ff), and the push to origin.
+have passed merge to local main (--no-ff), and the push to origin. You can fan out if needed to accomplish the task.
 
 digraph high-level-flow {
     rankdir=TB
