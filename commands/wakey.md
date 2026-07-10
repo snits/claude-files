@@ -27,4 +27,7 @@ We have started a new session. Please go through the following steps:
    - Verify MCP connections and agent availability if relevant
    - Check for any pending todos or incomplete workflows
 
-**Then let's discuss what we're going to do next, with full context of where we are and what we've learned.**
+5. **Propose the Session Plan:**
+   - From the handoff, ready beads, and journal context, close with a one-line committed proposal naming the session goal and the first work item, e.g. "Goal: finish chunk streaming. First: bd-123."
+   - Ask Jerry to confirm or redirect before starting work.
+   - Prefer scoping the session to a single bead. If context fills mid-task, write session-handoff.md and suggest a fresh session rather than compacting through the work.
