@@ -7,6 +7,9 @@ Investigate bead ${1}, and implement using superpowers. For any commits made, re
 of the automated roborev reviews, and deal with any relevant findings. Once complete, and reviews
 have passed merge to local main (--no-ff), and the push to origin. You can fan out if needed to accomplish the task.
 
+When writing plans and task briefs, specify the goal, constraints, and acceptance criteria for each
+task; don't enumerate implementation steps unless the ordering is genuinely load-bearing.
+
 digraph high-level-flow {
     rankdir=TB
 
