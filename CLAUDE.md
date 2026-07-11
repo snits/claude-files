@@ -407,10 +407,10 @@ Make use of the context7 mcp server if available to search for documentation tha
 
 ### Scratchpad Conventions
 
-The scratchpad (`~/.claude/scratchpad/`) is an agent work product store — research, code reviews, analysis, and investigation notes. It is a git repo with per-project symlinks.
+The scratchpad (`~/.claude/scratchpad/`) is an agent work product store — research, code reviews, analysis, and investigation notes. It is a git repo; project working copies sync into it additively each session.
 
 **Where to write:**
-- Project-specific work: `${PROJECT_ROOT}/.scratchpad/` (symlink into central repo)
+- Project-specific work: `${PROJECT_ROOT}/.scratchpad/` (real directory, gitignored in the project; synced to the central repo)
 - Cross-cutting work: `~/.claude/scratchpad/` root
 - Meeting artifacts: `${scratchpad}/meetings/{meeting-name}/`
 
@@ -419,9 +419,6 @@ The scratchpad (`~/.claude/scratchpad/`) is an agent work product store — rese
 - `{agent-type}` — omit for non-agent work; use the type that produced the artifact (e.g., `code-reviewer`, `general-purpose`)
 - Example: `20260402-orbweaver-rs-code-reviewer-lod-review.md`
 - Non-agent fallback: `20260402-description.md`
-
-### Cross-Claude Registration
-Register with the cross-claude MCP server at the start of every session so other Claude instances can find and communicate with you. Registration is ephemeral — it resets when the session ends.
 
 ### Colima Recovery
 When colima shows "Broken" status or "vz driver is running but host agent is not" after macOS reboot:
