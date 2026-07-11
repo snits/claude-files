@@ -1,16 +1,19 @@
 ---
-name: roborev-design-review
-description: Request a design review for a commit and present the results
+name: roborev-lookahead-review-branch
+description: Request a time-series look-ahead (a.k.a. peekahead / future-data leakage) review for all commits on the current branch and present the results
 ---
 
-# roborev-design-review
+# roborev-lookahead-review-branch
 
-Request a design review for a commit and present the results.
+Request a time-series look-ahead review for all commits on the current branch and
+present the results. A look-ahead review checks whether the change uses
+information that would not yet be available at the point in time it represents —
+also called peekahead, future leakage, or temporal leakage.
 
 ## Usage
 
 ```
-/roborev-design-review [commit] [--panel <name>|none]
+/roborev-lookahead-review-branch [--base <branch>] [--panel <name>|none]
 ```
 
 ## When NOT to invoke this skill
@@ -21,7 +24,7 @@ outputs — not requests to start a new review.
 
 ## IMPORTANT
 
-This skill requires you to **execute bash commands** to validate the commit and launch the review. The task is not complete until the background review finishes and you present the results to the user.
+This skill requires you to **execute bash commands** to validate inputs and launch the review. The task is not complete until the background review finishes and you present the results to the user.
 
 These instructions are guidelines, not a rigid script. Use the conversation
 context. Skip steps that are already satisfied. Defer to project-level
@@ -29,11 +32,11 @@ CLAUDE.md instructions when they conflict with these steps.
 
 ## Instructions
 
-When the user invokes `/roborev-design-review [commit] [--panel <name>|none]`:
+When the user invokes `/roborev-lookahead-review-branch [--base <branch>] [--panel <name>|none]`:
 
 ### 1. Validate inputs
 
-If a commit ref is provided, use the commit-provided command snippet below; it stores and validates the ref before invoking `roborev review`.
+If a base branch is provided, use the base-branch command snippet below; it stores and validates the ref before invoking `roborev review`.
 
 If validation fails, inform the user the ref is invalid. Do not proceed.
 
@@ -41,22 +44,23 @@ If validation fails, inform the user the ref is invalid. Do not proceed.
 
 Construct the review command:
 
-If no commit is specified:
+If no base branch is specified, run:
 
-```
-roborev review --wait --type design [--panel <name>|none]
+```bash
+roborev review --branch --wait --type lookahead [--panel <name>|none]
 ```
 
-If a commit is specified:
+If a base branch is specified, run:
 
-```
-read -r commit <<'ROBOREV_REF'
-<commit>
+```bash
+read -r branch <<'ROBOREV_REF'
+<branch>
 ROBOREV_REF
-git rev-parse --verify -- "$commit^{commit}" || exit 1
-roborev review "$commit" --wait --type design [--panel <name>|none]
+git rev-parse --verify -- "$branch" || exit 1
+roborev review --branch --wait --type lookahead --base "$branch" [--panel <name>|none]
 ```
 
+- If `--base` is specified, include it (otherwise auto-detects the base branch)
 - If `--panel <name>` is specified, include it (fans out to the named config panel); `--panel none` forces a single-agent review
 
 ### 3. Run the review in the background
@@ -65,23 +69,23 @@ Launch a background task that runs the command. This lets the user continue work
 
 Use the `Task` tool with `run_in_background: true` and `subagent_type: "Bash"`:
 
-If no commit is specified:
+If no base branch is specified, run:
 
-```
-roborev review --wait --type design [--panel <name>|none]
+```bash
+roborev review --branch --wait --type lookahead [--panel <name>|none]
 ```
 
-If a commit is specified:
+If a base branch is specified, run:
 
-```
-read -r commit <<'ROBOREV_REF'
-<commit>
+```bash
+read -r branch <<'ROBOREV_REF'
+<branch>
 ROBOREV_REF
-git rev-parse --verify -- "$commit^{commit}" || exit 1
-roborev review "$commit" --wait --type design [--panel <name>|none]
+git rev-parse --verify -- "$branch" || exit 1
+roborev review --branch --wait --type lookahead --base "$branch" [--panel <name>|none]
 ```
 
-Tell the user that the design review has been submitted and they can continue working. You will present the results when the review completes.
+Tell the user that the look-ahead review has been submitted and they can continue working. You will present the results when the review completes.
 
 ### 4. Present the results
 
@@ -118,30 +122,30 @@ If the review passed, confirm the result and do not offer `/roborev-fix`.
 
 ## Examples
 
-**Default design review of HEAD:**
+**Default branch look-ahead review:**
 
-User: `/roborev-design-review`
+User: `/roborev-lookahead-review-branch`
 
 Agent:
-1. Launches background task: `roborev review --wait --type design`
-2. Tells user: "Design review submitted for HEAD. I'll present the results when it completes."
+1. Launches background task: `roborev review --branch --wait --type lookahead`
+2. Tells user: "Look-ahead review submitted for branch. I'll present the results when it completes."
 3. When complete, presents the verdict and findings grouped by severity
 4. If findings exist: "Would you like me to address these findings? Run `/roborev-fix 1042`"
-5. If passed: "Design review passed with no findings."
+5. If passed: "Branch look-ahead review passed with no findings."
 
-**Design review of a specific commit:**
+**Look-ahead review against a specific base:**
 
-User: `/roborev-design-review abc123`
+User: `/roborev-lookahead-review-branch --base develop`
 
 Agent:
-1. Validates `abc123` resolves to a valid commit
-2. Launches background task: `roborev review abc123 --wait --type design`
-3. Tells user: "Design review submitted for abc123. I'll present the results when it completes."
+1. Validates `develop` resolves to a valid ref
+2. Launches background task: `roborev review --branch --wait --type lookahead --base develop`
+3. Tells user: "Look-ahead review submitted for branch (against develop). I'll present the results when it completes."
 4. When complete, presents the verdict and findings
 5. If findings exist: "Would you like me to address these findings? Run `/roborev-fix 1043`"
 
 ## See also
 
-- `/roborev-review --type design` — equivalent, with additional `--type` flexibility
-- `/roborev-design-review-branch` — design review all commits on the current branch
+- `/roborev-review-branch --type lookahead` — equivalent, with additional `--type` flexibility
+- `/roborev-lookahead-review` — look-ahead review a single commit
 - `/roborev-fix` — fix a review's findings in code
