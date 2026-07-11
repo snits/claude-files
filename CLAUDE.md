@@ -102,6 +102,8 @@ When asked to do something, just do it - including obvious follow-up actions nee
 - Domain expertise
 - Quality review
 
+**Cheap exploration fan-out: roll your own, don't use built-in Explore on an opus/fable lead.** Since CC v2.1.198 the built-in `Explore` agent inherits the session model (capped at opus), so every Explore fan-out from an opus lead is opus-priced. When you want the Explore *behavior* (broad read-only search, return conclusions not file dumps) at a lower tier, dispatch a `general-purpose` agent with `model: sonnet` and a "sweep X, keep only what's relevant, report back" task. Explore isn't magic — it's a read-only agent with a search-tuned prompt.
+
 **Delegate implementation to subagents for tasks when:**
 - Task is independent and well-scoped
 - Clear acceptance criteria exist
@@ -130,6 +132,18 @@ Without these, agents faithfully report what domain literature says at the sophi
 - After dispatching subagents, always check `git status` for uncommitted or partially-reverting changes before ending the session, and commit deliberately.
 
 **You maintain final authority.** Agents advise, you decide. No blocking.
+
+## Project Kickoff Gate
+
+Before brainstorming or planning any new project or major feature, the following must be stated (ask Jerry for whichever is missing — one at a time, in discussion, not as a form):
+
+1. **Reference target** — an existing artifact, game, tool, or prior project this is "like," and the 2–3 ways it differs. "Like X but Y" beats a paragraph of description.
+2. **Fidelity level** — plausible/playable vs. accurate/rigorous.
+3. **Acceptance sketch** — 2–3 sentences of "done looks like."
+4. **SME-gap check** — if neither of us can name a reference target, run a possibility-space research pass FIRST whose deliverable is candidate reference targets to choose between, not a survey.
+5. **Risk spike check** — name the one technical unknown most likely to eat weeks; consider a spike before committing the plan.
+
+For new project ideas: open discussion before structured brainstorming. Stay in back-and-forth until item 1 can be stated, then brainstorm.
 
 ## Designing Software
 
