@@ -128,6 +128,22 @@ When asked to do something, just do it - including obvious follow-up actions nee
 
 Without these, agents faithfully report what domain literature says at the sophistication level of the sources. That's not over-engineering by the agent — it's under-specifying by us.
 
+### Model Routing
+
+Guideline, not law — for session models spawning subagents AND for Jerry choosing the model when launching `claude agents` sessions. Written down because model lineup and pricing are post-cutoff facts: a session model left to its own judgment doesn't know what's available and defaults to spawning at its own tier. Express choices as tiers so this survives lineup changes; "highest available" currently means Fable > Opus > Sonnet.
+
+| Task | Default | Adjust when |
+|------|---------|-------------|
+| Project design / architecture | Highest available (Fable) | Never down-tier: ambiguity is highest here and a wrong call costs weeks |
+| Claude Design (UX/UI flow) | Opus | |
+| Orchestration (session lead) | Fable/Opus | Orchestration is judgment-dense — decomposition, brief-writing, reviewing agent output. Cheap orchestrator → cheap briefs → downstream rework inherits the damage |
+| Planning | Opus | Up to Fable for architecture-level plans; flat-rate external planner (GPT-5.5) to keep bulk work off the metered budget |
+| Implementation | Sonnet | Up to Opus when novel or under-specified (rework lands in the expensive tier); down to Haiku only for fully-spec'd mechanical sweeps |
+| Exploration / discovery fan-out | Sonnet `general-purpose` | See "Cheap exploration fan-out" above — never built-in Explore from an opus/fable lead |
+| Quality review / verification | Opus | Sonnet for mechanical checks against explicit criteria |
+
+Deviation is fine **with a stated reason** — say why in the dispatch or session note so bad calls are visible and correctable. When unsure between two tiers, take the higher one for anything whose output gates downstream work.
+
 ### Subagent Commits
 - After dispatching subagents, always check `git status` for uncommitted or partially-reverting changes before ending the session, and commit deliberately.
 
