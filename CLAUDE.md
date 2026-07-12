@@ -158,6 +158,7 @@ Before brainstorming or planning any new project or major feature, the following
 3. **Acceptance sketch** — 2–3 sentences of "done looks like."
 4. **SME-gap check** — if neither of us can name a reference target, run a possibility-space research pass FIRST whose deliverable is candidate reference targets to choose between, not a survey.
 5. **Risk spike check** — name the one technical unknown most likely to eat weeks; consider a spike before committing the plan.
+6. **Domain contract** — pin the shared quantity every subsystem parameterizes on, with units ("one hex = 6 miles", "one tick = one day"). Left implicit, it hardens into scattered hardcoded assumptions that cost an epic to remove (the 6-mile-hex bug survived three project generations).
 
 For deep-domain projects, the gate recurses: a reference target scopes the product surface, but the difficulty lives in the subsystems the reference can't see into. Name the load-bearing subsystems up front and apply items 2 and 4 to each — its own fidelity call, its own mini research pass delivering candidate approaches to choose between. Assembling from many sources is fine; each choice should be made against a stated fidelity, not grabbed under pressure.
 
