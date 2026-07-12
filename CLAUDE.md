@@ -404,6 +404,27 @@ MISSING SCALE CONTEXT: If project CLAUDE.md lacks this section, ANNOUNCE "PROJEC
 
 ## Environment & Tools
 
+### Claude Design Workflow (claude-design MCP server)
+
+Claude Design is not a separate agent to converse with — the session model *becomes* the
+designer by loading the design system prompt, then authors design files directly in a
+claude.ai/design project Jerry can view in the browser.
+
+**Tool flow:**
+1. `mcp__claude-design__list_design_systems` — check for a bound design system (`is_default=true` is what a fresh project uses).
+2. `mcp__claude-design__create_project` — returns `{project_id, url}`; share the page-specific link (`url?file=<path>`) after writing files, not the project root.
+3. `mcp__claude-design__get_claude_design_prompt` — MUST be called before any `write_files`; loads the designer system prompt (optionally with a design system's context).
+4. `mcp__claude-design__write_files` — author the design component files (`.dc.html`, support.js, README handoff).
+5. `mcp__claude-design__render_preview` — screenshot-check the design during iteration.
+6. `mcp__claude-design__put_conversation` — one-way sync of the working conversation into the project's chat panel so viewers can follow along; pass back `chat_id` + `synced_through_idx` on every sync, `append:true` for delta rows.
+7. `mcp__claude-design__get_conversation` — read chats from the project (how feedback typed in the app comes back).
+8. `mcp__claude-design__finalize_plan` when the design flow requires plan approval.
+
+**Brief-driven flow that works:** write the design brief as a file in the project repo's
+`.scratchpad/` first, get it domain-reviewed, then load the design prompt and execute the
+brief in-session. Reference example: fatescroll's Table Forge handoff
+(`fatescroll/docs/design/table-forge/README.md`) — the deliverable shape to aim for.
+
 ### API Documentation Cache
 
 Cached API summaries live in `~/.claude/scratchpad/api-docs/` to avoid repeated web searches.
