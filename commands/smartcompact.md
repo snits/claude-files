@@ -24,7 +24,9 @@ place they exist until you do.
 Ask: "Is anything load-bearing ONLY in this conversation?" — an agreement
 with Jerry, a path, an ID, a constraint, a half-finished plan. If yes, put it
 in the handoff file, a bead comment, or memory. Beads and `bd prime` survive
-compaction; chat nuance does not.
+compaction; chat nuance does not. This includes external **source material**
+you consumed directly this session — route it to the vault inbox per the
+intake sweep in `thanksforallthefish` before the source scrolls out of reach.
 
 **4. Emit a focus hint only if needed**
 If something unusual is in flight that auto-compaction might deprioritize

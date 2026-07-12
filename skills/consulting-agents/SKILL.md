@@ -149,6 +149,38 @@ Agents write reports to a **project scratchpad** by default, with a fallback cha
 
 **Objectivity required:** Focus on technical facts, not quality judgments. Avoid superlatives.
 
+## Routing Source Material to the Vault
+
+Some consultations yield **source material worth keeping** — an article, paper, YouTube
+transcript, podcast, or a research synthesis with lasting reference value. That is distinct
+from an **ephemeral work product** (a code review, a bug investigation, an analysis of *our
+own* code), which stays in the scratchpad and nowhere else. You own the judgment of which is
+which, because you know what you asked for.
+
+When you dispatch a research/discovery agent whose output will be source material, assign it a
+short kebab id like `web-search-researcher-jwt-refresh` and paste the block below into the
+dispatch prompt — **substituting that id for `<agent-id>` yourself** (the agent can't derive
+it). The agent then writes an intake stub alongside its report: the report stays as the full
+content, the stub is the routed signal, quarantined as `agent-proposed` until a human promotes
+it (trust comes from promotion, never the stub — see `~/.claude/vault/_system/routing.md`).
+
+> **Vault intake:** Alongside your scratchpad report, write an intake stub per the **Intake
+> item** contract in `~/.claude/vault/_system/schemas.md` (read it — it is authoritative) to
+> `~/.claude/vault/_inbox/<agent-id>/<source-slug>.md`, where `<source-slug>` is a specific
+> kebab-case name and `name:` in the frontmatter equals it. Normally write **one** stub:
+> `subtype: research` for your synthesis, with `source_url` pointing at your scratchpad report
+> and the underlying URLs listed in the body — write separate stubs only if you consumed
+> several genuinely standalone documents (each its own `article`/`paper`/`youtube`/`podcast`).
+> Set the literals `provenance: agent-proposed` (the only provenance you may write) and
+> `status: pending-promotion`; set `agent_id` to `<agent-id>`, `ingested` to today, and
+> `sha256` to a hash of what you saved (best-effort drift marker in V1). Body: one paragraph on
+> what the source contributes, then the absolute path to your scratchpad report. Write ONLY
+> under `_inbox/<agent-id>/` — never `atlas/`, `MEMORY.md`, or `_ops/`; if an atlas entry for
+> the same concept exists, read it first so the stub adds rather than duplicates.
+
+Skip this entirely when a consultation produces only read-only work products — there is
+nothing to route.
+
 ## Related Skills
 
 | Skill | Use When |
