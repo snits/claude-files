@@ -153,11 +153,13 @@ Deviation is fine **with a stated reason** — say why in the dispatch or sessio
 
 Before brainstorming or planning any new project or major feature, the following must be stated (ask Jerry for whichever is missing — one at a time, in discussion, not as a form):
 
-1. **Reference target** — an existing artifact, game, tool, or prior project this is "like," and the 2–3 ways it differs. "Like X but Y" beats a paragraph of description.
+1. **Reference target** — an existing artifact, game, tool, or prior project this is "like," and the 2–3 ways it differs. "Like X but Y" beats a paragraph of description. Prior generations of our own projects count, and negative references count ("like Worldographer but terrain generation I can understand"; "like kosmarium but real multi-scale") — a reference that only shows what to differ from still scopes the product.
 2. **Fidelity level** — plausible/playable vs. accurate/rigorous.
 3. **Acceptance sketch** — 2–3 sentences of "done looks like."
 4. **SME-gap check** — if neither of us can name a reference target, run a possibility-space research pass FIRST whose deliverable is candidate reference targets to choose between, not a survey.
 5. **Risk spike check** — name the one technical unknown most likely to eat weeks; consider a spike before committing the plan.
+
+For deep-domain projects, the gate recurses: a reference target scopes the product surface, but the difficulty lives in the subsystems the reference can't see into. Name the load-bearing subsystems up front and apply items 2 and 4 to each — its own fidelity call, its own mini research pass delivering candidate approaches to choose between. Assembling from many sources is fine; each choice should be made against a stated fidelity, not grabbed under pressure.
 
 For new project ideas: open discussion before structured brainstorming. Stay in back-and-forth until item 1 can be stated, then brainstorm.
 
