@@ -26,8 +26,12 @@ We have started a new session. Please go through the following steps:
 4. **System Status Check:**
    - Verify MCP connections and agent availability if relevant
    - Check for any pending todos or incomplete workflows
+   - Count pending knowledge-vault intake items awaiting promotion:
+     `find ~/.claude/vault/_inbox -mindepth 2 -type f -not -name '.gitkeep' | wc -l`
+     (files live in per-agent subdirs under `_inbox/`; the top-level `.gitkeep` is not an item).
 
 5. **Propose the Session Plan:**
    - From the handoff, ready beads, and journal context, close with a one-line committed proposal naming the session goal and the first work item, e.g. "Goal: finish chunk streaming. First: bd-123."
+   - If the vault intake count from Step 4 is non-zero, include "N intake items pending promotion" in the proposal so the pending items get reviewed within an existing session rhythm.
    - Ask Jerry to confirm or redirect before starting work.
    - Prefer scoping the session to a single bead. If context fills mid-task, write session-handoff.md and suggest a fresh session rather than compacting through the work.
