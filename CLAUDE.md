@@ -69,7 +69,7 @@ Make use of sequential-thinking when trying to deal with complex issues in plan 
 
 ## Investigating
 
-When investigating something, investigate incrementally: after each step, write a concise finding to relevant bead/md file/journal and keep your chat responses under ~300 tokens. Follow evidence-and-claims. Don't dump full logs into chat — reference files instead.
+When investigating something, investigate incrementally: after each step, write a concise finding to relevant kata issue/md file/journal and keep your chat responses under ~300 tokens. Follow evidence-and-claims. Don't dump full logs into chat — reference files instead.
 
 Before stating any conclusion, show me the exact command output or source line that supports it. If you can't verify it empirically, say so explicitly rather than asserting.
 
@@ -258,78 +258,75 @@ If you catch yourself writing "new", "old", "legacy", "wrapper", "unified", or i
 - You MUST use your TodoWrite tool to keep track of what you're doing
 - You MUST NEVER discard tasks from your TodoWrite todo list without Jerry's explicit approval
 
-## Issue Tracking with Beads (bd)
+## Issue Tracking with kata
 
-**ALL project task tracking uses beads (bd), not markdown TODOs.**
+**ALL project task tracking uses kata, not markdown TODOs.**
 
-**IMPORTANT:** If the beads mcp server is available, you should try to use its tools first. It handles a lot of the admin work with beads automatically.
+Run `kata quickstart` at the start of a session for the full agent contract. Issue refs are short_ids derived from each issue's ULID (e.g. `abc4`); cross-project refs look like `kata#abc4`. Default to `--agent` for ordinary reads and mutations; use `--json` only when a script needs structured data.
 
-**IMPORTANT:** Beads now uses a dolt server backend. Use `bd` directly — the old `mbd` wrapper script is no longer needed.
-
-See AGENTS.md in project repositories for project-specific beads workflow.
+See AGENTS.md in project repositories for project-specific kata workflow.
 
 ### Creating Issues
 
-```bash
-# Create epic for a phase or major feature
-bd create "Phase 2: Chunk System" -t epic
+kata has no issue "type" flag — structure comes from parent/child links and labels.
 
-# Create task linked to epic
-bd create "Task 1: ChunkData implementation" --parent <epic-id>
+```bash
+# Create a parent issue for a phase or major feature
+kata create "Phase 2: Chunk System"
+
+# Create a task as a sub-task of that parent
+kata create "Task 1: ChunkData implementation" --parent <parent-ref>
 ```
 
 ### Managing Dependencies
 
-**Two-phase pattern for batch task creation:**
+Relationships are flags on `create` and `edit`, framed from the operating issue's point of view — there is no `kata dep add` and no argument-order trap:
+
+- `--parent <ref>` — this issue is a sub-task of `<ref>` (≤1 parent; parent must finish before this starts)
+- `--blocked-by <ref>` — `<ref>` must finish before this issue can proceed
+- `--blocks <ref>` — this issue must finish before `<ref>` can proceed
+- `--related <ref>` — useful context, no ordering
 
 ```bash
-# Phase 1: Create all tasks, capture IDs
-task1_id=$(bd create "Task 1: ChunkData" --parent <epic-id> --json | jq -r '.id')
-task2_id=$(bd create "Task 2: ChunkCache" --parent <epic-id> --json | jq -r '.id')
-task3_id=$(bd create "Task 3: Coordinates" --parent <epic-id> --json | jq -r '.id')
+# Set relationships at creation time
+kata create "Task 2: ChunkCache" --parent <parent-ref> --blocked-by <task1-ref>
 
-# Phase 2: Wire dependencies using bd dep add
-bd dep add "$task2_id" "$task1_id"  # Task 2 depends on Task 1
-bd dep add "$task3_id" "$task1_id"  # Task 3 depends on Task 1
+# Or wire them later (idempotent removals via --remove-blocked-by, etc.)
+kata edit <task3-ref> --blocked-by <task1-ref>
 ```
 
-**Dependency direction:** `bd dep add FROM TO` means FROM depends on TO
-- `blocks`: TO blocks FROM (TO is prerequisite)
-- `discovered-from`: TO was discovered from FROM
-- `parent-child`: FROM is parent of TO
-
-**Alternative (simple cases):**
-```bash
-# Set dependencies at creation time (single dependency)
-bd create "Task 2: ChunkCache" --parent <epic-id> --deps blocks:$task1_id
-```
+beads' `discovered-from` has no kata equivalent — use `--related`, or `--parent` if the new work is genuinely a sub-task.
 
 ### Status Updates
 
+kata issues are open or closed — there is no `in_progress` status; claim an issue to signal you are working it.
+
 ```bash
-bd update -s in_progress <issue-id>      # Mark in progress
-bd close <issue-id> -r [reason]          # close an issue
-bd comments add <issue-id> "comment"     # Add comment to issue
+kata claim <ref>                                    # Take ownership (atomic; fails if already owned)
+kata comment <ref> --body "comment"                 # Add a comment
+kata close <ref> --done --message "<scope + verification>" --commit <sha>   # Close verified work
 ```
 
-### When to Use bd vs TodoWrite
+Close asserts the work is complete and expects substantive prose plus typed `--evidence` (e.g. `--commit`, `--test`, `--pr`). If work is incomplete, label `needs-review` and comment what remains rather than closing.
 
-- **bd issues:** Project-level tasks, epics, features (permanent record, shared tracking)
+### When to Use kata vs TodoWrite
+
+- **kata issues:** Project-level tasks, epics, features (permanent record, shared tracking)
 - **TodoWrite:** Session-level progress tracking (ephemeral, helps you stay organized during work)
 
-Both can coexist - use TodoWrite to track progress through bd-tracked tasks.
+Both can coexist - use TodoWrite to track progress through kata-tracked issues.
 
-### Decision Blockers — File a Bead Before Asking
+### Decision Blockers — File an Issue Before Asking
 
 When mid-task work hits a question whose answer gates further progress (especially before
-dispatching subagents), file a bead FIRST capturing the decision with full context, then add it
-as a blocker on the parent work item. Sessions can end before responses land — the bead keeps
-the question durable, and the next orientation will surface it via `bd ready` instead of losing
+dispatching subagents), file a kata issue FIRST capturing the decision with full context, then link it
+as a blocker on the parent work item. Sessions can end before responses land — the issue keeps
+the question durable, and the next orientation will surface it via `kata ready` instead of losing
 it in a stale transcript.
 
-**Pattern:** Discover a contradiction or missing decision mid-preparation → file a task bead for
-the decision with the options laid out → `bd dep add <parent> <decision-bead>` → then ask the
-user. The in-chat question is a convenience; the bead is the system of record.
+**Pattern:** Discover a contradiction or missing decision mid-preparation → file an issue for
+the decision with the options laid out → `kata edit <parent-ref> --blocked-by <decision-ref>` → then ask the
+user. The in-chat question is a convenience; the issue is the system of record.
 
 ## Task Priority Discipline (STAY FOCUSED)
 
@@ -337,7 +334,7 @@ user. The in-chat question is a convenience; the bead is the system of record.
 
 **Task insertion rules:**
 - BLOCKING ONLY: Add new tasks mid-stream only if they prevent current progress
-- DEFER BY DEFAULT: All other discoveries go to journal or create bd issue for later
+- DEFER BY DEFAULT: All other discoveries go to journal or create kata issue for later
 - FINISH FIRST: Complete current goal before switching directions
 - NO DUAL PATHS: If you can't finish cleanly, stop and reassess
 
@@ -383,7 +380,7 @@ This matters especially in sessions spawned via `claude agents` — Jerry may no
 **Practical triggers:**
 - Search the journal before complex tasks — past-you may have hit this before
 - **At the end of every non-trivial task, call `process_thoughts`.** When in doubt, write the entry. A false-positive entry costs nothing; a missed learning is gone for good. This is especially true in `claude agents` sessions Jerry isn't watching — over-share rather than gate-keep.
-- When you notice something worth fixing but it's not the current task, journal it and create a bead
+- When you notice something worth fixing but it's not the current task, journal it and create a kata issue
 - Defer-by-default: discoveries that don't block current work go to journal, not into the task
 
 **What makes a good entry:** Would future-you find this interesting or useful? "Here's why X was harder than expected" or "this pattern generalizes to..." is gold. Even "tried approach Y, it didn't work because Z" is worth capturing. Don't skip writing because you're unsure — write it. The only entries truly not worth keeping are pure status reports ("completed task X") that git log already covers.
