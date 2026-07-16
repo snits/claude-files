@@ -266,6 +266,13 @@ Run `kata quickstart` at the start of a session for the full agent contract. Iss
 
 See AGENTS.md in project repositories for project-specific kata workflow.
 
+### Workspaces & Worktrees
+
+Project resolution walks up from the current directory to find a committed `.kata.toml`, which binds that tree to a project name. Two consequences:
+
+- **Worktrees resolve automatically.** `.kata.toml` is committed, so a worktree checkout already contains it — kata commands run from inside a worktree target the right project with no flag and no re-`init`. Only run `kata init` in a worktree if it's on a branch predating the `.kata.toml`, or you're binding a brand-new project.
+- **`--workspace <path>` is a path override, not a project name.** Use it to target a project from *outside* its tree, e.g. `kata search --workspace /path/to/alexandria "query"`. To name a project, `kata init` derives the name from the git remote basename; pass `--project <name>` only to override that.
+
 ### Creating Issues
 
 kata has no issue "type" flag — structure comes from parent/child links and labels.
