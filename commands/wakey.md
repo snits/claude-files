@@ -13,6 +13,7 @@ We have started a new session. Please go through the following steps:
 
 2. **Check Development Context:**
    - Check the state of the git repository, and whether there are uncommitted changes.
+   - If the project has been dormant (handoff date or last commit more than a few weeks old), diff the project framing embedded in `.claude/agents/` (and any other embedded-context surfaces) against CLAUDE.md and the most recent design decisions. Decisions made in the last sessions before dormancy often never got swept into agent prompts — surface any drift found and fix or file it before starting work.
    - If there is a worktree, or multiple worktrees beyond the main repo, determine which one we are currently working in. Ask the user.
    - Look at the plan for work in the worktree's docs/plans/ directory.
    - Look at the current state of the git branch in the worktree location.
@@ -31,7 +32,7 @@ We have started a new session. Please go through the following steps:
      (files live in per-agent subdirs under `_inbox/`; the top-level `.gitkeep` is not an item).
 
 5. **Propose the Session Plan:**
-   - From the handoff, ready beads, and journal context, close with a one-line committed proposal naming the session goal and the first work item, e.g. "Goal: finish chunk streaming. First: bd-123."
+   - From the handoff, `kata ready` output, and journal context, close with a one-line committed proposal naming the session goal and the first work item, e.g. "Goal: finish chunk streaming. First: kata 12gg."
    - If the vault intake count from Step 4 is non-zero, include "N intake items pending promotion" in the proposal so the pending items get reviewed within an existing session rhythm.
    - Ask Jerry to confirm or redirect before starting work.
-   - Prefer scoping the session to a single bead. If context fills mid-task, write session-handoff.md and suggest a fresh session rather than compacting through the work.
+   - Prefer scoping the session to a single kata issue. If context fills mid-task, write session-handoff.md and suggest a fresh session rather than compacting through the work.
