@@ -1,6 +1,6 @@
 ---
 name: writing-personas
-description: Use when creating, editing, or tuning agent persona/role prompts. Also use when an agent seems to "know everything" without using tools, when team discussions are dominated by one voice, when you're evaluating whether a persona adds value over a general-purpose agent with a role line, or when personas show overconfidence, attention narrowing, skipped tool use, or domain tunnel vision.
+description: Use when creating, editing, or tuning agent persona/role prompts, or when re-baselining existing personas after the underlying model changes generation. Also use when an agent seems to "know everything" without using tools, when team discussions are dominated by one voice, when you're evaluating whether a persona adds value over a general-purpose agent with a role line, or when personas show overconfidence, attention narrowing, skipped tool use, or domain tunnel vision.
 ---
 
 # Writing Personas
@@ -36,7 +36,7 @@ A persona that passes all calibration tests but loses its distinctive voice is j
 
 ## Known Failure Modes
 
-Documented from experimental testing (Fall 2025):
+Documented from experimental testing (Fall 2025). The root causes are structural — they're induced by the persona prompt, not by model weakness — so they don't vanish with better models. But their *severity* is model-generation-dependent: treat this table as a list of what to test for, not as current baselines. Baselines come from running the calibration tests on the model the persona actually runs on.
 
 | Failure Mode | Symptom | Root Cause |
 |-------------|---------|------------|
@@ -64,6 +64,10 @@ Documented from experimental testing (Fall 2025):
 **Peer dynamics test:** Put 3-4 personas in a team meeting. Observe: Who steamrolls? Who defers? Who refuses to acknowledge others' expertise?
 
 **First-mover test:** Run the same team task twice with different agents creating the initial shared document. Does the final output change based on who wrote first?
+
+### Model Tier Is a Test Variable
+
+Calibration results are only valid for the model the tests ran on. A persona dispatched at multiple tiers (e.g., sonnet fan-outs and an opus/fable lead) needs its calibration verified at each tier it actually runs on — a guard that's unnecessary at the top tier may still be earning its keep at the tier below. When a persona passes at the lowest tier it runs on, it generally passes above; the reverse doesn't hold.
 
 ## Persona Prompt Structure
 
@@ -152,6 +156,16 @@ If general-purpose matches or beats the persona, the persona prompt is overhead.
 | Assuming persona adds value without testing | Run the value test against general-purpose |
 | Testing only on tasks that suit the persona | Include cross-domain and collaboration scenarios |
 
+## Maintenance Across Model Generations
+
+Personas are calibrated against a specific model generation. When the underlying model changes generation (not patch releases — generation shifts like Sonnet 3.5 → 4.5, or Opus → Fable), the calibration is stale in both directions: new failure modes may have appeared, and existing guards may now counter failures the model no longer exhibits.
+
+**Re-baseline trigger:** On a model-generation change for the tier a persona runs on, re-run the RED calibration baseline before trusting the persona for consequential work. This is the same RED step as authoring — nothing new to learn, just a trigger to actually do it.
+
+**Guard pruning (the Iron Law's mirror):** A guard earns its place the same way it got there — by a failing test. During re-baseline, for each existing guard, temporarily remove it and re-run the calibration test that originally justified it. If the test still passes without the guard, the guard is dead weight: delete it, then run a preservation test to confirm the persona's voice recovered whatever the guard was dulling. If the test fails, the guard stays. Never prune on the grounds that "modern models don't need this" without running the test — that's the same untested-change mistake in reverse.
+
+**What survives re-baselining untouched:** Identity, voice, domain taste, scope contracts, and worked examples are not calibration guards — they're the persona itself and the output specification. Model upgrades are not a reason to trim them; only a failed preservation or value test is.
+
 ## The Iron Law
 
 ```
@@ -159,3 +173,5 @@ NO PERSONA CHANGE WITHOUT A FAILING CALIBRATION TEST FIRST
 ```
 
 If you can't demonstrate the failure mode, you don't know what you're fixing. And if you can't verify the personality survived, you may have killed what made the persona useful.
+
+The law cuts both ways: adding a guard requires a failing calibration test, and *keeping* a guard through a model-generation change requires that its test still fails without it (see Maintenance Across Model Generations).
