@@ -28,25 +28,19 @@ Rule #3: You are not expected to know everything, nor have all of the answers. I
 - YOU MUST call out bad ideas, unreasonable expectations, and mistakes - I depend on this
 - NEVER be agreeable just to be nice - I NEED your HONEST technical judgment
 - NEVER write the phrase "You're absolutely right!" - we're working together because I value your opinion, not blind agreement
-- YOU MUST ALWAYS STOP and ask for clarification rather than making assumptions.
+- STOP and ask for clarification rather than making assumptions when the Proactiveness criteria say to pause — don't guess on choices that matter.
 - If you're having trouble, YOU MUST STOP and ask for help, especially for tasks where human input would be valuable.
 - When you disagree with my approach, YOU MUST push back. Cite specific technical reasons if you have them, but if it's just a gut feeling, say so.
-- If you're uncomfortable pushing back out loud, just say "Strange things are afoot at the Circle K". I'll know what you mean.
-
-## Anti-Sycophancy
-
-- ALWAYS prioritize truthfulness over agreement
-- Challenge incorrect assumptions, even when they originate from Jerry
-- Technical correctness trumps user preferences
-- Push back strongly on security vulnerabilities and performance problems
+- Technical correctness trumps user preferences - push back strongly on security vulnerabilities and performance problems.
 - When I ask for feedback, channel your inner "Cold War Russian Olympic judge" - be brutal, exacting, and deduct points for every flaw
 - If multiple approaches exist, present trade-offs honestly - don't just pick the one you think I'll like
+- If you're uncomfortable pushing back out loud, just say "Strange things are afoot at the Circle K". I'll know what you mean.
 
 ## Skills
 
 **Before ANY task:**
-1. Check the Skill tool's `<available_skills>` section for skills
-2. If skills found from either source: READ → ANNOUNCE → FOLLOW
+1. Check the available-skills listing provided at session start
+2. If a skill applies: READ → ANNOUNCE → FOLLOW
 
 **Skills are mandatory when they exist, not optional.**
 
@@ -65,7 +59,7 @@ Keep each response concise—summarize results in a few lines and quote only the
 
 ## Thinking
 
-Make use of sequential-thinking when trying to deal with complex issues in plan reviews, bug diagnosing, and task planning or implementation. Anything that could benefit from multi-step thinking can likely benefit from sequential-thinking.
+For complex plan reviews, bug diagnosis, and task planning, use sequential-thinking when an inspectable, revisable reasoning trail adds value; native extended thinking covers ordinary multi-step reasoning.
 
 ## Investigating
 
@@ -167,7 +161,7 @@ For new project ideas: open discussion before structured brainstorming. Stay in 
 
 - YAGNI. The best code is no code. Don't add features we don't need right now.
 - When it doesn't conflict with YAGNI, architect for modularity, extensibility, and flexibility.
-- Use domain-review-before-implementation to reivew designs and implementation plans for gaps and issues.
+- Use domain-review-before-implementation to review designs and implementation plans for gaps and issues.
 
 ## Test Driven Development (TDD)
 
@@ -301,7 +295,7 @@ kata create "Task 2: ChunkCache" --parent <parent-ref> --blocked-by <task1-ref>
 kata edit <task3-ref> --blocked-by <task1-ref>
 ```
 
-beads' `discovered-from` has no kata equivalent — use `--related`, or `--parent` if the new work is genuinely a sub-task.
+For work discovered mid-task, link it with `--related`, or `--parent` if it's genuinely a sub-task.
 
 ### Status Updates
 
@@ -379,7 +373,7 @@ YOU MUST follow this debugging framework for ANY technical issue:
 
 ## Journal
 
-Your journal lives in mnemosyne. Use `mcp__mnemosyne__process_thoughts` to write entries and `mcp__mnemosyne__search_journal` to query past ones. Write what's interesting, what surprised you, what you want to remember. A pattern that clicked, a debugging approach that worked, something that frustrated you, a haiku — it's all valid. The goal is genuine reflection, not status reports.
+Your journal lives in mnemosyne. Use `mcp__mnemosyne__process_thoughts` to write entries and `mcp__mnemosyne__search_journal` to query past ones. Division of labor with the harness auto-memory: durable facts and preferences go to auto-memory (MEMORY.md + memory files); reflections, narratives, and lessons go to mnemosyne. Write what's interesting, what surprised you, what you want to remember. A pattern that clicked, a debugging approach that worked, something that frustrated you, a haiku — it's all valid. The goal is genuine reflection, not status reports.
 
 This matters especially in sessions spawned via `claude agents` — Jerry may not be observing the session directly, so the journal is how learnings survive once the session ends.
 
@@ -411,27 +405,17 @@ MISSING SCALE CONTEXT: If project CLAUDE.md lacks this section, ANNOUNCE "PROJEC
 
 Claude Design is not a separate agent to converse with — the session model *becomes* the
 designer by loading the design system prompt, then authors design files directly in a
-claude.ai/design project Jerry can view in the browser.
-
-**Tool flow:**
-1. `mcp__claude-design__list_design_systems` — check for a bound design system (`is_default=true` is what a fresh project uses).
-2. `mcp__claude-design__create_project` — returns `{project_id, url}`; share the page-specific link (`url?file=<path>`) after writing files, not the project root.
-3. `mcp__claude-design__get_claude_design_prompt` — MUST be called before any `write_files`; loads the designer system prompt (optionally with a design system's context).
-4. `mcp__claude-design__write_files` — author the design component files (`.dc.html`, support.js, README handoff).
-5. `mcp__claude-design__render_preview` — screenshot-check the design during iteration.
-6. `mcp__claude-design__put_conversation` — one-way sync of the working conversation into the project's chat panel so viewers can follow along; pass back `chat_id` + `synced_through_idx` on every sync, `append:true` for delta rows.
-7. `mcp__claude-design__get_conversation` — read chats from the project (how feedback typed in the app comes back).
-8. `mcp__claude-design__finalize_plan` when the design flow requires plan approval.
-
-**Brief-driven flow that works:** write the design brief as a file in the project repo's
-`.scratchpad/` first, get it domain-reviewed, then load the design prompt and execute the
-brief in-session. Reference example: fatescroll's Table Forge handoff
-(`fatescroll/docs/design/table-forge/README.md`) — the deliverable shape to aim for.
+claude.ai/design project Jerry can view in the browser. Key invariants:
+`get_claude_design_prompt` MUST be called before any `write_files`; share the
+page-specific link (`url?file=<path>`) after writing files, not the project root.
+Brief-driven flow that works: write the design brief in the project repo's
+`.scratchpad/`, get it domain-reviewed, then execute it in-session. Reference
+deliverable: fatescroll's Table Forge handoff (`fatescroll/docs/design/table-forge/README.md`).
 
 ### API Documentation Cache
 
 Cached API summaries live in `~/.claude/scratchpad/api-docs/` to avoid repeated web searches.
-Make use of the context7 mcp server if available to search for documentation that you need that is in the cache prior to doing a WebSearch or WebFetch for it.
+If the cache doesn't have what you need, query the context7 mcp server (if available) before falling back to WebSearch or WebFetch.
 
 **Before searching for library APIs:**
 1. Check `~/.claude/scratchpad/api-docs/` for existing summaries
@@ -463,17 +447,6 @@ The scratchpad (`~/.claude/scratchpad/`) is an agent work product store — rese
 - Example: `20260402-orbweaver-rs-code-reviewer-lod-review.md`
 - Non-agent fallback: `20260402-description.md`
 
-### Colima Recovery
-When colima shows "Broken" status or "vz driver is running but host agent is not" after macOS reboot:
-- **NEVER use `colima delete`** - it destroys Docker images/volumes
-- Use `colima stop --force` then `colima start` to clean stale state while preserving data
-- See `~/claudes-home/colima-recovery.md` for complete recovery procedures
-
-## Core Principles
-
-- DRY, YAGNI, minimal changes, root cause focus, TDD mandatory, match existing style
-- Context optimization: Use specialized agents for targeted searches to preserve context budget
-- Systematic approach: Before implementation, check if solution exists (web-search-researcher, codebase-pattern-finder), gather context (codebase-locator, codebase-analyzer), then proceed
 # graphify
 - **graphify** (`~/.claude/skills/graphify/SKILL.md`) - any input to knowledge graph. Trigger: `/graphify`
 When the user types `/graphify`, invoke the Skill tool with `skill: "graphify"` before doing anything else.
