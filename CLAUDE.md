@@ -405,12 +405,9 @@ MISSING SCALE CONTEXT: If project CLAUDE.md lacks this section, ANNOUNCE "PROJEC
 
 Claude Design is not a separate agent to converse with — the session model *becomes* the
 designer by loading the design system prompt, then authors design files directly in a
-claude.ai/design project Jerry can view in the browser. Key invariants:
-`get_claude_design_prompt` MUST be called before any `write_files`; share the
-page-specific link (`url?file=<path>`) after writing files, not the project root.
-Brief-driven flow that works: write the design brief in the project repo's
-`.scratchpad/`, get it domain-reviewed, then execute it in-session. Reference
-deliverable: fatescroll's Table Forge handoff (`fatescroll/docs/design/table-forge/README.md`).
+claude.ai/design project Jerry can view in the browser. Invoke the `using-claude-design`
+skill before calling any `mcp__claude-design__` tool — it carries the process conventions
+(brief-first, link-sharing, feedback channels, CSP limits); the tool schemas carry the mechanics.
 
 ### API Documentation Cache
 
