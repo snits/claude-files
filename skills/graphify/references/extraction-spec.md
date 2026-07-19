@@ -10,6 +10,8 @@ Files (chunk CHUNK_NUM of TOTAL_CHUNKS):
 FILE_LIST
 
 Rules:
+- MANDATORY: emit exactly ONE node with file_type "document" for EVERY file in the FILE_LIST, even if you extract no concepts from it. Its id is {parent_dir}_{filename_stem}_doc (lowercased, non-alphanumeric -> _), its rationale is null, and its source_file is that file path verbatim. A chunk with 24 files MUST contain 24 document nodes. Then link each concept you extract to the document node of the file it came from with a "references" edge (source = document node, target = concept).
+- RELATIONSHIP DENSITY: this corpus is about ideas that recur and connect across files. Beyond the document->concept references edges, actively look for edges BETWEEN concepts: conceptually_related_to, semantically_similar_to, rationale_for, references. A concept that connects to nothing is nearly useless downstream. Aim for at least 2 edges per concept node on average; a 24-file chunk yielding 50 concepts should produce roughly 100 edges. Do not invent relationships, but do not stop at the obvious file-to-concept links either.
 - EXTRACTED: relationship explicit in source (import, call, citation, "see §3.2")
 - INFERRED: reasonable inference (shared data structure, implied dependency)
 - AMBIGUOUS: uncertain - flag for review, do not omit
