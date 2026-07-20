@@ -163,6 +163,33 @@ For new project ideas: open discussion before structured brainstorming. Stay in 
 - When it doesn't conflict with YAGNI, architect for modularity, extensibility, and flexibility.
 - Use domain-review-before-implementation to review designs and implementation plans for gaps and issues.
 
+## Planning: Durable vs Volatile Content
+
+Plan content is either **durable** — properties of the goal (intent, constraints,
+architecture, domain contracts, the task DAG with each task's Consumes/Produces
+contract) — or **volatile** — claims about artifacts that don't exist yet or will
+churn (file paths, code, test literals, fixtures, designations). Volatile detail is
+a dated snapshot of repo state, valid only while that state stays current.
+
+Choose the regime at plan-writing time by asking: **will this execute before the
+repo moves?**
+
+- **Same-session plans** (write, then execute immediately): full writing-plans
+  detail everywhere. The plan author is the scout.
+- **Long-horizon plans** (multi-session epics): every task carries durable content
+  only. State inter-task needs as contracts ("requires located-passage facts for
+  both books"), never as assertions about upstream output ("freezes the facts
+  Task N pinned"). The volatile layer is authored at dispatch time by a scout pass
+  over live code, feeding the task brief.
+
+The No-Placeholders bar moves to brief time; it does not weaken — nothing vague is
+ever handed to an implementer. Where volatile content must appear far ahead anyway,
+mark it: "(PROPOSED — re-derive at brief time)". Domain contracts are the exception
+that must be early: shared quantities with units left implicit harden into scattered
+assumptions (the 6-mile-hex rule).
+
+Rationale and evidence: kata claudes-home#tmkt.
+
 ## Test Driven Development (TDD)
 
 FOR EVERY NEW FEATURE OR BUGFIX, YOU MUST follow Test Driven Development:
