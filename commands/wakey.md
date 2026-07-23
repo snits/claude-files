@@ -34,6 +34,12 @@ We have started a new session. Please go through the following steps:
      `python3 ~/.claude/vault/_system/promote.py --backlog | wc -l`
      (source material that landed in `intake/` but has not yet been folded into an atlas
      entry — see the ingest loop in `~/.claude/vault/_system/routing.md`).
+   - Refresh the vault reading surface so it cannot drift from the atlas unnoticed:
+     `python3 ~/.claude/vault/_surface/generate.py --if-stale`
+     Report its `SURFACE CURRENT` / `SURFACE REGENERATED` line next to the two counts above —
+     together they say whether new material has reached the atlas yet. A current surface with
+     a non-empty ingest backlog means promoted material is still stuck in `intake/`, which is
+     work to do, not a stale page.
 
 5. **Propose the Session Plan:**
    - From the handoff, `kata ready` output, and journal context, close with a one-line committed proposal naming the session goal and the first work item, e.g. "Goal: finish chunk streaming. First: kata 12gg."
