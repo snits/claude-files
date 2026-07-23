@@ -40,12 +40,20 @@ We have started a new session. Please go through the following steps:
      together they say whether new material has reached the atlas yet. A current surface with
      a non-empty ingest backlog means promoted material is still stuck in `intake/`, which is
      work to do, not a stale page.
+   - Surface deferred kata issues whose defer date has arrived:
+     `python3 ~/.claude/scripts/kata_defer.py --due`
+     Deferred issues are hidden from `kata ready` by the `deferred` label, so this is the only
+     thing that brings them back. Report any `DEFERRED UNDATED` line too — a `deferred` label
+     with no `defer_until` never resurfaces on its own.
 
 5. **Propose the Session Plan:**
-   - From the handoff, `kata ready` output, and journal context, close with a one-line committed proposal naming the session goal and the first work item, e.g. "Goal: finish chunk streaming. First: kata 12gg."
+   - From the handoff, `kata ready --no-label deferred` output, and journal context, close with a one-line committed proposal naming the session goal and the first work item, e.g. "Goal: finish chunk streaming. First: kata 12gg."
+   - Use `--no-label deferred` for the ready listing; drop the flag only when deliberately reviewing the deferred set.
    - If either vault count from Step 4 is non-zero, include it in the proposal so the work
      happens within an existing session rhythm: "N intake items pending promotion" and/or
      "N promoted items awaiting ingest". Promotion is not the last step — promoted material
      only pays off once it is folded into an atlas entry, so surface both.
+   - If any deferred issues came due, name them in the proposal too — a defer that arrives
+     and goes unmentioned is the same lost reminder that deferring was meant to prevent.
    - Ask Jerry to confirm or redirect before starting work.
    - Prefer scoping the session to a single kata issue. If context fills mid-task, write session-handoff.md and suggest a fresh session rather than compacting through the work.

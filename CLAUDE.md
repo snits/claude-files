@@ -336,6 +336,22 @@ kata close <ref> --done --message "<scope + verification>" --commit <sha>   # Cl
 
 Close asserts the work is complete and expects substantive prose plus typed `--evidence` (e.g. `--commit`, `--test`, `--pr`). If work is incomplete, label `needs-review` and comment what remains rather than closing.
 
+### Deferring Issues
+
+kata has no native defer/snooze. The convention layers one on two primitives it does have: a
+`deferred` label, which `kata ready --no-label deferred` filters on, and a `defer_until`
+metadata key holding an ISO date.
+
+```bash
+python3 ~/.claude/scripts/kata_defer.py --set <ref> --days 60   # or --until 2026-09-21
+python3 ~/.claude/scripts/kata_defer.py --due                   # what has come due (run by /wakey)
+```
+
+Always defer through the script — it writes the label and the date together. A `deferred`
+label with no `defer_until` is hidden from `ready` with nothing to bring it back, which is
+strictly worse than the noise deferring was meant to remove; `--due` reports any such issue
+as `DEFERRED UNDATED` rather than leaving it silently buried.
+
 ### When to Use kata vs TodoWrite
 
 - **kata issues:** Project-level tasks, epics, features (permanent record, shared tracking)
