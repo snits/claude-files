@@ -24,5 +24,5 @@ This session is ending so do the following:
   was worth keeping.
 - Update `session-handoff.md` with the current status of the project, and the next step to pursue.
 - Verify the git repository state for the project, and that there are no uncommitted changes.
-- Capture any issues or tasks that need to be dealt with in a bead if one doesn't exist for it
-  already. See `bd create --help`
+- Capture any issues or tasks that need to be dealt with in a kata issue if one doesn't exist
+  for it already. See `kata create --help`

@@ -23,8 +23,8 @@ place they exist until you do.
 **3. Audit for conversation-only state**
 Ask: "Is anything load-bearing ONLY in this conversation?" — an agreement
 with Jerry, a path, an ID, a constraint, a half-finished plan. If yes, put it
-in the handoff file, a bead comment, or memory. Beads and `bd prime` survive
-compaction; chat nuance does not. This includes external **source material**
+in the handoff file, a kata comment, or memory. Kata issues and `kata quickstart`
+survive compaction; chat nuance does not. This includes external **source material**
 you consumed directly this session — route it to the vault inbox per the
 intake sweep in `thanksforallthefish` before the source scrolls out of reach.
 
