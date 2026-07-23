@@ -30,9 +30,16 @@ We have started a new session. Please go through the following steps:
    - Count pending knowledge-vault intake items awaiting promotion:
      `find ~/.claude/vault/_inbox -mindepth 2 -type f -not -name '.gitkeep' | wc -l`
      (files live in per-agent subdirs under `_inbox/`; the top-level `.gitkeep` is not an item).
+   - Count promoted vault material still awaiting the ingest loop:
+     `python3 ~/.claude/vault/_system/promote.py --backlog | wc -l`
+     (source material that landed in `intake/` but has not yet been folded into an atlas
+     entry — see the ingest loop in `~/.claude/vault/_system/routing.md`).
 
 5. **Propose the Session Plan:**
    - From the handoff, `kata ready` output, and journal context, close with a one-line committed proposal naming the session goal and the first work item, e.g. "Goal: finish chunk streaming. First: kata 12gg."
-   - If the vault intake count from Step 4 is non-zero, include "N intake items pending promotion" in the proposal so the pending items get reviewed within an existing session rhythm.
+   - If either vault count from Step 4 is non-zero, include it in the proposal so the work
+     happens within an existing session rhythm: "N intake items pending promotion" and/or
+     "N promoted items awaiting ingest". Promotion is not the last step — promoted material
+     only pays off once it is folded into an atlas entry, so surface both.
    - Ask Jerry to confirm or redirect before starting work.
    - Prefer scoping the session to a single kata issue. If context fills mid-task, write session-handoff.md and suggest a fresh session rather than compacting through the work.
