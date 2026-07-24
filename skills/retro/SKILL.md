@@ -29,7 +29,12 @@ failed tool results, each stamped `file:line`. Read the header — it reports se
 raw MB, and headless sessions skipped. Those numbers go in the recap.
 
 **3. Mine.** One `general-purpose` subagent on **sonnet** per project in the prefilter
-output, highest human-turn count first, **capped at 6**. Give each miner the prefilter
+output, **highest *distinct* count first** — the projects are already printed in that
+order, **capped at 6**. Rank on distinct, not raw human turns: a launched agent
+session, a probe, or a batch job replays one templated prompt across dozens of
+sessions, and raw counts let that outweigh a project with real back-and-forth.
+Turns matching a template are tagged `[TEMPLATE]` in the slice; a run of them is
+protocol, not signal. Give each miner the prefilter
 slice for its project (`--project <substring>`) and this instruction:
 
 > Each entry begins with a pointer `/full/path/session.jsonl:LINE`, optionally followed by

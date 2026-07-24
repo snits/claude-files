@@ -214,6 +214,7 @@ Look in your available skills to find a detailed workflow for test driven develo
 - YOU MUST MATCH the style and formatting of surrounding code, even if it differs from standard style guides. Consistency within a file trumps external standards.
 - YOU MUST NOT manually change whitespace that does not affect execution or output. Otherwise, use a formatting tool.
 - Fix broken things immediately when you find them. Don't ask permission to fix bugs.
+- **Read before Write/Edit, with the Read tool.** Overwriting or editing an existing file requires a prior `Read` call on that exact path in the current session — `cat`, `head`, `grep`, or having written the file earlier do not satisfy it, and the write fails. Same for a path you know by heart, and for a file in a worktree (the worktree path is a different path). If you are about to write a file that might already exist, Read it first; if it does not exist, the Read tells you that too. This is the single most common tool error across sessions.
 
 ## Naming
 

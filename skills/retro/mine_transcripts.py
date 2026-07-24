@@ -38,6 +38,12 @@ TEAMMATE_MARKER = "<teammate-message"
 
 MAX_TOOL_ERRORS_SHOWN = 15
 
+# A turn text repeated verbatim as the opener of at least this many distinct
+# sessions is a template — an agent launch prompt, a probe, a batch job — not
+# something typed that many times. Ranking on raw turn counts lets one template
+# outweigh a project with real back-and-forth.
+TEMPLATE_REPEAT_THRESHOLD = 3
+
 
 @dataclass
 class SessionFacts:
@@ -175,32 +181,83 @@ def _emit_json(interactive: list[SessionFacts], headless: list[SessionFacts], si
     )
 
 
+def _normalize(text: str) -> str:
+    return " ".join(text.split())
+
+
+def template_openers(sessions: list[SessionFacts]) -> set[str]:
+    """Opening turn texts that recur across sessions — templates, not typing.
+
+    A launched agent session, a connectivity probe, and a batch job each start
+    with the same prompt every time. Counted raw, one such template can be most
+    of a window's "human turns" and rank its project first for mining.
+    """
+    openers: dict[str, set[Path]] = {}
+    for s in sessions:
+        if not s.human_turns:
+            continue
+        openers.setdefault(_normalize(s.human_turns[0]["text"]), set()).add(s.path)
+    return {
+        text
+        for text, paths in openers.items()
+        if len(paths) >= TEMPLATE_REPEAT_THRESHOLD
+    }
+
+
+def distinct_turn_count(sessions: list[SessionFacts], templates: set[str]) -> int:
+    """Turns that are neither a known template nor a repeat of another turn.
+
+    This is the ranking signal: how much distinct human input a project saw,
+    not how many times the same string was replayed into it.
+    """
+    seen = {
+        _normalize(t["text"])
+        for s in sessions
+        for t in s.human_turns
+    }
+    return len(seen - templates)
+
+
 def _emit_markdown(
     scanned: list[SessionFacts], interactive: list[SessionFacts], headless: list[SessionFacts]
 ):
     raw_bytes = sum(s.bytes for s in scanned)
     turns = sum(len(s.human_turns) for s in interactive)
     errors = sum(len(s.tool_errors) for s in interactive)
+    templates = template_openers(interactive)
     print(f"# Transcript mine: {len(scanned)} sessions, {raw_bytes / 1048576:.1f} MB raw")
     print(f"# {len(interactive)} interactive / {len(headless)} headless (no human turns)")
     print(f"# {turns} human turns, {errors} tool errors")
+    if templates:
+        print(
+            f"# {len(templates)} templated opener(s) seen in "
+            f"{TEMPLATE_REPEAT_THRESHOLD}+ sessions each — excluded from the "
+            f"distinct counts that order projects below, still printed in full"
+        )
 
     by_project: dict[str, list[SessionFacts]] = {}
     for s in interactive:
         by_project.setdefault(s.project, []).append(s)
 
     for project, group in sorted(
-        by_project.items(), key=lambda kv: -sum(len(s.human_turns) for s in kv[1])
+        by_project.items(), key=lambda kv: -distinct_turn_count(kv[1], templates)
     ):
         total = sum(len(s.human_turns) for s in group)
-        print(f"\n## {project}  ({len(group)} sessions, {total} human turns)")
+        distinct = distinct_turn_count(group, templates)
+        print(
+            f"\n## {project}  ({len(group)} sessions, {total} human turns, "
+            f"{distinct} distinct)"
+        )
         for s in group:
             print(f"\n### {s.path}")
             if s.parse_failures:
                 print(f"_[{s.parse_failures} unparseable lines skipped]_")
             for turn in s.human_turns:
+                text = _normalize(turn["text"])
                 tag = " [TEAMMATE]" if turn["speaker"] == "teammate" else ""
-                print(f"- {s.path}:{turn['line']}{tag} {' '.join(turn['text'].split())[:600]}")
+                if text in templates:
+                    tag += " [TEMPLATE]"
+                print(f"- {s.path}:{turn['line']}{tag} {text[:600]}")
             for err in s.tool_errors[:MAX_TOOL_ERRORS_SHOWN]:
                 print(
                     f"- {s.path}:{err['line']} [TOOL ERROR] "
@@ -216,7 +273,28 @@ def _emit_markdown(
             print(f"- {s.path}")
 
 
+def _join_dashed_values(argv: list[str]) -> list[str]:
+    """Rewrite `--project -home-foo` to `--project=-home-foo`.
+
+    Project dir names begin with a dash (`-home-jsnitsel-devel-alexandria`), which
+    argparse reads as the next option and rejects with "expected one argument".
+    """
+    out: list[str] = []
+    skip = False
+    for i, arg in enumerate(argv):
+        if skip:
+            skip = False
+            continue
+        if arg == "--project" and i + 1 < len(argv) and argv[i + 1].startswith("-"):
+            out.append(f"--project={argv[i + 1]}")
+            skip = True
+        else:
+            out.append(arg)
+    return out
+
+
 def main(argv: list[str] | None = None) -> int:
+    argv = _join_dashed_values(sys.argv[1:] if argv is None else argv)
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--days", type=float, default=7.0, help="window size in days")
     parser.add_argument("--since", type=str, default=None, help="ISO date; overrides --days")

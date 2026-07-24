@@ -91,7 +91,7 @@ personas where the roster has the right lens (pairing complementary lenses,
 e.g. an invariant tracer plus a premise auditor, catches more than two passes
 of the same lens), `general-purpose` with a role line otherwise.
 
-- If reviewing an implementation plan, dispatch multiple agents focused on different aspects (examples: algorithmic correctness, architecture, api, tasks properly sized, ...)
+- If reviewing an implementation plan, dispatch multiple agents focused on different aspects (examples: algorithmic correctness, architecture, api, tasks properly sized, **task ordering**, ...)
 - If reviewing a design, dispatch multiple agents focused on different aspects (examples: conceptual correctness, ui/ux, architecture, api, ...)
 - If reviewing a task brief dispatch domain-appropriate expert agents to validate the prompt.
 
@@ -113,6 +113,7 @@ Agent(subagent_type="general-purpose", prompt="""
 5. Integration considerations
 6. Coherence with overall plan
 7. Task complexity and whether it should be decomposed
+8. Task ordering — does every task's inputs exist by the time it runs?
 
 **Provide:**
 1. List of issues (Critical/Important/Minor)
@@ -123,6 +124,19 @@ Agent(subagent_type="general-purpose", prompt="""
 **Note:** Review the BRIEF/DESIGN, not code. Focus on flaws that cause problems during implementation.
 """)
 ```
+
+**Plan-level reviews must include a sequencing pass.** Walk the task list in order
+and check each task's inputs against what earlier tasks actually produce. The
+recurring failure is a task that *measures* something scheduled before the task that
+makes it measurable — an acceptance run, calibration sweep, or conformance probe
+ordered ahead of the wiring it exercises. It reads fine task-by-task, because each
+task is individually correct; only the order is wrong. It surfaces as a dead-end
+partway through execution, after the earlier tasks are already committed.
+
+Concretely, for each task ask: what does this consume, and which earlier task
+produces it? A task whose answer is "the thing it's verifying" is misordered. This is
+the durable Consumes/Produces contract the plan should already carry — the review is
+where a missing or circular one gets caught.
 
 **If Task tool not available:**
 
