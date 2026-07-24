@@ -61,7 +61,11 @@ to `~/.claude/retro/last-retro`.
 Every friction candidate has exactly these five parts, in this order:
 
 1. **Pattern** — one sentence, what recurs
-2. **Evidence** — 2+ pointers as `path/to/session.jsonl:LINE`, each with the quoted text
+2. **Evidence** — one pointer per *instance*, as `path/to/session.jsonl:LINE` with the
+   quoted text. Two instances is what makes it a pattern rather than an incident. A single
+   vivid instance is not a pattern; keep it, label it as one-off, and let Jerry judge.
+   The prefilter emits one line per event, so a second pointer means it happened twice —
+   not two citations for the same event.
 3. **Cost** — what it actually cost (time, rework, a wrong turn taken)
 4. **Remedy type** — exactly one of: `hookify rule` · `skill edit` · `new skill` ·
    `feedback memory` · `kata issue` · `tooling fix`
@@ -118,4 +122,5 @@ nothing in it.
 | "Recurred several times in alexandria" | Cite `file:line` per instance or it is an impression |
 | Bundling candidates into one verdict | One at a time — Jerry decides each |
 | Silent cap at 6 projects | Name the dropped projects in the recap |
+| Grouping project dirs by splitting on `--` | Dotfile and `/tmp` paths contain `--` too (`.claude` → `-claude`). Worktree siblings are `<known-slug>--*`, only identifiable against a known project root |
 | Skipping the stamp write | Next retro re-mines the same window |
