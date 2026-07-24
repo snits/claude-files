@@ -40,6 +40,29 @@ class TestPointerExtraction:
         assert len(vc.extract_citations(report)) == 2
 
 
+class TestBareFilenameCitations:
+    def test_bare_filename_pointer_is_caught_not_skipped(self):
+        """`c84baf02.jsonl:43` with no directory is not resolvable, and silently
+        skipping it would let an unchecked citation pass as verified."""
+        report = "- `c84baf02-2ed7-44c0.jsonl:43` — `some quoted text`\n"
+        found = vc.extract_citations(report)
+        assert len(found) == 1
+        assert found[0][1] == 43
+
+    def test_bare_filename_is_reported_abbreviated(self):
+        report = "- `c84baf02-2ed7-44c0.jsonl:43` — `some quoted text`\n"
+        (path, line, quote, abbrev) = vc.extract_citations(report, with_abbrev=True)[0]
+        assert abbrev is True
+        assert vc.verify_one(path, line, quote, abbrev).status == "ABBREVIATED-POINTER"
+
+    def test_full_path_still_not_marked_abbreviated(self, tmp_path):
+        path = write_transcript(tmp_path, [human("real quote here")])
+        report = f"- `{path}:1` — `real quote`\n"
+        (p, line, quote, abbrev) = vc.extract_citations(report, with_abbrev=True)[0]
+        assert abbrev is False
+        assert vc.verify_one(p, line, quote, abbrev).status == "OK"
+
+
 class TestAbbreviatedPointers:
     def test_ellipsis_shortened_pointer_is_flagged_as_abbreviated(self):
         """`.../session.jsonl:21` is not independently resolvable by a reader."""

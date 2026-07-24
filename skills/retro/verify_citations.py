@@ -22,8 +22,10 @@ from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 
-# A pointer is a path ending .jsonl followed by :LINE
-POINTER = re.compile(r"(?P<path>/[^\s`'\"()\[\]]*\.jsonl):(?P<line>\d+)")
+# A pointer is anything ending .jsonl followed by :LINE. Bare filenames match
+# too: they cannot be resolved, and skipping them would let an unchecked
+# citation pass for a verified one.
+POINTER = re.compile(r"(?P<path>[^\s`'\"()\[\]]*\.jsonl):(?P<line>\d+)")
 # Quoted text following the pointer on the same report line
 QUOTE = re.compile(r"`([^`]{4,})`|\"([^\"]{4,})\"")
 
@@ -99,13 +101,19 @@ def extract_citations(report: str, with_abbrev: bool = False) -> list[tuple]:
             quote = (quote_match.group(1) or quote_match.group(2)) if quote_match else None
             record = (match.group("path"), int(match.group("line")), quote)
             if with_abbrev:
-                record += (is_abbreviated(report_line, match.start()),)
+                record += (is_abbreviated(report_line, match.start(), match.group("path")),)
             found.append(record)
     return found
 
 
-def is_abbreviated(report_line: str, pointer_start: int) -> bool:
-    """True if the pointer was written shortened, e.g. `.../session.jsonl:21`."""
+def is_abbreviated(report_line: str, pointer_start: int, path: str = "/") -> bool:
+    """True if the pointer cannot be resolved as written.
+
+    Either shortened with an ellipsis (`.../session.jsonl:21`) or given as a
+    bare filename with no directory.
+    """
+    if not path.startswith("/"):
+        return True
     return report_line[:pointer_start].endswith("..")
 
 
