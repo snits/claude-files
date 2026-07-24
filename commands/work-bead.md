@@ -10,6 +10,9 @@ can fan out if needed to accomplish the task.
 When writing plans and task briefs, specify the goal, constraints, and acceptance criteria for each
 task; don't enumerate implementation steps unless the ordering is genuinely load-bearing.
 
+When writing tests for a task, if they require fixtures make sure the fixture can actually fulfill its
+role in the task, or find another fixture that can.
+
 digraph high-level-flow {
     rankdir=TB
 
