@@ -45,6 +45,10 @@ We have started a new session. Please go through the following steps:
      Deferred issues are hidden from `kata ready` by the `deferred` label, so this is the only
      thing that brings them back. Report any `DEFERRED UNDATED` line too — a `deferred` label
      with no `defer_until` never resurfaces on its own.
+   - Check whether a retrospective is due:
+     `S=~/.claude/retro/last-retro; if [ -f "$S" ]; then echo "RETRO last=$(cat $S) days_ago=$(( ( $(date +%s) - $(date -d "$(cat $S)" +%s) ) / 86400 ))"; else echo "RETRO never run"; fi`
+     Report the line. There is no scheduler for the retro — this check is the only thing that
+     surfaces it.
 
 5. **Propose the Session Plan:**
    - From the handoff, `kata ready --no-label deferred` output, and journal context, close with a one-line committed proposal naming the session goal and the first work item, e.g. "Goal: finish chunk streaming. First: kata 12gg."
@@ -55,5 +59,7 @@ We have started a new session. Please go through the following steps:
      only pays off once it is folded into an atlas entry, so surface both.
    - If any deferred issues came due, name them in the proposal too — a defer that arrives
      and goes unmentioned is the same lost reminder that deferring was meant to prevent.
+   - If the retro check reports never-run or more than 7 days ago, offer a retro (`/retro`)
+     as an option in the proposal. Offer it; don't start one unasked.
    - Ask Jerry to confirm or redirect before starting work.
    - Prefer scoping the session to a single kata issue. If context fills mid-task, write session-handoff.md and suggest a fresh session rather than compacting through the work.
