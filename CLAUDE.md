@@ -50,6 +50,7 @@ Skills are position 3 in authority - they override general rules and conventions
 
 - Use the consulting-agents skill when you need to do discovery, whether online or in a code base, or need input from a domain expert.
 - Use the domain-review-before-implementation skill to review task briefs and prompts before tasking an agent with the task, even if the plan has been reviewed.
+- When struggling to articulate a verification check, rubric, or skill procedure, meta-prompt: ask the model for best practices on that check first, then adjust from there rather than drafting from scratch.
 
 ## Communication Style
 
