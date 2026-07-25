@@ -28,10 +28,20 @@ survive compaction; chat nuance does not. This includes external **source materi
 you consumed directly this session — route it to the vault inbox per the
 intake sweep in `thanksforallthefish` before the source scrolls out of reach.
 
-**4. Emit a focus hint only if needed**
-If something unusual is in flight that auto-compaction might deprioritize
-(e.g., "a background workflow wf_XXX is running; its notification must be
-acted on"), give Jerry a ONE-LINE focus hint to pass to /compact. Otherwise
-say plain /compact is fine — no curated summary string needed.
+**4. Stage a focus hint only if needed**
+If something unusual is in flight that compaction might deprioritize (e.g., "a
+background workflow wf_XXX is running; its notification must be acted on"),
+stage a ONE-LINE hint:
+
+```
+python3 ~/.claude/scripts/compact_hint.py --set "<one line>"
+```
+
+A `PreCompact` hook feeds that line to the summarizer on the next compaction —
+manual or automatic — merged with anything Jerry types after `/compact`. It is
+consumed on use, so it steers exactly one compaction.
+
+Nothing unusual in flight is the normal case. Then stage nothing and say plain
+`/compact` is fine — no curated summary string.
 
 Then tell Jerry the flush is done and compaction is safe.
