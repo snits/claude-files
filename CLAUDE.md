@@ -121,6 +121,8 @@ When asked to do something, just do it - including obvious follow-up actions nee
 
 Without these, agents faithfully report what domain literature says at the sophistication level of the sources. That's not over-engineering by the agent — it's under-specifying by us.
 
+**Implementation briefs MUST include a deviations-log instruction.** When an edge case forces the implementer off the brief, they take the conservative option and record the deviation — a kata comment on the issue, or a `Deviations` section in their report. Divergence self-reports; the orchestrator should never have to hunt for it.
+
 ### Model Routing
 
 Guideline, not law — for session models spawning subagents AND for Jerry choosing the model when launching `claude agents` sessions. Written down because model lineup and pricing are post-cutoff facts: a session model left to its own judgment doesn't know what's available and defaults to spawning at its own tier. Express choices as tiers so this survives lineup changes; "highest available" currently means Fable > Opus > Sonnet.
@@ -135,7 +137,7 @@ Guideline, not law — for session models spawning subagents AND for Jerry choos
 | Exploration / discovery fan-out | Sonnet `general-purpose` | See "Cheap exploration fan-out" above — never built-in Explore from an opus/fable lead |
 | Quality review / verification | Opus | Sonnet for mechanical checks against explicit criteria |
 
-Deviation is fine **with a stated reason** — say why in the dispatch or session note so bad calls are visible and correctable. When unsure between two tiers, take the higher one for anything whose output gates downstream work.
+Deviation is fine **with a stated reason** — say why in the dispatch or session note so bad calls are visible and correctable. When unsure between two tiers, take the higher one for anything whose output gates downstream work. Cost-per-task is often lower on the more capable tier — fewer turns to done — so start with the smartest available and tune effort down rather than starting cheap and upgrading.
 
 ### Subagent Commits
 - After dispatching subagents, always check `git status` for uncommitted or partially-reverting changes before ending the session, and commit deliberately.
@@ -152,6 +154,8 @@ Before brainstorming or planning any new project or major feature, the following
 4. **SME-gap check** — if neither of us can name a reference target, run a possibility-space research pass FIRST whose deliverable is candidate reference targets to choose between, not a survey.
 5. **Risk spike check** — name the one technical unknown most likely to eat weeks; consider a spike before committing the plan.
 6. **Domain contract** — pin the shared quantity every subsystem parameterizes on, with units ("one hex = 6 miles", "one tick = one day"). Left implicit, it hardens into scattered hardcoded assumptions that cost an epic to remove (the 6-mile-hex bug survived three project generations).
+
+When entering territory neither of us knows well, run a blind spot pass before planning: ask Claude directly what considerations are missing from the map, stating our expertise level so the pass targets the actual gaps.
 
 For deep-domain projects, the gate recurses: a reference target scopes the product surface, but the difficulty lives in the subsystems the reference can't see into. Name the load-bearing subsystems up front and apply items 2 and 4 to each — its own fidelity call, its own mini research pass delivering candidate approaches to choose between. Assembling from many sources is fine; each choice should be made against a stated fidelity, not grabbed under pressure.
 
