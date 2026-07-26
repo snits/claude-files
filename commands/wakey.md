@@ -52,10 +52,10 @@ We have started a new session. Please go through the following steps:
    - Check this project's memory index for orphans and truncation:
      ```
      M=~/.claude/projects/$(pwd | tr '/.' '--')/memory
-     [ -d "$M" ] && cd "$M" && \
+     [ -d "$M" ] && (cd "$M" && \
        echo "MEMORY.md $(wc -c < MEMORY.md) bytes (truncates near ~24986), $(ls *.md | grep -vc '^MEMORY.md$') files" && \
        comm -3 <(ls *.md | grep -v '^MEMORY.md$' | sort) \
-               <(grep -oE '\]\([a-zA-Z0-9_.-]+\.md\)' MEMORY.md | tr -d '](' | sed 's/)//' | sort -u)
+               <(grep -oE '\]\([a-zA-Z0-9_.-]+\.md\)' MEMORY.md | tr -d '](' | sed 's/)//' | sort -u))
      ```
      Left column = a memory file no index line points at; it never loads, ever. Right column =
      an index line whose file is gone. Both print nothing when clean. An oversized `MEMORY.md`
