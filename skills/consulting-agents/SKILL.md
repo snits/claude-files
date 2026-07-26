@@ -177,6 +177,22 @@ it (trust comes from promotion, never the stub — see `~/.claude/vault/_system/
 > what the source contributes, then the absolute path to your scratchpad report. Write ONLY
 > under `_inbox/<agent-id>/` — never `atlas/`, `MEMORY.md`, or `_ops/`; if an atlas entry for
 > the same concept exists, read it first so the stub adds rather than duplicates.
+>
+> **No-Write fallback:** if your toolset has no Write tool, you cannot save files — do not
+> skip intake and do not merely mention it. End your final report with the complete stub
+> content between `--- VAULT INTAKE STUB ---` and `--- END VAULT INTAKE STUB ---` lines —
+> the raw stub file text, no surrounding code fences — with `source_url` and `sha256` left
+> empty and the report path omitted from the body; the dispatching session saves your
+> report, fills both fields, and persists the stub verbatim to `_inbox/<agent-id>/`.
+
+Prefer dispatching source-material research to an agent type that has Write (e.g.
+`general-purpose`, model per the routing guidance) so the agent persists its own stub.
+Read-only types like `web-search-researcher` trigger the block's no-Write fallback: when a
+delimited stub comes back inline, save the report to the scratchpad, fill `source_url` (the
+saved report's absolute path) and `sha256` (hash of the saved report), and write the stub
+verbatim to `~/.claude/vault/_inbox/<agent-id>/<source-slug>.md`. The stub keeps the
+researcher's `agent_id` and `agent-proposed` provenance, so the quarantine model is
+unaffected — trust still arrives only at promotion.
 
 Skip this entirely when a consultation produces only read-only work products — there is
 nothing to route.
