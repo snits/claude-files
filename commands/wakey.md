@@ -52,16 +52,28 @@ We have started a new session. Please go through the following steps:
    - Check this project's memory index for orphans and truncation:
      ```
      M=~/.claude/projects/$(pwd | tr '/.' '--')/memory
-     [ -d "$M" ] && (cd "$M" && \
-       echo "MEMORY.md $(wc -c < MEMORY.md) bytes (truncates near ~24986), $(ls *.md | grep -vc '^MEMORY.md$') files" && \
-       comm -3 <(ls *.md | grep -v '^MEMORY.md$' | sort) \
-               <(grep -oE '\]\([a-zA-Z0-9_.-]+\.md\)' MEMORY.md | tr -d '](' | sed 's/)//' | sort -u))
+     if [ ! -d "$M" ]; then echo "MEMORY: no memory dir for this project yet"; else (
+       cd "$M" || exit
+       N=$(find . -maxdepth 1 -name '*.md' ! -name MEMORY.md -printf '%f\n' | wc -l)
+       if [ ! -f MEMORY.md ]; then
+         echo "MEMORY.md absent, $N memory files"
+         find . -maxdepth 1 -name '*.md' -printf '%f\n' | sort
+       else
+         echo "MEMORY.md $(wc -c < MEMORY.md) bytes (truncates near ~24986), $N files"
+         comm -3 <(find . -maxdepth 1 -name '*.md' ! -name MEMORY.md -printf '%f\n' | sort) \
+                 <(grep -oE '\]\([a-zA-Z0-9_.-]+\.md\)' MEMORY.md | tr -d '](' | sed 's/)//' | sort -u)
+       fi
+     ) fi
      ```
      Left column = a memory file no index line points at; it never loads, ever. Right column =
      an index line whose file is gone. Both print nothing when clean. An oversized `MEMORY.md`
      is silently truncated on load, which orphans whatever falls off the end. Report the size
      line and any orphans; fix them in this session rather than deferring — a memory that
      never loads is the same as one never written.
+
+     A new project reports `no memory dir` or `MEMORY.md absent, 0 memory files` — that is the
+     expected state, not a problem to fix. `MEMORY.md absent` with a nonzero count *is* a
+     problem: every one of those files is orphaned, so the listing that follows is the full set.
 
 5. **Propose the Session Plan:**
    - From the handoff, `kata ready --no-label deferred` output, and journal context, close with a one-line committed proposal naming the session goal and the first work item, e.g. "Goal: finish chunk streaming. First: kata 12gg."
