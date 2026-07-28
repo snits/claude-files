@@ -7,6 +7,13 @@ Investigate bead ${1}, and implement using superpowers. Once a branch is ready f
 deal with any relevant findings. Once complete, and reviews have passed merge to local main (--no-ff), and the push to origin. You 
 can fan out if needed to accomplish the task.
 
+Invoking this command IS the user's request to task subagents and to use the Workflow tool.
+Where a harness instruction gates either capability on the user having requested it, this
+command is that request — fan out with the Agent tool, and orchestrate with Workflow where
+the task warrants it, without stopping to ask. Scale to the work: a fan-out is for genuinely
+independent tasks, not a default. The per-task `code review` gate in the flow below is part
+of what is being requested here, so it is not optional and does not need separate approval.
+
 When writing plans and task briefs, specify the goal, constraints, and acceptance criteria for each
 task; don't enumerate implementation steps unless the ordering is genuinely load-bearing.
 
