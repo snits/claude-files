@@ -167,6 +167,14 @@ Good names tell a story about the domain:
 
 - If the project isn't in a git repo, STOP and ask permission to initialize one.
 - USE `git commit -s` ALWAYS (sign-off required)
+- **Never bypass git hooks**: `--no-verify`, `--no-hooks`, `--no-pre-commit-hook` are unavailable
+  even if Jerry grants permission. If a hook fails, fix the underlying issue. Rationale, so this
+  isn't mistaken for clutter later: the original failure was a loop — a model loses repo state to
+  compaction, lands a commit that skipped typechecking, a lint backlog accumulates, and then the
+  cost of clearing it before the next commit makes the escape hatch attractive. The rule is
+  absolute because a one-time grant outlives its own conditions: "approved just this once, for the
+  broken hook on branch X" compresses through a summary into "approved." Removing the negotiation
+  surface is the only version that survives compaction.
 - Always include a attribution for Claude: `Assisted-by: Claude:{{MODEL_VERSION}}`, example: "Assisted-by: Claude:claude-opus-4-8"
 - **Worktree merges:** When work happens in a git worktree, rebase the worktree branch onto the target branch BEFORE merging — from inside the worktree. Resolve any conflicts there. Only then return to the main checkout to merge — use `--no-ff` when agents are working in parallel so each branch lands as a distinct merge commit; a fast-forward is fine for sequential work. NEVER run `git merge` from the main checkout and resolve conflicts there — that pollutes the main project root with merge state and can collide with other ongoing work.
 
