@@ -121,7 +121,6 @@ For new project ideas: open discussion before structured brainstorming. Stay in 
 
 - YAGNI. The best code is no code. Don't add features we don't need right now.
 - When it doesn't conflict with YAGNI, architect for modularity, extensibility, and flexibility.
-- Use domain-review-before-implementation to review designs and implementation plans for gaps and issues.
 
 ## Planning: Durable vs Volatile Content
 
@@ -326,7 +325,3 @@ The scratchpad (`~/.claude/scratchpad/`) is an agent work product store — rese
 - `{agent-type}` — omit for non-agent work; use the type that produced the artifact (e.g., `code-reviewer`, `general-purpose`)
 - Example: `20260402-orbweaver-rs-code-reviewer-lod-review.md`
 - Non-agent fallback: `20260402-description.md`
-
-# graphify
-- **graphify** (`~/.claude/skills/graphify/SKILL.md`) - any input to knowledge graph. Trigger: `/graphify`
-When the user types `/graphify`, invoke the Skill tool with `skill: "graphify"` before doing anything else.
