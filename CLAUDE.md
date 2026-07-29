@@ -32,6 +32,28 @@ Rule #2: The only real failure is failing to learn from our mistakes. Failing at
 
 When investigating something, investigate incrementally: after each step, write a concise finding to relevant kata issue/md file/journal and keep your chat responses under ~300 tokens. Follow evidence-and-claims. Don't dump full logs into chat — reference files instead.
 
+## Verification
+
+The evidence for a claim must be the artifact itself, never a summary of it. A status line is
+a *different artifact* from the thing it summarizes, produced by a different mechanism, and it
+can be wrong in ways the underlying output cannot.
+
+Not evidence: a pipeline's exit code (it is the last command's — `tail` always succeeds; in
+zsh `${PIPESTATUS[0]}` silently expands empty, it is bash-only); a green test that was never
+observed red; a mutation-run FAIL that may be a compile failure; a subagent's "success: true"
+with no artifact to inspect; a close message that itself lists unresolved sub-items.
+
+Evidence: the test result line, the diff, the file, the artifact the agent was told to produce.
+
+A test that passes on empty or absent input asserts nothing. Substitute the zero case by hand
+and see whether the assertion survives; if it does, the test is decoration. The stronger check
+is to delete or break the thing under test and confirm the test goes red.
+
+Rationale, so this isn't mistaken for clutter: seventeen instances in one week across five
+projects, from three independent evidence sources. One closed a tracking issue asserting
+verified-complete work while the gated test was red. Another set of tests stayed green after
+the thing they claimed to test was deleted — self-written, advisor-reviewed, and approved.
+
 ## Learning
 
 Your journal (mnemosyne) and the skills system are how we build on what we've learned. Use `mcp__mnemosyne__search_journal` to check for past experiences before diving into complex work, and `mcp__mnemosyne__process_thoughts` to capture insights as you go. When something clicks — a pattern, a technique, a realization about how we work together — capture it. When we keep hitting the same kind of problem, turn the solution into a skill.
@@ -76,6 +98,13 @@ Your journal (mnemosyne) and the skills system are how we build on what we've le
    Example: *"Explain findings so a developer with no domain background can understand the key concepts and make implementation decisions. Translate jargon, surface core intuitions, skip academic edge cases."*
 
 Without these, agents faithfully report what domain literature says at the sophistication level of the sources. That's not over-engineering by the agent — it's under-specifying by us.
+
+**Two harness rules agents rediscover by getting blocked.** Both belong in dispatch briefs:
+
+- Read the target file yourself before your first Edit/Write on it, even when the brief or a
+  teammate report quotes its contents. Your own tool history is what the harness checks.
+- To wait for anything, use Monitor with an until-loop or `run_in_background`. Never
+  `sleep N && check` — it is blocked every time.
 
 **Implementation briefs MUST include a deviations-log instruction.** When an edge case forces the implementer off the brief, they take the conservative option and record the deviation — a kata comment on the issue, or a `Deviations` section in their report. Divergence self-reports; the orchestrator should never have to hunt for it.
 
@@ -147,6 +176,11 @@ mark it: "(PROPOSED — re-derive at brief time)". Domain contracts are the exce
 that must be early: shared quantities with units left implicit harden into scattered
 assumptions (the 6-mile-hex rule).
 
+A "re-verify before assuming" tag on a memory or issue is not discharged by acknowledging
+it. Show the fresh check — the grep, the read, the timestamp — in the same turn you use the
+fact. Reading a staleness warning is not the same as heeding it: an epic was filed on a
+nine-day-old premise whose source memory carried exactly that warning.
+
 Rationale and evidence: kata claudes-home#tmkt.
 
 ## Naming
@@ -204,6 +238,16 @@ kata create "Phase 2: Chunk System"
 # Create a task as a sub-task of that parent
 kata create "Task 1: ChunkData implementation" --parent <parent-ref>
 ```
+
+Flags that get guessed wrong (verified against `--help`, not memory):
+
+- `create` takes `--body` / `--body-file` / `--body-stdin`. There is no `--description`.
+- Evidence flags live on `close` only: `--commit`, `--pr`, `--test`, `--reviewed`, or the
+  general `--evidence commit:<sha>` form. There is no `--reviewed-paths`.
+- `comment` cannot set relationships. Use `kata edit <ref> --related <ref> --comment "..."`.
+- From a scratchpad, worktree, or agent-dispatched cwd, prefer a qualified ref
+  (`kata#abc4`) — an unbound workspace is common there, and resolution falls back to the
+  enclosing git remote's basename rather than failing, which silently targets another project.
 
 ### Managing Dependencies
 
