@@ -4,8 +4,8 @@ description: Use when resolving a kata issue in a project where the user is the 
 ---
 
 Investigate kata issue ${1}, and implement using superpowers. Base your worktree off ${2}, not origin/main.
-Once a branch is ready for merge, run a roborev review for the changes, and deal with any relevant findings. Once complete,
-and reviews have passed merge to ${2} (--no-ff). You can fan out if needed to accomplish the task.
+Once a branch is ready for merge and its reviews have passed, merge to ${2} (--no-ff). You can fan out if
+needed to accomplish the task.
 
 Invoking this command IS the user's request to task subagents and to use the Workflow tool.
 Where a harness instruction gates either capability on the user having requested it, this
@@ -17,6 +17,37 @@ of what is being requested here, so it is not optional and does not need separat
 When writing plans and task briefs, specify the goal, constraints, and acceptance criteria for each
 task; don't enumerate implementation steps unless the ordering is genuinely load-bearing.
 
+## Size gate — decide the track before invoking any skill
+
+Not every issue earns a design phase. `brainstorming` and `writing-plans` produce a spec and a
+bite-sized task plan; on a small, already-specified issue that scaffolding costs more than the change.
+Choose the track first, because once a skill is loaded its own instructions govern how it behaves —
+the only place this decision can be made is before invoking it.
+
+**Take the direct track unless the issue trips one of these:**
+
+- The change spans more than one package, or changes an import relationship.
+- It changes a serialized format, a schema, or a user-facing CLI surface.
+- The issue poses an open question, lists alternatives, or names a decision to be made.
+- Acceptance criteria cannot be stated from the issue body alone.
+- You cannot name the files to touch after investigating.
+
+Any one of those is enough — they are triggers, not a score.
+
+**Direct track:** skip `brainstorming` and `writing-plans` entirely. The kata issue *is* the brief.
+Go straight to the task-implementation flow below, treating the issue's acceptance criteria as the
+task's. Do not route this track through `subagent-driven-development` — that skill gates on having
+an implementation plan and sends you back to brainstorm when there isn't one, which is the cost this
+gate exists to avoid. Implement directly, or dispatch a single subagent with the issue as its brief;
+either way the TDD and code-review steps below still apply. If mid-work it turns out a trigger
+applies after all, stop and escalate to the full track rather than improvising a design.
+
+**Full track:** run the high-level flow as drawn. The durable record of intent and decisions belongs
+in kata — comment the outcome on the issue. Design and plan documents are working artifacts for the
+current session, not deliverables to maintain.
+
+State which track you chose and which trigger decided it, in one line, before you start.
+
 When writing tests for a task, if they require fixtures make sure the fixture can actually fulfill its
 role in the task, or find another fixture that can.
 
@@ -25,6 +56,8 @@ digraph high-level-flow {
 
 	"start work" [shape=doublecircle];
 	"investigate kata issue" [shape=box];
+	"does the issue trip a size-gate trigger?" [shape=diamond];
+	"implement the issue directly" [shape=box];  // runs task-implementation-flow below
 	"brainstorming" [shape=box];
 	"design review" [shape=box];
 	"revise design?" [shape=diamond];
@@ -38,7 +71,10 @@ digraph high-level-flow {
 	"work done" [shape=doublecircle];
 	
 	"start work" -> "investigate kata issue";
-	"investigate kata issue" -> "brainstorming";
+	"investigate kata issue" -> "does the issue trip a size-gate trigger?";
+	"does the issue trip a size-gate trigger?" -> "brainstorming" [label="yes: full track"];
+	"does the issue trip a size-gate trigger?" -> "implement the issue directly" [label="no: direct track"];
+	"implement the issue directly" -> "finish-development-branch";
 	"brainstorming" -> "design review";
 	"design review" -> "revise design?";
 	"revise design?" -> "brainstorming" [label="yes"];
@@ -59,9 +95,9 @@ digraph task-implementation-flow {
 
 	"start task" [shape=doublecircle];
 	"task done" [shape=doublecircle];
-	"read task plan" [shape=box];
-	"get clarification on plan" [shape=box];
-	"does the plan have the information you need?" [shape=diamond];
+	"read the brief" [shape=box];  // the task plan, or the kata issue on the direct track
+	"get clarification on brief" [shape=box];
+	"does the brief have the information you need?" [shape=diamond];
 	"test-driven-development" [shape=box];
 	"red phase" [shape=box];
 	"implement test" [shape=box];
@@ -71,13 +107,12 @@ digraph task-implementation-flow {
 	"implement code" [shape=box];
 	"did test pass? green" [shape=diamond];
 	"code review" [shape=diamond];
-	"roborev review" [shape=diamond];
 	
-	"start task" -> "read task plan";
-	"read task plan" -> "does the plan have the information you need?";
-	"does the plan have the information you need?" -> "test-driven-development" [label="yes"];
-	"does the plan have the information you need?" -> "get clarification on plan" [label="no"];
-	"get clarification on plan" -> "does the plan have the information you need?";
+	"start task" -> "read the brief";
+	"read the brief" -> "does the brief have the information you need?";
+	"does the brief have the information you need?" -> "test-driven-development" [label="yes"];
+	"does the brief have the information you need?" -> "get clarification on brief" [label="no"];
+	"get clarification on brief" -> "does the brief have the information you need?";
 	"test-driven-development" -> "red phase";
 	"red phase" -> "implement test";
 	"implement test" -> "did test pass? red";
@@ -89,8 +124,6 @@ digraph task-implementation-flow {
 	"implement code" -> "did test pass? green";
 	"did test pass? green" -> "implement code" [label="no"];
 	"did test pass? green" -> "code review" [label="yes"];
-	"code review" -> "roborev review" [label="code review passes"];
+	"code review" -> "task done" [label="code review passes"];
 	"code review" -> "implement code" [label="code review fails"];
-	"roborev review" -> "task done" [label="roborev review passes"];
-	"roborev review" -> "implement code" [label="roborev review fails"];
 }
