@@ -48,9 +48,19 @@ Give the miner the pointer format verbatim like that. Tested: miners handed a ba
 marker cited the *slice file's* own line numbers instead about 40% of the time, because two
 coordinate systems were visible at once. A whole-token pointer removes the ambiguity.
 
+**Miners return their report as message text; the lead transcribes it to
+`report-<project>.md`.** Do not instruct them to write the file — the harness denies subagent
+Write for report files ("Subagents should return findings as text, not write report files"),
+so every miner burns an attempt on it and some then go quiet. Expect to re-prompt: idle
+notifications arrive with the report dropped (see `reference_subagent_report_relay_drop`), and
+a `SendMessage` asking for a full resend is the reliable recovery.
+
 Run these in parallel alongside two more miners:
 - **journal/`.remember`** — mnemosyne entries and `~/claudes-home/.remember/` in window
-- **kata** — closed / deferred / `needs-review` deltas across projects in the window
+- **kata** — closed / deferred / `needs-review` / `needs-decision` deltas across projects in the
+  window. `needs-decision` is the one to read as a backlog rather than a delta: `wakey` surfaces it
+  per-project, so a ruling nobody is waiting on in a project Jerry hasn't opened lately is visible
+  only here. Report the standing count per project, not just what changed.
 
 **4. Synthesize** (session lead, not a subagent). Dedupe across miners and cluster.
 

@@ -45,6 +45,12 @@ We have started a new session. Please go through the following steps:
      Deferred issues are hidden from `kata ready` by the `deferred` label, so this is the only
      thing that brings them back. Report any `DEFERRED UNDATED` line too — a `deferred` label
      with no `defer_until` never resurfaces on its own.
+   - Surface kata issues waiting on a ruling from Jerry:
+     `kata list --label needs-decision --agent`
+     These are blocked on a choice, not on work — `work-issue` and `triage-issue` both skip them
+     by design, so nothing else brings them back. Report the count and the titles. If any are
+     present, offer to walk them: each needs its options stated and a ruling recorded as a comment
+     before the label comes off.
    - Check whether a retrospective is due:
      `S=~/.claude/retro/last-retro; if [ -f "$S" ]; then echo "RETRO last=$(cat $S) days_ago=$(( ( $(date +%s) - $(date -d "$(cat $S)" +%s) ) / 86400 ))"; else echo "RETRO never run"; fi`
      Report the line. There is no scheduler for the retro — this check is the only thing that

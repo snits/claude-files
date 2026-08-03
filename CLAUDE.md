@@ -49,6 +49,21 @@ A test that passes on empty or absent input asserts nothing. Substitute the zero
 and see whether the assertion survives; if it does, the test is decoration. The stronger check
 is to delete or break the thing under test and confirm the test goes red.
 
+**The operative question, before accepting any artifact as evidence: could this artifact look
+exactly like this if my claim were false?** If yes, it is not evidence for that claim. Two
+corollaries, each of which cost a real error the week of 2026-07-29:
+
+- *An artifact shared across runs cannot answer a per-run question.* A suite that aliases the
+  built output back to source cannot detect a stale build; a counter reused between batches
+  cannot tell you which batch failed.
+- *Negative claims need the authoritative lookup, not a search.* "Nothing in this package does
+  X" from a proxy check, or "this name is free" from a search-result list, fails in the
+  direction that makes absence look confirmed. Query the thing that would contain the answer
+  and read its status. Relatedly, a filter combined with a limit (`--merges -n300`) applies the
+  limit to the *filtered* set, not the scan window — express windows explicitly
+  (`HEAD~300..HEAD`), and verify any instrument against one known case before running it across
+  many.
+
 Rationale, so this isn't mistaken for clutter: seventeen instances in one week across five
 projects, from three independent evidence sources. One closed a tracking issue asserting
 verified-complete work while the gated test was red. Another set of tests stayed green after
@@ -99,12 +114,14 @@ Your journal (mnemosyne) and the skills system are how we build on what we've le
 
 Without these, agents faithfully report what domain literature says at the sophistication level of the sources. That's not over-engineering by the agent — it's under-specifying by us.
 
-**Two harness rules agents rediscover by getting blocked.** Both belong in dispatch briefs:
+**Three harness rules agents rediscover by getting blocked.** All belong in dispatch briefs:
 
 - Read the target file yourself before your first Edit/Write on it, even when the brief or a
   teammate report quotes its contents. Your own tool history is what the harness checks.
 - To wait for anything, use Monitor with an until-loop or `run_in_background`. Never
   `sleep N && check` — it is blocked every time.
+- In a background or `claude agents` session, call `EnterWorktree` before your first
+  Edit/Write. Otherwise the edit targets the shared checkout and is refused.
 
 **Implementation briefs MUST include a deviations-log instruction.** When an edge case forces the implementer off the brief, they take the conservative option and record the deviation — a kata comment on the issue, or a `Deviations` section in their report. Divergence self-reports; the orchestrator should never have to hunt for it.
 
@@ -210,6 +227,16 @@ Good names tell a story about the domain:
   broken hook on branch X" compresses through a summary into "approved." Removing the negotiation
   surface is the only version that survives compaction.
 - Always include a attribution for Claude: `Assisted-by: Claude:{{MODEL_VERSION}}`, example: "Assisted-by: Claude:claude-opus-4-8"
+- **Cite commits upstream-style, never a bare SHA** — `af09720eb5b6 ("docs: record the CA bundle
+  path as fixed, keep its signature")`. Applies anywhere a reference outlives the session: kata
+  bodies/comments/close messages, plan docs, code comments, commit messages, handoffs. Generate it
+  with `git show -s --format='%h ("%s")' <sha>`. Where a schema takes only a SHA (`kata close
+  --commit`), put the subject in the accompanying prose. Rationale: the two halves fail
+  independently — a SHA is exact but dies in any `filter-repo`, rebase, or squash, while a subject
+  survives every rewrite and is recoverable with `git log --grep`. Citing both degrades instead of
+  dying. Alexandria, 2026-08-02: a `filter-repo` run left 101 dead refs across 19 kata issues; 56
+  were saved only because the commit-map still existed, and the other 45 were unrecoverable
+  *precisely because nothing but the SHA had been recorded*.
 - **Worktree merges:** When work happens in a git worktree, rebase the worktree branch onto the target branch BEFORE merging — from inside the worktree. Resolve any conflicts there. Only then return to the main checkout to merge — use `--no-ff` when agents are working in parallel so each branch lands as a distinct merge commit; a fast-forward is fine for sequential work. NEVER run `git merge` from the main checkout and resolve conflicts there — that pollutes the main project root with merge state and can collide with other ongoing work.
 
 ## Issue Tracking with kata
@@ -253,7 +280,7 @@ Flags that get guessed wrong (verified against `--help`, not memory):
 
 Relationships are flags on `create` and `edit`, framed from the operating issue's point of view — there is no `kata dep add` and no argument-order trap:
 
-- `--parent <ref>` — this issue is a sub-task of `<ref>` (≤1 parent; parent must finish before this starts)
+- `--parent <ref>` — this issue is a sub-task of `<ref>` (≤1 parent; setting it replaces any existing). Hierarchy, not ordering: an open parent does **not** hold back its children — `kata ready` offers a child whose parent is still open. The gate runs the other way; kata refuses to close a parent while open children remain. Use `--blocked-by` when you actually need sequencing. (`kata edit --help` claims the parent "must finish before this issue starts" — that is wrong, verified against `kata ready`.)
 - `--blocked-by <ref>` — `<ref>` must finish before this issue can proceed
 - `--blocks <ref>` — this issue must finish before `<ref>` can proceed
 - `--related <ref>` — useful context, no ordering
@@ -273,12 +300,73 @@ For work discovered mid-task, link it with `--related`, or `--parent` if it's ge
 kata issues are open or closed — there is no `in_progress` status; claim an issue to signal you are working it.
 
 ```bash
-kata claim <ref>                                    # Take ownership (atomic; fails if already owned)
+kata claim <ref> --as claude-<agent-name>           # Take ownership (see actor caveat below)
 kata comment <ref> --body "comment"                 # Add a comment
 kata close <ref> --done --message "<scope + verification>" --commit <sha>   # Close verified work
 ```
 
 Close asserts the work is complete and expects substantive prose plus typed `--evidence` (e.g. `--commit`, `--test`, `--pr`). If work is incomplete, label `needs-review` and comment what remains rather than closing.
+
+**Claim is atomic per distinct *actor string*, not per session.** `KATA_AUTHOR=claude` is set in
+the environment, so every Claude agent that does not override it resolves to actor `claude` — and
+a same-owner claim is a silent no-op, not a 409. Concurrent agents sharing the default all
+"successfully" claim issues each other already hold. Pass `--as` (global flag) with a string
+unique to the *running instance* — `claude-<agent-name>-<random-suffix>`, not just the agent or
+loop name, since two concurrent runs of the same loop would otherwise share a string and collide
+identically. Confirm with `kata whoami --as <string>` (expect `source=flag`). Not fixable
+locally: kata is upstream (`kenn-io/kata`, no local commits).
+
+**Close: which `--reason` accepts which evidence.** Verified with `kata close --dry-run`, not
+from memory:
+
+| `--reason` | evidence required |
+|---|---|
+| `done` | at least one of `commit:<sha>` / `pr:<url>` / `test:<cmd>` / `reviewed-paths:<path>` |
+| `superseded` | **exactly one** `superseded-by:<ref>`; target must already exist. Adding `commit:` does not satisfy it |
+| `duplicate` | **exactly one** `duplicate-of:<ref>` |
+| `wontfix` | none — but the **message must be ≥60 chars** after normalization |
+| `audit-no-change` | **exactly one** `no-change-audit:<text>` |
+
+`--reason X` and X's sugar flag (`--done`, `--wontfix`, `--superseded-by`, …) are mutually
+exclusive — pick one form or kata rejects the command as a flag conflict. When closing a batch in
+a grooming loop, the ≥60-char minimum on `wontfix` is the one that bites: terse close messages are
+refused.
+
+### Labels: which blocked state an issue is in
+
+Labels are set with `kata label add|rm <ref> <label>` — there is no `--label` flag on `create` or
+`edit`. Four carry meaning across the loops, and the distinction is *who the issue is waiting on*:
+
+| Label | Means | Waiting on | Cleared by |
+|---|---|---|---|
+| `needsinfo` | A fact is missing and someone could go get it — it's in the code, history, docs, another issue | `triage-issue` | whoever establishes the fact, with a citation |
+| `needs-decision` | A choice is unmade and only Jerry can make it; two defensible options, not a research question | Jerry | Jerry ruling, recorded as a comment |
+| `needs-review` | Work happened and should be looked at before closing | Jerry | review, then close or continue |
+| `deferred` | Not now. Always paired with a `defer_until` date — set both via `kata_defer.py`, never by hand | nothing | `kata_defer.py --due` |
+
+`needsinfo` and `needs-decision` are the pair that gets conflated, because both look like "I can't
+proceed." Judge the gap, not the phrasing: **an issue that states its options in full and argues
+them to a conclusion is not missing information — it is missing a ruling.** If the comment you are
+about to write says "Jerry needs to decide", the label is `needs-decision`. Getting this wrong
+routes the issue to a loop that cannot clear it, where it accumulates identical re-triage comments.
+
+An issue can carry both: a fact is missing *and* a choice depends on how it lands. `triage-issue`
+takes the `needsinfo` half and leaves `needs-decision` standing — handing over a decision with its
+facts already pinned is most of the work.
+
+Two other shapes worth naming, because neither takes a label:
+
+- **A fact neither of us can reach from here** (hardware we don't have, a measurement nobody took)
+  is not triageable and not a decision. If some existing issue would produce the fact when it
+  lands, `--blocked-by` it — the issue then returns exactly when the fact exists, which beats any
+  label. Otherwise defer it with a note saying what would bring it back.
+- **A decision that gates several issues** earns its own issue plus `--blocked-by` links. A
+  decision gating one issue does not — relabel that issue in place and state the options in a
+  comment. Copying a body into a second issue to satisfy a protocol is duplication, and ceremony
+  that expensive gets skipped rather than followed.
+
+Clearing a label is two operations: record the reasoning as a comment, *then* remove the label. A
+cleared label with no recorded rationale is worse than the label — it reads as resolved and isn't.
 
 ### Deferring Issues
 
