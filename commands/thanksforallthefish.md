@@ -23,6 +23,9 @@ This session is ending so do the following:
   duplicates. Skip anything already stubbed this session, and skip entirely if nothing external
   was worth keeping.
 - Update `session-handoff.md` with the current status of the project, and the next step to pursue.
+  It usually already exists from the prior session, so **Read it before you Write it** — a bare
+  Write is blocked by the harness and costs a round-trip at the point in the session where
+  context is thinnest.
 - Verify the git repository state for the project, and that there are no uncommitted changes.
 - Capture any issues or tasks that need to be dealt with in a kata issue if one doesn't exist
   for it already. See `kata create --help`
