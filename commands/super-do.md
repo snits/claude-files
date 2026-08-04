@@ -127,3 +127,31 @@ digraph task-implementation-flow {
 	"code review" -> "task done" [label="code review passes"];
 	"code review" -> "implement code" [label="code review fails"];
 }
+
+## The code review gate
+
+The `code review -> implement code` edge is a loop, so it needs a bar that says which findings
+send you back, and a cap that says when to stop going around.
+
+**The bar does not move: any finding of severity critical or high fails the review.** Medium and
+low findings do not block. Hold the same bar on every cycle. A bar that softens after the first
+round is a judge growing lenient with fatigue — it reads as progress while the standard is what
+actually moved, and it is the failure mode `writing-rubrics` exists to prevent.
+
+Medium findings from the *first* review get resolved in that cycle anyway — either fixed, or
+declined in one line saying why. They are cheapest to address before the code is revised around
+them, and this keeps the record honest without giving them blocking power they don't deserve.
+
+**Each review is a fresh dispatch that sees the diff and the brief. Nothing else.** Not the prior
+round's findings, not the implementer's reasoning, not the argument for why a finding was
+addressed. A reviewer shown its own earlier feedback grades the response to the feedback rather
+than the code, and a reviewer shown the implementer's justification anchors on it. The isolation
+is the mechanism; an instruction to stay objective is not a substitute for it.
+
+**Cap the loop at 3 review cycles.** Stop earlier when a cycle returns the same blocking findings
+as the one before it — the loop has stopped converging and another pass buys nothing.
+
+When the cap is reached with blocking findings outstanding, or the loop stops converging: **stop.
+Do not merge, and do not close the issue.** Comment the surviving findings on the kata issue,
+label it `needs-review`, and report to Jerry. An implementation that three reviews could not clear
+is a design question surfacing as a review failure, and it needs a person, not a fourth attempt.
