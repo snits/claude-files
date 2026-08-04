@@ -23,13 +23,28 @@ Check before the first dispatch, and stop rather than work around either:
 ## Selecting
 
 ```
-kata next --unowned --no-label needsinfo --no-label needs-decision --no-label deferred
+kata next --unowned --no-label needsinfo --json
 ```
 
-Filter data-side, not by reading labels off the result and deciding. A `needsinfo` issue is
-waiting on `triage-issue` and a `needs-decision` issue is waiting on Jerry; neither is waiting on
-you, and re-examining one every cycle buries it under identical comments. The filter belongs in
-the query because that is the only version that cannot be forgotten mid-run.
+Then **read the selected issue's labels and skip it yourself** if it carries `needsinfo`,
+`needs-decision`, or `deferred`. Say in the ledger that you skipped it and which label did it.
+
+The check is redundant with the query on purpose, because the query cannot be trusted to do it.
+**kata honors only the *first* `--no-label`; every later one is accepted without error and
+ignored** (`1ycz` — huma decodes the param non-exploded, so it reads one occurrence and splits
+that one on commas). Three flags filter one label. Do not "simplify" this back into a repeatable
+filter, and do not reach for the quoted-CSV form that does currently work
+(`--no-label '"a,b,c"'`) — it depends on shell quoting surviving into pflag, and it fails *open*
+the day kata adds the `explode` tag, silently filtering nothing.
+
+One flag is always honored because it is always first, so `needsinfo` stays in the query and the
+other two live in the post-check. That split fails closed under either kata behavior: a label the
+filter missed still stops the dispatch.
+
+Skipping matters because none of these is waiting on you. A `needsinfo` issue is waiting on
+`triage-issue` and a `needs-decision` issue is waiting on Jerry; re-examining one every cycle
+buries it under identical comments. A `deferred` issue was snoozed deliberately and its date has
+not arrived.
 
 ## Claiming
 
