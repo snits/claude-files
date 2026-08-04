@@ -59,6 +59,31 @@ gate, TDD, the review gate, and the merge, so do not restate any of it in the di
 - **Model tier:** default to the session tier for the agent. Drop to a cheaper tier only for
   issues already fully specified and mechanical, and say why in the ledger.
 
+## Merging — the agent delivers a branch, you land it
+
+`/super-do` assigns itself the `--no-ff` merge, but a worktree-isolated agent cannot perform it:
+the target branch is checked out in the primary worktree, and `git worktree add <path> <target>`
+refuses a branch already checked out elsewhere. **Tell each agent in its dispatch to stop at a
+reviewed branch and leave the merge to you.** Otherwise it burns its budget discovering this and
+escalates on plumbing.
+
+Landing is CLAUDE.md's worktree-merge sequence, and all three steps matter:
+
+```
+git -C <agent-worktree> rebase <target>          # rebase FROM INSIDE the worktree
+git -C <repo-root> merge --no-ff <agent-branch>  # then merge from the root
+git -C <repo-root> worktree remove <agent-worktree>
+```
+
+The rebase comes first so the merge cannot produce conflict state in the project root — that is
+what CLAUDE.md's "NEVER run `git merge` from the main checkout **and resolve conflicts there**"
+forbids. The merge itself from the root is prescribed, not forbidden; the rule reads as a
+prohibition only when its second clause is dropped. If the rebase reports conflicts, resolve them
+in the worktree or escalate — never carry them to the root.
+
+Verify the landing rather than assuming it: `<target>..<agent-branch>` empty and
+`git diff <target> <agent-branch>` empty. Cite the merge commit upstream-style in the ledger.
+
 ## Escalation — record it, do not resolve it
 
 An agent returns escalated when `/super-do` hits its 3-cycle review cap, or when the issue is
