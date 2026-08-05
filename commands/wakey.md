@@ -13,6 +13,21 @@ We have started a new session. Please go through the following steps:
 
 2. **Check Development Context:**
    - Check the state of the git repository, and whether there are uncommitted changes.
+   - **Derive the remote relationship; never quote it from the handoff.** A handoff's "N commits
+     ahead of origin" is a dated snapshot, and the remote can move from outside the session:
+     ```
+     B=$(git branch --show-current)
+     if [ -z "$B" ]; then echo "GIT: detached HEAD, no upstream relationship"
+     elif ! git rev-parse --verify -q '@{upstream}' >/dev/null; then echo "GIT: branch $B has no upstream"
+     else
+       git fetch --quiet origin
+       echo "GIT $B vs $(git rev-parse --abbrev-ref '@{upstream}'): ahead $(git rev-list --count '@{upstream}..HEAD'), behind $(git rev-list --count 'HEAD..@{upstream}')"
+     fi
+     ```
+     The `git fetch` is load-bearing, not hygiene: `rev-list` reads `refs/remotes/origin/<branch>`,
+     which is only as fresh as the last fetch and will happily report "in sync" against a remote
+     that has advanced. Report the live numbers, and say so explicitly in the no-upstream and
+     detached-HEAD cases rather than printing nothing — silence there reads as "in sync".
    - If the project has been dormant (handoff date or last commit more than a few weeks old), diff the project framing embedded in `.claude/agents/` (and any other embedded-context surfaces) against CLAUDE.md and the most recent design decisions. Decisions made in the last sessions before dormancy often never got swept into agent prompts — surface any drift found and fix or file it before starting work.
    - If there is a worktree, or multiple worktrees beyond the main repo, determine which one we are currently working in. Ask the user.
    - Look at the plan for work in the worktree's docs/plans/ directory.

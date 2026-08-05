@@ -38,5 +38,10 @@ This session is ending so do the following:
   Write is blocked by the harness and costs a round-trip at the point in the session where
   context is thinnest.
 - Verify the git repository state for the project, and that there are no uncommitted changes.
+  In the handoff, record **what landed** — the branch and the commit list — and do **not** write an
+  absolute "N commits ahead of origin" count. That number is guaranteed stale by the time it is
+  read: the remote can advance from outside the session, so the next startup must derive the
+  relationship itself (it does; see `/wakey` step 2). A stale count read as fresh is how a session
+  declines to push work that is already pushed, or believes pushed work is safe when it is not.
 - Capture any issues or tasks that need to be dealt with in a kata issue if one doesn't exist
   for it already. See `kata create --help`
