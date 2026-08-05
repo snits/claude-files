@@ -17,7 +17,7 @@ This session is ending so do the following:
   **source material worth keeping** that *you* consumed directly (an article, transcript,
   paper) rather than via a research agent that already stubbed it — and route those to the
   vault before handoff. For each, write an intake stub per the **Intake item** contract in
-  `~/.claude/vault/_system/schemas.md` to `~/.claude/vault/_inbox/session-lead/<source-slug>.md`
+  `~/vault/_system/schemas.md` to `~/vault/_inbox/session-lead/<source-slug>.md`
   (`agent_id: session-lead`, `provenance: agent-proposed`, `status: pending-promotion`); read
   the existing atlas entry for the concept first, if any, so the stub adds rather than
   duplicates. Skip anything already stubbed this session, and skip entirely if nothing external

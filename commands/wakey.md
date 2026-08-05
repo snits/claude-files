@@ -28,14 +28,14 @@ We have started a new session. Please go through the following steps:
    - Verify MCP connections and agent availability if relevant
    - Check for any pending todos or incomplete workflows
    - Count pending knowledge-vault intake items awaiting promotion:
-     `find ~/.claude/vault/_inbox -mindepth 2 -type f -not -name '.gitkeep' | wc -l`
+     `find ~/vault/_inbox -mindepth 2 -type f -not -name '.gitkeep' | wc -l`
      (files live in per-agent subdirs under `_inbox/`; the top-level `.gitkeep` is not an item).
    - Count promoted vault material still awaiting the ingest loop:
-     `python3 ~/.claude/vault/_system/promote.py --backlog | wc -l`
+     `python3 ~/vault/_system/promote.py --backlog | wc -l`
      (source material that landed in `intake/` but has not yet been folded into an atlas
-     entry — see the ingest loop in `~/.claude/vault/_system/routing.md`).
+     entry — see the ingest loop in `~/vault/_system/routing.md`).
    - Refresh the vault reading surface so it cannot drift from the atlas unnoticed:
-     `python3 ~/.claude/vault/_surface/generate.py --if-stale`
+     `python3 ~/vault/_surface/generate.py --if-stale`
      Report its `SURFACE CURRENT` / `SURFACE REGENERATED` line next to the two counts above —
      together they say whether new material has reached the atlas yet. A current surface with
      a non-empty ingest backlog means promoted material is still stuck in `intake/`, which is

@@ -162,11 +162,11 @@ short kebab id like `web-search-researcher-jwt-refresh` and paste the block belo
 dispatch prompt — **substituting that id for `<agent-id>` yourself** (the agent can't derive
 it). The agent then writes an intake stub alongside its report: the report stays as the full
 content, the stub is the routed signal, quarantined as `agent-proposed` until a human promotes
-it (trust comes from promotion, never the stub — see `~/.claude/vault/_system/routing.md`).
+it (trust comes from promotion, never the stub — see `~/vault/_system/routing.md`).
 
 > **Vault intake:** Alongside your scratchpad report, write an intake stub per the **Intake
-> item** contract in `~/.claude/vault/_system/schemas.md` (read it — it is authoritative) to
-> `~/.claude/vault/_inbox/<agent-id>/<source-slug>.md`, where `<source-slug>` is a specific
+> item** contract in `~/vault/_system/schemas.md` (read it — it is authoritative) to
+> `~/vault/_inbox/<agent-id>/<source-slug>.md`, where `<source-slug>` is a specific
 > kebab-case name and `name:` in the frontmatter equals it. Normally write **one** stub:
 > `subtype: research` for your synthesis, with `source_url` pointing at your scratchpad report
 > and the underlying URLs listed in the body — write separate stubs only if you consumed
@@ -190,7 +190,7 @@ Prefer dispatching source-material research to an agent type that has Write (e.g
 Read-only types like `web-search-researcher` trigger the block's no-Write fallback: when a
 delimited stub comes back inline, save the report to the scratchpad, fill `source_url` (the
 saved report's absolute path) and `sha256` (hash of the saved report), and write the stub
-verbatim to `~/.claude/vault/_inbox/<agent-id>/<source-slug>.md`. The stub keeps the
+verbatim to `~/vault/_inbox/<agent-id>/<source-slug>.md`. The stub keeps the
 researcher's `agent_id` and `agent-proposed` provenance, so the quarantine model is
 unaffected — trust still arrives only at promotion.
 
