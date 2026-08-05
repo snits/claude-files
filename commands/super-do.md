@@ -155,3 +155,16 @@ When the cap is reached with blocking findings outstanding, or the loop stops co
 Do not merge, and do not close the issue.** Comment the surviving findings on the kata issue,
 label it `needs-review`, and report to Jerry. An implementation that three reviews could not clear
 is a design question surfacing as a review failure, and it needs a person, not a fourth attempt.
+
+If Jerry then rules on how to proceed and you record that ruling in kata, write it under a
+distinct actor:
+
+```
+kata comment <ref> --as jerry-via-claude \
+  --body "RULING (Jerry, <session id or context>): chose <option> because <reason>."
+```
+
+The default actor resolves to `claude` for every agent, so a transcribed ruling filed that way is
+indistinguishable from your own findings on the same issue — and a design call is exactly the
+thing a later reader must not mistake for a model's conclusion. `jerry` is wrong too; it claims he
+typed it.

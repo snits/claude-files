@@ -54,6 +54,20 @@ kata edit <blocked-ref> --blocked-by <new-ref>
 Do not use `needs-review` for either case. It means work happened and should be looked at before
 closing — a different state with a different consumer.
 
+**If Jerry rules while you are in the session — the common case, since triage runs attended —
+record it under a distinct actor and clear the label:**
+
+```
+kata comment <ref> --as jerry-via-claude \
+  --body "RULING (Jerry, <session id or context>): chose <option> because <reason>."
+kata label rm <ref> needs-decision
+```
+
+Both steps, in that order: a label cleared with no recorded reasoning reads as resolved and
+isn't. The actor matters because everything else you write on this issue is `claude` by default,
+and a ruling that looks like a model's own conclusion is the one that later gets defended back to
+Jerry as though he had made it. `jerry` alone is also wrong — it asserts he typed the comment.
+
 ## The gap is a fact neither of us can reach from here
 
 A capture from hardware we do not have, a measurement nobody has taken. This is not a decision, so

@@ -114,6 +114,30 @@ What you *do* add is batching: hold every escalation until the run ends and deli
 consolidated report. Five escalations as one review session is a materially different cost to
 Jerry than five interruptions, and batching is the only part of the escalation path that is yours.
 
+### Recording Jerry's answer — a different actor than your claims
+
+When Jerry rules on a batched escalation and you write that ruling into kata, the comment is his
+decision and your transcription. Record both halves:
+
+```
+kata comment <ref> --as jerry-via-claude \
+  --body "RULING (Jerry, <session id or context>): chose <option> because <reason>."
+```
+
+Not your `claude-orch-<run-suffix>` actor, which marks your own reasoning, and **not `jerry`**,
+which asserts he typed it. The compound form is the only honest one, and it is greppable —
+`kata show <ref> --agent | grep author=` separates rulings from findings.
+
+This is the path that failed on 2026-08-04. A ruling on `alexandria#cbbw` was transcribed as
+`author=claude`, and "adjudicated by Jerry" then propagated through a ledger, a handoff, a close
+message, and a later session defending it back to him — four hops, every one written carefully,
+because carefulness does not compose when no hop re-contacts the source. It was settled only by
+asking him. Downstream it corrupted the drain trial's attended-rate figure, which is the input
+that sizes concurrency for `w2rd`.
+
+Do not retro-attribute older comments. Comments written as `claude` are accurate as written;
+rewriting them to look like Jerry authored them is the same revisionism from the other direction.
+
 ## Stopping
 
 Stop at the issue cap, when every ready issue carries a skip label, or on the first

@@ -44,6 +44,19 @@ habitual label; if your own comment says "Jerry needs to decide", the label is `
 Some issues carry both: a fact is missing *and* a choice depends on how that fact lands. Label
 both, and say in the comment which one has to resolve first.
 
+**If Jerry rules on the spot rather than leaving it labelled, transcribe it under a different
+actor than your claims:**
+
+```
+kata comment <ref> --as jerry-via-claude \
+  --body "RULING (Jerry, <session id or context>): chose <option> because <reason>."
+```
+
+Your `claude-work-issue-<suffix>` actor marks your own reasoning; `jerry` would assert he typed
+the comment. Only the compound form records both his decision and your transcription, and a
+ruling filed as `claude` is indistinguishable from a model's conclusion the moment it is read
+back — which is how one propagated through four artifacts before anyone thought to ask him.
+
 If every ready issue carries one of the two labels, say "All ready issues for this project are
 completed."
 
