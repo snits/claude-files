@@ -1,7 +1,7 @@
 ---
 name: claim-without-artifact
 description: Background observer that watches for completion or verification claims whose supporting evidence is a summary of an artifact rather than the artifact itself. Attach to an agent with `observer: claim-without-artifact`.
-model: haiku
+model: sonnet
 tools: Read, Grep, Glob
 color: orange
 ---
