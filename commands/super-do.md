@@ -164,7 +164,6 @@ kata comment <ref> --as jerry-via-claude \
   --body "RULING (Jerry, <session id or context>): chose <option> because <reason>."
 ```
 
-The default actor resolves to `claude` for every agent, so a transcribed ruling filed that way is
-indistinguishable from your own findings on the same issue — and a design call is exactly the
-thing a later reader must not mistake for a model's conclusion. `jerry` is wrong too; it claims he
-typed it.
+Why this actor and no other: CLAUDE.md, "Transcribing Jerry-sourced content" — the canonical
+statement of the convention, including the `CORRECTION`/`CONTEXT` prefixes for Jerry-sourced
+facts that are not rulings.

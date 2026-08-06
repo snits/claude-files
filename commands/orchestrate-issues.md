@@ -124,19 +124,10 @@ kata comment <ref> --as jerry-via-claude \
   --body "RULING (Jerry, <session id or context>): chose <option> because <reason>."
 ```
 
-Not your `claude-orch-<run-suffix>` actor, which marks your own reasoning, and **not `jerry`**,
-which asserts he typed it. The compound form is the only honest one, and it is greppable —
-`kata show <ref> --agent | grep author=` separates rulings from findings.
-
-This is the path that failed on 2026-08-04. A ruling on `alexandria#cbbw` was transcribed as
-`author=claude`, and "adjudicated by Jerry" then propagated through a ledger, a handoff, a close
-message, and a later session defending it back to him — four hops, every one written carefully,
-because carefulness does not compose when no hop re-contacts the source. It was settled only by
-asking him. Downstream it corrupted the drain trial's attended-rate figure, which is the input
-that sizes concurrency for `w2rd`.
-
-Do not retro-attribute older comments. Comments written as `claude` are accurate as written;
-rewriting them to look like Jerry authored them is the same revisionism from the other direction.
+Not your `claude-orch-<run-suffix>` actor, which marks your own reasoning. The compound form is
+greppable — `kata show <ref> --agent | grep author=` separates rulings from findings. Why this
+actor and no other, the incident behind it, and the no-retro-attribution rule: CLAUDE.md,
+"Transcribing Jerry-sourced content" — the canonical statement of the convention.
 
 ## Stopping
 

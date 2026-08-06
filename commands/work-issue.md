@@ -52,10 +52,10 @@ kata comment <ref> --as jerry-via-claude \
   --body "RULING (Jerry, <session id or context>): chose <option> because <reason>."
 ```
 
-Your `claude-work-issue-<suffix>` actor marks your own reasoning; `jerry` would assert he typed
-the comment. Only the compound form records both his decision and your transcription, and a
-ruling filed as `claude` is indistinguishable from a model's conclusion the moment it is read
-back — which is how one propagated through four artifacts before anyone thought to ask him.
+Your `claude-work-issue-<suffix>` actor marks your own reasoning, not his ruling. Why this actor
+and no other: CLAUDE.md, "Transcribing Jerry-sourced content" — the canonical statement of the
+convention, including the `CORRECTION`/`CONTEXT` prefixes for Jerry-sourced facts that are not
+rulings.
 
 If every ready issue carries one of the two labels, say "All ready issues for this project are
 completed."

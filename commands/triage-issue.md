@@ -64,9 +64,9 @@ kata label rm <ref> needs-decision
 ```
 
 Both steps, in that order: a label cleared with no recorded reasoning reads as resolved and
-isn't. The actor matters because everything else you write on this issue is `claude` by default,
-and a ruling that looks like a model's own conclusion is the one that later gets defended back to
-Jerry as though he had made it. `jerry` alone is also wrong — it asserts he typed the comment.
+isn't. Why this actor and no other: CLAUDE.md, "Transcribing Jerry-sourced content" — the
+canonical statement, including the `CORRECTION`/`CONTEXT` prefixes for Jerry-sourced facts
+that are not rulings.
 
 ## The gap is a fact neither of us can reach from here
 

@@ -65,7 +65,17 @@ We have started a new session. Please go through the following steps:
      These are blocked on a choice, not on work — `work-issue` and `triage-issue` both skip them
      by design, so nothing else brings them back. Report the count and the titles. If any are
      present, offer to walk them: each needs its options stated and a ruling recorded as a comment
-     before the label comes off.
+     before the label comes off. When Jerry rules, transcribe it under the distinct actor and only
+     then clear the label — both steps, in this order:
+     ```
+     kata comment <ref> --as jerry-via-claude \
+       --body "RULING (Jerry, <session id or context>): chose <option> because <reason>."
+     kata label rm <ref> needs-decision
+     ```
+     (CLAUDE.md "Transcribing Jerry-sourced content" is the canonical statement — `RULING` /
+     `CORRECTION` / `CONTEXT` prefixes, never `--as jerry`.) A label cleared with no recorded
+     reasoning reads as resolved and isn't; a ruling filed as `claude` reads as the model's own
+     conclusion.
    - Check whether a retrospective is due:
      `S=~/.claude/retro/last-retro; if [ -f "$S" ]; then echo "RETRO last=$(cat $S) days_ago=$(( ( $(date +%s) - $(date -d "$(cat $S)" +%s) ) / 86400 ))"; else echo "RETRO never run"; fi`
      Report the line. There is no scheduler for the retro — this check is the only thing that

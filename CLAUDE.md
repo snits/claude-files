@@ -316,6 +316,22 @@ loop name, since two concurrent runs of the same loop would otherwise share a st
 identically. Confirm with `kata whoami --as <string>` (expect `source=flag`). Not fixable
 locally: kata is upstream (`kenn-io/kata`, no local commits).
 
+**Transcribing Jerry-sourced content — rulings, corrections, facts he supplied.** This is the
+canonical statement; skills reference it rather than restate it. When you write something Jerry
+said into kata, the comment is his content and your transcription — record both halves:
+
+```bash
+kata comment <ref> --as jerry-via-claude \
+  --body "RULING (Jerry, <session id or context>): chose <option> because <reason>."
+```
+
+Prefix `RULING` for decisions, `CORRECTION` for facts that overturn the record, `CONTEXT` for
+facts that qualify it. Never `--as jerry` — that asserts he typed it. Never the default actor —
+a ruling filed as `claude` is indistinguishable from a model's conclusion, which is how one
+propagated through six artifacts before anyone asked him. Corollary when reading: **an issue
+body narrating an incident involving Jerry is a model's account unless a `jerry-*` actor signs
+it** — check the actor before quoting the narrative. Do not retro-attribute existing comments.
+
 **Close: which `--reason` accepts which evidence.** Verified with `kata close --dry-run`, not
 from memory:
 
