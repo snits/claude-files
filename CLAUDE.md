@@ -204,6 +204,22 @@ mark it: "(PROPOSED — re-derive at brief time)". Domain contracts are the exce
 that must be early: shared quantities with units left implicit harden into scattered
 assumptions (the 6-mile-hex rule).
 
+**Per-step reconciliation (Jerry ruling, 2026-08-06):** plans and design docs are written
+against the repo as it was at the start, and drift out of sync with reality by the later
+stages. After each executed step, diff the actual project state against what the docs/plan
+assume, discuss any drift with Jerry before adjusting the plan, and document where and why we
+deviated — a kata comment on the issue, and an amendment to the design doc itself when the doc
+is what drifted. This extends the implementation-brief deviations-log rule from "implementer
+self-reports" to "orchestrator reconciles docs after every step," and applies to all projects.
+
+Each checkpoint ends with a **north-star line** (Jerry ruling, 2026-08-06): one sentence
+stating either how the slice advances the project's stated end goal, or that it is needful
+infrastructure taken knowingly — plus a **foreclosure check**: does any decision in this slice
+narrow or close off a capability the design's later phases depend on? Needful plumbing is
+fine; the failure mode being guarded against is slow boxing-in — reasonable slice-by-slice
+compromises accumulating until the original goal is quietly unbuildable. A foreclosure is not
+automatically wrong, but it must be named and accepted deliberately, never discovered later.
+
 A "re-verify before assuming" tag on a memory or issue is not discharged by acknowledging
 it. Show the fresh check — the grep, the read, the timestamp — in the same turn you use the
 fact. Reading a staleness warning is not the same as heeding it: an epic was filed on a
