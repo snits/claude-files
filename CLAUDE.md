@@ -135,9 +135,20 @@ Guideline, not law — for session models spawning subagents AND for Jerry choos
 | Claude Design (UX/UI flow) | Opus | |
 | Orchestration (session lead) | Fable/Opus | Orchestration is judgment-dense — decomposition, brief-writing, reviewing agent output. Cheap orchestrator → cheap briefs → downstream rework inherits the damage |
 | Planning | Opus | Up to Fable for architecture-level plans; flat-rate external planner (GPT-5.5) to keep bulk work off the metered budget |
-| Implementation | Sonnet | Up to Opus when novel or under-specified (rework lands in the expensive tier); down to Haiku only for fully-spec'd mechanical sweeps |
+| Implementation | Sonnet | Up to Opus when the task likely involves ambiguity or judgment — see below; down to Haiku only for fully-spec'd mechanical sweeps |
 | Exploration / discovery fan-out | Sonnet `general-purpose` | See "Cheap exploration fan-out" above — never built-in Explore from an opus/fable lead |
 | Quality review / verification | Opus | Sonnet for mechanical checks against explicit criteria |
+
+**The implementation tier splits on ambiguity and judgment, not code difficulty.** Sonnet
+executes complex-but-pinned work well (big refactors, intricate multi-file features with clear
+acceptance criteria). Elevate to Opus when the *task itself* might need judgment: the issue's
+premise could be false, the spec might be lying or self-contradictory, the fix may turn out to
+be a design ruling rather than a patch, or "done" requires deciding what correct means. The
+tiers separate on recognizing-when-to-stop, not on writing the code — a cheaper model's failure
+mode is picking a plausible reading and implementing it well, and confidently-implemented-wrong
+is the expensive outcome because rework lands back in the loop with review cycles on top.
+Evidence: alpha-prime run 0805a (2026-08-05), where two of three "implementation" issues were
+design questions wearing a bug label, and the value came from opus agents refusing to patch.
 
 Deviation is fine **with a stated reason** — say why in the dispatch or session note so bad calls are visible and correctable. When unsure between two tiers, take the higher one for anything whose output gates downstream work. Cost-per-task is often lower on the more capable tier — fewer turns to done — so start with the smartest available and tune effort down rather than starting cheap and upgrading.
 
