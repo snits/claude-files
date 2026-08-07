@@ -1,5 +1,5 @@
 ---
-name: wakey
+name: talktomegoose
 description: Use this when a session is beginning to get context on the current project
 ---
 
