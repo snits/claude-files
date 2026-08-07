@@ -33,3 +33,5 @@ skills/flowchart
 __pycache__/
 compact-hints/
 image-cache
+daemon*
+
