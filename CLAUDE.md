@@ -114,7 +114,7 @@ Your journal (mnemosyne) and the skills system are how we build on what we've le
 
 Without these, agents faithfully report what domain literature says at the sophistication level of the sources. That's not over-engineering by the agent — it's under-specifying by us.
 
-**Three harness rules agents rediscover by getting blocked.** All belong in dispatch briefs:
+**Four harness rules agents rediscover by getting blocked.** All belong in dispatch briefs:
 
 - Read the target file yourself before your first Edit/Write on it, even when the brief or a
   teammate report quotes its contents. Your own tool history is what the harness checks.
@@ -122,6 +122,16 @@ Without these, agents faithfully report what domain literature says at the sophi
   `sleep N && check` — it is blocked every time.
 - In a background or `claude agents` session, call `EnterWorktree` before your first
   Edit/Write. Otherwise the edit targets the shared checkout and is refused.
+- **Never delete, truncate, or overwrite anything outside your worktree and scratchpad —
+  no exceptions for files that "look stale."** Debugging pressure is exactly when this rule
+  matters: if a file outside your sandbox seems to be in the way, STOP and report it as a
+  finding instead of removing it. Rationale (Jerry ruling, 2026-08-06, quiddity ma55): a
+  subagent debugging a stalled launcher ran `rm -f /run/user/1000/wayland-{1,2,3}` on
+  "stale test sockets" — `wayland-1` was the live Sway session socket, and an unlinked unix
+  socket path cannot be relinked, so every new GUI app launch was broken until a session
+  restart. Legitimate cleanup of test artifacts belongs in the harness itself, scoped to
+  patterns the project owns (e.g. `quiddity-*` sockets only — kata quiddity#r1f5), never
+  improvised mid-debug by an agent.
 
 **Implementation briefs MUST include a deviations-log instruction.** When an edge case forces the implementer off the brief, they take the conservative option and record the deviation — a kata comment on the issue, or a `Deviations` section in their report. Divergence self-reports; the orchestrator should never have to hunt for it.
 
