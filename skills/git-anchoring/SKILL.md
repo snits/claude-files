@@ -34,7 +34,7 @@ step that changes repo position:
       "work_branch": "<branch surgery happens on>",
       "worktree_path": "/abs/path",
       "cursor": 7,
-      "cursor_meaning": "next patch index to process",
+      "cursor_meaning": "patches completed; next patch file is %04d of cursor+1",
       "last_good": "<sha of work branch at last verified step>"
     }
 

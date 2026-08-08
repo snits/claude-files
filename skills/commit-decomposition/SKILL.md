@@ -38,22 +38,27 @@ gets its own isolated commit.
 2. Invoke the `git-anchoring` skill: anchor tag + backup branch on the original
    tip; dedicated worktree; work branch at the base commit
    (`git switch -c decompose/<slug> <base>` inside the worktree).
-3. Require a linear range: `git rev-list --merges <base>..<anchor-tip>` must
+3. Require a linear range: `git rev-list --merges <base>..<anchor_ref>` must
    be empty. `git format-patch` silently emits nothing for merge commits,
    breaking the patch↔commit correspondence. A range with merges needs a
    different strategy — stop and consult the user.
 4. Export the source of truth:
-   `git format-patch <base>..<anchor-tag> -o <scratchpad>/patches/`
+   `git format-patch <base>..<anchor_ref> -o <scratchpad>/patches/`
    (the anchor ref, not a remembered tip SHA). These files are the unloseable
    record; nothing that happens later can destroy the original commits.
-5. Write `state.json` (git-anchoring schema; `cursor: 0`,
-   `cursor_meaning: "next patch index"`, `last_good: <base sha>`). `cursor`
-   counts patches processed so far; the next patch file to process is `%04d`
-   of `cursor+1` (`git format-patch` numbers patches from 0001).
+5. The task scratchpad (`patches/`, `analysis/`, `state.json`) MUST live
+   outside the worktree — no git operation inside the worktree (including a
+   retry's `git clean -fd`) may be able to touch it.
+6. Write `state.json` (git-anchoring schema; `cursor: 0`,
+   `cursor_meaning: "patches completed; next patch file is %04d of cursor+1"`,
+   `last_good: <base sha>`). `cursor` counts patches completed so far; the
+   next patch file to process is `%04d` of `cursor+1` (`git format-patch`
+   numbers patches from 0001).
 
 ## Phase 1: Per-patch loop (lead)
 
-For each patch N (from `state.json`, not from memory):
+For each patch N — the 1-based patch-file number, N = `cursor+1` read from
+`state.json` at the start of the step, never from memory:
 
 1. **Dispatch** a fresh subagent with the brief template below. Model per the
    routing table: implementation tier; elevate when the patch looks
@@ -72,13 +77,18 @@ For each patch N (from `state.json`, not from memory):
    - **Worktree clean:** `git status --porcelain` is empty in the worktree.
      Uncommitted leftovers contaminate patch N+1's apply.
 
-   - All three pass → record: update `state.json` (`cursor: N+1`,
+   - All three pass → record: update `state.json` (`cursor: N`,
      `last_good: <new tip>`); append one line to `<scratchpad>/progress.md`.
-   - Any check fails → `git switch <work-branch>` (ensure HEAD is on it),
-     `git reset --hard <last_good>`, `git clean -fd` (safe here only because
-     this runs inside the dedicated worktree), then re-dispatch ONCE with the
-     failing diff included in the brief. Second failure → STOP, report to the
-     user with the diff. Never improvise past a failed gate.
+   - Any check fails → first capture the evidence for the retry brief (the
+     failing `--stat` diff for a tree-parity failure; for a history-intact
+     failure there is no diff — record instead that ancestry broke, i.e. the
+     previous attempt amended or squashed existing commits) — do this BEFORE
+     resetting, since the reset destroys it. Then `git switch <work-branch>`
+     (ensure HEAD is on it), `git reset --hard <last_good>`, `git clean -fd`
+     (safe here only because this runs inside the dedicated worktree and the
+     scratchpad lives outside it), then re-dispatch ONCE with the captured
+     evidence in the brief's retry-context section. Second failure → STOP,
+     report to the user with the evidence. Never improvise past a failed gate.
 3. Do not review commit-boundary quality mid-run — that is the optional
    Phase 2. Parity and progress only.
 
@@ -115,20 +125,24 @@ patch file before every dispatch — never sent unresolved.
     file written. Report: number of commits created, one-line summary each.
 
     **Retry context (present only on re-dispatch):** the previous attempt
-    failed the parity gate; the failing diff follows. Diagnose which hunks
-    were missed or altered and correct the decomposition.
-    <failing-diff>
+    failed the parity gate's <failed-check-name> check.
+    - If tree parity failed: diagnose which hunks were missed or altered
+      from the diff below and correct the decomposition.
+      <failing-diff>
+    - If history-intact failed: the previous attempt amended or squashed
+      existing commits. Build strictly on top of <last_good> — never amend
+      or squash a commit that already passed the gate.
 
 ## Phase 2 (optional, after full parity): quality pass
 
-Only after the final gate — `git diff <anchor-tip> <work-branch>` empty — walk
+Only after the final gate — `git diff <anchor_ref> <work-branch>` empty — walk
 the new series for build/test health per commit (`git rebase --exec 'make ...'`
 or equivalent) and message quality. Parity first, polish second: mixing these
 concerns is what sank the 2025 attempts.
 
 ## Finish
 
-Final parity check against the anchor tip, then
+Final parity check against the anchor ref, then
 `superpowers:finishing-a-development-branch`. The original branch was never
 touched; the anchor tag and backup branch are deleted only by the user after
 they accept the result.
