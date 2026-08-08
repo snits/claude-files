@@ -248,3 +248,107 @@ big refactor or feature PR in application code):
   short, the chosen design, what's deliberately deferred — not a bullet list of commit
   titles.
 - Deliberately-omitted scope gets a sentence explaining why, not silence.
+
+---
+
+## 10. A pure refactor converges on one behavioral-flip patch, everything else is zero-behavior-change plumbing
+
+**Rule:** In a series whose end goal is to change what the code *does* (not just how
+it's organized), push the actual behavior change down to one or two patches as late
+as possible. Every patch before that point should be a rename, consolidation, or
+data-structure change that a reviewer can verify preserves current behavior exactly —
+only the final patch(es) require the reviewer to reason about the new behavior itself.
+
+This is a specialization of "preparatory refactors land before the new capability"
+(rule 1) but pushed further: in a pure refactor, almost the *entire* series is
+preparation, and the actual functional change can be a single-digit fraction of the
+patches. That ratio is a feature, not an accident — it means a bisect that lands on
+the series only needs close scrutiny at the one or two patches where behavior could
+plausibly have changed; every other patch is ruled out by construction.
+
+Example (series studied here): "Consolidate the error handling around device
+attachment" (v5, 17 patches, Jason Gunthorpe, merged for v6.5) spends patches 1–10
+restructuring `__iommu_device_set_domain()` and error-unwind plumbing with no
+behavior change, then patch 11, `dfddd54dc77c ("iommu: Remove the assignment of
+group->domain during default domain alloc")`, patch 12, `8b4eb75ee50e ("iommu:
+Consolidate the code to calculate the target default domain type")`, and patch 13,
+`fcbb0a4d738c ("iommu: Revise iommu_group_alloc_default_domain()")`, are where the
+actual default-domain-selection logic changes — reordering the fallback so a driver's
+explicit `ops->def_domain_type()` preference is only overridden by guesswork when the
+driver doesn't supply one. Patches 14–17 are again pure consolidation/tidying with no
+further behavior change.
+
+---
+
+## 11. Deletion is the last patch, not the first — a helper is removed only after every caller has already migrated
+
+**Rule:** When a series retires a helper function, struct, or code path, the deletion
+patch comes last in that helper's story, after every call site has already been moved
+onto its replacement in earlier patches. By the time the deletion patch lands, it
+removes something with zero remaining references — the diff is pure subtraction and
+requires no judgment to review, only a grep to confirm nothing still calls it.
+
+This keeps a stale-but-referenced helper from ever needing to coexist mid-series with
+its own removal in the same patch (which would force a reviewer to check "is this
+callsite gone AND is the deletion safe" simultaneously), and it means `git bisect`
+never lands on a patch that both drops functionality and changes a caller in the same
+step.
+
+Example: `e996c12d76d0 ("iommu: Remove __iommu_group_for_each_dev()")` is patch 16 of
+17 in the same series — the helper's last two call sites were already open-coded away
+in patch 12, `8b4eb75ee50e ("iommu: Consolidate the code to calculate the target
+default domain type")`, four patches earlier ("Remove the obfuscating use of
+`__iommu_group_for_each_dev()`" per that patch's own commit message). The removal
+patch itself has nothing left to reason about.
+
+---
+
+## 12. A regression discovered mid-area gets its own minimal, independently-submitted fix — not a fold-in to the next series respin
+
+**Rule:** When a bug is found in already-merged work while a related series is still
+in flight, don't fold the fix into the next spin of the in-progress series and don't
+silently amend the merged history. Send it as its own tiny, separately numbered
+submission (even a one-patch "v1"), carrying a `Fixes:` tag that names the exact
+commit that introduced the regression, and let it merge on its own schedule before
+continuing the larger body of work.
+
+This keeps the fix bisectable and cherry-pickable to stable kernels independently of
+whatever the in-progress series is still debating, and it keeps the in-progress
+series's patch count and story from being disturbed by an unrelated emergency. The
+`Fixes:` tag is what lets tooling (and future archaeologists) reconstruct that this
+was a targeted correction, not part of the plan.
+
+Example: `911476ef3c58 ("iommu: Fix crash during syfs iommu_groups/N/type")`, sent as
+`[PATCH v1]` (Link: `0-v1-5bd8cc969d9e+1f1-iommu_set_def_fix_jgg@nvidia.com`), landed
+between the 17-patch "Consolidate the error handling around device attachment" series
+and the follow-on 10-patch "Consolidate the probe_device path" series. Its commit
+message states plainly: "The err_restore_domain flow was accidentally inserted into
+the success path in commit 1000dccd5d13," and carries `Fixes: 1000dccd5d13 ("iommu:
+Allow IOMMU_RESV_DIRECT to work on ARM")` — that commit was itself patch 15/17 of the
+series that had just merged.
+
+---
+
+## 13. A multi-series refactor states, in each new cover letter, which prior series it depends on
+
+**Rule:** When a large refactor is too big for one series and gets split across
+several sequential series over weeks or months, each new series's cover letter names
+what already landed and why the new series only makes sense now that it has. This is
+rule 5 ("the cover letter tells a story") applied across series boundaries instead of
+within one — the dependency being narrated is "this series" on "that other, already-
+merged series," not "this patch" on "that earlier patch in the same posting."
+
+Without this, a reviewer opening the new series has to independently reconstruct
+whether it's safe to review in isolation or whether it silently assumes context from
+work they may not have followed. Stating the dependency up front lets them either
+confirm the prerequisite already landed or object to the ordering before spending time
+on the diff.
+
+Example: the cover letter of "Consolidate the probe_device path" (v3, 10 patches,
+Link: `0-v3-328044aa278c+45e49-iommu_probe_jgg@nvidia.com`) opens with "Now that the
+domain allocation path is less duplicated we can tackle the probe_device path" —
+directly naming the just-merged "Consolidate the error handling around device
+attachment" series as the reason this one is possible now. (Jerry, the iommu
+maintainer who reviewed this work upstream, pointed at this exact pair of series —
+plus the interjected one-patch fix between them — as the third exemplar for this
+reference.)
