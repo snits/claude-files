@@ -70,3 +70,25 @@ def test_repair_resolves(stg_repo):
     desync(stg_repo)
     subprocess.run(["stg", "-C", str(stg_repo), "repair"], check=True)
     assert run_hook("ls", stg_repo).returncode == 0
+
+
+class TestInCommandCd:
+    """`cd <dir> && cmd` must be checked at the *effective* cwd too — a
+    compound command can desync a repo the payload cwd never mentions."""
+
+    def test_cd_into_desynced_repo_warns(self, tmp_path, stg_repo):
+        """cwd=parent of the stg repo; the command cds into the stg repo
+        and runs a script there. The desync must be caught via the
+        effective cwd, not just the (irrelevant) payload cwd."""
+        desync(stg_repo)
+        res = run_hook(f"cd {stg_repo} && ./sneaky.sh", tmp_path)
+        assert res.returncode == 2
+        assert "stg repair" in res.stderr
+
+    def test_cd_into_synced_repo_silent(self, tmp_path, stg_repo):
+        """Payload cwd is a plain non-repo dir; the command cds into the
+        stg repo, which is NOT desynced. Effective-cwd checking must not
+        manufacture a false warning when nothing is actually out of sync."""
+        res = run_hook(f"cd {stg_repo} && ls", tmp_path)
+        assert res.returncode == 0
+        assert res.stderr == ""

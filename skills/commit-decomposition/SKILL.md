@@ -58,7 +58,9 @@ gets its own isolated commit.
 ## Phase 1: Per-patch loop (lead)
 
 For each patch N — the 1-based patch-file number, N = `cursor+1` read from
-`state.json` at the start of the step, never from memory:
+`state.json` at the start of the step, never from memory. The loop ends when
+`cursor` equals the number of patch files in `<scratchpad>/patches/` — count
+them on disk, don't remember the total.
 
 1. **Dispatch** a fresh subagent with the brief template below. Model per the
    routing table: implementation tier; elevate when the patch looks

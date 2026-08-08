@@ -176,9 +176,12 @@ class TestClassifierRobustness:
         assert res.returncode == 2
         assert "[git-surgery-guard]" in res.stderr
 
-    def test_unspaced_semicolon_after_cd_blocked(self, repo):
+    def test_unspaced_semicolon_after_cd_blocked(self, repo, tmp_path):
+        """The `cd` target (not the payload cwd) is where the checkout
+        actually runs — semicolon-splitting must still recognize the `cd`
+        segment so the effective cwd tracks it."""
         sha = git(repo, "rev-parse", "HEAD~1")
-        res = run_hook(f"cd /tmp;git checkout {sha}", repo)
+        res = run_hook(f"cd {repo};git checkout {sha}", tmp_path)
         assert res.returncode == 2
         assert "[git-surgery-guard]" in res.stderr
 
@@ -346,6 +349,57 @@ class TestOrphanReachabilityGate:
         )
         res = run_hook("git checkout --orphan fresh", repo)
         assert res.returncode == 0
+
+
+class TestInCommandCd:
+    """`cd <dir> && git ...` must resolve the git command's effective repo
+    against the *post-cd* directory, not the payload cwd."""
+
+    def test_cd_into_repo_then_detach_blocked(self, repo, tmp_path):
+        """cwd=parent, `cd repo && git checkout <sha>` must BLOCK — the
+        payload cwd (parent) isn't a repo at all, so without effective-cwd
+        tracking the segment would be silently allowed."""
+        sha = git(repo, "rev-parse", "HEAD~1")
+        res = run_hook(f"cd {repo.name} && git checkout {sha}", repo.parent)
+        assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
+
+    def test_cd_into_plain_repo_from_stg_cwd_allowed(self, repo, tmp_path):
+        """cwd=stg-repo, `cd <plain-repo-abs> && git commit` must be ALLOWED
+        — the command actually operates on the plain repo, not the stg one
+        the payload cwd points at."""
+        plain = tmp_path / "plain"
+        plain.mkdir()
+        subprocess.run(["git", "init", "-q", "-b", "main", str(plain)], check=True)
+        git(plain, "commit", "--allow-empty", "-m", "init")
+        subprocess.run(["stg", "-C", str(repo), "init"], check=True)
+        res = run_hook(f"cd {plain} && git commit -m x", repo)
+        assert res.returncode == 0
+
+    def test_cd_into_stg_repo_from_plain_cwd_blocked(self, repo, tmp_path):
+        """cwd=plain, `cd <stg-repo-abs> && git commit` must be BLOCKED with
+        the stg message — the command actually operates on the stg repo."""
+        plain = tmp_path / "plain"
+        plain.mkdir()
+        subprocess.run(["git", "init", "-q", "-b", "main", str(plain)], check=True)
+        git(plain, "commit", "--allow-empty", "-m", "init")
+        subprocess.run(["stg", "-C", str(repo), "init"], check=True)
+        res = run_hook(f"cd {repo} && git commit -m x", plain)
+        assert res.returncode == 2
+        assert "stg repair" in res.stderr
+
+    def test_relative_nested_cd_resolves_and_blocks(self, tmp_path):
+        """`cd a; cd b; git checkout <sha>` must chain relative cds against
+        the evolving effective cwd, landing inside the repo."""
+        nested = tmp_path / "a" / "b"
+        nested.mkdir(parents=True)
+        subprocess.run(["git", "init", "-q", "-b", "main", str(nested)], check=True)
+        git(nested, "commit", "--allow-empty", "-m", "one")
+        git(nested, "commit", "--allow-empty", "-m", "two")
+        sha = git(nested, "rev-parse", "HEAD~1")
+        res = run_hook(f"cd a; cd b; git checkout {sha}", tmp_path)
+        assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
 
 
 class TestStartPointEqualsHead:

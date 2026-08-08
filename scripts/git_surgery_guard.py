@@ -203,6 +203,23 @@ def checkout_would_detach(repo, args):
     return resolves_to_commit(repo, target)
 
 
+def resolve_cd(cwd, path):
+    """Resolve a `cd` argument against the current effective cwd.
+
+    Bare `cd` (no path) goes home, same as the shell. `cd -` (previous dir)
+    is unknown to a static analyzer, so conservatively fall back to keeping
+    the payload cwd for everything after it, same as today's behavior.
+    """
+    if path is None:
+        return str(Path.home())
+    if path == "-":
+        return None  # signal "unknown": caller keeps prior effective cwd
+    p = Path(path)
+    if p.is_absolute():
+        return str(p)
+    return str(Path(cwd) / p)
+
+
 def check_segment(tokens, cwd):
     parsed = parse_git_invocation(tokens, cwd)
     if parsed is None:
@@ -279,9 +296,15 @@ def main():
     segments = split_segments(command)
     if segments is None:
         sys.exit(0)  # unparseable: allow; the desync detector backstops
+    effective_cwd = cwd
     for tokens in segments:
         try:
-            check_segment(tokens, cwd)
+            if tokens and tokens[0] == "cd":
+                path = tokens[1] if len(tokens) > 1 else None
+                resolved = resolve_cd(effective_cwd, path)
+                effective_cwd = resolved if resolved is not None else cwd
+                continue
+            check_segment(tokens, effective_cwd)
         except SystemExit:
             raise
         except Exception:
