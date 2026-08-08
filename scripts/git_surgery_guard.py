@@ -11,7 +11,6 @@ Never blocks read-only commands. On any parse/classification failure: allow —
 the PostToolUse desync detector is the safety net.
 """
 import json
-import re
 import shlex
 import subprocess
 import sys
@@ -19,7 +18,7 @@ from pathlib import Path
 
 MUTATING = {
     "commit", "checkout", "switch", "reset", "rebase", "am",
-    "apply", "merge", "cherry-pick", "revert",
+    "merge", "cherry-pick", "revert",
 }
 # checkout/switch to another branch is safe on an stg branch; the stack refs stay put.
 STG_UNSAFE = {"commit", "rebase", "reset", "cherry-pick", "am", "merge", "revert"}
@@ -37,13 +36,32 @@ def git(repo, *args):
         return 1, ""
 
 
+OPERATORS = {"&&", "||", ";", "|"}
+
+
 def split_segments(command):
-    """Split a shell command on ;, &&, ||, | into token lists. None if unparseable."""
+    """Tokenize with shlex, then split the token list on operator tokens.
+
+    Tokenizing before splitting means a quoted metacharacter (e.g. a commit
+    message containing "&&") stays part of its token instead of being
+    mistaken for a shell operator. None if unparseable.
+    """
     try:
-        parts = re.split(r"(?<!\|)\|\|(?!\|)|&&|;|\|", command)
-        return [shlex.split(p) for p in parts if p.strip()]
+        tokens = shlex.split(command)
     except ValueError:
         return None
+    segments = []
+    current = []
+    for tok in tokens:
+        if tok in OPERATORS:
+            if current:
+                segments.append(current)
+            current = []
+        else:
+            current.append(tok)
+    if current:
+        segments.append(current)
+    return segments
 
 
 def parse_git_invocation(tokens, cwd):
@@ -55,7 +73,7 @@ def parse_git_invocation(tokens, cwd):
     while i < len(tokens):
         t = tokens[i]
         if t == "-C" and i + 1 < len(tokens):
-            repo = tokens[i + 1]
+            repo = str(Path(cwd) / tokens[i + 1])
             i += 2
         elif t == "-c" and i + 1 < len(tokens):
             i += 2
@@ -82,7 +100,13 @@ def resolves_to_commit(repo, name):
 
 
 def checkout_would_detach(repo, args):
-    if any(a in ("-b", "-B", "--orphan", "-t", "--track") for a in args):
+    """True if `git checkout`/`switch <args>` leaves HEAD detached.
+
+    False for anything that lands on a ref: -b/-B (checkout) or -c/-C
+    (switch) create-and-move-to a new branch, --orphan/-t/--track track a
+    branch, and an existing local-branch target moves HEAD to that branch.
+    """
+    if any(a in ("-b", "-B", "-c", "-C", "--orphan", "-t", "--track") for a in args):
         return False
     if "--detach" in args:
         return True
@@ -105,11 +129,14 @@ def check_segment(tokens, cwd):
     if parsed is None:
         return  # not a git command (stg, ls, ...): always allowed
     repo, sub, args = parsed
+    if sub not in MUTATING:
+        return
+    if sub == "commit" and "--dry-run" in args:
+        return  # doesn't mutate
+
     rc, _ = git(repo, "rev-parse", "--git-dir")
     if rc != 0:
         return  # not a repo; nothing to guard
-    if sub not in MUTATING:
-        return
 
     _, git_dir = git(repo, "rev-parse", "--absolute-git-dir")
     if git_dir and (Path(git_dir) / "BISECT_LOG").exists():
@@ -117,14 +144,21 @@ def check_segment(tokens, cwd):
 
     detached = git(repo, "symbolic-ref", "-q", "HEAD")[0] != 0
     if detached:
-        _, sha = git(repo, "rev-parse", "--short", "HEAD")
-        block(
-            f"[git-surgery-guard] BLOCKED: HEAD is detached at {sha} and "
-            f"'git {sub}' would risk orphaning work.\n"
-            f"First attach your work to a ref:  git switch -c rescue/<slug>\n"
-            f"That makes everything on this HEAD unloseable. Then continue.\n"
-            f"(Diagnosis commands — status/log/diff/reflog — are not blocked.)"
-        )
+        # Leaving detached HEAD for a ref (checkout/switch onto an existing
+        # branch, or -b/-B/-c/-C creating one) is the prescribed recovery —
+        # never block it. Anything else while detached still risks orphaning
+        # work: other mutating subcommands, or checkout/switch to yet
+        # another non-branch commit (still detached afterward).
+        recovers = sub in ("checkout", "switch") and not checkout_would_detach(repo, args)
+        if not recovers:
+            _, sha = git(repo, "rev-parse", "--short", "HEAD")
+            block(
+                f"[git-surgery-guard] BLOCKED: HEAD is detached at {sha} and "
+                f"'git {sub}' would risk orphaning work.\n"
+                f"First attach your work to a ref:  git switch -c rescue/<slug>\n"
+                f"That makes everything on this HEAD unloseable. Then continue.\n"
+                f"(Diagnosis commands — status/log/diff/reflog — are not blocked.)"
+            )
 
     if sub == "checkout" and checkout_would_detach(repo, args):
         target = next((a for a in args if not a.startswith("-")), "<sha>")

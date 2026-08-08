@@ -41,11 +41,13 @@ class TestDetachedHeadEntry:
         sha = git(repo, "rev-parse", "HEAD~1")
         res = run_hook(f"git checkout {sha}", repo)
         assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
         assert "git switch -c" in res.stderr
 
     def test_switch_detach_blocked(self, repo):
         res = run_hook("git switch --detach HEAD~1", repo)
         assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
 
     def test_checkout_branch_allowed(self, repo):
         git(repo, "branch", "feature")
@@ -70,10 +72,13 @@ class TestAlreadyDetached:
     def test_commit_blocked_with_rescue(self, detached):
         res = run_hook("git commit -m x", detached)
         assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
         assert "rescue/" in res.stderr
 
     def test_reset_blocked(self, detached):
-        assert run_hook("git reset --hard HEAD~1", detached).returncode == 2
+        res = run_hook("git reset --hard HEAD~1", detached)
+        assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
 
     def test_readonly_allowed(self, detached):
         assert run_hook("git log --oneline", detached).returncode == 0
@@ -85,6 +90,19 @@ class TestAlreadyDetached:
         (gd / "BISECT_LOG").write_text("")
         assert run_hook("git checkout HEAD~1", detached).returncode == 0
 
+    def test_switch_new_branch_allowed(self, detached):
+        """The hook's own prescribed recovery command must not be blocked."""
+        res = run_hook("git switch -c rescue/save", detached)
+        assert res.returncode == 0
+
+    def test_checkout_existing_branch_allowed(self, detached):
+        """Recovering onto an existing branch (not just a new one) must work too."""
+        res = run_hook("git checkout main", detached)
+        assert res.returncode == 0
+
+    def test_apply_check_allowed(self, detached):
+        assert run_hook("git apply --check x.patch", detached).returncode == 0
+
 
 class TestStgClause:
     @pytest.fixture
@@ -95,10 +113,13 @@ class TestStgClause:
     def test_raw_commit_blocked(self, stg_repo):
         res = run_hook("git commit -m x", stg_repo)
         assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
         assert "stg repair" in res.stderr
 
     def test_raw_rebase_blocked(self, stg_repo):
-        assert run_hook("git rebase main", stg_repo).returncode == 2
+        res = run_hook("git rebase main", stg_repo)
+        assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
 
     def test_stg_commands_allowed(self, stg_repo):
         assert run_hook("stg new -m msg p1", stg_repo).returncode == 0
@@ -111,6 +132,13 @@ class TestStgClause:
     def test_non_stg_branch_unaffected(self, repo):
         assert run_hook("git commit --allow-empty -m x", repo).returncode == 0
 
+    def test_quoted_metachar_in_commit_message_still_blocked(self, stg_repo):
+        """A commit message containing "&&" must not split into segments and
+        bypass classification via an unparseable/allow-all path."""
+        res = run_hook('git commit -m "fix: a && b"', stg_repo)
+        assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
+
 
 class TestClassifierRobustness:
     def test_non_git_command_allowed(self, repo):
@@ -120,11 +148,21 @@ class TestClassifierRobustness:
         sha = git(repo, "rev-parse", "HEAD~1")
         res = run_hook(f"git status && git checkout {sha}", repo)
         assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
 
     def test_git_dash_c_repo_targeting(self, repo, tmp_path):
         sha = git(repo, "rev-parse", "HEAD~1")
         res = run_hook(f"git -C {repo} checkout {sha}", tmp_path)
         assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
+
+    def test_git_dash_c_relative_path_resolved_against_cwd(self, repo, tmp_path):
+        """`-C repo` (relative) must resolve against payload cwd, not the
+        hook process's own cwd, when cwd is the repo's parent directory."""
+        sha = git(repo, "rev-parse", "HEAD~1")
+        res = run_hook(f"git -C {repo.name} checkout {sha}", repo.parent)
+        assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
 
     def test_unparseable_command_allowed(self, repo):
         assert run_hook("git checkout $(broken 'quote", repo).returncode == 0
