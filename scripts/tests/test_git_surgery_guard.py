@@ -238,3 +238,73 @@ class TestDetachedEscapeReachability:
         )
         res = run_hook("git checkout -b save", repo)
         assert res.returncode == 0
+
+
+class TestDetachedEscapeStartPoint:
+    """A branch-creating escape (-b/-B/-c/-C) with an explicit start-point
+    still moves HEAD to that start-point's ref, not to current HEAD — so it
+    must go through the same reachability gate as landing on an existing
+    branch. Only the no-start-point form (new branch starts at HEAD) is
+    unconditionally safe."""
+
+    @pytest.fixture
+    def orphaned(self, repo):
+        """Detached at an unreachable commit: HEAD~1, then a new commit made
+        while detached, with nothing pointing at either."""
+        subprocess.run(
+            ["git", "-C", str(repo), "checkout", "-q", "--detach", "HEAD~1"],
+            check=True,
+        )
+        subprocess.run(
+            ["git", "-C", str(repo), "commit", "-q", "--allow-empty", "-m", "orphan"],
+            check=True,
+        )
+        return repo
+
+    def test_checkout_dash_b_with_start_point_blocked(self, orphaned):
+        res = run_hook("git checkout -b save main", orphaned)
+        assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
+        assert "rescue/" in res.stderr
+
+    def test_switch_dash_c_with_start_point_blocked(self, orphaned):
+        res = run_hook("git switch -c tmp main", orphaned)
+        assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
+        assert "rescue/" in res.stderr
+
+    def test_checkout_dash_blocked(self, orphaned):
+        """`git checkout -` returns to the previously-checked-out ref (main,
+        checked out just before detaching), abandoning the orphaned chain."""
+        res = run_hook("git checkout -", orphaned)
+        assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
+        assert "rescue/" in res.stderr
+
+    def test_checkout_dash_b_no_start_point_allowed(self, orphaned):
+        """Regression: no start-point still means the new branch starts at
+        current (detached, unreachable) HEAD, so nothing is orphaned."""
+        res = run_hook("git checkout -b save", orphaned)
+        assert res.returncode == 0
+
+    def test_checkout_dash_b_with_start_point_allowed_when_reachable(self, repo):
+        """Detached but still reachable (no new commits since detaching):
+        a start-point escape is safe because the old chain isn't going
+        anywhere — it's still hanging off main."""
+        subprocess.run(
+            ["git", "-C", str(repo), "checkout", "-q", "--detach", "HEAD~1"],
+            check=True,
+        )
+        res = run_hook("git checkout -b save main", repo)
+        assert res.returncode == 0
+
+
+class TestCommentersGuard:
+    def test_unquoted_hash_in_commit_message_then_checkout_blocked(self, repo):
+        """Without lex.commenters = "", shlex would truncate at the unquoted
+        '#' and the checkout segment would vanish, silently allowing entry
+        into detached HEAD."""
+        sha = git(repo, "rev-parse", "HEAD~1")
+        res = run_hook(f"git commit --allow-empty -m fix#123 && git checkout {sha}", repo)
+        assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr

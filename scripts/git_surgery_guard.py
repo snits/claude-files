@@ -126,22 +126,39 @@ def is_head_reachable(repo):
 def escapes_detached_head(repo, args):
     """True if this checkout/switch is a safe way out of detached HEAD.
 
-    Branch-creating forms (-b/-B/-c/-C, --orphan, -t/--track) are always
-    safe: they land on a new ref, nothing is orphaned. "-" (previous ref)
-    and pathspec checkouts ("--") are always safe too. Landing on an
-    *existing* local branch is only safe if the detached HEAD is already
-    reachable from some ref — otherwise commits made while detached would
-    be silently orphaned the moment HEAD moves off them.
+    A branch-creating form (-b/-B/-c/-C) is unconditionally safe only when
+    it has no start-point argument and no -t/--track: the new branch then
+    starts at HEAD, so the detached chain becomes that branch's tip and
+    nothing is orphaned. --orphan and pathspec checkouts ("--") are always
+    safe too (--orphan leaves the old chain in the reflog same as any other
+    ref move; a pathspec checkout never moves HEAD).
+
+    Everything else — a branch-creating form WITH a start-point or with
+    -t/--track, "-" (previous ref), or landing on an existing local
+    branch — moves HEAD to a ref chosen independently of current HEAD, so
+    it's only safe if the detached HEAD is already reachable from some
+    other ref. Otherwise commits made while detached would be silently
+    orphaned the moment HEAD moves off them.
     """
     if checkout_would_detach(repo, args):
         return False  # lands on yet another commit, still detached
-    if any(a in ("-b", "-B", "-c", "-C", "--orphan", "-t", "--track") for a in args):
+    if "--orphan" in args:
         return True
     if "--" in args:
         return True
+    if "-" in args:
+        # "-" (previous ref) is a single-char token that also matches the
+        # startswith("-") flag filter below, so it must be caught here —
+        # it picks a ref independent of current HEAD, same as any other
+        # existing-branch target, and needs the reachability gate.
+        return is_head_reachable(repo)
     targets = [a for a in args if not a.startswith("-")]
-    if not targets or targets[0] == "-":
+    if not targets:
         return True
+    branch_creating = any(a in ("-b", "-B", "-c", "-C") for a in args)
+    has_track = any(a in ("-t", "--track") for a in args)
+    if branch_creating and not has_track and len(targets) <= 1:
+        return True  # no start-point: new branch starts at current HEAD
     return is_head_reachable(repo)
 
 
