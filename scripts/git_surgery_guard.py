@@ -23,6 +23,8 @@ MUTATING = {
 # checkout/switch to another branch is safe on an stg branch; the stack refs stay put.
 STG_UNSAFE = {"commit", "rebase", "reset", "cherry-pick", "am", "merge", "revert"}
 
+OPERATORS = {"&&", "||", ";", ";;", "|", "&"}
+
 
 def git(repo, *args):
     """Run git, return (rc, stdout). Never raises."""
@@ -36,18 +38,23 @@ def git(repo, *args):
         return 1, ""
 
 
-OPERATORS = {"&&", "||", ";", "|"}
-
-
 def split_segments(command):
     """Tokenize with shlex, then split the token list on operator tokens.
 
     Tokenizing before splitting means a quoted metacharacter (e.g. a commit
     message containing "&&") stays part of its token instead of being
-    mistaken for a shell operator. None if unparseable.
+    mistaken for a shell operator. punctuation_chars=True makes shlex emit
+    ";", "&&", "|" etc. as their own tokens even when jammed against
+    adjacent commands with no whitespace (e.g. "git status;git checkout").
+    Newlines are normalized to ";" first so newline-separated commands split
+    the same way. None if unparseable.
     """
+    command = command.replace("\n", " ; ")
+    lex = shlex.shlex(command, posix=True, punctuation_chars=True)
+    lex.whitespace_split = True
+    lex.commenters = ""  # bare shlex.shlex defaults to '#': would truncate at unquoted #
     try:
-        tokens = shlex.split(command)
+        tokens = list(lex)
     except ValueError:
         return None
     segments = []
@@ -99,6 +106,45 @@ def resolves_to_commit(repo, name):
     return rc == 0
 
 
+def is_head_reachable(repo):
+    """True if the current (possibly detached) HEAD is already reachable
+    from some existing branch or tag. Fails toward blocking: any error
+    running the check itself counts as unreachable, since the rescue
+    command (git switch -c rescue/<slug>) always works regardless."""
+    # for-each-ref, not `branch --contains`/`tag --contains`: the latter
+    # prints a "* (HEAD detached from ...)" placeholder line even when
+    # nothing is reachable, which would false-positive as reachable.
+    rc, refs = git(
+        repo, "for-each-ref", "--contains", "HEAD",
+        "--format=%(refname)", "refs/heads", "refs/tags",
+    )
+    if rc != 0:
+        return False
+    return bool(refs)
+
+
+def escapes_detached_head(repo, args):
+    """True if this checkout/switch is a safe way out of detached HEAD.
+
+    Branch-creating forms (-b/-B/-c/-C, --orphan, -t/--track) are always
+    safe: they land on a new ref, nothing is orphaned. "-" (previous ref)
+    and pathspec checkouts ("--") are always safe too. Landing on an
+    *existing* local branch is only safe if the detached HEAD is already
+    reachable from some ref — otherwise commits made while detached would
+    be silently orphaned the moment HEAD moves off them.
+    """
+    if checkout_would_detach(repo, args):
+        return False  # lands on yet another commit, still detached
+    if any(a in ("-b", "-B", "-c", "-C", "--orphan", "-t", "--track") for a in args):
+        return True
+    if "--" in args:
+        return True
+    targets = [a for a in args if not a.startswith("-")]
+    if not targets or targets[0] == "-":
+        return True
+    return is_head_reachable(repo)
+
+
 def checkout_would_detach(repo, args):
     """True if `git checkout`/`switch <args>` leaves HEAD detached.
 
@@ -148,8 +194,10 @@ def check_segment(tokens, cwd):
         # branch, or -b/-B/-c/-C creating one) is the prescribed recovery —
         # never block it. Anything else while detached still risks orphaning
         # work: other mutating subcommands, or checkout/switch to yet
-        # another non-branch commit (still detached afterward).
-        recovers = sub in ("checkout", "switch") and not checkout_would_detach(repo, args)
+        # another non-branch commit (still detached afterward), or checkout
+        # onto an existing branch that would abandon unreachable commits
+        # made while detached.
+        recovers = sub in ("checkout", "switch") and escapes_detached_head(repo, args)
         if not recovers:
             _, sha = git(repo, "rev-parse", "--short", "HEAD")
             block(

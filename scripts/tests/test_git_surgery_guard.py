@@ -169,3 +169,72 @@ class TestClassifierRobustness:
 
     def test_outside_any_repo_allowed(self, tmp_path):
         assert run_hook("git checkout deadbeef", tmp_path).returncode == 0
+
+    def test_unspaced_semicolon_blocked(self, repo):
+        sha = git(repo, "rev-parse", "HEAD~1")
+        res = run_hook(f"git status;git checkout {sha}", repo)
+        assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
+
+    def test_unspaced_semicolon_after_cd_blocked(self, repo):
+        sha = git(repo, "rev-parse", "HEAD~1")
+        res = run_hook(f"cd /tmp;git checkout {sha}", repo)
+        assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
+
+    def test_unspaced_trailing_semicolon_blocked(self, repo):
+        sha = git(repo, "rev-parse", "HEAD~1")
+        res = run_hook(f"git checkout {sha};", repo)
+        assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
+
+    def test_unspaced_double_ampersand_blocked(self, repo):
+        sha = git(repo, "rev-parse", "HEAD~1")
+        res = run_hook(f"git status&&git checkout {sha}", repo)
+        assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
+
+    def test_newline_separated_commands_blocked(self, repo):
+        sha = git(repo, "rev-parse", "HEAD~1")
+        res = run_hook(f"git status\ngit checkout {sha}", repo)
+        assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
+
+    def test_hash_in_commit_message_allowed(self, repo):
+        assert run_hook('git commit -m "has # hash"', repo).returncode == 0
+
+
+class TestDetachedEscapeReachability:
+    def test_detached_at_branch_tip_checkout_main_allowed(self, repo):
+        subprocess.run(
+            ["git", "-C", str(repo), "checkout", "-q", "--detach", "HEAD~1"],
+            check=True,
+        )
+        res = run_hook("git checkout main", repo)
+        assert res.returncode == 0
+
+    def test_detached_with_new_commit_checkout_main_blocked(self, repo):
+        subprocess.run(
+            ["git", "-C", str(repo), "checkout", "-q", "--detach", "HEAD~1"],
+            check=True,
+        )
+        subprocess.run(
+            ["git", "-C", str(repo), "commit", "-q", "--allow-empty", "-m", "orphan"],
+            check=True,
+        )
+        res = run_hook("git checkout main", repo)
+        assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
+        assert "rescue/" in res.stderr
+
+    def test_detached_with_new_commit_checkout_dash_b_allowed(self, repo):
+        subprocess.run(
+            ["git", "-C", str(repo), "checkout", "-q", "--detach", "HEAD~1"],
+            check=True,
+        )
+        subprocess.run(
+            ["git", "-C", str(repo), "commit", "-q", "--allow-empty", "-m", "orphan"],
+            check=True,
+        )
+        res = run_hook("git checkout -b save", repo)
+        assert res.returncode == 0
