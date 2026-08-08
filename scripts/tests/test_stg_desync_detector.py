@@ -55,11 +55,15 @@ def test_non_stg_repo_silent(tmp_path):
     subprocess.run(
         ["git", "-C", str(r), "commit", "--allow-empty", "-m", "init"], check=True
     )
-    assert run_hook("git commit --allow-empty -m x", r).returncode == 0
+    res = run_hook("git commit --allow-empty -m x", r)
+    assert res.returncode == 0
+    assert res.stderr == ""
 
 
 def test_outside_repo_silent(tmp_path):
-    assert run_hook("ls", tmp_path).returncode == 0
+    res = run_hook("ls", tmp_path)
+    assert res.returncode == 0
+    assert res.stderr == ""
 
 
 def test_repair_resolves(stg_repo):
