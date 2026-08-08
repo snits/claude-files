@@ -116,7 +116,11 @@ patch file before every dispatch — never sent unresolved.
     6. Write <scratchpad>/analysis/patch-NNNN.md: the boundaries you chose and
        the reasoning, ~20 lines. This is a work product, not a formality.
     7. Do not touch refs matching anchor/* or backup/*. Do not push. Do not
-       leave the worktree.
+       leave the worktree. Read `state.json` if you need the current tip, but
+       NEVER write `state.json` or `progress.md` — they are lead-only
+       bookkeeping, and the lead runs the gate. (A practice-run subagent
+       updated them "helpfully"; the lead then had to re-derive the true
+       last_good from progress.md to keep the ancestry check meaningful.)
     8. **Deviations log:** if anything forces you off this brief, take the
        conservative option and record it in the analysis file under
        `## Deviations`.
@@ -132,6 +136,10 @@ patch file before every dispatch — never sent unresolved.
     - If history-intact failed: the previous attempt amended or squashed
       existing commits. Build strictly on top of <last_good> — never amend
       or squash a commit that already passed the gate.
+    - If worktree-clean failed: the captured `git status --porcelain` output
+      follows; the previous attempt left these paths uncommitted. Everything
+      belonging to the patch must end up committed.
+      <porcelain-output>
 
 ## Phase 2 (optional, after full parity): quality pass
 
