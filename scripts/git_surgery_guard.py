@@ -123,27 +123,40 @@ def is_head_reachable(repo):
     return bool(refs)
 
 
+def resolves_to_head(repo, ref):
+    """True if `ref` names the same commit as current HEAD. Used to treat
+    an explicit start-point that happens to equal HEAD as equivalent to no
+    start-point at all — both leave the new branch's tip at current HEAD."""
+    rc, head_sha = git(repo, "rev-parse", "-q", "--verify", "HEAD^{commit}")
+    if rc != 0:
+        return False
+    rc, ref_sha = git(repo, "rev-parse", "-q", "--verify", f"{ref}^{{commit}}")
+    if rc != 0:
+        return False
+    return bool(head_sha) and head_sha == ref_sha
+
+
 def escapes_detached_head(repo, args):
     """True if this checkout/switch is a safe way out of detached HEAD.
 
     A branch-creating form (-b/-B/-c/-C) is unconditionally safe only when
-    it has no start-point argument and no -t/--track: the new branch then
-    starts at HEAD, so the detached chain becomes that branch's tip and
-    nothing is orphaned. --orphan and pathspec checkouts ("--") are always
-    safe too (--orphan leaves the old chain in the reflog same as any other
-    ref move; a pathspec checkout never moves HEAD).
+    it has no start-point argument (or the start-point resolves to current
+    HEAD) and no -t/--track: the new branch then starts at HEAD, so the
+    detached chain becomes that branch's tip and nothing is orphaned.
+    Pathspec checkouts ("--") are always safe too (they never move HEAD).
 
-    Everything else — a branch-creating form WITH a start-point or with
-    -t/--track, "-" (previous ref), or landing on an existing local
-    branch — moves HEAD to a ref chosen independently of current HEAD, so
-    it's only safe if the detached HEAD is already reachable from some
-    other ref. Otherwise commits made while detached would be silently
-    orphaned the moment HEAD moves off them.
+    Everything else — a branch-creating form WITH a start-point other than
+    HEAD, --orphan, -t/--track, "-" (previous ref), or landing on an
+    existing local branch — moves HEAD to a ref chosen independently of
+    current HEAD, so it's only safe if the detached HEAD is already
+    reachable from some other ref. Otherwise commits made while detached
+    would be silently orphaned the moment HEAD moves off them. (--orphan
+    looks harmless since it starts a brand-new unrelated root, but that's
+    exactly the problem: nothing keeps the old detached chain reachable
+    once HEAD moves.)
     """
     if checkout_would_detach(repo, args):
         return False  # lands on yet another commit, still detached
-    if "--orphan" in args:
-        return True
     if "--" in args:
         return True
     if "-" in args:
@@ -157,8 +170,11 @@ def escapes_detached_head(repo, args):
         return True
     branch_creating = any(a in ("-b", "-B", "-c", "-C") for a in args)
     has_track = any(a in ("-t", "--track") for a in args)
-    if branch_creating and not has_track and len(targets) <= 1:
-        return True  # no start-point: new branch starts at current HEAD
+    if branch_creating and not has_track:
+        if len(targets) <= 1:
+            return True  # no start-point: new branch starts at current HEAD
+        if len(targets) == 2 and resolves_to_head(repo, targets[1]):
+            return True  # start-point IS current HEAD: equivalent to none
     return is_head_reachable(repo)
 
 

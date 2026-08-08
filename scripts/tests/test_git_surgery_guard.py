@@ -308,3 +308,67 @@ class TestCommentersGuard:
         res = run_hook(f"git commit --allow-empty -m fix#123 && git checkout {sha}", repo)
         assert res.returncode == 2
         assert "[git-surgery-guard]" in res.stderr
+        assert "would enter detached HEAD" in res.stderr
+
+
+class TestOrphanReachabilityGate:
+    """--orphan starts a brand-new unrelated root; it looks like it can't
+    orphan anything (there's nothing to inherit) but the *old* detached
+    chain still needs a ref pointing at it once HEAD moves off, exactly
+    like any other escape target."""
+
+    @pytest.fixture
+    def orphaned(self, repo):
+        subprocess.run(
+            ["git", "-C", str(repo), "checkout", "-q", "--detach", "HEAD~1"],
+            check=True,
+        )
+        subprocess.run(
+            ["git", "-C", str(repo), "commit", "-q", "--allow-empty", "-m", "orphan"],
+            check=True,
+        )
+        return repo
+
+    def test_checkout_orphan_blocked_when_unreachable(self, orphaned):
+        res = run_hook("git checkout --orphan fresh", orphaned)
+        assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
+
+    def test_switch_orphan_blocked_when_unreachable(self, orphaned):
+        res = run_hook("git switch --orphan fresh", orphaned)
+        assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
+
+    def test_checkout_orphan_allowed_when_reachable(self, repo):
+        subprocess.run(
+            ["git", "-C", str(repo), "checkout", "-q", "--detach", "HEAD~1"],
+            check=True,
+        )
+        res = run_hook("git checkout --orphan fresh", repo)
+        assert res.returncode == 0
+
+
+class TestStartPointEqualsHead:
+    """A start-point that names current HEAD is a no-op start-point: the
+    new branch lands exactly where a bare `-b save` would have landed."""
+
+    @pytest.fixture
+    def orphaned(self, repo):
+        subprocess.run(
+            ["git", "-C", str(repo), "checkout", "-q", "--detach", "HEAD~1"],
+            check=True,
+        )
+        subprocess.run(
+            ["git", "-C", str(repo), "commit", "-q", "--allow-empty", "-m", "orphan"],
+            check=True,
+        )
+        return repo
+
+    def test_checkout_dash_b_start_point_head_allowed(self, orphaned):
+        res = run_hook("git checkout -b save HEAD", orphaned)
+        assert res.returncode == 0
+
+    def test_checkout_dash_b_start_point_main_still_blocked(self, orphaned):
+        res = run_hook("git checkout -b save main", orphaned)
+        assert res.returncode == 2
+        assert "[git-surgery-guard]" in res.stderr
