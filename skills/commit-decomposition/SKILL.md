@@ -38,12 +38,18 @@ gets its own isolated commit.
 2. Invoke the `git-anchoring` skill: anchor tag + backup branch on the original
    tip; dedicated worktree; work branch at the base commit
    (`git switch -c decompose/<slug> <base>` inside the worktree).
-3. Export the source of truth:
-   `git format-patch <base>..<original-tip> -o <scratchpad>/patches/`
-   These files are the unloseable record; nothing that happens later can
-   destroy the original commits.
-4. Write `state.json` (git-anchoring schema; `cursor: 0`,
-   `cursor_meaning: "next patch index"`, `last_good: <base sha>`).
+3. Require a linear range: `git rev-list --merges <base>..<anchor-tip>` must
+   be empty. `git format-patch` silently emits nothing for merge commits,
+   breaking the patch↔commit correspondence. A range with merges needs a
+   different strategy — stop and consult the user.
+4. Export the source of truth:
+   `git format-patch <base>..<anchor-tag> -o <scratchpad>/patches/`
+   (the anchor ref, not a remembered tip SHA). These files are the unloseable
+   record; nothing that happens later can destroy the original commits.
+5. Write `state.json` (git-anchoring schema; `cursor: 0`,
+   `cursor_meaning: "next patch index"`, `last_good: <base sha>`). `cursor`
+   counts patches processed so far; the next patch file to process is `%04d`
+   of `cursor+1` (`git format-patch` numbers patches from 0001).
 
 ## Phase 1: Per-patch loop (lead)
 
@@ -53,17 +59,33 @@ For each patch N (from `state.json`, not from memory):
    routing table: implementation tier; elevate when the patch looks
    judgment-heavy (tangled concerns, possible design questions).
 2. **Parity gate (mechanical, non-negotiable):** after the subagent reports,
-   run in the worktree:
-   `git diff <sha-of-original-commit-N> <work-branch> --stat`
-   - Empty → record: update `state.json` (`cursor: N+1`,
+   run in the worktree — three checks, all mechanical, all must pass before
+   the cursor advances:
+   - **Tree parity:** `git diff <sha-from-patch-header-N> <work-branch> --stat`
+     is empty. `<sha-from-patch-header-N>` comes from the first line of the
+     patch file itself (`From <sha> Mon Sep 17 ...`) — read off disk per
+     git-anchoring Rule 2, never recalled from context.
+   - **History intact:** `git merge-base --is-ancestor <last_good> <work-branch>`
+     succeeds. A subagent that squashed or amended already-approved commits
+     can land the right tree while breaking this — treat it as a gate
+     failure, not a pass.
+   - **Worktree clean:** `git status --porcelain` is empty in the worktree.
+     Uncommitted leftovers contaminate patch N+1's apply.
+
+   - All three pass → record: update `state.json` (`cursor: N+1`,
      `last_good: <new tip>`); append one line to `<scratchpad>/progress.md`.
-   - Non-empty → `git reset --hard <last_good>`, re-dispatch ONCE with the
+   - Any check fails → `git switch <work-branch>` (ensure HEAD is on it),
+     `git reset --hard <last_good>`, `git clean -fd` (safe here only because
+     this runs inside the dedicated worktree), then re-dispatch ONCE with the
      failing diff included in the brief. Second failure → STOP, report to the
      user with the diff. Never improvise past a failed gate.
 3. Do not review commit-boundary quality mid-run — that is the optional
    Phase 2. Parity and progress only.
 
 ## Subagent brief template
+
+Angle-bracket placeholders are filled in by the lead from `state.json` and the
+patch file before every dispatch — never sent unresolved.
 
     **Role:** You are decomposing one oversized patch into logical commits.
 
@@ -91,6 +113,11 @@ For each patch N (from `state.json`, not from memory):
 
     **Done means:** working tree clean, all patch content committed, analysis
     file written. Report: number of commits created, one-line summary each.
+
+    **Retry context (present only on re-dispatch):** the previous attempt
+    failed the parity gate; the failing diff follows. Diagnose which hunks
+    were missed or altered and correct the decomposition.
+    <failing-diff>
 
 ## Phase 2 (optional, after full parity): quality pass
 
