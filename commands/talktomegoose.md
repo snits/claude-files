@@ -49,12 +49,20 @@ We have started a new session. Please go through the following steps:
      `python3 ~/vault/_system/promote.py --backlog | wc -l`
      (source material that landed in `intake/` but has not yet been folded into an atlas
      entry — see the ingest loop in `~/vault/_system/routing.md`).
-   - Refresh the vault reading surface so it cannot drift from the atlas unnoticed:
-     `python3 ~/vault/_surface/generate.py --if-stale`
-     Report its `SURFACE CURRENT` / `SURFACE REGENERATED` line next to the two counts above —
+   - Check the vault reading surface for drift from the atlas:
+     `python3 ~/vault/_surface/generate.py --check`
+     Report its `SURFACE CURRENT` / `SURFACE DRIFTED` line next to the two counts above —
      together they say whether new material has reached the atlas yet. A current surface with
      a non-empty ingest backlog means promoted material is still stuck in `intake/`, which is
      work to do, not a stale page.
+     Use `--check`, never `--if-stale`, here. `_surface/index.html` is tracked and the
+     mutating gate regenerates it, so `--if-stale` would *write* — leaving a modified tracked
+     file in `~/vault` from a startup that ran in some unrelated project. `--check` writes
+     nothing. `SURFACE DRIFTED` means the committed surface no longer matches what the atlas
+     renders to — usually an entry edited outside the gate, though a change to `generate.py`
+     or `classical.css` drifts it with no atlas edit at all, since the check compares rendered
+     bytes. The fix is `python3 ~/vault/_surface/generate.py` and committing the surface with
+     whatever change caused the drift, not a silent rebuild here.
    - Surface deferred kata issues whose defer date has arrived:
      `python3 ~/.claude/scripts/kata_defer.py --due`
      Deferred issues are hidden from `kata ready` by the `deferred` label, so this is the only
