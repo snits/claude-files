@@ -28,6 +28,13 @@ Do exactly one item of work, then stop. Do not chain A into B in the same firing
 ## A. Ingest one backlog item
 
 1. Read the intake source in full.
+
+   Then read what is already known about it: `cd ~/vault && kata search "<slug>"` for any open
+   issue referencing this item. Corrections, rulings, and cross-item findings collect on those
+   issues — branch B *writes* them and, until now, nothing ever *read* them, so a defect
+   recorded weeks ago is invisible to you unless you go and look. Apply what you find, and name
+   the issue in your report. If an issue says the item is blocked on a ruling that has not
+   landed, stop and say so rather than authoring around it.
 2. Find its atlas home. Which branch you take depends on the source's `subtype:`.
 
    **`subtype: case-study`** — the home is `atlas/case-studies/<slug>.md`, same slug as the
