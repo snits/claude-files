@@ -25,7 +25,8 @@ Reference exemplar: `~/vault/atlas/case-studies/brew-architecture-case-study.md`
 1. Subject lives at `~/devel/case-studies/<name>`; clone it there if absent.
 2. Pin the commit: `git -C ~/devel/case-studies/<name> show -s --format='%h ("%s")'`.
 3. Write one paragraph: *why this subject earns a study* — the hard question its
-   architecture is a sustained answer to. Confirm with Jerry before dispatching recon.
+   architecture is a sustained answer to. Confirm with Jerry before dispatching recon
+   (fine to present this and the Phase 2 lens list together in one message).
 
 ## Phase 2 — Lens selection
 
@@ -51,6 +52,8 @@ judgment-dense. Each brief must contain:
 - Report shape: system role of the lens; how it works (mechanism, not tour); design
   decisions and their apparent rationale; warts, hacks, and suspicious spots; 3–5
   candidate patterns or anti-patterns with evidence.
+- Gap flagging: if a finding's evidence lives in another lens's files, state the gap
+  explicitly in the report rather than stretching — the synthesizer follows up.
 
 Before synthesis, read each report file and confirm it is substantive — an agent's
 "done" is not evidence.
@@ -74,8 +77,10 @@ Before synthesis, read each report file and confirm it is substantive — an age
      subject, cite its existing wikilink and say so explicitly — two citations is what
      graduates a candidate toward a concept entry (writing the concept entry is the
      vault ingest loop's job, not this session's).
-   - **Sources:** method, recon report paths, working tree path, sha256 of the
-     concatenated recon reports (repo state is pinned by the commit citation).
+   - **Sources:** method, recon report paths, working tree path, sha256 of the recon
+     reports concatenated in **sorted filename order** (`cat <dir>/<glob>*.md | sha256sum`
+     — glob order is sorted, so this is reproducible; repo state is pinned by the
+     commit citation).
 
 ## Phase 5 — Diagrams
 
