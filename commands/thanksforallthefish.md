@@ -33,6 +33,13 @@ This session is ending so do the following:
   Read the existing atlas entry for the concept first, if any, so the stub adds rather than
   duplicates. Skip anything already stubbed this session, and skip entirely if nothing external
   was worth keeping.
+- Vault tree check: if this session wrote anything under `~/vault` — a stub from the sweep
+  above, a promotion, an ingest — confirm `git -C ~/vault status --porcelain` is empty before
+  handoff. An uncommitted change there is not merely untidy: a dirty tree is the *first*
+  precondition `/manage-vault` stops on, so anything left behind silently halts every
+  subsequent firing of the loop instead of being picked up by it. Commit deliberately —
+  `promote.py` regenerates the tracked `_surface/index.html`, so stage that alongside whatever
+  atlas or intake change produced it, and never sweep in another session's staged work.
 - **Rewrite `session-handoff.md` — do not prepend a section to it.** The handoff answers one
   question for the next session: *what is in flight, and where do I look.* It is a pointer, not
   a ledger, and it should stay under roughly a hundred lines. It usually already exists from the
