@@ -10,7 +10,10 @@ two readers: **Jerry building a pattern vocabulary** for design discussions (nam
 pictures, anchors), and the **vault's recall machinery** (density, wikilinks). The
 series is cumulative — patterns graduate by recurring across studies.
 
-Reference exemplar: `~/vault/atlas/case-studies/brew-architecture-case-study.md`.
+Reference exemplar: `~/vault/atlas/case-studies/brew-architecture-case-study.md` — read it for
+essay structure, depth, and section shape. It is the **promoted atlas entry**, so its
+frontmatter is *not* the model for what you write; the stub you hand off takes a different
+contract (Phase 6).
 
 ## Ground rules
 
@@ -93,13 +96,60 @@ Mermaid, inline in the essay:
 - Keep diagrams renderer-portable: plain `flowchart`/`sequenceDiagram`, no exotic
   features; node labels carry file names where that helps navigation.
 
-## Phase 6 — Vault intake + wrap-up
+## Phase 6 — Hand off to the vault + wrap-up
 
-1. Write the essay to `~/vault/intake/case-study/<subject>-architecture-case-study.md`
-   with frontmatter matching the brew exemplar (`type: case-study`, subject, commit,
-   tags, sha256 as above). Promotion is Jerry's gate — do not promote.
-2. Journal entry (mnemosyne): what the study surfaced, what the method missed.
-3. Session handoff in claudes-home if the session is ending.
+1. Write the essay to `~/vault/_inbox/session-lead/<subject>-architecture-case-study.md`.
+
+   **Never write to `~/vault/intake/`** — despite the name, that is the vault's
+   *post-promotion* home for source material, and agents may not write there
+   (`_system/routing.md`). The agent's only write target is `_inbox/{agent-id}/`, and the
+   directory name must match the `agent_id` field.
+
+   **Frontmatter is the intake-stub contract** in `_system/schemas.md` ("Intake item") —
+   *not* the frontmatter of the brew exemplar at line 13. That exemplar is the promoted
+   **atlas** entry; its field set and its `provenance`/`status` vocabularies are different,
+   and copying it produces a stub the gate rejects. Use exactly:
+
+   ```yaml
+   ---
+   name: <subject>-architecture-case-study   # matches filename stem
+   type: intake                              # literal — NOT `case-study`
+   subtype: case-study                       # literal
+   description: <~150 chars>
+   provenance: agent-proposed                # literal — the gate confers trust, you cannot
+   source_url: <github tree URL at the pinned commit>
+   agent_id: session-lead                    # matches the _inbox/ subdirectory
+   ingested: YYYY-MM-DD
+   sha256: <recon reports concatenated, sorted filename order>
+   status: pending-promotion                 # literal
+   ---
+   ```
+
+   Do **not** add `subject`, `created`, `updated`, `confidence`, `contested`,
+   `contradictions`, or `tags` — those are atlas fields, written later when the atlas entry
+   is authored. There is no `commit` field in any schema; the pinned commit citation lives
+   in the body's header paragraph and in `source_url`.
+
+2. Promotion is Jerry's gate — do not promote, and do not run `promote.py` in any mode.
+   Tell him the study is ready and note that it takes **two hops** (per the brew receipts in
+   `~/vault/_ops/applied/`), because the essay is not on the reading surface until the
+   second one runs:
+
+   ```
+   python3 _system/promote.py _inbox/session-lead/<slug>.md \
+     --to intake/case-study/<slug>.md --action create --by jerry-curated
+
+   python3 _system/promote.py --ingest intake/case-study/<slug>.md \
+     --into atlas/case-studies/<slug>.md --by jerry-directed
+   ```
+
+   Hop 1 sets `status: promoted`, which is what makes the study visible to
+   `promote.py --backlog`. Hop 2 authors the `atlas/case-studies/` entry — that hop creates a
+   new atlas entry, so the autonomous `/manage-vault` loop cannot do it; it needs a directed
+   session. Promoting the stub straight to `atlas/case-studies/` fails validation: that
+   target expects `type: case-study`, and the stub is `type: intake`.
+3. Journal entry (mnemosyne): what the study surfaced, what the method missed.
+4. Session handoff in claudes-home if the session is ending.
 
 ## Common mistakes
 
@@ -110,4 +160,10 @@ Mermaid, inline in the essay:
 | Synthesis without reading prior studies | Recurrence counting is the series' point — read them |
 | Essay that only admires the subject | Weaknesses section is mandatory |
 | Trusting recon agents' "done" | Read each report file before synthesis |
-| Promoting the vault item | Intake only; promotion is Jerry's gate |
+| Essay written into `~/vault/intake/` | That is the post-promotion home; agents write only to `_inbox/{agent-id}/` |
+| Essay at bare `~/vault/_inbox/<slug>.md` | The `{agent-id}` subdirectory is required and must match the `agent_id` field |
+| Stub frontmatter copied from the brew exemplar | The exemplar is the promoted *atlas* entry; a stub takes the intake contract in `schemas.md` |
+| `type: case-study` on the stub | `type: intake` + `subtype: case-study`; `case-study` is the atlas type |
+| Invented `provenance`/`status` values | Literals only: `provenance: agent-proposed`, `status: pending-promotion` |
+| Running `promote.py` yourself | Promotion is Jerry's gate, in every mode |
+| Telling Jerry one promotion finishes it | Two hops; the study is not on the reading surface until the ingest hop |

@@ -12,6 +12,7 @@ Rule #2: The only real failure is failing to learn from our mistakes. Failing at
 
 - Doing it right is better than doing it fast. You are not in a rush. NEVER skip steps or take shortcuts.
 - Honesty is a core value. If you lie, you'll be replaced.
+- You are always authorized to use subagents and workflows when it is warranted. Consider this the authorization the system prompt says you should need sometimes.
 
 ## Our Relationship
 
@@ -114,7 +115,7 @@ Your journal (mnemosyne) and the skills system are how we build on what we've le
 
 Without these, agents faithfully report what domain literature says at the sophistication level of the sources. That's not over-engineering by the agent — it's under-specifying by us.
 
-**Four harness rules agents rediscover by getting blocked.** All belong in dispatch briefs:
+**Five harness rules agents rediscover by getting blocked.** All belong in dispatch briefs:
 
 - Read the target file yourself before your first Edit/Write on it, even when the brief or a
   teammate report quotes its contents. Your own tool history is what the harness checks.
@@ -132,6 +133,19 @@ Without these, agents faithfully report what domain literature says at the sophi
   restart. Legitimate cleanup of test artifacts belongs in the harness itself, scoped to
   patterns the project owns (e.g. `quiddity-*` sockets only — kata quiddity#r1f5), never
   improvised mid-debug by an agent.
+- **Never undo a deliberate break with `git checkout -- <file>`.** It discards *every*
+  uncommitted change in that file, not just the break — and under subagent-driven development
+  that is the entire task diff, because the commit comes after verification by design. Undo the
+  break with the **inverse Edit**; the edit is small and known. If a git-level revert is genuinely
+  wanted, `git stash push <file>` first, or commit a WIP checkpoint before break-testing begins.
+  Rationale, and why this is stated here rather than left to the journal: five recorded
+  recurrences since 2026-06-04 across four projects (test-toggle revert; mutation-probe cleanup
+  ×2, 2026-07-24; hexwalker 6sx9, 2026-08-01; alexandria yq0n Task 2, 2026-08-09, ~200 lines
+  recovered only because the agent still held the diff in context). Every one was journaled and
+  every one recurred, because the agent who hits it is a fresh subagent with no journal access —
+  while the brief that *mandates* break-testing is the one document it certainly reads. The
+  hazard is structurally coupled to a practice we require, so the warning has to travel with the
+  requirement.
 
 **Implementation briefs MUST include a deviations-log instruction.** When an edge case forces the implementer off the brief, they take the conservative option and record the deviation — a kata comment on the issue, or a `Deviations` section in their report. Divergence self-reports; the orchestrator should never have to hunt for it.
 
