@@ -63,10 +63,22 @@ Before synthesis, read each report file and confirm it is substantive — an age
 
 ## Phase 4 — Synthesis (session model)
 
-1. Read **all recon reports** and **every prior study** in `~/vault/atlas/case-studies/`
-   (at minimum their pattern-candidate lists).
+1. Read **all recon reports** and **every prior study** — at minimum their pattern-candidate
+   lists. Prior studies live in **two** places and you must read both:
+   - `~/vault/atlas/case-studies/` — studies that have completed the ingest loop.
+   - `~/vault/intake/case-study/` — studies still in flight, promoted but not yet folded into
+     the atlas. A study can sit here for a long time, so this directory is not an edge case.
+
+   Reading only the atlas directory is how a recurrence check silently misses a sibling
+   study: on 2026-08-11 the git study missed rsync entirely because rsync was in `intake/`
+   and `atlas/case-studies/` held only brew.
 2. Write the essay with these sections:
-   - **Header paragraph:** series positioning, pinned commit, why this subject.
+   - **Header paragraph:** series positioning, pinned commit, why this subject. **Do not
+     number the entry** ("Second entry in the series…"). Studies are often researched in
+     parallel and cannot know their own ordinal; the number carries nothing the series
+     order does not already say, and two studies claiming the same one is a coordination
+     problem with no upside. Name the subject and, where it helps, the prior studies whose
+     patterns recur here.
    - **System shape:** one dense prose paragraph plus the required mermaid diagram
      (Phase 5).
    - **Cross-cutting themes:** shapes visible only across reports, not to any single
@@ -158,6 +170,8 @@ Mermaid, inline in the essay:
 | Handoff or notes written into the subject repo | Subject is read-only; handoffs live in claudes-home |
 | Lens list reused from a plan or prior chat | Re-derive from the live tree at Phase 2 |
 | Synthesis without reading prior studies | Recurrence counting is the series' point — read them |
+| Prior studies read only from `atlas/case-studies/` | In-flight studies sit in `intake/case-study/`; read both or the recurrence check misses siblings |
+| Numbering the entry ("Second entry…") | Parallel studies can't know their ordinal — don't number them |
 | Essay that only admires the subject | Weaknesses section is mandatory |
 | Trusting recon agents' "done" | Read each report file before synthesis |
 | Essay written into `~/vault/intake/` | That is the post-promotion home; agents write only to `_inbox/{agent-id}/` |
