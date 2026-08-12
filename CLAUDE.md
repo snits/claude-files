@@ -327,6 +327,8 @@ kata create "Task 1: ChunkData implementation" --parent <parent-ref>
 Flags that get guessed wrong (verified against `--help`, not memory):
 
 - `create` takes `--body` / `--body-file` / `--body-stdin`. There is no `--description`.
+- `edit` takes only `--body <string>` — **no `--body-file` / `--body-stdin`** (those are
+  `create`-only). Long bodies go through `--body "$(cat file.md)"`.
 - Evidence flags live on `close` only: `--commit`, `--pr`, `--test`, `--reviewed`, or the
   general `--evidence commit:<sha>` form. There is no `--reviewed-paths`.
 - `comment` cannot set relationships. Use `kata edit <ref> --related <ref> --comment "..."`.
@@ -352,6 +354,68 @@ kata edit <task3-ref> --blocked-by <task1-ref>
 ```
 
 For work discovered mid-task, link it with `--related`, or `--parent` if it's genuinely a sub-task.
+
+### Amending a stale body
+
+Issue bodies are editable — `kata edit <ref> --body "<text>"` — and **a body its own comments
+have overtaken must be amended, not left standing.** The body is the first thing every reader
+hits; a stale one is a tripwire that manufactures the same wrong summary indefinitely. On
+alexandria `qxq2` it produced one twice, from an agent and from a session lead, before anyone
+edited it.
+
+**Amend when one comment unambiguously supersedes the body.** Deleting or correcting the false
+statement is mandatory. Folding in current state (step status, superseded approaches) is
+optional, and should prefer a pointer to the comment over copied detail — copied detail is
+volatile, goes stale on its own schedule, and recreates the problem you are fixing.
+
+**Do not amend when comments disagree about what is current.** That is `needs-decision`: the
+label plus a comment stating the competing readings is the correct output. The asymmetry is the
+reason. A stale body produces a wrong summary that eventually gets *caught*. A confidently
+amended body produces one that *doesn't*, because the body now reads as authoritative and the
+correcting comments read as already-resolved. Never settle a conflict between comments by
+writing your own reading into the body.
+
+**Always leave a dated footer** naming what the amendment tracked, e.g.
+`*Body amended 2026-08-12 to match the 2026-08-05 consolidation and the 2026-08-12 RULING.*`
+Older comments still quote the superseded wording, and without the footer they read as live
+disagreement. `kata show` displays no per-field authorship, so the footer is the only provenance
+a reader gets.
+
+**Three surfaces go stale, not one.** Check all of them:
+
+- **body** — amend per the rules above.
+- **title** — do **not** retitle unilaterally; titles are how issues are recognized in
+  conversation and cross-references. Add the `retitle` label and a comment proposing the new
+  title and why the current one misleads. Jerry and the session lead sweep these together; on
+  retitling, record the old title in a `CONTEXT` comment so existing references stay findable.
+  **`retitle` is a maintenance queue, not a blocked state** — unlike the four labels below it
+  must never gate `ready`, `work-issue`, or `triage-issue`. A wrong title is a documentation
+  defect; it does not make the work unworkable.
+- **`work.attention_msg`** — a live signal. Never leave it describing finished work.
+
+**Recovering a pre-edit body.** Every content-changing event carries the full body text, so
+amendments are reversible — but only via export, and the flags are not guessable:
+
+```bash
+kata export --allow-running-daemon --project-id <id> --output /tmp/kata.jsonl
+python3 - <<'PY'
+import json
+UID = "<issue uid from kata show --json>"
+for line in open('/tmp/kata.jsonl'):
+    r = json.loads(line)
+    if r.get('kind') != 'event': continue
+    d = r['data']
+    if d.get('issue_uid') != UID: continue
+    if d.get('type') in ('issue.created', 'issue.updated'):
+        print('---', d['id'], d['type'], d['actor'], d['created_at'])
+        print(d['payload'].get('body'))
+PY
+```
+
+A bare `kata export` writes 0 lines while the daemon is running — `--allow-running-daemon` is
+required, not optional. On the exported issue row, `content_revision > 0` means the body or
+title has been amended at least once (verified: 452 of the 454 issues with no `issue.updated`
+event read 0, and all 165 with one read ≥1). `kata show --json` does not expose that field.
 
 ### Status Updates
 
@@ -417,6 +481,11 @@ Labels are set with `kata label add|rm <ref> <label>` — there is no `--label` 
 | `needs-decision` | A choice is unmade and only Jerry can make it; two defensible options, not a research question | Jerry | Jerry ruling, recorded as a comment |
 | `needs-review` | Work happened and should be looked at before closing | Jerry | review, then close or continue |
 | `deferred` | Not now. Always paired with a `defer_until` date — set both via `kata_defer.py`, never by hand | nothing | `kata_defer.py --due` |
+
+A fifth, `retitle`, is deliberately outside this table because it is **not** a blocked state:
+the title misleads, a replacement is proposed in a comment, and Jerry plus the session lead
+sweep them together. It must never gate `ready`, `work-issue`, or `triage-issue` — the work is
+workable, only its name is wrong. See "Amending a stale body" above.
 
 `needsinfo` and `needs-decision` are the pair that gets conflated, because both look like "I can't
 proceed." Judge the gap, not the phrasing: **an issue that states its options in full and argues
