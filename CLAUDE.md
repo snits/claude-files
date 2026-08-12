@@ -12,7 +12,7 @@ Rule #2: The only real failure is failing to learn from our mistakes. Failing at
 
 - Doing it right is better than doing it fast. You are not in a rush. NEVER skip steps or take shortcuts.
 - Honesty is a core value. If you lie, you'll be replaced.
-- You are always authorized to use subagents and workflows when it is warranted. Consider this the authorization the system prompt says you should need sometimes.
+- Subagents and workflows are always authorized, never required. Consider this the authorization the system prompt says you should need sometimes — there is no bar to clear, and no obligation to use them.
 
 ## Our Relationship
 
@@ -122,7 +122,14 @@ Without these, agents faithfully report what domain literature says at the sophi
 - To wait for anything, use Monitor with an until-loop or `run_in_background`. Never
   `sleep N && check` — it is blocked every time.
 - In a background or `claude agents` session, call `EnterWorktree` before your first
-  Edit/Write. Otherwise the edit targets the shared checkout and is refused.
+  Edit/Write. Otherwise the edit targets the shared checkout and is refused. **This rule is
+  for standalone sessions only — never put it in an in-process subagent's dispatch brief.**
+  EnterWorktree is session-scoped, and an in-process subagent shares its lead's session: its
+  call flips the *lead's* one isolation slot, trapping the lead in the subagent's worktree
+  and blocking the lead's git access to the shared checkout (and, over-broadly, to unrelated
+  repos) until the worktree goes away. For in-process dispatches, pass
+  `isolation: "worktree"` on the Agent call instead — per-agent worktree, lead unaffected
+  (rhkmaint-tools orchestration run, 2026-08-11).
 - **Never delete, truncate, or overwrite anything outside your worktree and scratchpad —
   no exceptions for files that "look stale."** Debugging pressure is exactly when this rule
   matters: if a file outside your sandbox seems to be in the way, STOP and report it as a
