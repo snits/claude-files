@@ -332,6 +332,17 @@ Flags that get guessed wrong (verified against `--help`, not memory):
 - Evidence flags live on `close` only: `--commit`, `--pr`, `--test`, `--reviewed`, or the
   general `--evidence commit:<sha>` form. There is no `--reviewed-paths`.
 - `comment` cannot set relationships. Use `kata edit <ref> --related <ref> --comment "..."`.
+- Ownership has three verbs: `claim` (take it; `--force` takes it from another actor),
+  `assign` (set an owner explicitly), and **`unassign` (clear the owner — this is how you
+  release a claim)**. There is no `unclaim`, which is the name everyone guesses. All three
+  accept `--comment` to append a note in the same mutation. Release the claim when you hand
+  off unfinished work, so the next worker does not have to `--force` past a dead owner.
+- **A guessed command name failing is not evidence the capability is absent**, and neither is
+  a sibling command's `--help`. Both fail in the direction that makes absence look confirmed.
+  `kata --help` lists every command in one screen — read it before writing "kata cannot do X"
+  anywhere that outlives the session. (2026-08-13: `kata unclaim` erroring plus `claim --help`
+  showing no release flag produced a confident, wrong "kata has no unclaim command" in a
+  session handoff; `unassign` existed the whole time.)
 - From a scratchpad, worktree, or agent-dispatched cwd, prefer a qualified ref
   (`kata#abc4`) — an unbound workspace is common there, and resolution falls back to the
   enclosing git remote's basename rather than failing, which silently targets another project.
