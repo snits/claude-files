@@ -88,6 +88,10 @@ We have started a new session. Please go through the following steps:
      `S=~/.claude/retro/last-retro; if [ -f "$S" ]; then echo "RETRO last=$(cat $S) days_ago=$(( ( $(date +%s) - $(date -d "$(cat $S)" +%s) ) / 86400 ))"; else echo "RETRO never run"; fi`
      Report the line. There is no scheduler for the retro — this check is the only thing that
      surfaces it.
+   - Check whether a dream pass is due:
+     `S=~/.claude/dream/last-pass; if [ -f "$S" ]; then echo "DREAM last=$(cat $S) days_ago=$(( ( $(date +%s) - $(date -d "$(cat $S)" +%s) ) / 86400 ))"; else echo "DREAM never run"; fi`
+     Report the line. Like the retro, there is no scheduler — this check is the only
+     thing that surfaces it.
    - Check this project's memory index for orphans and truncation:
      ```
      M=~/.claude/projects/$(pwd | tr '/.' '--')/memory
@@ -125,5 +129,7 @@ We have started a new session. Please go through the following steps:
      and goes unmentioned is the same lost reminder that deferring was meant to prevent.
    - If the retro check reports never-run or more than 7 days ago, offer a retro (`/retro`)
      as an option in the proposal. Offer it; don't start one unasked.
+   - If the dream check reports never-run or more than 7 days ago, offer a dream pass
+     (`/dream`) as an option in the proposal. Offer it; don't start one unasked.
    - Ask Jerry to confirm or redirect before starting work.
    - Prefer scoping the session to a single kata issue. If context fills mid-task, write session-handoff.md and suggest a fresh session rather than compacting through the work.
