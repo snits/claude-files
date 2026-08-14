@@ -71,10 +71,16 @@ provenance: agent-proposed
 source_url: <primary provenance path, e.g. the pearl draft or the superseding entry>
 agent_id: dream
 ingested: <YYYY-MM-DD>
-sha256: <hash of the body content>
+sha256: <hash of the file named by source_url>
 status: pending-promotion
 ---
 ```
+
+`sha256` hashes the **source**, never the stub's own body — it exists so promotion can
+detect that the underlying material drifted since the proposal was written. For an
+amendment or culling that means the hash of the entry being amended or superseded, which
+is what makes the drift check meaningful. Compute it with
+`sha256sum <source_url>` on the resolved path.
 
 Body: the pearl text, amendment, or culling case. Amendments and cullings state their
 target explicitly ("amends atlas/<...>/<slug>.md", "supersedes <path>"). Promotion is
