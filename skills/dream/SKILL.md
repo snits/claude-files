@@ -76,11 +76,10 @@ status: pending-promotion
 ---
 ```
 
-`sha256` hashes the **source**, never the stub's own body — it exists so promotion can
-detect that the underlying material drifted since the proposal was written. For an
-amendment or culling that means the hash of the entry being amended or superseded, which
-is what makes the drift check meaningful. Compute it with
-`sha256sum <source_url>` on the resolved path.
+`sha256` hashes the file named by `source_url`, never the stub's own body — it exists so
+promotion can detect that the material drifted since the proposal was written. There is no
+per-subtype interpretation: whatever path you put in `source_url`, hash that same file.
+Compute it with `sha256sum` on the resolved path.
 
 Body: the pearl text, amendment, or culling case. Amendments and cullings state their
 target explicitly ("amends atlas/<...>/<slug>.md", "supersedes <path>"). Promotion is
