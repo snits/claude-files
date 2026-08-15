@@ -40,6 +40,19 @@ This session is ending so do the following:
   subsequent firing of the loop instead of being picked up by it. Commit deliberately —
   `promote.py` regenerates the tracked `_surface/index.html`, so stage that alongside whatever
   atlas or intake change produced it, and never sweep in another session's staged work.
+- **Account for live background work before writing the handoff.** Enumerate every background
+  task, `run_in_background` command, and Monitor this session started, and for each one either
+  (a) record it in the handoff with what it is, where its output lands, and how to check
+  whether it finished, or (b) stop it deliberately. Ending a session with unreported live
+  background work is the failure this step exists to prevent.
+
+  **Why this is not optional:** a killed background job and a completed one look identical from
+  the next session — the same absence of output, the same silence. On mnemosyne, two sessions
+  ended with Jerry unsure whether he had just killed an in-flight full-corpus atom rebuild that
+  ran 12–14 hours and had already needed a mid-run code fix and a cursor-based resume ("So I
+  might have killed ongoing work"). He never established that he hadn't. An artifact that looks
+  the same whether or not the claim is true is not evidence — so the running state has to be
+  written down while it is still knowable.
 - **Rewrite `session-handoff.md` — do not prepend a section to it.** The handoff answers one
   question for the next session: *what is in flight, and where do I look.* It is a pointer, not
   a ledger, and it should stay under roughly a hundred lines. It usually already exists from the

@@ -18,6 +18,17 @@ what actually happened — the corrections, the retries, the abandoned approache
 
 **1. Window.** Read `~/.claude/retro/last-retro` (ISO date). Absent → 7 days back.
 
+**1b. Report last retro's remedy status before mining anything.** Read the previous
+`~/.claude/scratchpad/retros/*.md`, take every kata ref it recorded as approved, and
+`kata show` each one. State in the recap how many landed and how many are still open.
+
+This is not bookkeeping. On 2026-08-15 all five remedies approved the previous retro were
+still open, and three of them produced repeat findings *in that same window* — the retro was
+re-mining friction its own last output was supposed to have fixed. Approving remedies that
+sit unworked is worse than approving fewer, because the filed-and-ignored ones make the next
+retro's evidence noisier without changing anything. If the previous retro's remedies are
+mostly unworked, say so up front and consider capping this retro's approvals.
+
 **2. Prefilter (deterministic, do this before dispatching anything).**
 
 ```bash
@@ -51,9 +62,25 @@ coordinate systems were visible at once. A whole-token pointer removes the ambig
 **Miners return their report as message text; the lead transcribes it to
 `report-<project>.md`.** Do not instruct them to write the file — the harness denies subagent
 Write for report files ("Subagents should return findings as text, not write report files"),
-so every miner burns an attempt on it and some then go quiet. Expect to re-prompt: idle
-notifications arrive with the report dropped (see `reference_subagent_report_relay_drop`), and
-a `SendMessage` asking for a full resend is the reliable recovery.
+so every miner burns an attempt on it and some then go quiet. This is **confirmed**, not
+suspected: three miners independently hit the refusal on 2026-08-15, which settles the open
+question the 2026-08-06 retro carried. Do not re-test it, and do not write a
+write-the-file instruction into any dispatch brief.
+
+**Instruct miners to send one finding per message from the start.** The relay drops long
+message bodies. On 2026-08-15, 5 of 8 miners lost their report twice each on a full-body
+send; all four holdouts then completed cleanly, ~15 messages, zero further drops, once
+switched to one-finding-per-message. Payload size is the variable. Put this in the miner
+brief:
+
+> Send your report **one finding per message** — the pattern line, its Evidence pointers with
+> quoted text, and the Cost line, and nothing else in that message. Send a final message with
+> `Uncited impressions`. Do not wait for acknowledgement between messages. A single long
+> report message will be dropped by the relay.
+
+Expect to re-prompt anyway: idle notifications arrive with the report dropped (see
+`reference_subagent_report_relay_drop`). The reliable recovery is a `SendMessage` asking for a
+chunked resend — asking for a *full* resend usually drops again.
 
 Run these in parallel alongside two more miners:
 - **journal/`.remember`** — mnemosyne entries and `~/claudes-home/.remember/` in window

@@ -88,6 +88,14 @@ We have started a new session. Please go through the following steps:
      `S=~/.claude/retro/last-retro; if [ -f "$S" ]; then echo "RETRO last=$(cat $S) days_ago=$(( ( $(date +%s) - $(date -d "$(cat $S)" +%s) ) / 86400 ))"; else echo "RETRO never run"; fi`
      Report the line. There is no scheduler for the retro — this check is the only thing that
      surfaces it.
+   - Check whether decisions are standing across projects:
+     `python3 ~/.claude/skills/decision-roundup/sweep_decisions.py --brief`
+     Report the line. Unlike the retro and dream checks, this one is **not** a calendar
+     interval — it reports the live count, because a round-up is due when rulings are
+     actually waiting, not on a schedule. It is the only thing that sees decisions in
+     projects you are not currently in; the per-project `needs-decision` check above is
+     true for this project and silent about every other one. Takes ~0.4s.
+     If it reports `unqueryable=N`, those projects are gaps, not zeroes.
    - Check whether a dream pass is due:
      `S=~/.claude/dream/last-pass; if [ -f "$S" ]; then echo "DREAM last=$(cat $S) days_ago=$(( ( $(date +%s) - $(date -d "$(cat $S)" +%s) ) / 86400 ))"; else echo "DREAM never run"; fi`
      Report the line. Like the retro, there is no scheduler — this check is the only
@@ -131,5 +139,10 @@ We have started a new session. Please go through the following steps:
      as an option in the proposal. Offer it; don't start one unasked.
    - If the dream check reports never-run or more than 7 days ago, offer a dream pass
      (`/dream`) as an option in the proposal. Offer it; don't start one unasked.
+   - If the DECISIONS check reports `standing=` 5 or more, **or** an `oldest=` over 14 days,
+     offer a decision round-up (`/decision-roundup`) as an option in the proposal. Offer it;
+     don't start one unasked. Name the oldest issue and its project in the offer — the whole
+     point is that Jerry cannot see it from here, so "5 decisions standing" without the
+     headline is a number he has no way to weigh.
    - Ask Jerry to confirm or redirect before starting work.
    - Prefer scoping the session to a single kata issue. If context fills mid-task, write session-handoff.md and suggest a fresh session rather than compacting through the work.
