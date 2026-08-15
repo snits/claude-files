@@ -168,11 +168,11 @@ Guideline, not law — for session models spawning subagents AND for Jerry choos
 | Planning | Opus | Up to Fable for architecture-level plans; flat-rate external planner (GPT-5.5) to keep bulk work off the metered budget |
 | Implementation | Sonnet | Up to Opus when the task likely involves ambiguity or judgment — see below; down to Haiku only for fully-spec'd mechanical sweeps |
 | Exploration / discovery fan-out | Sonnet `general-purpose` | See "Cheap exploration fan-out" above — never built-in Explore from an opus/fable lead |
-| Quality review / verification | Opus | Sonnet for mechanical checks against explicit criteria |
+| Quality review / verification | Sonnet | Opus for complex implementations, architectural boundaries |
 
 **The implementation tier splits on ambiguity and judgment, not code difficulty.** Sonnet
 executes complex-but-pinned work well (big refactors, intricate multi-file features with clear
-acceptance criteria). Elevate to Opus when the *task itself* might need judgment: the issue's
+acceptance criteria). Elevate to Opus when the *task itself* might need complex judgment: the issue's
 premise could be false, the spec might be lying or self-contradictory, the fix may turn out to
 be a design ruling rather than a patch, or "done" requires deciding what correct means. The
 tiers separate on recognizing-when-to-stop, not on writing the code — a cheaper model's failure
