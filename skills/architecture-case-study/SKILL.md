@@ -89,9 +89,14 @@ Before synthesis, read each report file and confirm it is substantive — an age
    - **Where the architecture is weakest** (mandatory).
    - **Pattern candidates:** new candidates as unresolved `[[wikilinks]]` with one-line
      definitions. **Recurrence check:** if a prior study's candidate appears in this
-     subject, cite its existing wikilink and say so explicitly — two citations is what
-     graduates a candidate toward a concept entry (writing the concept entry is the
-     vault ingest loop's job, not this session's).
+     subject, cite its existing wikilink and say so explicitly, and state the running
+     count — `routing.md`'s earn-an-entry floor of **3+ citations** is what graduates a
+     candidate into a concept entry (writing the entry is a promoter's act, not this
+     session's). Do not write "graduates on a second sighting": that wording came from
+     this skill, contradicted `routing.md:29`, and propagated into three curated studies
+     before Jerry ruled the 3+ floor standing (2026-08-15, kata vault#5btt). Judgment
+     (routing clause b) may still fire earlier, but that is a promoter's call stated as
+     one — never the default the study asserts.
    - **Sources:** method, recon report paths, working tree path, sha256 of the recon
      reports concatenated in **sorted filename order** (`cat <dir>/<glob>*.md | sha256sum`
      — glob order is sorted, so this is reproducible; repo state is pinned by the
