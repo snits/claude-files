@@ -29,6 +29,7 @@ BLOCKED_DIRS=(
     "telemetry"
     "channels"
     "jobs"
+    "ide"
 )
 
 staged=$(git diff --cached --name-only --diff-filter=ACMR)
