@@ -67,9 +67,25 @@ When the issue was worked in a worktree, teardown has a precondition. Run it in 
 1. Rebase onto the target branch **from inside the worktree**, resolving conflicts there.
 2. Merge into the target branch from the main checkout.
 3. Verify: `git branch --merged <target>` lists the worktree branch.
-4. Only then `ExitWorktree{action: "remove"}`.
+4. Only then `ExitWorktree{action: "remove", discard_changes: true}`.
 
 If step 3 does not list the branch, **stop and report** — do not remove. `ExitWorktree` with
-unmerged commits is a request to destroy finished work; the harness guard is currently the only
-thing refusing it, and it has refused three times in one loop session with 1, 13, and 20
-unmerged commits on the branch.
+unmerged commits is a request to destroy finished work, and step 3 is the only thing standing
+between you and that. It is never skippable.
+
+**Step 3 is the safety property, not the harness guard.** The guard refuses `remove` whenever
+the worktree branch carries commits not reachable from `origin/<default-branch>` — divergence
+from the *remote*, not unmerged work. Local merges never clear it; only a push does. So it
+fires on branches that are fully merged and safe, and its message ("Removing will discard this
+work permanently") is wrong in exactly that case. Passing `discard_changes: true` after a
+verified step 3 discards nothing.
+
+Never pass `discard_changes: true` to skip step 3, or because the guard fired and you want past
+it. Verify first; the flag is what you use *after* verifying, not instead of.
+
+Measured 2026-08-16 over every session transcript (kata claudes-home `qcqb`): 118 refusals —
+93 cited commits alone, 22 cited commits plus uncommitted files, 3 cited uncommitted files
+alone. Two of them were checked against `git rev-list --count origin/<default>..<branch tip>`
+and matched exactly (32 and 34, hexwalker session `10988fbb`); the rest were classified from
+the refusal text, not individually re-derived. This is why "just commit or stash before
+teardown" is not the fix: it addresses 3 of 118.
