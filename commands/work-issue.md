@@ -66,22 +66,30 @@ When the issue was worked in a worktree, teardown has a precondition. Run it in 
 
 1. Rebase onto the target branch **from inside the worktree**, resolving conflicts there.
 2. Merge into the target branch from the main checkout.
-3. Verify: `git branch --merged <target>` lists the worktree branch.
+3. Verify **both**, and stop on either:
+   - `git branch --merged <target>` lists the worktree branch — the commits are on the target.
+   - `git -C <worktree> status --porcelain` is empty — nothing uncommitted, untracked scratch
+     included. Commit it or explicitly stash it; do not leave it to the guard.
 4. Only then `ExitWorktree{action: "remove", discard_changes: true}`.
 
-If step 3 does not list the branch, **stop and report** — do not remove. `ExitWorktree` with
-unmerged commits is a request to destroy finished work, and step 3 is the only thing standing
-between you and that. It is never skippable.
+If either check in step 3 fails, **stop and report** — do not remove. Step 3 is the only thing
+standing between you and destroying finished work. It is never skippable.
 
-**Step 3 is the safety property, not the harness guard.** The guard refuses `remove` whenever
-the worktree branch carries commits not reachable from `origin/<default-branch>` — divergence
-from the *remote*, not unmerged work. Local merges never clear it; only a push does. So it
-fires on branches that are fully merged and safe, and its message ("Removing will discard this
-work permanently") is wrong in exactly that case. Passing `discard_changes: true` after a
-verified step 3 discards nothing.
+**Step 3 is the safety property, not the harness guard.** The two checks exist because
+`discard_changes: true` deletes the branch *and* the working tree, while the guard that would
+otherwise stop you is unreliable in one direction and silent in the other:
+
+- Its commit count is commits not reachable from `origin/<default-branch>` — divergence from the
+  *remote*, not unmerged work. Local merges never clear it; only a push does. So it fires on
+  branches that are fully merged and safe, and its message ("Removing will discard this work
+  permanently") is wrong in exactly that case. The `branch --merged` check is what tells you the
+  commits are safe.
+- Its uncommitted-files clause is accurate, and it is the clause you are overriding when you
+  pass the flag. Nothing else will warn you. The `status --porcelain` check is what makes the
+  override harmless.
 
 Never pass `discard_changes: true` to skip step 3, or because the guard fired and you want past
-it. Verify first; the flag is what you use *after* verifying, not instead of.
+it. Verify both, then pass it; the flag is what you use *after* verifying, not instead of.
 
 Measured 2026-08-16 over every session transcript (kata claudes-home `qcqb`): 118 refusals —
 93 cited commits alone, 22 cited commits plus uncommitted files, 3 cited uncommitted files
