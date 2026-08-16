@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+# Refuse to commit secrets or machine-local runtime state to this repo.
+#
+# Why this exists beyond .gitignore and .git/info/exclude: this repo is PUBLIC
+# (github.com/snits/claude-files) and contains credentials. Both ignore mechanisms are
+# single files that an editor accident can flatten — on 2026-08-15 a stray save wrote a
+# rendered Emacs frame over .git/info/exclude, and every pattern in it stopped parsing.
+# Nothing was leaked, but a single `git add -A` would have published .credentials.json.
+#
+# Ignore rules prevent accidental *staging*. This hook prevents the commit even when the
+# rules are gone or bypassed with `git add -f`. It reads the index, so it does not care
+# what any ignore file currently says.
+#
+# Adding a path here is cheap. Removing one should be deliberate.
+
+set -euo pipefail
+
+BLOCKED=(
+    ".credentials.json"
+    "mcp-needs-auth-cache.json"
+    "policy-limits.json"
+    "remote-settings.json"
+    "history.jsonl"
+    "stats-cache.json"
+)
+BLOCKED_DIRS=(
+    "security"
+    "logs"
+    "telemetry"
+    "channels"
+    "jobs"
+)
+
+staged=$(git diff --cached --name-only --diff-filter=ACMR)
+[ -z "$staged" ] && exit 0
+
+offenders=""
+while IFS= read -r path; do
+    for f in "${BLOCKED[@]}"; do
+        [ "$path" = "$f" ] && offenders+="  $path"$'\n'
+    done
+    for d in "${BLOCKED_DIRS[@]}"; do
+        case "$path" in
+            "$d"/*) offenders+="  $path"$'\n' ;;
+        esac
+    done
+done <<< "$staged"
+
+if [ -n "$offenders" ]; then
+    cat >&2 <<EOF
+
+pre-commit: refusing to commit — this repo is PUBLIC and these paths hold secrets
+or machine-local state:
+
+$offenders
+Unstage them:
+
+    git restore --staged <path>
+
+If an ignore rule stopped working, check .gitignore and .git/info/exclude — a missing
+rule here is usually the real bug, not this hook. Verify with:
+
+    git check-ignore -v --no-index <path>
+
+To commit one of these deliberately, edit the BLOCKED lists in .git/hooks/pre-commit.
+Do NOT reach for --no-verify: hooks are never bypassed in this setup, and a bypass here
+publishes credentials.
+
+EOF
+    exit 1
+fi
+
+exit 0
