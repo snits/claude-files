@@ -116,6 +116,19 @@ class TestDeferredExclusion:
         assert "Awaiting a ruling (1)" in out
         assert "## Deferred" not in out
 
+    def test_folded_deferred_item_still_gets_label_applied_age(self, monkeypatch, capsys):
+        """The fold happens before enrichment; a folded item must not keep its filing age."""
+        out = run(
+            monkeypatch,
+            capsys,
+            [project("p", blocked=[item("d", deferred=True, defer_until="2026-10-02",
+                                        age_days=116)])],
+            argv=["--include-deferred"],
+            labeled={("p", "needs-decision"): {"d": "2026-08-05T00:00:00Z"}},
+        )
+        assert "| 10d |" in out
+        assert "116" not in out
+
     def test_deferred_without_a_date_is_flagged_not_silently_buried(self, monkeypatch, capsys):
         out = run(
             monkeypatch,
@@ -292,6 +305,20 @@ class TestBriefLine:
             argv=["--brief"],
         )
         assert out.startswith("DECISIONS waiting_on_you=1 (decision 1, review 1)")
+
+    def test_both_labels_age_from_whichever_went_on_first(self, monkeypatch, capsys):
+        """Waiting started at the earlier label; the later one does not reset the clock."""
+        out = run(
+            monkeypatch,
+            capsys,
+            [project("p", blocked=[item("a", labels=["needs-decision", "needs-review"])])],
+            argv=["--brief"],
+            labeled={
+                ("p", "needs-decision"): {"a": "2026-07-16T00:00:00Z"},
+                ("p", "needs-review"): {"a": "2026-08-13T00:00:00Z"},
+            },
+        )
+        assert "oldest=30d(p/a)" in out
 
     def test_deferred_excluded_from_the_brief_count_too(self, monkeypatch, capsys):
         out = run(

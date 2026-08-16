@@ -231,6 +231,7 @@ def main() -> int:
     report = feed()
 
     standing, deferred, gaps = collect(report, labels)
+    # Fold before enriching: a folded item must get a label-applied age like any other.
     if args.include_deferred:
         for due, project, item in deferred:
             item["_age_basis"] = "created"
