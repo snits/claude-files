@@ -61,6 +61,49 @@ def age_days(created: str, now: dt.datetime) -> int:
     return (now - ts).days
 
 
+def labeled_at(project: str, label: str) -> dict[str, str]:
+    """Map short_id -> when `label` was last applied, from the project's event log.
+
+    The age that matters is how long the issue has been *waiting*, which is when the label
+    went on — not when the issue was filed. Those diverge wildly: a batch of beads imports
+    filed in March and triaged in August reads as five months old against `created_at`,
+    which turns ordinary recent triage into what looks like months of neglect. Verified on
+    fatescroll `kmgh`: reported 159d, labeled `needsinfo` 15 days earlier.
+
+    Events come back ordered by id ASC, so `--limit` takes the OLDEST rows, not the newest.
+    Paging with `--after` to exhaustion is required; a bare `--limit N` would silently miss
+    every recent label on any project with more than N events.
+    """
+    applied: dict[str, str] = {}
+    after = 0
+    while True:
+        code, out, _ = run(
+            ["kata", "events", "--project", project, "--json",
+             "--limit", "1000", "--after", str(after)]
+        )
+        if code != 0:
+            return applied  # caller falls back to created_at
+        try:
+            payload = json.loads(out)
+        except json.JSONDecodeError:
+            return applied
+        events = payload.get("events", payload if isinstance(payload, list) else [])
+        if not events:
+            return applied
+        for e in events:
+            after = max(after, e.get("event_id", after))
+            if e.get("type") != "issue.labeled":
+                continue
+            if (e.get("payload") or {}).get("label") != label:
+                continue
+            short = e.get("issue_short_id")
+            when = e.get("created_at")
+            if short and when:
+                applied[short] = when  # ASC order means the last write is the latest
+        if len(events) < 1000:
+            return applied
+
+
 def defer_until(issue: dict) -> str | None:
     raw = (issue.get("metadata") or {}).get("defer_until")
     if raw is None:
@@ -134,12 +177,15 @@ def main() -> int:
         if err:
             gaps.append((proj, err))
             continue
+        applied = labeled_at(proj, args.label) if found else {}
         for issue in found:
             labels = issue.get("labels") or []
             if "deferred" in labels and not args.include_deferred:
                 deferred.append((defer_until(issue) or "UNDATED", proj, issue))
                 continue
-            standing.append((age_days(issue["created_at"], now), proj, issue))
+            when = applied.get(issue["short_id"])
+            issue["_age_basis"] = "labeled" if when else "created"
+            standing.append((age_days(when or issue["created_at"], now), proj, issue))
 
     standing.sort(key=lambda r: -r[0])
     deferred.sort(key=lambda r: r[0])
@@ -158,6 +204,8 @@ def main() -> int:
         for age, proj, i in standing:
             other = ",".join(l for l in (i.get("labels") or []) if l != args.label) or "—"
             title = i["title"].replace("|", "\\|")
+            if i.get("_age_basis") == "created":
+                age = f"{age}?"  # no label event found; this is filing age, not waiting age
             print(f"| {age}d | {proj} | `{i['short_id']}` | {title} | {other} |")
     else:
         print(f"No standing `{args.label}` issues in any project.")
