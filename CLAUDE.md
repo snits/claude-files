@@ -65,10 +65,24 @@ corollaries, each of which cost a real error the week of 2026-07-29:
   (`HEAD~300..HEAD`), and verify any instrument against one known case before running it across
   many.
 
+**This bar applies to what you file, not just what you claim.** A filed bug's premise is a
+claim requiring an artifact, exactly like a completion claim — and the agent reading a filed
+bug is in the opposite posture from the one producing evidence for its own work: inclined to
+treat the tracker as ground truth. Reproduce before fixing. If it doesn't reproduce, establish
+whether it *ever could*, rather than closing "works now" (which is silent on whether the bug
+never existed or existed and healed — those have opposite implications for the surrounding
+work's trustworthiness): `git log -S'<literal>' -- <path>` to check whether any commit could
+exhibit the state described, and `git show <reporter-branch>:<path>` to check what the
+reporter's own tree actually contained.
+
 Rationale, so this isn't mistaken for clutter: seventeen instances in one week across five
 projects, from three independent evidence sources. One closed a tracking issue asserting
 verified-complete work while the gated test was red. Another set of tests stayed green after
-the thing they claimed to test was deleted — self-written, advisor-reviewed, and approved.
+the thing they claimed to test was deleted — self-written, advisor-reviewed, and approved. The
+filed-premise half has its own record: rhkmaint-tools `jyfc`, and two of four pcitopo issues
+reviewed in one 2026-08-15 sitting — `2dzf`'s premise was false outright (an ET Book hazard
+applied to text set in Plex) and `z9m6` offered three options built on coverage that had
+already shipped uncross-referenced.
 
 ## Learning
 
