@@ -533,6 +533,24 @@ Two other shapes worth naming, because neither takes a label:
   comment. Copying a body into a second issue to satisfy a protocol is duplication, and ceremony
   that expensive gets skipped rather than followed.
 
+**When triage finds a `needsinfo` fact is not agent-gettable, branch three ways — and check the
+first branch first.** Discovering at triage time that a filed `needsinfo` was mislabeled is not
+the same as the filing-time conflation above, and it resolves differently:
+
+1. **Would an existing or creatable issue produce the fact?** Then `--blocked-by` it and drop
+   `needsinfo`, adding *no* other blocked-state label. The gate is now modeled structurally, and
+   the issue returns exactly when the fact exists.
+2. Only when no issue can produce it is there a choice: **`needs-decision`** if a ruling is what
+   is missing, **`needs-review`** if work exists and wants looking at.
+3. Either way, record which branch and why before removing the old label.
+
+Branch 1 is listed first because it is the one that gets skipped. alexandria `qxq2` carried
+`needsinfo` *and* `needs-decision` for weeks while its missing fact was the entire output of
+`b4mr` — a tracked epic with its own owner, which it was already `--blocked-by`. Both labels were
+redundant with that link, and each routed the issue to a loop that could not clear it (Jerry
+ruling, 2026-08-15, kata claudes-home#qk08). A two-way "relabel it to `needs-decision` or
+`needs-review`" rule would have gotten that case wrong.
+
 Clearing a label is two operations: record the reasoning as a comment, *then* remove the label. A
 cleared label with no recorded rationale is worse than the label — it reads as resolved and isn't.
 
