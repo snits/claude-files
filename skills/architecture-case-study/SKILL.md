@@ -87,8 +87,23 @@ Before synthesis, read each report file and confirm it is substantive — an age
    - **Where this could bite or help us:** 1–2 sentences per applicable theme anchoring
      it to our own projects.
    - **Where the architecture is weakest** (mandatory).
+   - **Style-catalog check** (one short paragraph): name the subject's implicit driving
+     characteristic — the one nobody wrote down — and what was deliberately spent for it;
+     then name the nearest mainstream architecture style and the "but" clause it needs, or
+     state that no catalog entry fits. `atlas/concepts/style-catalogs-measure-distribution.md`
+     makes a falsifiable prediction that the "but" clause goes empty on distributed subjects
+     (kubernetes, containerd) — this paragraph is how that prediction gets tested, so report
+     the result plainly whichever way it lands, including when it refutes the concept.
    - **Pattern candidates:** new candidates as unresolved `[[wikilinks]]` with one-line
-     definitions. **Recurrence check:** if a prior study's candidate appears in this
+     definitions, each carrying a **buys / spends** clause — which architecture
+     characteristic the mechanism purchases and which one pays for it (adoptability bought
+     with security-by-default; common-case latency bought with mirrored logic). Without it a
+     candidate is a named mechanism; with it, it is a decision aid, which is the whole point
+     of the vocabulary. Derive the trade from the subject's own evidence, not from a generic
+     -ilities list. Required from 2026-08-18 forward; the first five studies do not carry it
+     natively and are not being backfilled — the cross-study trades live in
+     `atlas/concepts/style-catalogs-measure-distribution.md` instead.
+     **Recurrence check:** if a prior study's candidate appears in this
      subject, cite its existing wikilink and say so explicitly, and state the running
      count — `routing.md`'s earn-an-entry floor of **3+ citations** is what graduates a
      candidate into a concept entry (writing the entry is a promoter's act, not this
