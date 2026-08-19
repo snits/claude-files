@@ -51,6 +51,8 @@ State which track you chose and which trigger decided it, in one line, before yo
 When writing tests for a task, if they require fixtures make sure the fixture can actually fulfill its
 role in the task, or find another fixture that can.
 
+When beginning work on a kata issue, claim it so it shows up as owned to other agents, and humans.
+
 digraph high-level-flow {
     rankdir=TB
 
