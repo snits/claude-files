@@ -309,7 +309,7 @@ Good names tell a story about the domain:
   dying. Alexandria, 2026-08-02: a `filter-repo` run left 101 dead refs across 19 kata issues; 56
   were saved only because the commit-map still existed, and the other 45 were unrecoverable
   *precisely because nothing but the SHA had been recorded*.
-- **Worktree merges:** When work happens in a git worktree, rebase the worktree branch onto the target branch BEFORE merging — from inside the worktree. Resolve any conflicts there. Only then return to the main checkout to merge — use `--no-ff` when agents are working in parallel so each branch lands as a distinct merge commit; a fast-forward is fine for sequential work. NEVER run `git merge` from the main checkout and resolve conflicts there — that pollutes the main project root with merge state and can collide with other ongoing work.
+- **Worktree merges:** When work happens in a git worktree, rebase the worktree branch onto the target branch BEFORE merging — from inside the worktree. Resolve any conflicts there. Only then return to the main checkout to merge. NEVER run `git merge` from the main checkout and resolve conflicts there — that pollutes the main project root with merge state and can collide with other ongoing work.
 
 ## Issue Tracking with kata
 
