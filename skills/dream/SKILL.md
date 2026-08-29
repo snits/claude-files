@@ -25,10 +25,12 @@ ruling 2026-08-11); architecture recorded on kata p48f.
 `~/.claude/dream/ledger.md` (candidate themes) and the pearl inventory (vault atlas
 entries tagged `pearl`, plus any un-promoted pearl stubs in `~/vault/_inbox/dream/`).
 
-**2. Fetch.** `mcp__mnemosyne__show_entries_since` with `since: <cursor>`,
-`project_filter: "all"`, no limit. Note the newest entry timestamp — it becomes the new
-cursor. If the volume is large (a long gap), fetch in date slices rather than raising a
-limit, so nothing is silently dropped.
+**2. Fetch.** `python3 ~/.claude/scripts/dream_corpus.py dump --since <cursor> -o <file>`
+— a read-only JSONL dump straight from the journal's PostgreSQL store (each line:
+`{p: file_path, d: date, proj, c: content}`). Note the newest entry timestamp — it
+becomes the new cursor. Do NOT use `mcp__mnemosyne__show_entries_since` for bulk
+fetches: a no-limit full-corpus call crashed the MCP server on 2026-08-29 (~13.5K
+entries / 24MB in one response); the MCP surface is for interactive recall only.
 
 **3. Job A — maintenance.** Read every fetched entry against the existing pearls. Where
 an entry is a genuine new instance of a pearl's theme (not a mention — an instance, with
@@ -43,15 +45,25 @@ across 3+ projects, or 5+ instances spanning 2+ months. Mark ripe themes `status
 **5. Pearl drafting (only when a theme is ripe, this pass or next — editor's call).**
 A new pearl hunts the FULL corpus, not just the window — the spike proved the archive's
 old stories are what similarity search misses and what gives a pearl its arc. Procedure
-is the spike's hybrid, reference implementation in
-`~/devel/mnemosyne/.scratchpad/zhqp-spike/` (dump_slices.py, compare_arms.py, manifest):
-  - Arm A: cosine queries (`mcp__mnemosyne__search_journal`) seeded from the theme's
-    ledger vocabulary.
-  - Arm B: slice the corpus and fan out cheap readers (haiku-tier subagents), each
-    returning candidate entry ids + why.
-  - Editor (session-tier, you): judge the pooled candidates, read the raw rows, write
-    the pearl — Bentley-column register, provenance links (entry ids + dates) on every
-    instance, every quote re-verified.
+is the spike's hybrid, run RLM-style against the DB via
+`~/.claude/scripts/dream_corpus.py` (Jerry ruling, 2026-08-29: treat the corpus as data
+you query with code; spend model calls only on rows that matter). Spike reference
+implementation remains in `~/devel/mnemosyne/.scratchpad/zhqp-spike/`:
+  - Arm A: `dream_corpus.py search "<query>" -k 15` — pgvector cosine directly
+    (qwen3-embedding-8b via llama-swap :11435, same model and instruct prefix as
+    mnemosyne's own search), seeded from the theme's ledger vocabulary. Calibrate on
+    one known-relevant entry before trusting a miss.
+  - Arm B: `dream_corpus.py dump` the full corpus, slice at entry boundaries
+    (~650KB/slice), fan out cheap readers (haiku-tier subagents, batches under the
+    20-concurrent cap), each returning candidate paths + why. Expect reader noise:
+    off-theme drift and missed instances both occurred on 2026-08-29; the two arms
+    cross-check each other — investigate any arm-A hit inside a slice whose reader
+    reported zero.
+  - Editor (session-tier, you): judge the pooled candidates, read raw rows
+    (`dream_corpus.py show <path>`), write the pearl — Bentley-column register,
+    provenance links (entry paths + dates) on every instance, every quote re-verified
+    with `dream_corpus.py verify <path> "<fragment>"` (readers paraphrase and
+    mis-path at every model tier; verify recovers the true path on a miss).
 
 **6. Culling.** If the window's reading shows a loaded surface entry (memory file,
 vault entry, pearl section) superseded by newer evidence, draft a culling proposal
