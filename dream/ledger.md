@@ -47,9 +47,15 @@ rhkmaint-tools, alexandria, vault, projstat, mnemosyne, claudes-home, orbweaver-
 
 ## compound-shell-commands are their own failure domain
 
-status: ripe (full-corpus hunt now deferred TWICE — 08-13 pass was wiring verification,
-08-29 pass spent its pearl slot on prose-is-not-under-test. Next pass should either
-draft it or demote it with a stated reason.)
+status: pearled (draft: `~/vault/_inbox/dream/pearl-shell-inside-the-instrument.md`,
+pending promotion). Full-corpus hunt run 2026-08-29 at Jerry's request, same sitting as
+the pass: 38 haiku readers over the entire pre-window corpus (13,359 entries dumped
+from the mnemosyne DB after the MCP full-fetch crashed the server) + 3 cosine queries.
+Timeline found: zero instances before 2025-10; first specimens 2025-11-24 (orbweaver
+subagent-cwd grep miss, pre-commit wrapper chain); recognizable family from 2026-04;
+explosion 2026-06→08 in the worktree/multi-agent/zsh era. Six species stabilized in
+the pearl. Reader noise note: one haiku reader (slice 34) drifted off-theme, one
+(slice 24) missed an arm-A-confirmed instance — hybrid redundancy caught both.
 
 Prior instances: see 08-13 entry in git history of this file. New this window:
 - merged grep outputs losing filenames → confidently wrong "BRIEF CORRECTION"
