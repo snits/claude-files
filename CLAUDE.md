@@ -641,6 +641,26 @@ If the cache doesn't have what you need, query the context7 mcp server (if avail
 
 The scratchpad (`~/.claude/scratchpad/`) is an agent work product store — research, code reviews, analysis, and investigation notes. It is a git repo; project working copies sync into it additively each session.
 
+**Two zones, and the difference is load-bearing:**
+
+- `${PROJECT_ROOT}/.scratchpad/` — the **knowledge layer**. Reports, session records,
+  per-issue dirs, probe scripts. Synced to the central store and version-controlled.
+  Only `*.md`, `*.diff`, `*.patch`, `*.py`, `*.sh` under 10 MiB are admitted.
+- `${PROJECT_ROOT}/.scratchpad/tmp/` — the **bulk/ephemeral zone**. Databases, dumps,
+  extracted corpora, caches, images, logs, anything large or machine-generated.
+  **Never synced.** It dies with the checkout. Put it here on purpose rather than
+  letting a filter catch it by accident.
+
+Write bulk output to `tmp/` **by choice**. The type allowlist in
+`~/.claude/scripts/sync-scratchpad.sh` and the central store's allowlist `.gitignore`
+are fences behind the convention, not the convention itself — and a fence only stops
+the shapes it anticipated. The 2026-08-19 blowup (263 GB of abandoned pack files, from
+a 4.4 GB DB written to a per-issue dir) is what an unanticipated shape costs.
+
+A **vendored upstream checkout** inside a scratchpad is the case type filters cannot
+see: its `*.py` are indistinguishable from ours. Either put it under `tmp/`, or drop a
+`.rsync-filter` file containing `- *` at its root to exclude that subtree wholesale.
+
 **Where to write:**
 - Project-specific work: `${PROJECT_ROOT}/.scratchpad/` (real directory, gitignored in the project; synced to the central repo)
 - Cross-cutting work: `~/.claude/scratchpad/` root

@@ -49,6 +49,27 @@ if [ -f "$TASK_MARKER" ]; then
   exit 0
 fi
 
+# Rate guard (ruling: Jerry, 2026-08-29, kata claudes-home#6w27). SessionStart fires
+# ~1,579 times/day; each firing previously did a network pull+push. That stampede,
+# hammering a push that had become permanently unpushable, is what manufactured 263G
+# of abandoned tmp_pack_* files on 2026-08-19.
+#
+# A stamp file rather than a systemd timer, deliberately: if this guard breaks, the
+# hook degrades to "runs every session" (today's behaviour, merely noisy). A broken
+# timer degrades to "never runs", and nothing notices until work is silently uncaptured.
+STAMP="$SCRATCHPAD/.autocommit-last-run"
+MIN_INTERVAL=3600
+if [ -f "$STAMP" ]; then
+  last=$(cat "$STAMP" 2>/dev/null || echo 0)
+  case "$last" in (*[!0-9]*|'') last=0 ;; esac
+  now=$(date +%s)
+  if [ $(( now - last )) -lt "$MIN_INTERVAL" ]; then
+    log "INFO: last run $(( now - last ))s ago (< ${MIN_INTERVAL}s), skipping"
+    exit 0
+  fi
+fi
+date +%s > "$STAMP" 2>/dev/null
+
 # Recover from a stuck rebase left over from a previous failed run
 if [ -d ".git/rebase-merge" ] || [ -d ".git/rebase-apply" ]; then
   log "WARN: found in-progress rebase from a previous run, aborting"
@@ -58,6 +79,36 @@ fi
 
 # Stage and commit any local changes (clean working tree before network ops)
 git add -A >>"$LOG_FILE" 2>&1 || log "WARN: git add -A returned non-zero"
+
+# Staged-size guard (kata claudes-home#6w27). Third fence behind the allowlist
+# .gitignore and the rsync intake filter, for whatever slips past both.
+#
+# It UNSTAGES AND REFUSES rather than committing. That direction is the whole point:
+# the 2026-08-19 failure mode was a local commit too large for the remote to accept,
+# i.e. permanently unpushable, which then drove the retry stampede. A guard that
+# commits and merely declines to push would recreate the original bug exactly.
+MAX_FILE_BYTES=$((10 * 1024 * 1024))
+MAX_TOTAL_BYTES=$((50 * 1024 * 1024))
+offenders=""
+total=0
+while IFS= read -r -d '' f; do
+  [ -f "$f" ] || continue
+  sz=$(stat -c %s "$f" 2>/dev/null || echo 0)
+  total=$(( total + sz ))
+  if [ "$sz" -gt "$MAX_FILE_BYTES" ]; then
+    offenders="$offenders $f(${sz}B)"
+  fi
+done < <(git diff --cached --name-only -z)
+
+if [ -n "$offenders" ] || [ "$total" -gt "$MAX_TOTAL_BYTES" ]; then
+  log "REFUSED: staged set rejected -- total=${total}B oversized:${offenders:-none}"
+  git reset >>"$LOG_FILE" 2>&1 || log "ERROR: git reset failed after refusal"
+  # emit_and_exit interpolates this straight into a JSON string, so a path
+  # containing a quote or backslash would emit malformed JSON. Strip both.
+  safe_offenders=$(printf '%s' "$offenders" | tr -d '"\\')
+  SYSTEM_MESSAGE="scratchpad-autocommit REFUSED a commit: staged ${total} bytes${safe_offenders:+, oversized:$safe_offenders}. Nothing was committed or pushed. See ~/.claude/logs/scratchpad-autocommit.log and kata claudes-home#6w27."
+  emit_and_exit
+fi
 
 if ! git diff --cached --quiet; then
   if ! git commit -s -m "scratchpad: auto-commit $(date +%Y-%m-%d)
