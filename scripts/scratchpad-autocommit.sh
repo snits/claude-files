@@ -29,6 +29,9 @@ log() {
 }
 
 emit_and_exit() {
+  # A handled outcome counts as a completed run: consume the rate window so a
+  # persistent failure cannot be retried every session.
+  [ -n "${STAMP:-}" ] && date +%s > "$STAMP" 2>/dev/null
   if [ -n "$SYSTEM_MESSAGE" ]; then
     printf '{"systemMessage": "%s"}\n' "$SYSTEM_MESSAGE"
   fi
@@ -68,7 +71,12 @@ if [ -f "$STAMP" ]; then
     exit 0
   fi
 fi
-date +%s > "$STAMP" 2>/dev/null
+# NOTE: the stamp is written when a run COMPLETES, not here. Writing it up front
+# would let a run that dies mid-flight (hook timeout during push, killed session)
+# consume the whole hour -- including the stuck-rebase recovery below, which is
+# exactly the path a dead run needs the next session to take. Writing it only on
+# full success is also wrong: a persistently failing push would then retry every
+# session, which is the 2026-08-19 stampede. So: on completion, either outcome.
 
 # Recover from a stuck rebase left over from a previous failed run
 if [ -d ".git/rebase-merge" ] || [ -d ".git/rebase-apply" ]; then
@@ -147,4 +155,5 @@ if ! git push >>"$LOG_FILE" 2>&1; then
 fi
 
 # Silent success
+date +%s > "$STAMP" 2>/dev/null
 exit 0
