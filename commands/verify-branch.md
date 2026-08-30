@@ -3,13 +3,28 @@ name: verify-branch
 description: Pre-merge gate — three concurrent auditors on claims, test discrimination, and scope. Any BLOCK stops the merge.
 ---
 
-Verify the current branch before it merges. Arguments: `${1}` = target branch (the merge base
-side), `${2}` = the qualified kata ref for the issue being worked (`kata#abc4` form).
+Verify a branch before it merges. Arguments: `${1}` = target branch (the merge-base side),
+`${2}` = the qualified kata ref for the issue being worked (`kata#abc4` form), `${3}` = the
+branch under audit.
 
-**Both arguments are required. Do not default `${1}` to `main`** — `/orchestrate-issues` already
-rules that a merge target is named, never assumed. **Use the qualified `kata#` form for `${2}`**:
-from inside a worktree an unbound workspace resolves to the enclosing git remote's basename
-rather than failing, which silently targets another project.
+**All three are required. Do not default `${1}` to `main`** — `/orchestrate-issues` already rules
+that a merge target is named, never assumed. **Use the qualified `kata#` form for `${2}`**: from
+inside a worktree an unbound workspace resolves to the enclosing git remote's basename rather
+than failing, which silently targets another project.
+
+**`${3}` is named explicitly and never inferred from `HEAD`.** This gate is invoked from two
+places and `HEAD` means different things in each. Under `/super-do` the session sits on the
+feature branch, so `HEAD` would work. Under `/orchestrate-issues` the orchestrator runs from the
+repo root **where the target branch is checked out** — there `git merge-base <target> HEAD`
+returns the target's own tip, the range is empty, every auditor audits nothing, and all three
+return PASS. That is not a degraded gate; it is a gate that silently passes everything, which is
+indistinguishable from a gate that never ran.
+
+Measured 2026-08-30 on a fixture with `main` checked out and a 4-file `dirty-branch` pending:
+`merge-base main HEAD` gave main's own tip, `<mb>..HEAD` held 0 commits and 0 files, while
+`<mb>..dirty-branch` held 4. Passing the branch also frees the auditors from depending on their
+own cwd, which matters because each runs under `isolation: "worktree"` and nothing guarantees the
+harness parks that worktree on the ref you meant.
 
 Invoking this command IS the user's request to task subagents. Dispatch the three below without
 stopping to ask.
@@ -65,11 +80,11 @@ A branch that cleared three code reviews can still fail every one of them.
 ## Establish the base first
 
 ```
-git merge-base ${1} HEAD
+git merge-base ${1} ${3}
 git rev-parse --show-toplevel        # the PRIMARY checkout, not a worktree
 ```
 
-Every auditor scopes to `<merge-base>..HEAD`. Compute it once, paste the SHA into all three
+Every auditor scopes to `<merge-base>..${3}` — the named branch, never `HEAD`. Compute it once, paste the SHA into all three
 briefs, and never let an auditor recompute it — three auditors deriving their own base is three
 chances to audit a different diff than the one being merged.
 
@@ -114,9 +129,9 @@ Every brief carries, verbatim:
 defines the extract / categorize (CODE_CITATION, COMMAND_RESULT, INFERENCE) / verify / table
 procedure. This brief supplies only what is branch-specific:
 
-**Extraction sources**, all scoped to `<merge-base>..HEAD`:
-- commit messages (`git log <merge-base>..HEAD`) — subject and body
-- comments added or changed in the diff (`git diff <merge-base>..HEAD`)
+**Extraction sources**, all scoped to `<merge-base>..${3}`:
+- commit messages (`git log <merge-base>..${3}`) — subject and body
+- comments added or changed in the diff (`git diff <merge-base>..${3}`)
 - test names and docstrings for tests added or modified
 - the kata issue body and comments pasted into this brief
 
@@ -145,7 +160,7 @@ test) fails in the direction that makes a defect look absent.
 **Role:** You are a test-quality auditor. You establish whether the tests on this branch can
 fail.
 
-For every test added or modified in `<merge-base>..HEAD`:
+For every test added or modified in `<merge-base>..${3}`:
 
 1. Identify the code path the test covers.
 2. Apply one targeted mutation to that path — invert a condition, change a boundary, return a
@@ -192,7 +207,7 @@ does not.
 **Role:** You are a scope auditor. You establish whether this diff is the diff the issue asked
 for.
 
-Against `git diff <merge-base>..HEAD`:
+Against `git diff <merge-base>..${3}`:
 
 1. **Untraceable change.** Every hunk maps to something the pasted issue asks for, or it is
    reported. Incidental refactors, drive-by renames, and reformatting count — they may be fine,

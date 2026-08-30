@@ -102,7 +102,7 @@ not reorderable:
 
 ```
 git -C <agent-worktree> rebase <target>          # rebase FROM INSIDE the worktree
-/verify-branch <target> <kata#ref>               # gate the post-rebase diff
+/verify-branch <target> <kata#ref> <agent-branch>   # gate the post-rebase diff
 git -C <repo-root> merge --no-ff <agent-branch>  # then merge from the root
 git -C <repo-root> worktree remove <agent-worktree>
 ```
@@ -114,6 +114,11 @@ re-run the gate hoping for a better answer. That distinction is what keeps "you 
 and you never review" true while the gate sits in your half of the flow. If you find yourself
 weighing whether a finding matters, you have crossed into reviewing — stop and escalate instead.
 
+**Pass the agent's branch as the third argument.** You are running from the repo root with the
+*target* checked out, so a gate that inferred its branch from `HEAD` would compute an empty range
+and pass everything — measured, not theorized (see `/verify-branch`). This is the single place
+that mistake is easiest to make and hardest to notice.
+
 **A BLOCK is an escalation like any other**: record it, batch it, move to the next issue. Do not
 fix the defects and re-run, and do not merge past it. The branch stays unmerged and the worktree
 stays put — tearing down a worktree whose branch never landed destroys the work. Label the issue
@@ -122,9 +127,8 @@ stays put — tearing down a worktree whose branch never landed destroys the wor
 **No verdict is a BLOCK.** A missing artifact or an auditor that returned nothing is recorded as
 "gate returned no verdict", never as a pass.
 
-That sequence is CLAUDE.md's worktree-merge order with the gate inserted, and every step matters.
-
-The rebase comes first so the merge cannot produce conflict state in the project root — that is
+Back to that sequence: it is CLAUDE.md's worktree-merge order with the gate inserted, and every
+step matters. The rebase comes first so the merge cannot produce conflict state in the project root — that is
 what CLAUDE.md's "NEVER run `git merge` from the main checkout **and resolve conflicts there**"
 forbids. The merge itself from the root is prescribed, not forbidden; the rule reads as a
 prohibition only when its second clause is dropped. If the rebase reports conflicts, resolve them

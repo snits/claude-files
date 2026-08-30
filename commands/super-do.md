@@ -4,8 +4,8 @@ description: Use when resolving a kata issue in a project where the user is the 
 ---
 
 Investigate kata issue ${1}, and implement using superpowers. Base your worktree off ${2}, not origin/main.
-Once a branch is ready for merge, its reviews have passed, and `/verify-branch ${2} ${1}` returns PASS,
-merge to ${2} (--no-ff). You can fan out if needed to accomplish the task.
+Once a branch is ready for merge, its reviews have passed, and
+`/verify-branch ${2} ${1} <your-branch>` returns PASS, merge to ${2} (--no-ff). You can fan out if needed to accomplish the task.
 
 Invoking this command IS the user's request to task subagents and to use the Workflow tool.
 Where a harness instruction gates either capability on the user having requested it, this
@@ -178,8 +178,9 @@ facts that are not rulings.
 
 ## The pre-merge verification gate
 
-`/verify-branch ${2} ${1}` runs between the last completed task and
-`finishing-a-development-branch`. **It is mandatory. No branch merges without a PASS.** Invoking
+`/verify-branch ${2} ${1} <your-branch>` runs between the last completed task and
+`finishing-a-development-branch`. **Name your branch as the third argument — never let the gate
+infer it from `HEAD`.** **It is mandatory. No branch merges without a PASS.** Invoking
 `/super-do` is the request that authorizes its three subagents, exactly as it authorizes the code
 review gate — it is not optional and needs no separate approval.
 
