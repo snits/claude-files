@@ -69,6 +69,7 @@ digraph high-level-flow {
 	"executing-plans" [shape=box];
 	"subagent-driven-development" [shape=box];
 	"all tasks complete?" [shape=diamond];
+	"branch simplify pass" [shape=box];
 	"verify-branch gate" [shape=box];
 	"gate verdict?" [shape=diamond];
 	"escalate: needs-review" [shape=doublecircle];
@@ -79,7 +80,7 @@ digraph high-level-flow {
 	"investigate kata issue" -> "does the issue trip a size-gate trigger?";
 	"does the issue trip a size-gate trigger?" -> "brainstorming" [label="yes: full track"];
 	"does the issue trip a size-gate trigger?" -> "implement the issue directly" [label="no: direct track"];
-	"implement the issue directly" -> "verify-branch gate";
+	"implement the issue directly" -> "branch simplify pass";
 	"brainstorming" -> "design review";
 	"design review" -> "revise design?";
 	"revise design?" -> "brainstorming" [label="yes"];
@@ -91,7 +92,8 @@ digraph high-level-flow {
 	"executing-plans" -> "subagent-driven-development";
 	"subagent-driven-development" -> "all tasks complete?";
 	"all tasks complete?" -> "subagent-driven-development" [label="no"];
-	"all tasks complete?" -> "verify-branch gate" [label="yes"];
+	"all tasks complete?" -> "branch simplify pass" [label="yes"];
+	"branch simplify pass" -> "verify-branch gate";
 	"verify-branch gate" -> "gate verdict?";
 	"gate verdict?" -> "finish-development-branch" [label="PASS"];
 	"gate verdict?" -> "escalate: needs-review" [label="BLOCK"];
@@ -175,6 +177,35 @@ kata comment <ref> --as jerry-via-claude \
 Why this actor and no other: CLAUDE.md, "Transcribing Jerry-sourced content" — the canonical
 statement of the convention, including the `CORRECTION`/`CONTEXT` prefixes for Jerry-sourced
 facts that are not rulings.
+
+## The branch simplify pass
+
+After the last task completes (either track), and before the verify-branch gate, run one
+simplify pass over the whole branch diff (`git diff ${2}...HEAD`): the built-in `/simplify`
+angles — reuse, simplification, efficiency, altitude — applied by a fresh dispatch that sees the
+diff and nothing else. Apply the fixes, re-run the tests, and proceed only on green. This sits
+here rather than per-task because it is the only point that can see **cross-task duplication** —
+task N re-implementing a helper task 1 wrote is the signature failure of fresh-context
+subagents — and because it must sit *upstream* of the mandatory gate so no fix merges unaudited.
+
+**Skip it when the branch touches two or fewer files** — a direct-track one-file fix has no
+cross-task surface, and the per-task code review already covered local cleanup. Say you skipped
+it and why, in one line.
+
+Two constraints are load-bearing:
+
+- **Scope fence: fixes stay within files the branch already touched.** The verify-branch scope
+  auditor checks that the diff is traceable to the issue; edits wandering into untouched files
+  hand it legitimate BLOCK material. A finding whose fix needs out-of-scope edits gets filed as
+  a `simplify:`-prefixed kata issue instead — that feeds the repo-level `/simplify-pass`
+  burn-down, so nothing is lost.
+- **Altitude findings route out, never get fixed here.** By this point "the mechanism should
+  generalize" is a design critique of an implementation that already cleared per-task review.
+  File it (with `needs-decision` when two defensible depths exist); do not restructure the
+  branch.
+
+Skipping a finding is fine — same rule as `/simplify`: anything that would change intended
+behavior, or that you judge a false positive, is noted rather than applied.
 
 ## The pre-merge verification gate
 
