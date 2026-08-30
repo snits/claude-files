@@ -64,7 +64,12 @@ On a failed claim, move to the next issue. Never dispatch against an unclaimed i
 ## Dispatching
 
 One agent per issue. Its task is `/super-do <ref> <target-branch>` — that command carries the size
-gate, TDD, the review gate, and the merge, so do not restate any of it in the dispatch.
+gate, TDD, and the review gate, so do not restate any of those in the dispatch.
+
+**Two things it normally does are yours instead, and the dispatch must say so:** the `--no-ff`
+merge and the `/verify-branch` gate. Both are covered under "Merging" below; name them as
+exclusions in the brief so the agent stops at a reviewed branch rather than burning turns
+discovering it cannot merge.
 
 - **Each agent gets its own worktree.** They edit in parallel and would otherwise collide.
 - **Concurrency defaults to 1.** Raise it only deliberately: parallel agents in one repo routinely
@@ -82,13 +87,42 @@ refuses a branch already checked out elsewhere. **Tell each agent in its dispatc
 reviewed branch and leave the merge to you.** Otherwise it burns its budget discovering this and
 escalates on plumbing.
 
-Landing is CLAUDE.md's worktree-merge sequence, and all three steps matter:
+### The gate travels with the merge
+
+**`/verify-branch` is mandatory here, and it is yours to run — not the agent's.**
+
+`/super-do` places the gate before its own merge. Under orchestration the merge moves to you, so
+the gate moves with it. **Tell each agent in its dispatch to skip `/verify-branch` along with the
+merge**, for the same reason it skips the merge: it cannot do the thing the gate gates.
+
+Run it **after the rebase and before the merge**, not earlier. The rebase rewrites the branch's
+commits and can move the merge base, so a verdict produced before it was reached against a diff
+that no longer exists. The gate has to see what actually lands. Concretely, the sequence below is
+not reorderable:
 
 ```
 git -C <agent-worktree> rebase <target>          # rebase FROM INSIDE the worktree
+/verify-branch <target> <kata#ref>               # gate the post-rebase diff
 git -C <repo-root> merge --no-ff <agent-branch>  # then merge from the root
 git -C <repo-root> worktree remove <agent-worktree>
 ```
+
+**This does not make you the reviewer.** Running the gate is not adjudicating it: you dispatch
+three auditors, read their artifacts, and act on the verdict mechanically — PASS lands, BLOCK
+escalates. You never decide whether a finding is really a defect, never fix one, and never
+re-run the gate hoping for a better answer. That distinction is what keeps "you never implement
+and you never review" true while the gate sits in your half of the flow. If you find yourself
+weighing whether a finding matters, you have crossed into reviewing — stop and escalate instead.
+
+**A BLOCK is an escalation like any other**: record it, batch it, move to the next issue. Do not
+fix the defects and re-run, and do not merge past it. The branch stays unmerged and the worktree
+stays put — tearing down a worktree whose branch never landed destroys the work. Label the issue
+`needs-review` and carry the numbered defect list into the batch report.
+
+**No verdict is a BLOCK.** A missing artifact or an auditor that returned nothing is recorded as
+"gate returned no verdict", never as a pass.
+
+That sequence is CLAUDE.md's worktree-merge order with the gate inserted, and every step matters.
 
 The rebase comes first so the merge cannot produce conflict state in the project root — that is
 what CLAUDE.md's "NEVER run `git merge` from the main checkout **and resolve conflicts there**"
@@ -135,7 +169,9 @@ Stop at the issue cap, when every ready issue carries a skip label, or on the fi
 orchestrator-level failure — an unresolvable claim, a dirty tree, a merge you cannot complete.
 An orchestrator that works around its own broken precondition is worse than one that stops.
 
-Report a ledger: per issue, the outcome (merged / escalated / skipped) and one line of why.
+Report a ledger: per issue, the outcome (merged / gate-blocked / escalated / skipped) and one
+line of why. For every issue that reached the gate, record its verdict and the auditor that
+blocked — a gate that silently passes everything looks exactly like a gate that never ran.
 Then the totals, the escalation rate, and the run cost. The escalation rate is the number that
 decides what concurrency is worth using next time, so state it even when it is zero.
 

@@ -183,6 +183,11 @@ facts that are not rulings.
 `/super-do` is the request that authorizes its three subagents, exactly as it authorizes the code
 review gate — it is not optional and needs no separate approval.
 
+**When the caller owns the merge, the caller owns the gate.** Under `/orchestrate-issues` the
+`--no-ff` merge moves to the orchestrator, and the gate moves with it — you stop at a reviewed
+branch and it gates the post-rebase diff. That is a relocation, not an exemption; the gate still
+runs, just not by you. Anywhere you perform the merge yourself, you run it yourself.
+
 It is a **different question from the code review gate above**, which is why it sits outside that
 loop rather than inside it. Code review asks whether the code is correct. This asks whether the
 claims we wrote down are true, whether the tests can fail, and whether the diff is traceable to
