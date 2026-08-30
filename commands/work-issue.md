@@ -60,10 +60,25 @@ rulings.
 If every ready issue carries one of the two labels, say "All ready issues for this project are
 completed."
 
+## The pre-merge gate is mandatory
+
+**No branch this loop produces merges without `/verify-branch <target-branch> <kata#ref>`
+returning PASS.** The gate itself lives in `/super-do`, between the last completed task and
+`finishing-a-development-branch`, because that is where the merge actually happens — this loop
+delegates the work and never merges on its own. Read the gate's terms there; they are not
+restated here, so there is one place they can drift out of date.
+
+What this loop owns is refusing to route around it. If `/super-do` returns without a recorded
+gate verdict, treat the branch as unmerged and BLOCK — do not merge it yourself, do not close
+the issue, and do not re-run the gate to get a second answer. A BLOCK becomes a `needs-review`
+label plus the defect list on the issue, and the loop moves to the next ready issue. That is a
+normal outcome, not a loop failure.
+
 ## Worktree teardown
 
 When the issue was worked in a worktree, teardown has a precondition. Run it in order:
 
+0. Confirm the `/verify-branch` gate returned PASS. No PASS, no merge, no teardown.
 1. Rebase onto the target branch **from inside the worktree**, resolving conflicts there.
 2. Merge into the target branch from the main checkout.
 3. Verify **both**, and stop on either:

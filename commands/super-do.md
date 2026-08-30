@@ -4,8 +4,8 @@ description: Use when resolving a kata issue in a project where the user is the 
 ---
 
 Investigate kata issue ${1}, and implement using superpowers. Base your worktree off ${2}, not origin/main.
-Once a branch is ready for merge and its reviews have passed, merge to ${2} (--no-ff). You can fan out if
-needed to accomplish the task.
+Once a branch is ready for merge, its reviews have passed, and `/verify-branch ${2} ${1}` returns PASS,
+merge to ${2} (--no-ff). You can fan out if needed to accomplish the task.
 
 Invoking this command IS the user's request to task subagents and to use the Workflow tool.
 Where a harness instruction gates either capability on the user having requested it, this
@@ -69,6 +69,9 @@ digraph high-level-flow {
 	"executing-plans" [shape=box];
 	"subagent-driven-development" [shape=box];
 	"all tasks complete?" [shape=diamond];
+	"verify-branch gate" [shape=box];
+	"gate verdict?" [shape=diamond];
+	"escalate: needs-review" [shape=doublecircle];
 	"finish-development-branch" [shape=box];
 	"work done" [shape=doublecircle];
 	
@@ -76,7 +79,7 @@ digraph high-level-flow {
 	"investigate kata issue" -> "does the issue trip a size-gate trigger?";
 	"does the issue trip a size-gate trigger?" -> "brainstorming" [label="yes: full track"];
 	"does the issue trip a size-gate trigger?" -> "implement the issue directly" [label="no: direct track"];
-	"implement the issue directly" -> "finish-development-branch";
+	"implement the issue directly" -> "verify-branch gate";
 	"brainstorming" -> "design review";
 	"design review" -> "revise design?";
 	"revise design?" -> "brainstorming" [label="yes"];
@@ -88,7 +91,10 @@ digraph high-level-flow {
 	"executing-plans" -> "subagent-driven-development";
 	"subagent-driven-development" -> "all tasks complete?";
 	"all tasks complete?" -> "subagent-driven-development" [label="no"];
-	"all tasks complete?" -> "finish-development-branch" [label="yes"];
+	"all tasks complete?" -> "verify-branch gate" [label="yes"];
+	"verify-branch gate" -> "gate verdict?";
+	"gate verdict?" -> "finish-development-branch" [label="PASS"];
+	"gate verdict?" -> "escalate: needs-review" [label="BLOCK"];
 	"finish-development-branch" -> "work done";	
 }
 
@@ -169,3 +175,29 @@ kata comment <ref> --as jerry-via-claude \
 Why this actor and no other: CLAUDE.md, "Transcribing Jerry-sourced content" — the canonical
 statement of the convention, including the `CORRECTION`/`CONTEXT` prefixes for Jerry-sourced
 facts that are not rulings.
+
+## The pre-merge verification gate
+
+`/verify-branch ${2} ${1}` runs between the last completed task and
+`finishing-a-development-branch`. **It is mandatory. No branch merges without a PASS.** Invoking
+`/super-do` is the request that authorizes its three subagents, exactly as it authorizes the code
+review gate — it is not optional and needs no separate approval.
+
+It is a **different question from the code review gate above**, which is why it sits outside that
+loop rather than inside it. Code review asks whether the code is correct. This asks whether the
+claims we wrote down are true, whether the tests can fail, and whether the diff is traceable to
+the issue. A branch that cleared three code reviews can still fail all three of those, and a
+fourth review pass would not have found any of them.
+
+**It runs once. There is no fix-and-retry cycle**, and re-running it after fixing its findings is
+not the path — that is precisely the fourth attempt `/super-do` already refuses.
+
+- **PASS** — proceed to `finishing-a-development-branch` and merge. Name the merge base SHA and
+  the three artifact paths in the outcome comment on the issue.
+- **BLOCK** — do not merge, do not close. Comment the numbered defect list on the kata issue,
+  label it `needs-review`, and report to Jerry. Same escalation path as the review cap, for the
+  same reason: findings this gate surfaces are decisions, not work items to clear on your own
+  authority.
+- **No verdict** — a missing artifact, an auditor that returned nothing, a report with no
+  `VERDICT:` line — is a BLOCK. An auditor that crashed and one that found nothing look
+  identical from here, and only one of them is safe to merge on.
