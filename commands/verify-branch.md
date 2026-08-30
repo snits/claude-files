@@ -14,6 +14,44 @@ rather than failing, which silently targets another project.
 Invoking this command IS the user's request to task subagents. Dispatch the three below without
 stopping to ask.
 
+## The bar — what blocks, and what is only reported
+
+Every auditor reports everything it finds. **Only some findings block**, and the split is fixed
+here rather than left to each auditor's judgment, so the bar cannot drift between runs or
+between auditors.
+
+`/super-do`'s review gate already holds this shape — critical and high fail, medium and low do
+not — and this gate inherits its mandatory-ness, so it inherits the calibration too. A gate
+where every finding blocks is a gate that blocks on a regenerated lockfile, and one false BLOCK
+in front of Jerry costs more credibility than the gate buys in a month.
+
+**Blocking:**
+
+- `UNSUPPORTED` or `STALE` — a claim that is not true, or no longer true.
+- `OVERCLAIM` on a claim about behavior the code is relied on to guarantee — a safety property,
+  an invariant, an error-handling boundary, anything a reader would act on.
+- `NON-DISCRIMINATING` or `UNFALSIFIABLE` — a test that cannot fail.
+- `SHOULD-NOT-BE-TRACKED` — a file that must not ship.
+- `UNJUSTIFIED-DELETION` — a removed rule or doc line with no rationale in the commit message
+  or the issue.
+- `UNTRACEABLE` where the change is a behavior change: new logic, altered control flow, a
+  changed default, a touched public signature.
+
+**Reported, not blocking:**
+
+- `OVERCLAIM` in text nothing is acted on — a test name, a scratch note, prose flourish in a
+  commit body that the code around it does not depend on.
+- `DUPLICATE` tests.
+- `UNTRACEABLE` where the change is mechanical and self-evidently entailed by the work:
+  a regenerated lockfile (`Cargo.lock`, `package-lock.json`, `uv.lock` — CLAUDE.md-adjacent
+  practice *requires* regenerating these on a version or dependency change, so blocking on one
+  would forbid a correct commit), formatter output, an import added for a symbol the change
+  uses, a mechanical rename carried through call sites.
+
+An auditor that is genuinely unsure which side a finding falls on marks it blocking and says so
+in one line. Fail closed — but say it, so the calibration can be corrected rather than quietly
+absorbed.
+
 ## What this gate is, and is not
 
 This is **one pass, not a loop.** There is no fix-and-retry cycle inside it. It runs once; it
@@ -28,16 +66,35 @@ A branch that cleared three code reviews can still fail every one of them.
 
 ```
 git merge-base ${1} HEAD
+git rev-parse --show-toplevel        # the PRIMARY checkout, not a worktree
 ```
 
 Every auditor scopes to `<merge-base>..HEAD`. Compute it once, paste the SHA into all three
 briefs, and never let an auditor recompute it — three auditors deriving their own base is three
 chances to audit a different diff than the one being merged.
 
+**Compute the artifact directory here too, as an absolute path in the primary checkout, and
+paste that absolute path into each brief.** Do not write `${PROJECT_ROOT}/.scratchpad/` into a
+brief and leave the agent to expand it. Each auditor runs with `isolation: "worktree"`, where
+that expands to the *worktree* root — and a worktree the harness finds unchanged is auto-cleaned,
+which for the two read-only auditors deletes the artifact along with it. The fail-closed rule
+below reads a missing artifact as BLOCK, so this mistake manufactures BLOCKs that have nothing
+to do with the branch.
+
+```
+mkdir -p "$(git rev-parse --show-toplevel)/.scratchpad"
+```
+
 ## The three auditors — dispatch concurrently, one message, three Agent calls
 
 All three run in parallel. Each gets `isolation: "worktree"` — they read and (for the mutation
 auditor) mutate independently, and a shared checkout makes that unsafe.
+
+**The branch under audit is already checked out in the primary checkout**, and `git worktree add`
+refuses a branch that is checked out elsewhere. So the mutation auditor's worktree must be
+detached — `git worktree add --detach <path> <branch>` — or created on a throwaway branch. Say
+this in its brief; otherwise it burns turns rediscovering it, exactly as `/orchestrate-issues`
+warns about agents escalating on plumbing.
 
 Every brief carries, verbatim:
 
@@ -75,7 +132,8 @@ both the claim and the current `file:line` that contradicts it.
 **Output** a table — `claim | source (file:line or commit) | evidence location | VERIFIED /
 UNSUPPORTED / OVERCLAIM / STALE` — and a one-line verdict.
 
-**Verdict rule:** any UNSUPPORTED, OVERCLAIM, or STALE row is BLOCK.
+**Verdict rule:** apply the bar above. UNSUPPORTED and STALE always block; OVERCLAIM blocks
+only on a claim about guaranteed behavior.
 
 ### 2. test-quality-auditor — Opus
 
@@ -105,6 +163,14 @@ For every test added or modified in `<merge-base>..HEAD`:
    projects, each one journaled and each one repeated. The mutation is small and you know it;
    reverse it by hand.
 
+**If the suite cannot run in the worktree**, say so rather than scoring tests you never
+executed. A fresh worktree has no `node_modules`, `target/`, `.venv`, or build cache, and a cold
+build may be slower than the audit. Two acceptable moves, in order: link or copy the dependency
+directory in from the primary checkout, or — if that is not workable — run the mutations in the
+primary checkout instead. Choosing the second is exactly the case the inverse-Edit rule above
+was written for, since the diff you would destroy is the real one. Record which you did under
+`Deviations`. Reporting "could not run the suite" is a BLOCK, and an honest one; guessing is not.
+
 Also report, without mutating:
 
 - **Fakes and mocks that can never fail** — a mock asserting only that it was called, a stub
@@ -118,7 +184,8 @@ Also report, without mutating:
 reversed by inverse Edit and `git status --porcelain` is back to its pre-audit state, and a
 one-line verdict.
 
-**Verdict rule:** any NON-DISCRIMINATING or UNFALSIFIABLE row is BLOCK. DUPLICATE alone is not.
+**Verdict rule:** apply the bar above. NON-DISCRIMINATING and UNFALSIFIABLE block; DUPLICATE
+does not.
 
 ### 3. scope-auditor — Sonnet
 
@@ -135,8 +202,16 @@ Against `git diff <merge-base>..HEAD`:
    broad `git add -A`. **That is not detectable from a diff — staging method leaves no trace in
    history.** This is the substitute, and the substitution is stated here so a later reader
    knows the literal check was impossible rather than forgotten. Check instead:
-   - `git diff --name-only <merge-base>..HEAD | xargs -r git check-ignore -v` — any hit is a
-     force-added ignored file, which is the actual harm `add -A` causes.
+   - `git ls-files -i -c --exclude-standard` — every tracked file that .gitignore says should
+     not be. Any hit is a force-added ignored file, which is the actual harm `add -A` causes.
+
+     **Do not use a bare `git check-ignore` here. It skips tracked files by default**, so on
+     exactly the force-added file you are hunting it exits 1 and prints nothing — failing in the
+     direction that makes the problem look absent. Verified 2026-08-30 against a fixture with
+     `.secrets.env` in `.gitignore` and force-added: `git check-ignore -v .secrets.env` exits 1,
+     while `git check-ignore -v --no-index .secrets.env` and `git ls-files -i -c
+     --exclude-standard` both report it. If you want the per-file form, it must carry
+     `--no-index`.
    - Known-personal paths that must never ship: `.superpowers/`, `.devcontainer/`,
      `session-handoff.md`, `.scratchpad/` contents, editor and OS droppings, credentials,
      absolute paths under `/home/`.
@@ -151,13 +226,15 @@ Against `git diff <merge-base>..HEAD`:
 **Output** a table — `change (file:line) | category | traceable to | UNTRACEABLE /
 SHOULD-NOT-BE-TRACKED / UNJUSTIFIED-DELETION / OK` — and a one-line verdict.
 
-**Verdict rule:** any non-OK row is BLOCK.
+**Verdict rule:** apply the bar above. SHOULD-NOT-BE-TRACKED and UNJUSTIFIED-DELETION always
+block; UNTRACEABLE blocks only on a behavior change, not on mechanical fallout.
 
 ## Artifacts — read the file, not the report
 
 Each auditor writes its full table to
-`${PROJECT_ROOT}/.scratchpad/{YYYYMMDD}-verify-branch-{auditor}-{branch}.md` **before** it
-returns, and ends its report with a single line: `VERDICT: PASS` or `VERDICT: BLOCK`.
+`<primary-checkout>/.scratchpad/{YYYYMMDD}-verify-branch-{auditor}-{branch}.md` — the absolute
+path resolved above and pasted into its brief — **before** it returns, and ends its report with
+a single line: `VERDICT: PASS` or `VERDICT: BLOCK`.
 
 **Aggregate from the files, not from the returned reports.** The harness sometimes delivers only
 an idle notification and drops an agent's final report; the artifact is what survives that. If a
@@ -171,10 +248,13 @@ safe.
 ## The verdict
 
 Aggregate into one PASS or BLOCK and a single numbered defect list across all three auditors,
-most severe first, each entry naming its auditor and its `file:line`.
+most severe first, each entry naming its auditor, its `file:line`, and whether it is **blocking**
+or **reported**. Non-blocking findings still appear in the list — suppressing them would make
+this gate the only reviewer that saw them.
 
 **PASS requires all three to return PASS.** Any BLOCK is a BLOCK — there is no override, no
-majority, and no "two of three is close enough."
+majority, and no "two of three is close enough." A PASS carrying non-blocking findings is still
+a PASS; report them and merge.
 
 **On PASS:** say so, name the merge base SHA and the three artifact paths, and proceed to the
 merge.
