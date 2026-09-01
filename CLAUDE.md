@@ -698,3 +698,6 @@ see: its `*.py` are indistinguishable from ours. Either put it under `tmp/`, or 
 - `{agent-type}` — omit for non-agent work; use the type that produced the artifact (e.g., `code-reviewer`, `general-purpose`)
 - Example: `20260402-orbweaver-rs-code-reviewer-lod-review.md`
 - Non-agent fallback: `20260402-description.md`
+# graphify
+- **graphify** (`~/.claude/skills/graphify/SKILL.md`) - any input to knowledge graph. Trigger: `/graphify`
+When the user types `/graphify`, use the installed graphify skill or instructions before doing anything else.
