@@ -29,7 +29,7 @@ def brief(ref: str, target: str, actor: str, worktree, run_id: str, model: str) 
     return f"""/super-do {ref} {target}
 
 Dispatcher constraints (kata-dispatch run {run_id}, worker for {ref}). These override anything in /super-do that conflicts:
-- You are in worktree {worktree} on branch dispatch/{ref}, based on {target}. Every edit stays in this worktree. Run `python3 {PREFLIGHT}` before your first edit; a PreToolUse hook enforces the same check on every Edit/Write and will refuse edits outside this worktree.
+- You are in worktree {worktree} on branch dispatch/{ref}, based on {target}. You are ALREADY in your worktree: do NOT run `git worktree add`, do NOT create or switch branches; /super-do's "base your worktree off" step is already done for you. Every edit stays in this worktree. Run `python3 {PREFLIGHT}` before your first edit; a PreToolUse hook enforces the same check on every Edit/Write and will refuse edits outside this worktree.
 - The issue is already claimed for you as actor {actor}, and KATA_AUTHOR is set to that actor, so every kata mutation you make is attributed correctly. Do not claim, do not use --force.
 - Stop at a reviewed branch. do NOT merge, do NOT run /verify-branch, do NOT touch {target} or main. The dispatcher rebases, runs the gate, and merges. Commit with `git commit -s` and the trailer `Assisted-by: Claude:{trailer}`. Leave the worktree clean (no uncommitted changes) when you stop.
 - If you need a fact only a person can supply, a ruling between defensible options, or you hit the review cap: `kata label add {ref} <needsinfo|needs-decision|needs-review>`, `kata comment {ref} --body "<why>"`, then `kata unassign {ref}`, and stop.

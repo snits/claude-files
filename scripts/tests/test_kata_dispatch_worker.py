@@ -48,7 +48,7 @@ def test_spawn_creates_worktree_branch_and_record(tmp_path, monkeypatch):
 def test_brief_carries_the_load_bearing_instructions():
     b = worker.brief("ab12", "integration", "claude-dispatch-r1-ab12", "/wt/ab12", "r1", "opus")
     assert b.startswith("/super-do ab12 integration")
-    for must in ("do NOT merge", "do NOT run /verify-branch", "OUTCOME: reviewed-branch", "OUTCOME: escalated", "OUTCOME: no-change", "preflight.py", "kata unassign ab12", "Assisted-by: Claude:claude-opus"):
+    for must in ("do NOT merge", "do NOT run /verify-branch", "OUTCOME: reviewed-branch", "OUTCOME: escalated", "OUTCOME: no-change", "preflight.py", "do NOT run `git worktree add`", "kata unassign ab12", "Assisted-by: Claude:claude-opus"):
         assert must in b, must
 
 
