@@ -32,9 +32,10 @@ def _artifacts_since(repo: Path, ref: str, branch: str, since: float) -> list[Pa
     keys = {branch, branch.replace("/", "-")}
     out = []
     for p in d.glob("*verify-branch*.md"):
-        # No slop on the mtime window: it's coarse (whole seconds), and a widened window
-        # would admit a prior run's overwritten artifact for the same branch. Fail closed
-        # instead — a borderline timestamp reads as missing, not as a stale pass.
+        # No slop on the mtime window: mtime resolution here is sub-millisecond (measured),
+        # so no buffer is needed, and any widening would admit a prior run's overwritten
+        # artifact for the same branch. Fail closed instead — a borderline timestamp reads
+        # as missing, not as a stale pass.
         if p.stat().st_mtime >= since and any(k in p.name for k in keys):
             out.append(p)
     return sorted(out)

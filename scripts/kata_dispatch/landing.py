@@ -38,6 +38,14 @@ def _safe_release(paths: Paths, rec: AgentRecord, kata: KataClient):
         claims.release(paths, rec.ref, rec.actor, kata)
     except Exception as e:
         _record_failure(rec, "release", e)
+        # claims.release calls kata.unassign_if_owner, whose first act is owner() (a show
+        # read-back) -- that's exactly what may be raising here, so the unassign itself
+        # never ran. Call unassign directly rather than through the owner-guarded helper:
+        # we hold the claim under this exact actor, so there's nothing to look up first.
+        try:
+            kata._run(["unassign", rec.ref], actor=rec.actor, check=False)
+        except Exception:
+            pass
         paths.lock(rec.ref).unlink(missing_ok=True)
 
 
@@ -62,9 +70,14 @@ def _teardown(paths: Paths, rec: AgentRecord, force: bool):
         wt = Path(rec.worktree)
         if wt.exists():
             gitops.worktree_remove(paths.repo, wt, force=force)
+    except Exception as e:
+        _record_failure(rec, "teardown", e)
+    try:
         # `branch -d`'s merged-into-HEAD check is relative to the cwd's checked-out branch; the
         # primary checkout stays on main, but the merge landed on integration, so the check must
         # run from the integration worktree or an unmerged-looking dispatch branch never deletes.
+        # Kept in its own try so a failed worktree_remove above doesn't skip this -- branch -d
+        # is self-guarding via -d and safe to attempt regardless.
         gitops.branch_delete_merged(paths.integration_worktree, rec.branch)
     except Exception as e:
         _record_failure(rec, "teardown", e)
@@ -117,6 +130,7 @@ def land(paths: Paths, rec: AgentRecord, kata: KataClient, gate_fn, target: str 
         rec.save(paths.agent(rec.ref)); return rec
 
     iw = paths.integration_worktree
+    pre = gitops.rev_parse(iw, "HEAD")
     m = gitops.git(["merge", "--no-ff", "--signoff", "-m", f"Merge {rec.branch} (kata#{rec.ref})", rec.branch], iw, check=False)
     if m.returncode != 0:
         gitops.git(["merge", "--abort"], iw, check=False)
@@ -125,18 +139,25 @@ def land(paths: Paths, rec: AgentRecord, kata: KataClient, gate_fn, target: str 
         rec.save(paths.agent(rec.ref)); return rec
 
     if gitops.commits_ahead(repo, target, rec.branch) != 0 or not gitops.diff_empty(repo, target, rec.branch):
-        gitops.git(["reset", "--hard", "ORIG_HEAD"], iw, check=False)
-        rec.state, rec.outcome = "blocked", "landing verification failed: branch not fully contained in integration; merge undone"
+        outcome = "landing verification failed: branch not fully contained in integration"
+        if gitops.rev_parse(iw, "HEAD") != pre:
+            gitops.git(["reset", "--hard", pre], iw, check=False)
+            post = gitops.rev_parse(iw, "HEAD")
+            if post == pre:
+                outcome += "; merge undone"
+            else:
+                outcome += f"; merge undo FAILED, integration left at {post}"
+        rec.state, rec.outcome = "blocked", outcome
         _escalate(paths, rec, kata, "needs-review", rec.outcome, keep_worktree=True)
         rec.save(paths.agent(rec.ref)); return rec
 
     rec.merge_commit = gitops.cite(repo, target)
     rec.state, rec.outcome = "done", "merged"
+    _safe_release(paths, rec, kata)
     try:
         kata.comment(rec.ref, rec.actor, f"kata-dispatch run {rec.run_id}: landed on {target} as {rec.merge_commit}; gate: {verdict.detail}")
     except Exception as e:
         _record_failure(rec, "kata comment", e)
-    _safe_release(paths, rec, kata)
     _teardown(paths, rec, force=False)
     rec.save(paths.agent(rec.ref))
     return rec

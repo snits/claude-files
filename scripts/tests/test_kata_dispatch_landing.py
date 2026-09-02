@@ -106,7 +106,7 @@ def test_unverified_post_merge_containment_undoes_the_merge(tmp_path, monkeypatc
     assert Path(rec.worktree).exists() and "needs-review" in k.labels("ab12")
 
 
-def test_escalate_releases_claim_and_tears_down_when_kata_calls_fail(tmp_path, monkeypatch):
+def test_success_path_survives_kata_failures(tmp_path, monkeypatch):
     from test_kata_dispatch_fakes import FAKE_CLAUDE_COMMIT
     repo, paths, k, rec = _setup(tmp_path, monkeypatch, FAKE_CLAUDE_COMMIT)
     # Break every kata call the land()->success path makes (comment, label, unassign
@@ -117,6 +117,20 @@ def test_escalate_releases_claim_and_tears_down_when_kata_calls_fail(tmp_path, m
     assert "failed" in rec.outcome
     assert not paths.lock("ab12").exists()
     assert not Path(rec.worktree).exists()
+
+
+def test_escalate_releases_lock_when_kata_calls_fail(tmp_path, monkeypatch):
+    from test_kata_dispatch_fakes import FAKE_CLAUDE_COMMIT
+    repo, paths, k, rec = _setup(tmp_path, monkeypatch, FAKE_CLAUDE_COMMIT)
+    subprocess.run(["git", "checkout", "-b", "other"], cwd=rec.worktree, check=True)
+    # Break every kata call the escalate path makes (label lookup/add, comment, unassign
+    # read-back) by removing the issue's fake-kata state out from under it.
+    (tmp_path / "kata-state" / "ab12.json").unlink()
+    rec = landing.land(paths, rec, k, gate.NO_GATE)
+    assert rec.state == "blocked"
+    assert "failed" in rec.outcome
+    assert not paths.lock("ab12").exists()
+    assert Path(rec.worktree).exists()
 
 
 def test_missing_worktree_is_blocked_not_a_crash(tmp_path, monkeypatch):
