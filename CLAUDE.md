@@ -677,6 +677,11 @@ The scratchpad (`~/.claude/scratchpad/`) is an agent work product store — rese
   extracted corpora, caches, images, logs, anything large or machine-generated.
   **Never synced.** It dies with the checkout. Put it here on purpose rather than
   letting a filter catch it by accident.
+- **Virtualenvs never go in a per-issue directory.** A venv lives at the project root
+  `.venv` or under `.scratchpad/tmp/`; for a one-off version pin use
+  `uv run --with <pkg>==<ver>` and create no venv at all. The sync excludes any
+  directory holding a `pyvenv.cfg`, but that is the fence, not the convention:
+  `m5fc/venv-2120` (13,572 files) stalled the central store for a day on 2026-09-01.
 
 Write bulk output to `tmp/` **by choice**. The type allowlist in
 `~/.claude/scripts/sync-scratchpad.sh` and the central store's allowlist `.gitignore`

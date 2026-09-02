@@ -43,9 +43,22 @@ mkdir -p "$dest"
 # allowlist cannot tell a vendored upstream CHECKOUT from agent work product --
 # revumatic's ~75 *.py matched the allowlist perfectly. Structural funnel: see
 # kata claudes-home#ehph.
+# Venvs are excluded by MARKER, not name. The name fences below (venv*/, .venv*/)
+# lost to projects/alexandria/m5fc/venv-2120 on 2026-09-01: 13,572 *.py, 212 MiB,
+# and the store stopped committing for a day. Every venv carries a pyvenv.cfg at
+# its root, whatever it is called, so find those and exclude each parent. rsync
+# has no content-based exclude; this pre-pass is the substitute.
+venv_excludes=()
+while IFS= read -r cfg; do
+  rel=${cfg#"$src/"}; rel=${rel%/pyvenv.cfg}
+  venv_excludes+=("--exclude=/$rel/")
+done < <(find "$src" -name pyvenv.cfg -not -path "$src/tmp/*" 2>/dev/null)
+[ ${#venv_excludes[@]} -gt 0 ] && log "venv excludes for $slug: ${venv_excludes[*]}"
+
 rsync -a -m -F --max-size=10m \
   --exclude='.git/' \
-  --exclude='.venv/' --exclude='venv/' --exclude='node_modules/' \
+  "${venv_excludes[@]}" \
+  --exclude='.venv*/' --exclude='venv*/' --exclude='node_modules/' \
   --exclude='__pycache__/' --exclude='target/' --exclude='.tox/' \
   --exclude='.mypy_cache/' --exclude='.pytest_cache/' \
   --exclude='tmp/' \
