@@ -1,6 +1,7 @@
 """Spawn one headless claude session per issue in its own worktree."""
 import json
 import os
+import re
 import shutil
 import subprocess
 from dataclasses import dataclass
@@ -72,8 +73,8 @@ def spawn(paths: Paths, ref: str, actor: str, run_id: str, cfg: Config, target: 
     if cfg.use_systemd and shutil.which("systemd-run"):
         cmd = ["systemd-run", "--user", "--scope", "--quiet", "-p", f"MemoryHigh={cfg.memory_high}", "-p", f"MemoryMax={cfg.memory_max}", *cmd]
     env = dict(os.environ, KATA_AUTHOR=actor, KATA_DISPATCH_MAIN_CHECKOUT=str(paths.repo))
-    logf = open(log, "ab")
-    proc = subprocess.Popen(cmd, cwd=str(wt), env=env, stdin=subprocess.DEVNULL, stdout=logf, stderr=open(run_dir / f"{ref}.stderr", "ab"))
+    with open(log, "ab") as logf, open(run_dir / f"{ref}.stderr", "ab") as errf:
+        proc = subprocess.Popen(cmd, cwd=str(wt), env=env, stdin=subprocess.DEVNULL, stdout=logf, stderr=errf)
     rec = AgentRecord(ref=ref, actor=actor, run_id=run_id, branch=branch, worktree=str(wt), log=str(log), pid=proc.pid)
     rec.save(paths.agent(ref))
     return rec, proc
@@ -95,12 +96,11 @@ def parse_result(log_path: Path) -> dict:
         out["cost_usd"] = float(d.get("total_cost_usd") or 0.0)
         out["session_id"] = d.get("session_id", "")
         out["subtype"] = d.get("subtype", "")
-        first = (d.get("result") or "").strip().splitlines()[:1]
-        head = first[0].strip() if first else ""
-        if head.startswith("OUTCOME:"):
-            words = head.split(":", 1)[1].split()
-            out["outcome"] = words[0] if words else "unknown"
-            if out["outcome"] == "escalated" and len(words) > 1:
-                out["label"] = words[1]
+        text = d.get("result") or ""
+        m = re.search(r"^[\s`*_>]*OUTCOME:\s*([A-Za-z-]+)(?:\s+([\w-]+))?", text, re.M)
+        if m:
+            out["outcome"] = m.group(1).lower()
+            if out["outcome"] == "escalated":
+                out["label"] = m.group(2) or ""
         break
     return out

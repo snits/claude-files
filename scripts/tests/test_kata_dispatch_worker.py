@@ -67,3 +67,40 @@ def test_parse_result_without_result_line_is_unknown(tmp_path):
     log = tmp_path / "x.jsonl"
     log.write_text('{"type":"system"}\n')
     assert worker.parse_result(log)["outcome"] == "unknown"
+
+
+def _write_result_log(path, result_text, cost=0.02):
+    path.write_text(json.dumps({
+        "type": "result", "subtype": "success", "total_cost_usd": cost,
+        "is_error": False, "session_id": "s1", "result": result_text,
+    }) + "\n")
+
+
+def test_parse_result_finds_outcome_after_code_fence(tmp_path):
+    log = tmp_path / "a.jsonl"
+    _write_result_log(log, "```\nOUTCOME: reviewed-branch\n```")
+    r = worker.parse_result(log)
+    assert r["outcome"] == "reviewed-branch"
+
+
+def test_parse_result_finds_outcome_after_blank_lines_and_bold(tmp_path):
+    log = tmp_path / "b.jsonl"
+    _write_result_log(log, "\n\n**OUTCOME: escalated needs-review**\nwhy")
+    r = worker.parse_result(log)
+    assert r["outcome"] == "escalated"
+    assert r["label"] == "needs-review"
+
+
+def test_parse_result_finds_outcome_after_summary_line(tmp_path):
+    log = tmp_path / "c.jsonl"
+    _write_result_log(log, "Summary first.\nOUTCOME: no-change")
+    r = worker.parse_result(log)
+    assert r["outcome"] == "no-change"
+
+
+def test_parse_result_no_marker_is_unknown_but_cost_parsed(tmp_path):
+    log = tmp_path / "d.jsonl"
+    _write_result_log(log, "no marker here", cost=0.05)
+    r = worker.parse_result(log)
+    assert r["outcome"] == "unknown"
+    assert r["cost_usd"] == 0.05
