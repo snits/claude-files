@@ -1,0 +1,106 @@
+import json
+import os
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from test_kata_dispatch_fakes import install_fake_kata, make_repo  # noqa: E402
+
+from kata_dispatch import claims, landing, reap, state, status  # noqa: E402
+from kata_dispatch.kata import KataClient  # noqa: E402
+
+DEAD = 2**22 - 1
+
+
+def _record(paths, ref, pid, started=None, commit=False):
+    wt = paths.worktree(ref)
+    subprocess.run(["git", "worktree", "add", "-q", "-b", f"dispatch/{ref}", str(wt), "integration"], cwd=paths.repo, check=True)
+    if commit:
+        (wt / "f.txt").write_text("x")
+        subprocess.run(["git", "add", "f.txt"], cwd=wt, check=True)
+        subprocess.run(["git", "commit", "-q", "-m", "work"], cwd=wt, check=True)
+    log = paths.run_dir("r1") / f"{ref}.jsonl"
+    log.parent.mkdir(parents=True, exist_ok=True)
+    log.write_text("{}\n")
+    rec = state.AgentRecord(ref=ref, actor=f"claude-dispatch-r1-{ref}", run_id="r1", branch=f"dispatch/{ref}", worktree=str(wt), log=str(log), pid=pid, started=started or time.time())
+    rec.save(paths.agent(ref))
+    return rec
+
+
+def test_status_flags_stalled_and_dead(tmp_path, monkeypatch):
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch)
+    paths = state.Paths(repo); paths.ensure(); landing.ensure_integration(paths)
+    live = _record(paths, "aaaa", os.getpid())
+    old = time.time() - 1000
+    stale = _record(paths, "bbbb", os.getpid(), started=old)
+    os.utime(stale.log, (old, old))
+    dead = _record(paths, "cccc", DEAD)
+    rows = {r.ref: r for r in status.rows(paths)}
+    assert rows["aaaa"].flag == "" and rows["aaaa"].idle_s < 60
+    assert rows["bbbb"].flag == "STALLED" and rows["bbbb"].idle_s >= 600
+    assert rows["cccc"].flag == "DEAD"
+    text = status.render(list(rows.values()))
+    assert "STALLED" in text and "dispatch/bbbb" in text and "cccc" in text
+
+
+def test_idle_uses_latest_of_commit_and_log(tmp_path, monkeypatch):
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch)
+    paths = state.Paths(repo); paths.ensure(); landing.ensure_integration(paths)
+    rec = _record(paths, "aaaa", os.getpid(), commit=True)
+    old = time.time() - 5000
+    os.utime(rec.log, (old, old))
+    r = status.rows(paths)[0]
+    assert r.idle_s < 60 and r.last_commit.endswith('("work")')
+
+
+def test_reap_orphaned_with_commits_is_kept_and_labeled(tmp_path, monkeypatch):
+    repo = make_repo(tmp_path)
+    st = install_fake_kata(tmp_path, monkeypatch, [{"short_id": "aaaa", "title": "t", "body": "b"}])
+    paths = state.Paths(repo); paths.ensure(); landing.ensure_integration(paths)
+    k = KataClient(repo)
+    assert claims.acquire(paths, "aaaa", "claude-dispatch-r1-aaaa", k)
+    rec = _record(paths, "aaaa", DEAD, commit=True)
+    lines = reap.reap(paths, k)
+    assert any("aaaa" in l and "kept" in l for l in lines)
+    assert Path(rec.worktree).exists()
+    assert "needs-review" in k.labels("aaaa") and k.owner("aaaa") is None and not paths.lock("aaaa").exists()
+    assert state.AgentRecord.load(paths.agent("aaaa")).state == "orphaned"
+
+
+def test_reap_orphaned_without_commits_is_removed(tmp_path, monkeypatch):
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch, [{"short_id": "aaaa", "title": "t", "body": "b"}])
+    paths = state.Paths(repo); paths.ensure(); landing.ensure_integration(paths)
+    k = KataClient(repo)
+    assert claims.acquire(paths, "aaaa", "claude-dispatch-r1-aaaa", k)
+    rec = _record(paths, "aaaa", DEAD)
+    reap.reap(paths, k)
+    assert not Path(rec.worktree).exists()
+    assert subprocess.run(["git", "branch", "--list", "dispatch/aaaa"], cwd=repo, capture_output=True, text=True).stdout == ""
+    assert k.owner("aaaa") is None
+
+
+def test_reap_stale_lock_without_record_respects_foreign_owner(tmp_path, monkeypatch):
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch, [{"short_id": "aaaa", "title": "t", "body": "b"}])
+    paths = state.Paths(repo); paths.ensure()
+    k = KataClient(repo)
+    subprocess.run(["kata", "claim", "aaaa", "--as", "human"], check=True, capture_output=True)
+    paths.lock("aaaa").write_text(json.dumps({"actor": "claude-dispatch-r0-aaaa", "pid": DEAD, "host": os.uname().nodename, "started": 0}))
+    reap.reap(paths, k)
+    assert not paths.lock("aaaa").exists() and k.owner("aaaa") == "human"
+
+
+def test_reap_leaves_live_agents_alone(tmp_path, monkeypatch):
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch, [{"short_id": "aaaa", "title": "t", "body": "b"}])
+    paths = state.Paths(repo); paths.ensure(); landing.ensure_integration(paths)
+    k = KataClient(repo)
+    assert claims.acquire(paths, "aaaa", "claude-dispatch-r1-aaaa", k)
+    rec = _record(paths, "aaaa", os.getpid())
+    reap.reap(paths, k)
+    assert Path(rec.worktree).exists() and k.owner("aaaa") == "claude-dispatch-r1-aaaa"

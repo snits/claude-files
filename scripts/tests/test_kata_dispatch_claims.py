@@ -74,6 +74,20 @@ def test_release_only_unassigns_own_claim(tmp_path, monkeypatch):
     assert k.owner("ab12") == "someone-else"        # not ours, so not unassigned
 
 
+def test_release_falls_back_when_owner_lookup_raises(tmp_path, monkeypatch):
+    repo = make_repo(tmp_path)
+    st = install_fake_kata(tmp_path, monkeypatch, [ISSUE])
+    paths = state.Paths(repo)
+    paths.ensure()
+    k = KataClient(repo)
+    assert claims.acquire(paths, "ab12", "claude-dispatch-r1-ab12", k) is True
+    # delete the fake's issue state file so `show` (and thus owner()) exits 4 -- release must
+    # still fall back to a direct unassign under our held actor and never raise.
+    (st / "ab12.json").unlink()
+    claims.release(paths, "ab12", "claude-dispatch-r1-ab12", k)
+    assert not paths.lock("ab12").exists()
+
+
 def _racer(args):
     repo, ref, actor, env = args
     os.environ.update(env)

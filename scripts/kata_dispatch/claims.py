@@ -67,7 +67,19 @@ def acquire(paths: Paths, ref: str, actor: str, kata: KataClient) -> bool:
 
 
 def release(paths: Paths, ref: str, actor: str, kata: KataClient):
-    kata.unassign_if_owner(ref, actor)
+    """Release the claim no matter what. Never raises: kata's own lookups can 404 (e.g. a
+    deleted ref), so guarantee the lock file is gone even when the kata-side unassign raises."""
+    try:
+        kata.unassign_if_owner(ref, actor)
+    except Exception:
+        # unassign_if_owner's first act is owner() (a show read-back) -- that's exactly what
+        # may be raising here, so the unassign itself never ran. Call unassign directly rather
+        # than through the owner-guarded helper: we hold the claim under this exact actor, so
+        # there's nothing to look up first.
+        try:
+            kata._run(["unassign", ref], actor=actor, check=False)
+        except Exception:
+            pass
     paths.lock(ref).unlink(missing_ok=True)
 
 

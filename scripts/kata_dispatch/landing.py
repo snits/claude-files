@@ -32,20 +32,12 @@ def _record_failure(rec: AgentRecord, what: str, err: Exception):
 
 
 def _safe_release(paths: Paths, rec: AgentRecord, kata: KataClient):
-    """Release the claim no matter what. kata's own lookups can 404 (e.g. a deleted ref),
-    so guarantee the lock file is gone even when the kata-side unassign call raises."""
+    """claims.release itself never raises (it has its own owner-lookup fallback); this just
+    guards the call site in case that guarantee is ever broken."""
     try:
         claims.release(paths, rec.ref, rec.actor, kata)
     except Exception as e:
         _record_failure(rec, "release", e)
-        # claims.release calls kata.unassign_if_owner, whose first act is owner() (a show
-        # read-back) -- that's exactly what may be raising here, so the unassign itself
-        # never ran. Call unassign directly rather than through the owner-guarded helper:
-        # we hold the claim under this exact actor, so there's nothing to look up first.
-        try:
-            kata._run(["unassign", rec.ref], actor=rec.actor, check=False)
-        except Exception:
-            pass
         paths.lock(rec.ref).unlink(missing_ok=True)
 
 
