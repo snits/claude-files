@@ -1,5 +1,4 @@
-import json
-import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -8,7 +7,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from test_kata_dispatch_fakes import (FAKE_CLAUDE_ESCALATE, FAKE_CLAUDE_GATE_PASS, install_fake_claude,  # noqa: E402
                                       install_fake_kata, make_repo)
 
-from kata_dispatch import claims, gate, landing, state, worker  # noqa: E402
+from kata_dispatch import claims, gate, gitops, landing, state, worker  # noqa: E402
 from kata_dispatch.kata import KataClient  # noqa: E402
 
 ISSUE = {"short_id": "ab12", "title": "t", "body": "b"}
@@ -94,3 +93,47 @@ def test_real_gate_reads_artifacts_fail_closed(tmp_path, monkeypatch):
     monkeypatch.setenv("FAKE_GATE_COUNT", "2")
     v = gate.run_gate(repo, "ab12", "dispatch/ab12", "integration", "sonnet", tmp_path / "gate3.jsonl")
     assert not v.passed and "no verdict" in v.detail
+
+
+def test_unverified_post_merge_containment_undoes_the_merge(tmp_path, monkeypatch):
+    from test_kata_dispatch_fakes import FAKE_CLAUDE_COMMIT
+    repo, paths, k, rec = _setup(tmp_path, monkeypatch, FAKE_CLAUDE_COMMIT)
+    before = _git(["rev-parse", "main"], repo)
+    monkeypatch.setattr(gitops, "diff_empty", lambda *a, **kw: False)
+    rec = landing.land(paths, rec, k, gate.NO_GATE)
+    assert rec.state == "blocked" and "merge undone" in rec.outcome
+    assert _git(["rev-parse", "integration"], repo) == before
+    assert Path(rec.worktree).exists() and "needs-review" in k.labels("ab12")
+
+
+def test_escalate_releases_claim_and_tears_down_when_kata_calls_fail(tmp_path, monkeypatch):
+    from test_kata_dispatch_fakes import FAKE_CLAUDE_COMMIT
+    repo, paths, k, rec = _setup(tmp_path, monkeypatch, FAKE_CLAUDE_COMMIT)
+    # Break every kata call the land()->success path makes (comment, label, unassign
+    # read-back) by removing the issue's fake-kata state out from under it.
+    (tmp_path / "kata-state" / "ab12.json").unlink()
+    rec = landing.land(paths, rec, k, gate.NO_GATE)
+    assert rec.state == "done"
+    assert "failed" in rec.outcome
+    assert not paths.lock("ab12").exists()
+    assert not Path(rec.worktree).exists()
+
+
+def test_missing_worktree_is_blocked_not_a_crash(tmp_path, monkeypatch):
+    from test_kata_dispatch_fakes import FAKE_CLAUDE_COMMIT
+    repo, paths, k, rec = _setup(tmp_path, monkeypatch, FAKE_CLAUDE_COMMIT)
+    shutil.rmtree(rec.worktree)
+    subprocess.run(["git", "worktree", "prune"], cwd=repo, check=True)
+    rec = landing.land(paths, rec, k, gate.NO_GATE)
+    assert rec.state == "blocked" and "worktree missing" in rec.outcome
+    assert not paths.lock("ab12").exists() and k.owner("ab12") is None
+    assert _git(["branch", "--list", "dispatch/ab12"], repo) != ""
+
+
+def test_worktree_on_wrong_branch_is_blocked(tmp_path, monkeypatch):
+    from test_kata_dispatch_fakes import FAKE_CLAUDE_COMMIT
+    repo, paths, k, rec = _setup(tmp_path, monkeypatch, FAKE_CLAUDE_COMMIT)
+    subprocess.run(["git", "checkout", "-b", "other"], cwd=rec.worktree, check=True)
+    rec = landing.land(paths, rec, k, gate.NO_GATE)
+    assert rec.state == "blocked" and "worktree on other, expected dispatch/ab12" in rec.outcome
+    assert Path(rec.worktree).exists() and "needs-review" in k.labels("ab12")

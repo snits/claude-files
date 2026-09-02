@@ -27,25 +27,47 @@ def ensure_integration(paths: Paths, target: str = "integration"):
         raise RuntimeError(f"integration worktree {iw} is dirty")
 
 
-def _escalate(paths: Paths, rec: AgentRecord, kata: KataClient, label: str, why: str, keep_worktree: bool):
+def _record_failure(rec: AgentRecord, what: str, err: Exception):
+    rec.outcome = f"{rec.outcome}; {what} failed: {err}"
+
+
+def _safe_release(paths: Paths, rec: AgentRecord, kata: KataClient):
+    """Release the claim no matter what. kata's own lookups can 404 (e.g. a deleted ref),
+    so guarantee the lock file is gone even when the kata-side unassign call raises."""
     try:
-        if label and label not in kata.labels(rec.ref):
-            kata.label_add(rec.ref, rec.actor, label)
-        kata.comment(rec.ref, rec.actor, f"kata-dispatch run {rec.run_id}: {why}")
-    finally:
-        if not keep_worktree:
-            _teardown(paths, rec)
         claims.release(paths, rec.ref, rec.actor, kata)
+    except Exception as e:
+        _record_failure(rec, "release", e)
+        paths.lock(rec.ref).unlink(missing_ok=True)
 
 
-def _teardown(paths: Paths, rec: AgentRecord):
-    wt = Path(rec.worktree)
-    if wt.exists():
-        gitops.worktree_remove(paths.repo, wt, force=True)
-    # `branch -d`'s merged-into-HEAD check is relative to the cwd's checked-out branch; the
-    # primary checkout stays on main, but the merge landed on integration, so the check must
-    # run from the integration worktree or an unmerged-looking dispatch branch never deletes.
-    gitops.branch_delete_merged(paths.integration_worktree, rec.branch)
+def _escalate(paths: Paths, rec: AgentRecord, kata: KataClient, label: str, why: str, keep_worktree: bool):
+    _safe_release(paths, rec, kata)
+    if label:
+        try:
+            if label not in kata.labels(rec.ref):
+                kata.label_add(rec.ref, rec.actor, label)
+        except Exception as e:
+            _record_failure(rec, "kata label", e)
+    try:
+        kata.comment(rec.ref, rec.actor, f"kata-dispatch run {rec.run_id}: {why}")
+    except Exception as e:
+        _record_failure(rec, "kata comment", e)
+    if not keep_worktree:
+        _teardown(paths, rec, force=True)
+
+
+def _teardown(paths: Paths, rec: AgentRecord, force: bool):
+    try:
+        wt = Path(rec.worktree)
+        if wt.exists():
+            gitops.worktree_remove(paths.repo, wt, force=force)
+        # `branch -d`'s merged-into-HEAD check is relative to the cwd's checked-out branch; the
+        # primary checkout stays on main, but the merge landed on integration, so the check must
+        # run from the integration worktree or an unmerged-looking dispatch branch never deletes.
+        gitops.branch_delete_merged(paths.integration_worktree, rec.branch)
+    except Exception as e:
+        _record_failure(rec, "teardown", e)
 
 
 def land(paths: Paths, rec: AgentRecord, kata: KataClient, gate_fn, target: str = "integration", gate_model: str = "opus") -> AgentRecord:
@@ -65,6 +87,16 @@ def land(paths: Paths, rec: AgentRecord, kata: KataClient, gate_fn, target: str 
         _escalate(paths, rec, kata, label, rec.outcome, keep_worktree=False)
         rec.save(paths.agent(rec.ref))
         return rec
+
+    if not wt.exists():
+        rec.state, rec.outcome = "blocked", "worktree missing; branch kept"
+        _escalate(paths, rec, kata, "needs-review", rec.outcome, keep_worktree=True)
+        rec.save(paths.agent(rec.ref)); return rec
+
+    if gitops.current_branch(wt) != rec.branch:
+        rec.state, rec.outcome = "blocked", f"worktree on {gitops.current_branch(wt)}, expected {rec.branch}"
+        _escalate(paths, rec, kata, "needs-review", rec.outcome, keep_worktree=True)
+        rec.save(paths.agent(rec.ref)); return rec
 
     if not gitops.is_clean(wt):
         rec.state, rec.outcome = "blocked", "worktree left dirty by worker"
@@ -93,14 +125,18 @@ def land(paths: Paths, rec: AgentRecord, kata: KataClient, gate_fn, target: str 
         rec.save(paths.agent(rec.ref)); return rec
 
     if gitops.commits_ahead(repo, target, rec.branch) != 0 or not gitops.diff_empty(repo, target, rec.branch):
-        rec.state, rec.outcome = "blocked", "landing verification failed: branch not fully contained in integration"
+        gitops.git(["reset", "--hard", "ORIG_HEAD"], iw, check=False)
+        rec.state, rec.outcome = "blocked", "landing verification failed: branch not fully contained in integration; merge undone"
         _escalate(paths, rec, kata, "needs-review", rec.outcome, keep_worktree=True)
         rec.save(paths.agent(rec.ref)); return rec
 
     rec.merge_commit = gitops.cite(repo, target)
     rec.state, rec.outcome = "done", "merged"
-    kata.comment(rec.ref, rec.actor, f"kata-dispatch run {rec.run_id}: landed on {target} as {rec.merge_commit}; gate: {verdict.detail}")
-    _teardown(paths, rec)
-    claims.release(paths, rec.ref, rec.actor, kata)
+    try:
+        kata.comment(rec.ref, rec.actor, f"kata-dispatch run {rec.run_id}: landed on {target} as {rec.merge_commit}; gate: {verdict.detail}")
+    except Exception as e:
+        _record_failure(rec, "kata comment", e)
+    _safe_release(paths, rec, kata)
+    _teardown(paths, rec, force=False)
     rec.save(paths.agent(rec.ref))
     return rec

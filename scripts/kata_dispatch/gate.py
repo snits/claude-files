@@ -4,7 +4,6 @@ The skill writes `<primary>/.scratchpad/{YYYYMMDD}-verify-branch-{auditor}-{bran
 ending in `VERDICT: PASS|BLOCK`. Three auditors. A missing artifact or a missing VERDICT line
 is a BLOCK recorded as "no verdict", never a pass.
 """
-import os
 import re
 import subprocess
 import time
@@ -30,9 +29,12 @@ def _artifacts_since(repo: Path, ref: str, branch: str, since: float) -> list[Pa
     d = repo / ".scratchpad"
     if not d.is_dir():
         return []
-    keys = {ref, branch, branch.replace("/", "-")}
+    keys = {branch, branch.replace("/", "-")}
     out = []
     for p in d.glob("*verify-branch*.md"):
+        # No slop on the mtime window: it's coarse (whole seconds), and a widened window
+        # would admit a prior run's overwritten artifact for the same branch. Fail closed
+        # instead — a borderline timestamp reads as missing, not as a stale pass.
         if p.stat().st_mtime >= since and any(k in p.name for k in keys):
             out.append(p)
     return sorted(out)
