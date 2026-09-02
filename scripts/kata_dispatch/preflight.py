@@ -35,11 +35,25 @@ def check(cwd, file_path=None, main_checkout=None) -> tuple[bool, str]:
         return False, f"branch {branch!r} is not a dispatch/ branch"
     if file_path:
         fp = Path(file_path)
-        fp = (cwd / fp).resolve() if not fp.is_absolute() else fp.resolve()
+        abs_fp = fp if fp.is_absolute() else (cwd / fp)
+        # Judge containment lexically first (normpath, no symlink resolution) so that a
+        # symlink the dispatcher plants on purpose (e.g. a shared .scratchpad) isn't
+        # rejected just because it resolves outside the worktree. `..` escapes are still
+        # caught because normpath collapses them lexically.
+        lexical = Path(os.path.normpath(str(abs_fp)))
         try:
-            fp.relative_to(top)
+            rel = lexical.relative_to(top)
         except ValueError:
-            return False, f"{fp} is outside the worktree {top}"
+            return False, f"{lexical} is outside the worktree {top}"
+        if rel.parts and rel.parts[0] == ".scratchpad":
+            return True, "ok"
+        # Otherwise also require the symlink-resolved path to stay inside the worktree,
+        # so a symlink planted inside the worktree pointing elsewhere can't escape it.
+        resolved = abs_fp.resolve()
+        try:
+            resolved.relative_to(top)
+        except ValueError:
+            return False, f"{resolved} is outside the worktree {top}"
     return True, "ok"
 
 
@@ -49,9 +63,13 @@ def main(argv=None) -> int:
         try:
             payload = json.load(sys.stdin)
         except json.JSONDecodeError:
-            payload = {}
+            payload = None
+        tool_input = (payload or {}).get("tool_input") or {}
+        fp = tool_input.get("file_path") or tool_input.get("notebook_path")
+        if payload is None or not fp:
+            print("kata-dispatch preflight: hook payload has no file path; refusing", file=sys.stderr)
+            return 2
         cwd = payload.get("cwd") or os.getcwd()
-        fp = (payload.get("tool_input") or {}).get("file_path")
         ok, why = check(cwd, fp)
     else:
         ok, why = check(os.getcwd())

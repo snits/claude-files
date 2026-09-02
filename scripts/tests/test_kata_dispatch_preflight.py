@@ -61,3 +61,53 @@ def test_cli_mode(tmp_path):
     repo = make_repo(tmp_path)
     p = subprocess.run([sys.executable, str(PF)], capture_output=True, text=True, cwd=repo)
     assert p.returncode == 2
+
+
+def test_shared_scratchpad_symlink_is_allowed(tmp_path):
+    repo = make_repo(tmp_path)
+    wt = _wt(repo, tmp_path)
+    (repo / ".scratchpad").mkdir()
+    (wt / ".scratchpad").symlink_to(repo / ".scratchpad", target_is_directory=True)
+    ok, why = preflight.check(wt, file_path=str(wt / ".scratchpad" / "note.md"))
+    assert (ok, why) == (True, "ok")
+
+
+def test_symlink_escape_inside_worktree_is_refused(tmp_path):
+    repo = make_repo(tmp_path)
+    wt = _wt(repo, tmp_path)
+    (wt / "evil").symlink_to(repo / "src", target_is_directory=True)
+    ok, why = preflight.check(wt, file_path=str(wt / "evil" / "app.py"))
+    assert not ok and "outside" in why
+
+
+def test_relative_dotdot_escape_is_refused(tmp_path):
+    repo = make_repo(tmp_path)
+    wt = _wt(repo, tmp_path)
+    ok, why = preflight.check(wt, file_path="../README.md")
+    assert not ok and "outside" in why
+
+
+def test_relative_dotdot_that_stays_inside_is_allowed(tmp_path):
+    repo = make_repo(tmp_path)
+    wt = _wt(repo, tmp_path)
+    ok, why = preflight.check(wt, file_path=str(wt / "src" / ".." / "README.md"))
+    assert (ok, why) == (True, "ok")
+
+
+def test_hook_mode_malformed_payload_fails_closed(tmp_path):
+    repo = make_repo(tmp_path)
+    wt = _wt(repo, tmp_path)
+    p = subprocess.run([sys.executable, str(PF), "--hook"], input="not json", capture_output=True, text=True, cwd=wt)
+    assert p.returncode == 2 and "refusing" in p.stderr
+
+
+def test_hook_mode_notebook_edit_uses_notebook_path(tmp_path):
+    repo = make_repo(tmp_path)
+    wt = _wt(repo, tmp_path)
+    payload = json.dumps({"tool_name": "NotebookEdit", "tool_input": {"notebook_path": str(wt / "nb.ipynb")}, "cwd": str(wt)})
+    p = subprocess.run([sys.executable, str(PF), "--hook"], input=payload, capture_output=True, text=True, cwd=wt)
+    assert p.returncode == 0
+
+    payload = json.dumps({"tool_name": "NotebookEdit", "tool_input": {"notebook_path": str(repo / "nb.ipynb")}, "cwd": str(wt)})
+    p = subprocess.run([sys.executable, str(PF), "--hook"], input=payload, capture_output=True, text=True, cwd=wt)
+    assert p.returncode == 2
