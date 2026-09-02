@@ -2,7 +2,8 @@
 """SubagentStart hook: the skills reminder plus the four brief-side rules retros traced to
 subagent failures (report delivery, own-worktree merges, per-checkout paths, sleep-polling).
 
-Ignores stdin. Prints one hookSpecificOutput JSON object. Never exits non-zero.
+Drains stdin (so the hook writer never sees EPIPE) and ignores its content. Prints one
+hookSpecificOutput JSON object. Never exits non-zero.
 """
 import json
 import sys

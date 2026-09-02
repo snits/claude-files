@@ -43,9 +43,10 @@ def coach(command, error):
     return text
 
 
-def test_cwd_trap_names_enterworktree():
+def test_cwd_trap_names_cd_back():
     text = coach("grep -n VERDICT report.md", V_CWD)
-    assert f"Call EnterWorktree {WT} again" in text
+    assert f"cd {WT}" in text
+    assert "EnterWorktree" not in text
 
 
 def test_git_dash_c_elsewhere():
@@ -110,7 +111,30 @@ def test_unrelated_bash_failure_is_silent():
 
 
 def test_malformed_stdin_is_silent():
-    for payload in ("not json", "[]", json.dumps({"error": 5}), json.dumps({"error": V_C})):
+    for payload in ("not json", "[]", json.dumps({"error": 5}), json.dumps({"error": V_C}),
+                    json.dumps({"tool_input": {"command": "ls"}, "error": "Refusing to run it — some other guard."})):
         r = run_hook(payload)
         assert r.returncode == 0, payload
         assert r.stdout == "", payload
+
+
+def test_eval_refusal_wins_over_dash_c_inside_the_string():
+    text = coach(f'eval "git -C {SHARED} log --oneline -1"', V_EVAL)
+    assert "eval is refused" in text
+    assert "targets the shared checkout" not in text
+
+
+def test_relative_dash_c_is_not_called_elsewhere():
+    text = coach("git -C submodule status", V_COMPLEX)
+    assert "targets the shared checkout" not in text
+
+
+def test_dash_c_refusal_with_quoted_path_strips_quotes():
+    text = coach(f'git -C "{SHARED}" status --short', V_C)
+    assert f"git -C {SHARED} targets the shared checkout" in text
+    assert '"' not in text.split(" targets")[0]
+
+
+def test_dash_c_refusal_without_visible_dash_c_still_coaches():
+    text = coach("some-wrapper --git-dir", V_C)
+    assert "Run git without -C" in text

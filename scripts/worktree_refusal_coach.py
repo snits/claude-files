@@ -18,9 +18,10 @@ ENV_PREFIX_SUBST_RE = re.compile(r"^\s*(?:[A-Za-z_]\w*=\S*\s+)*[A-Za-z_]\w*=\S*\
 SEGMENT_SPLIT_RE = re.compile(r"\s*(?:&&|\|\||;|\||\n)\s*")
 CD_RE = re.compile(r"^\(?\s*cd\s+(\S+)")
 
-CWD_TRAP = ("Your shell cwd is outside the worktree. Call EnterWorktree {wt} again to reset it, "
+CWD_TRAP = ("Your shell cwd drifted outside the worktree. Run `cd {wt}` as its own Bash call, "
             "then rerun the command unchanged.")
 GIT_C = "git -C {arg} targets the shared checkout. Run git without -C; your shell already sits in {wt}."
+GIT_C_GENERIC = "git -C redirects git to the shared checkout. Run git without -C; your shell already sits in {wt}."
 CD_ELSEWHERE = "Do not cd out of the worktree before git. Run the git command from {wt}, with no cd."
 GIT_SUBST = ("$(git …) inside a string is refused in an isolated worktree. Run the git command as "
              "its own Bash call and use its output in the next call.")
@@ -38,14 +39,26 @@ def under(path: str, root: str) -> bool:
     return path == root or path.startswith(root + "/")
 
 
+def is_elsewhere(arg: str, wt: str) -> bool:
+    """An absolute path that is not the worktree or inside it. Relative paths are never 'elsewhere'."""
+    arg = arg.strip("'\"")
+    return arg.startswith("/") and not under(arg, wt)
+
+
+def git_c_message(command: str, wt: str) -> str:
+    m = GIT_C_RE.search(command)
+    if m:
+        return GIT_C.format(arg=m.group(1).strip("'\""), wt=wt)
+    return GIT_C_GENERIC.format(wt=wt)
+
+
 def cd_elsewhere_before_git(command: str, wt: str) -> bool:
     """True when an absolute `cd <dir>` outside the worktree precedes a segment that names git."""
     left_worktree = False
     for seg in SEGMENT_SPLIT_RE.split(command):
         m = CD_RE.match(seg)
         if m:
-            arg = m.group(1).strip("'\"")
-            if arg.startswith("/") and not under(arg, wt):
+            if is_elsewhere(m.group(1), wt):
                 left_worktree = True
             continue
         if left_worktree and re.search(r"\bgit\b", seg):
@@ -54,12 +67,24 @@ def cd_elsewhere_before_git(command: str, wt: str) -> bool:
 
 
 def classify(command: str, error: str, wt: str) -> str:
+    # 1. The harness's own words name the shape.
     if "working directory resolved to the shared checkout" in error:
         return CWD_TRAP.format(wt=wt)
+    if "redirects git to the shared checkout via -C" in error:
+        return git_c_message(command, wt)
+    if "changes directory to the shared checkout" in error:
+        return CD_ELSEWHERE.format(wt=wt)
+    if "runs a string through eval" in error:
+        return EVAL
+    if "is set here to a value that configures what it loads" in error:
+        return ENV_PREFIX
+    if "names git in a form too complex" in error:
+        return GIT_SUBST
+    # 2. Generic "too complex" text: read the command for the shape.
     m = GIT_C_RE.search(command)
-    if m and not under(m.group(1).strip("'\""), wt):
-        return GIT_C.format(arg=m.group(1), wt=wt)
-    if "changes directory to the shared checkout" in error or cd_elsewhere_before_git(command, wt):
+    if m and is_elsewhere(m.group(1), wt):
+        return git_c_message(command, wt)
+    if cd_elsewhere_before_git(command, wt):
         return CD_ELSEWHERE.format(wt=wt)
     if GIT_SUBST_RE.search(command):
         return GIT_SUBST
