@@ -26,7 +26,9 @@ def _idle(rec: AgentRecord, repo: Path, now: float) -> tuple[int, str]:
     ts, cite = 0, ""
     if gitops.branch_exists(repo, rec.branch):
         ts, cite = gitops.last_commit(repo, rec.branch)
-        if gitops.commits_ahead(repo, "integration", rec.branch) == 0:
+        # No integration branch yet (e.g. status run before setup) means no ahead-count to
+        # compute -- treat that the same as "0 ahead": base commit only, not worker activity.
+        if not gitops.branch_exists(repo, "integration") or gitops.commits_ahead(repo, "integration", rec.branch) == 0:
             cite, ts = f"(none yet) base {cite}", 0      # the base commit is not worker activity
     try:
         log_ts = os.stat(rec.log).st_mtime

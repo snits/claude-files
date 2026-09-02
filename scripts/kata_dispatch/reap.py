@@ -45,19 +45,29 @@ def reap(paths: Paths, kata: KataClient, target: str = "integration") -> list[st
                 _record_failure(rec, "kata comment", e)
             report.append(f"{rec.ref}: kept {wt} ({ahead} commits), labeled needs-review")
         else:
+            # Set the optimistic outcome first: _record_failure appends onto rec.outcome, so a
+            # teardown failure must land as an addition to this text, never get clobbered by it.
+            rec.outcome = "worker died with no commits; worktree removed"
             try:
                 if wt.exists():
                     gitops.worktree_remove(paths.repo, wt, force=True)
+                elif gitops.branch_exists(paths.repo, rec.branch):
+                    # Worktree dir is already gone (e.g. removed by hand) but git still has it
+                    # registered -- prune the stale registration before touching the branch.
+                    gitops.git(["worktree", "prune"], paths.repo, check=False)
             except Exception as e:
                 _record_failure(rec, "teardown", e)
             try:
                 # branch -d judges "merged" against the cwd checkout's HEAD; main has not seen
                 # these commits, integration has -- same fix as landing._teardown (Task 7).
-                gitops.branch_delete_merged(paths.integration_worktree, rec.branch)
+                if not gitops.branch_delete_merged(paths.integration_worktree, rec.branch):
+                    rec.outcome += "; branch -d refused"
             except Exception as e:
                 _record_failure(rec, "teardown", e)
-            rec.outcome = "worker died with no commits; worktree removed"
-            report.append(f"{rec.ref}: removed empty worktree and branch")
+            if "failed" in rec.outcome or "refused" in rec.outcome:
+                report.append(f"{rec.ref}: {rec.outcome}")
+            else:
+                report.append(f"{rec.ref}: removed empty worktree and branch")
         rec.save(paths.agent(rec.ref))
 
     for lock in claims.stale_locks(paths):
@@ -67,11 +77,14 @@ def reap(paths: Paths, kata: KataClient, target: str = "integration") -> list[st
             owner = kata.owner(lock["ref"])
         except Exception:
             owner = None
-        # claims.release only unassigns when kata's owner matches the lock's actor, and always
-        # removes the lock file -- exactly the "unassign only when owner equals actor" contract.
-        claims.release(paths, lock["ref"], lock["actor"], kata)
+        # Branch on the owner we just looked up, never route through claims.release here:
+        # its lookup-failure fallback calls `kata unassign` unconditionally, and `kata unassign`
+        # succeeds for any actor (verified 2026-09-01) -- safe only when we provably hold the
+        # claim, which an owner()-raise or owner-mismatch means we do not.
         if owner == lock["actor"]:
+            claims.release(paths, lock["ref"], lock["actor"], kata)
             report.append(f"{lock['ref']}: stale lock (pid {lock['pid']} dead), claim released")
         else:
+            paths.lock(lock["ref"]).unlink(missing_ok=True)
             report.append(f"{lock['ref']}: stale lock removed; kata owner is {owner!r}, left alone")
     return report

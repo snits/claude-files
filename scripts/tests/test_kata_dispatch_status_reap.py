@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 import subprocess
 import sys
 import time
@@ -9,7 +10,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from test_kata_dispatch_fakes import install_fake_kata, make_repo  # noqa: E402
 
 from kata_dispatch import claims, landing, reap, state, status  # noqa: E402
-from kata_dispatch.kata import KataClient  # noqa: E402
+from kata_dispatch.kata import KataClient, KataError  # noqa: E402
 
 DEAD = 2**22 - 1
 
@@ -104,3 +105,67 @@ def test_reap_leaves_live_agents_alone(tmp_path, monkeypatch):
     rec = _record(paths, "aaaa", os.getpid())
     reap.reap(paths, k)
     assert Path(rec.worktree).exists() and k.owner("aaaa") == "claude-dispatch-r1-aaaa"
+
+
+def test_reap_stale_lock_owner_lookup_failure_leaves_claim_alone(tmp_path, monkeypatch):
+    """A kata.owner() failure on the stale-lock path must never fall through to unassigning --
+    claims.release's lookup-failure fallback calls `kata unassign` unconditionally, and that
+    succeeds for any actor. Simulate the failure and confirm the foreign claim survives."""
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch, [{"short_id": "aaaa", "title": "t", "body": "b"}])
+    paths = state.Paths(repo); paths.ensure()
+    k = KataClient(repo)
+    subprocess.run(["kata", "claim", "aaaa", "--as", "human"], check=True, capture_output=True)
+    paths.lock("aaaa").write_text(json.dumps({"actor": "claude-dispatch-r0-aaaa", "pid": DEAD, "host": os.uname().nodename, "started": 0}))
+    orig_owner = KataClient.owner
+
+    def raising_owner(self, ref):
+        if ref == "aaaa":
+            raise KataError("simulated show failure")
+        return orig_owner(self, ref)
+
+    with monkeypatch.context() as m:
+        m.setattr(KataClient, "owner", raising_owner)
+        lines = reap.reap(paths, k)
+    assert not paths.lock("aaaa").exists()
+    assert any("aaaa" in l and "left alone" in l for l in lines)
+    # Fresh, unpatched client: the foreign claim must still stand.
+    assert KataClient(repo).owner("aaaa") == "human"
+
+
+def test_reap_no_commits_branch_delete_refused_surfaces_in_outcome(tmp_path, monkeypatch):
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch, [{"short_id": "aaaa", "title": "t", "body": "b"}])
+    paths = state.Paths(repo); paths.ensure(); landing.ensure_integration(paths)
+    k = KataClient(repo)
+    assert claims.acquire(paths, "aaaa", "claude-dispatch-r1-aaaa", k)
+    _record(paths, "aaaa", DEAD)
+    monkeypatch.setattr(reap.gitops, "branch_delete_merged", lambda repo, branch: False)
+    lines = reap.reap(paths, k)
+    saved = state.AgentRecord.load(paths.agent("aaaa"))
+    assert "branch -d refused" in saved.outcome
+    assert any("aaaa" in l and "refused" in l for l in lines)
+
+
+def test_reap_no_commits_worktree_dir_already_removed(tmp_path, monkeypatch):
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch, [{"short_id": "aaaa", "title": "t", "body": "b"}])
+    paths = state.Paths(repo); paths.ensure(); landing.ensure_integration(paths)
+    k = KataClient(repo)
+    assert claims.acquire(paths, "aaaa", "claude-dispatch-r1-aaaa", k)
+    rec = _record(paths, "aaaa", DEAD)
+    shutil.rmtree(rec.worktree)
+    lines = reap.reap(paths, k)
+    assert subprocess.run(["git", "branch", "--list", "dispatch/aaaa"], cwd=repo, capture_output=True, text=True).stdout == ""
+    assert any("aaaa" in l and "removed" in l for l in lines)
+
+
+def test_status_rows_without_integration_branch(tmp_path, monkeypatch):
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch)
+    paths = state.Paths(repo); paths.ensure(); landing.ensure_integration(paths)
+    _record(paths, "aaaa", os.getpid())
+    subprocess.run(["git", "worktree", "remove", "--force", str(paths.integration_worktree)], cwd=repo, check=True)
+    subprocess.run(["git", "branch", "-D", "integration"], cwd=repo, check=True)
+    rows = status.rows(paths)
+    assert len(rows) == 1
