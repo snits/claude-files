@@ -1,13 +1,15 @@
-import json
 import os
+import signal
 import subprocess
 import sys
+import time
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from test_kata_dispatch_fakes import install_fake_claude, install_fake_kata, kata_calls, make_repo  # noqa: E402
+SCRIPTS_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(SCRIPTS_DIR))
+from test_kata_dispatch_fakes import install_fake_claude, install_fake_kata, make_repo  # noqa: E402
 
-from kata_dispatch import gate, run, state  # noqa: E402
+from kata_dispatch import run, state  # noqa: E402
 from kata_dispatch.kata import KataClient  # noqa: E402
 
 # a fake worker that commits a file named after FAKE_REF, sleeping so overlap gating is observable
@@ -122,3 +124,77 @@ def test_run_landing_exception_is_isolated_and_run_continues(tmp_path, monkeypat
     assert by["a1"].state == "blocked" and "landing raised" in by["a1"].outcome
     assert by["c3"].state == "done"
     assert KataClient(repo).owner("a1") is None
+
+
+# Commits immediately (so the dispatcher has something to keep), then sleeps long enough that
+# a SIGINT sent to the dispatcher must interrupt it -- if the dispatcher didn't stop and
+# terminate the worker, the test would have to wait out the sleep.
+FAKE_CLAUDE_COMMIT_THEN_SLEEP = r'''#!/usr/bin/env python3
+import json, os, subprocess, sys, time
+ref = os.environ["KATA_AUTHOR"].rsplit("-", 1)[-1]
+open(ref + ".txt", "w").write(ref)
+subprocess.run(["git", "add", ref + ".txt"], check=True)
+subprocess.run(["git", "commit", "-q", "-s", "-m", "feat: " + ref], check=True)
+time.sleep(60)
+print(json.dumps({"type": "result", "subtype": "success", "total_cost_usd": 0.2, "is_error": False, "session_id": "s-" + ref, "result": "OUTCOME: reviewed-branch"}))
+'''
+
+_DISPATCH_IN_SUBPROCESS = '''
+import sys
+sys.path.insert(0, {scripts_dir!r})
+from pathlib import Path
+from kata_dispatch import run, state
+from kata_dispatch.kata import KataClient
+paths = state.Paths(Path({repo!r}))
+paths.ensure()
+kata = KataClient(paths.repo)
+opts = run.Options(agents=1, cap=8, model="sonnet", budget_usd=1.0, gate=False, poll_s=0.2,
+                    use_systemd=False, run_id="sigtest", issues=["e5"])
+run.run(paths, kata, opts)
+'''
+
+
+def test_sigint_stops_the_run_and_terminates_the_worker(tmp_path, monkeypatch):
+    """C1/C2/C3/I4: a SIGINT while a worker is active must break the loop even though the
+    worker is still running, terminate that worker, and land it as blocked-with-worktree-kept
+    rather than losing the ledger or the claim. Runs the dispatcher in a real subprocess so a
+    real signal is delivered to the main thread that installed the handler."""
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch, ISSUES)
+    install_fake_claude(tmp_path, monkeypatch, FAKE_CLAUDE_COMMIT_THEN_SLEEP)
+    paths = state.Paths(repo); paths.ensure()
+
+    code = _DISPATCH_IN_SUBPROCESS.format(scripts_dir=str(SCRIPTS_DIR), repo=str(repo))
+    dispatcher = subprocess.Popen([sys.executable, "-c", code], cwd=str(repo), env=dict(os.environ))
+
+    rec_path = paths.agent("e5")
+
+    def _committed():
+        if not rec_path.exists():
+            return False
+        log = subprocess.run(["git", "log", "--oneline", "dispatch/e5"], cwd=repo, capture_output=True, text=True)
+        return log.returncode == 0 and "feat: e5" in log.stdout
+
+    deadline = time.time() + 20
+    while time.time() < deadline and not _committed():
+        time.sleep(0.1)
+    assert _committed(), "worker never committed before the deadline"
+
+    rec_before = state.AgentRecord.load(rec_path)
+    dispatcher.send_signal(signal.SIGINT)
+    try:
+        dispatcher.wait(timeout=30)
+    except subprocess.TimeoutExpired:
+        dispatcher.kill()
+        raise AssertionError("dispatcher did not exit within 30s of SIGINT")
+
+    assert not state.pid_alive(rec_before.pid)
+    rec_after = state.AgentRecord.load(rec_path)
+    assert rec_after.state == "blocked"
+    assert paths.worktree("e5").exists()
+    kata = KataClient(repo)
+    assert "needs-review" in kata.labels("e5")
+    assert kata.owner("e5") is None
+    assert not paths.lock("e5").exists()
+    ledger = next((repo / ".scratchpad").glob("*-dispatch-sigtest-ledger.md"))
+    assert ledger.exists()

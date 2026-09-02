@@ -31,6 +31,8 @@ def main(argv=None) -> int:
     p = sub.add_parser("integrate", help="rebase integration onto main, run tests, ff main"); common(p)
     p.add_argument("--test-cmd", required=True)
     a = ap.parse_args(argv)
+    if a.cmd == "run" and (a.agents < 1 or a.cap < 1):
+        ap.error(f"--agents and --cap must both be >= 1 (agents={a.agents}, cap={a.cap})")
 
     if a.cmd == "preflight":
         return preflight.main(["--hook"] if a.hook else [])

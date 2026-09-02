@@ -1,14 +1,12 @@
 """The dispatcher loop: fill free slots with non-overlapping issues, land finished workers, write a ledger."""
-import os
 import signal
 import time
 from dataclasses import dataclass
-from pathlib import Path
 
 from . import claims, gate, gitops, landing, scheduler, surface, worker
 from .kata import KataClient
-from .state import AgentRecord, Paths, pid_alive
-from .status import STALL_SECONDS, rows
+from .state import AgentRecord, Paths
+from .status import rows
 
 
 @dataclass
@@ -61,6 +59,8 @@ def _land_safe(paths: Paths, rec: AgentRecord, kata: KataClient, gate_fn, target
 
 
 def run(paths: Paths, kata: KataClient, opts: Options) -> list[AgentRecord]:
+    if opts.agents < 1 or opts.cap < 1:
+        raise ValueError(f"agents and cap must both be >= 1 (agents={opts.agents}, cap={opts.cap})")
     if not gitops.is_clean(paths.repo):
         raise RuntimeError(f"main checkout {paths.repo} is not clean; refusing to dispatch")
     if not kata.healthy():
@@ -87,11 +87,18 @@ def run(paths: Paths, kata: KataClient, opts: Options) -> list[AgentRecord]:
                 if proc.poll() is None:
                     continue
                 del active[ref]
-                finished.append(_land_safe(paths, rec, kata, gate_fn, opts.target, opts.gate_model))
+                # A record already marked "blocked" got there via the stall-kill path below:
+                # route it to _abandon (keep worktree, needs-review) rather than treating a
+                # dispatcher-killed worker as a normal landing candidate.
+                finished.append(_abandon(paths, rec, kata) if rec.state == "blocked"
+                                 else _land_safe(paths, rec, kata, gate_fn, opts.target, opts.gate_model))
             if opts.stall_action == "kill":
                 for r in rows(paths):
                     if r.flag == "STALLED" and r.ref in active:
-                        active[r.ref][1].terminate()
+                        rec, proc, _ = active[r.ref]
+                        rec.state, rec.outcome = "blocked", "stalled; killed by dispatcher"
+                        rec.save(paths.agent(rec.ref))
+                        proc.terminate()
             if not stop["flag"]:
                 while len(active) < opts.agents and dispatched < opts.cap:
                     cands = _candidates(paths, kata, opts.issues)
@@ -111,22 +118,49 @@ def run(paths: Paths, kata: KataClient, opts: Options) -> list[AgentRecord]:
                     active[pick.ref] = (rec, proc, pick.surface)
                     dispatched += 1
                     skipped.pop(pick.ref, None)
-            if not active and (stop["flag"] or dispatched >= opts.cap or scheduler.pick(_candidates(paths, kata, opts.issues), [], {r.ref for r in finished})[0] is None):
+            if stop["flag"] or (not active and (dispatched >= opts.cap
+                                                 or scheduler.pick(_candidates(paths, kata, opts.issues), [], {r.ref for r in finished})[0] is None)):
                 break
             time.sleep(opts.poll_s)
     finally:
-        signal.signal(signal.SIGINT, old[0]); signal.signal(signal.SIGTERM, old[1])
+        # Signal handlers stay installed through cleanup below -- a second Ctrl-C during
+        # bounded cleanup must not abort landing/abandon or skip the ledger. Restored only
+        # at the very end, after _ledger has run (C2).
         if active:
-            for ref, (rec, proc, _) in active.items():
-                proc.terminate()
-            for ref, (rec, proc, _) in active.items():
+            for ref, (rec, proc, _) in list(active.items()):
+                try:
+                    proc.terminate()
+                except Exception:
+                    pass
+            for ref, (rec, proc, _) in list(active.items()):
                 try:
                     proc.wait(timeout=30)
                 except Exception:
-                    proc.kill()
-                finished.append(_land_safe(paths, rec, kata, gate.NO_GATE, opts.target, opts.gate_model) if gitops.commits_ahead(paths.repo, opts.target, rec.branch) == 0
-                                else _abandon(paths, rec, kata))
+                    try:
+                        proc.kill()
+                    except Exception:
+                        pass
+                try:
+                    try:
+                        ahead = (gitops.commits_ahead(paths.repo, opts.target, rec.branch)
+                                  if gitops.branch_exists(paths.repo, rec.branch) else 0)
+                    except Exception:
+                        ahead = 1  # unknown -- treat as non-zero so the worktree is kept, not landed
+                    finished.append(_land_safe(paths, rec, kata, gate.NO_GATE, opts.target, opts.gate_model) if ahead == 0
+                                    else _abandon(paths, rec, kata))
+                except Exception as e:
+                    rec.state, rec.outcome = "blocked", f"cleanup raised: {e!r}"
+                    try:
+                        claims.release(paths, rec.ref, rec.actor, kata)
+                    except Exception:
+                        pass
+                    try:
+                        rec.save(paths.agent(rec.ref))
+                    except Exception:
+                        pass
+                    finished.append(rec)
         _ledger(paths, run_id, finished, skipped, t0, opts)
+        signal.signal(signal.SIGINT, old[0]); signal.signal(signal.SIGTERM, old[1])
     return [r for r in finished if r.state != "skipped"]
 
 
@@ -151,6 +185,13 @@ def _abandon(paths: Paths, rec: AgentRecord, kata: KataClient) -> AgentRecord:
     return rec
 
 
+def _cell(text) -> str:
+    """Markdown table cell text: a literal '|' would fork the row and an embedded newline
+    would truncate it, so escape the former and collapse the latter before it ever reaches
+    an f-string row."""
+    return str(text).replace("|", "\\|").replace("\r\n", " ").replace("\n", " ").replace("\r", " ")
+
+
 def _ledger(paths: Paths, run_id: str, finished: list[AgentRecord], skipped: dict, t0: float, opts: Options):
     wall = time.time() - t0
     real = [r for r in finished if r.state != "skipped"]
@@ -163,10 +204,10 @@ def _ledger(paths: Paths, run_id: str, finished: list[AgentRecord], skipped: dic
              "| ref | state | outcome | merge commit | wall clock | cost USD |", "|---|---|---|---|---|---|"]
     for r in real:
         mins = ((r.finished or time.time()) - r.started) / 60
-        lines.append(f"| {r.ref} | {r.state} | {r.outcome} | {r.merge_commit} | {mins:.1f} min | {r.cost_usd:.2f} |")
+        lines.append(f"| {r.ref} | {r.state} | {_cell(r.outcome)} | {_cell(r.merge_commit)} | {mins:.1f} min | {r.cost_usd:.2f} |")
     for ref, why in skipped.items():
         if ref not in {r.ref for r in real}:
-            lines.append(f"| {ref} | skipped | {why} | | | |")
+            lines.append(f"| {ref} | skipped | {_cell(why)} | | | |")
     rate = f"{len(esc)}/{len(real)}" if real else "0/0"
     lines += ["", f"- dispatched: {len(real)}; merged: {len(merged)}; no-change: {len(nochange)}; escalated or blocked: {len(esc)}; escalation rate: {rate}",
               f"- run wall clock: {wall / 60:.1f} min; sum of per-issue wall clocks: {per_issue / 60:.1f} min; speedup: {per_issue / wall if wall else 0:.2f}x",
