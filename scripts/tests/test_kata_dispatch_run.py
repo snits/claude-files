@@ -124,6 +124,28 @@ def test_run_landing_exception_is_isolated_and_run_continues(tmp_path, monkeypat
     assert by["a1"].state == "blocked" and "landing raised" in by["a1"].outcome
     assert by["c3"].state == "done"
     assert KataClient(repo).owner("a1") is None
+    # A landing that raised must also be visible in kata, or the next run picks the issue up
+    # as if nothing had ever touched it.
+    assert "needs-review" in KataClient(repo).labels("a1")
+
+
+def test_run_survives_a_spawn_failure_after_the_claim(tmp_path, monkeypatch):
+    """worker.spawn raising after claims.acquire must not kill the run or leak the claim. A
+    pre-existing dispatch/c3 branch makes `git worktree add -b` fail for exactly one ref; with
+    the bug the exception escapes run() entirely and e5 never lands."""
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch, ISSUES)
+    install_fake_claude(tmp_path, monkeypatch, FAKE_CLAUDE_SLOW)
+    subprocess.run(["git", "branch", "dispatch/c3", "integration"], cwd=repo, check=True)
+    paths = state.Paths(repo); paths.ensure()
+    recs = run.run(paths, KataClient(repo), _opts(issues=["c3", "e5"], agents=1))
+    by = {r.ref: r for r in recs}
+    assert "c3" not in by, "a never-spawned ref is not a dispatched agent"
+    assert by["e5"].state == "done", "the other ref must still land"
+    kata = KataClient(repo)
+    assert kata.owner("c3") is None and not paths.lock("c3").exists(), "claim must be released"
+    ledger = next((repo / ".scratchpad").glob("*-dispatch-t1-ledger.md")).read_text()
+    assert "c3" in ledger and "spawn failed" in ledger
 
 
 # Commits immediately (so the dispatcher has something to keep), then sleeps long enough that

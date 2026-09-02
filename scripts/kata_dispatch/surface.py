@@ -17,13 +17,19 @@ IDENT_RE = re.compile(r"^[A-Za-z_][\w:.]*$")
 
 
 def _tracked(repo: Path) -> set[str]:
-    out = subprocess.run(["git", "ls-files"], cwd=repo, capture_output=True, text=True, check=True).stdout
+    out = subprocess.run(["git", "ls-files"], cwd=repo, capture_output=True, text=True, check=True,
+                         stdin=subprocess.DEVNULL).stdout
     return set(out.split())
 
 
 def _grep_files(repo: Path, token: str, cap: int) -> list[str]:
-    p = subprocess.run(["rg", "-l", "--fixed-strings", "--", token], cwd=repo, capture_output=True, text=True)
-    hits = [h for h in p.stdout.split() if h]
+    # The explicit "." is load-bearing: given no path, rg searches stdin, which blocks forever
+    # whenever the dispatcher's stdin is an open pipe rather than a tty. DEVNULL closes the
+    # same hole from the other side. A path argument makes rg prefix every hit with "./",
+    # which `git ls-files` never does, so strip it before the tracked-set filter in predict().
+    p = subprocess.run(["rg", "-l", "--fixed-strings", "--", token, "."], cwd=repo,
+                       capture_output=True, text=True, stdin=subprocess.DEVNULL)
+    hits = [h[2:] if h.startswith("./") else h for h in p.stdout.split() if h]
     return hits[:cap]
 
 

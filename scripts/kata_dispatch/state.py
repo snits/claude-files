@@ -53,7 +53,7 @@ class AgentRecord:
     pid: int = 0
     started: float = field(default_factory=time.time)
     finished: float = 0.0
-    state: str = "running"          # running | landing | done | no-change | escalated | blocked | orphaned
+    state: str = "running"          # running | landing | done | no-change | escalated | blocked | orphaned | skipped
     outcome: str = ""               # free text set by landing
     session_id: str = ""
     cost_usd: float = 0.0

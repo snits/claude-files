@@ -16,7 +16,7 @@ class KataClient:
         cmd = ["kata", *args]
         if actor:
             cmd += ["--as", actor]
-        p = subprocess.run(cmd, cwd=str(self.repo), capture_output=True, text=True)
+        p = subprocess.run(cmd, cwd=str(self.repo), capture_output=True, text=True, stdin=subprocess.DEVNULL)
         if check and p.returncode != 0:
             raise KataError(f"kata {' '.join(args)} failed ({p.returncode}): {p.stderr.strip() or p.stdout.strip()}")
         return p

@@ -93,6 +93,19 @@ def land(paths: Paths, rec: AgentRecord, kata: KataClient, gate_fn, target: str 
         rec.save(paths.agent(rec.ref))
         return rec
 
+    # Commits alone do not make a branch landable: only a worker that reported
+    # OUTCOME: reviewed-branch is claiming its work is finished and reviewed. Anything else --
+    # an escalation it made after committing, a budget/timeout death, a missing OUTCOME line --
+    # leaves commits nobody vouched for, so the branch is kept for a human and never gated or
+    # merged. `unknown` is parse_result's own placeholder, so fall back to the result subtype
+    # for the reason text rather than reporting the placeholder.
+    if result["outcome"] != "reviewed-branch":
+        why = result["outcome"] if result["outcome"] != "unknown" else (result["subtype"] or "without result")
+        rec.state = "escalated" if result["outcome"] == "escalated" else "blocked"
+        rec.outcome = f"worker reported {why} with {ahead} commit(s); branch kept"
+        _escalate(paths, rec, kata, result["label"] or "needs-review", rec.outcome, keep_worktree=True)
+        rec.save(paths.agent(rec.ref)); return rec
+
     if not wt.exists():
         rec.state, rec.outcome = "blocked", "worktree missing; branch kept"
         _escalate(paths, rec, kata, "needs-review", rec.outcome, keep_worktree=True)

@@ -41,12 +41,20 @@ def _artifacts_since(repo: Path, ref: str, branch: str, since: float) -> list[Pa
     return sorted(out)
 
 
-def run_gate(repo, ref: str, branch: str, target: str, model: str, log_path: Path, timeout: int = 3600) -> Verdict:
+BUDGET_USD = 15.0     # per gate session; three auditors run inside it
+
+
+def run_gate(repo, ref: str, branch: str, target: str, model: str, log_path: Path,
+             budget_usd: float = BUDGET_USD, timeout: int = 3600) -> Verdict:
+    # budget_usd sits after log_path so landing.land's six positional args are unaffected; an
+    # ungated session can outspend the whole run's worker budget on one branch. Exceeding it
+    # exits non-zero, which the returncode check below already turns into a fail-closed BLOCK.
     repo = Path(repo)
     started = time.time()
     prompt = f"/verify-branch {target} kata#{ref} {branch}"
     with open(log_path, "ab") as logf:
-        p = subprocess.run(["claude", "-p", prompt, "--model", model, "--permission-mode", "bypassPermissions",
+        p = subprocess.run(["claude", "-p", prompt, "--model", model, "--max-budget-usd", str(budget_usd),
+                            "--permission-mode", "bypassPermissions",
                             "--output-format", "stream-json", "--verbose", "--name", f"gate-{ref}"],
                            cwd=str(repo), stdin=subprocess.DEVNULL, stdout=logf, stderr=subprocess.STDOUT, timeout=timeout)
     arts = _artifacts_since(repo, ref, branch, started)

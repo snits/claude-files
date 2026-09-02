@@ -1,8 +1,10 @@
+import os
 import subprocess
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+SCRIPTS_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(SCRIPTS_DIR))
 from test_kata_dispatch_fakes import make_repo  # noqa: E402
 
 from kata_dispatch import surface  # noqa: E402
@@ -38,6 +40,27 @@ def test_too_many_files_is_wildcard(tmp_path):
     subprocess.run(["git", "add", "src"], cwd=repo, check=True)
     subprocess.run(["git", "commit", "-q", "-m", "many"], cwd=repo, check=True)
     assert surface.predict(repo, "touch src/", "all of src/") == surface.WILDCARD
+
+
+def test_predict_never_reads_stdin(tmp_path):
+    """rg with no path argument searches stdin. Run predict in a child whose stdin is a pipe
+    nobody ever writes to or closes: with the bug, rg blocks forever and this times out. The
+    body must be grep-bait (a backticked identifier, no path token) or _grep_files is never
+    reached and the test would pass either way."""
+    code = (
+        f"import sys; sys.path.insert(0, {str(SCRIPTS_DIR)!r})\n"
+        "from kata_dispatch import surface\n"
+        f"print(sorted(surface.predict({str(tmp_path / 'proj')!r}, 'rename it', '`helper` returns the wrong thing')))\n"
+    )
+    make_repo(tmp_path)
+    r, w = os.pipe()
+    try:
+        p = subprocess.run([sys.executable, "-c", code], stdin=r, capture_output=True, text=True, timeout=20)
+    finally:
+        os.close(r)
+        os.close(w)
+    assert p.returncode == 0, p.stderr
+    assert "src/util.py" in p.stdout, p.stdout
 
 
 def test_overlaps():

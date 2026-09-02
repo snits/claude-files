@@ -4,15 +4,14 @@ from pathlib import Path
 
 
 def git(args, cwd, check=True) -> subprocess.CompletedProcess:
-    return subprocess.run(["git", *args], cwd=str(cwd), capture_output=True, text=True, check=check)
+    # stdin=DEVNULL: git subcommands that fall back to reading stdin (or a pager/editor that
+    # does) must never inherit the dispatcher's, which may be an open pipe that never closes.
+    return subprocess.run(["git", *args], cwd=str(cwd), capture_output=True, text=True, check=check,
+                          stdin=subprocess.DEVNULL)
 
 
 def rev_parse(cwd, what: str) -> str:
     return git(["rev-parse", what], cwd).stdout.strip()
-
-
-def toplevel(cwd) -> Path:
-    return Path(rev_parse(cwd, "--show-toplevel")).resolve()
 
 
 def current_branch(cwd) -> str:

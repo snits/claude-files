@@ -16,13 +16,28 @@ def _record_failure(rec: AgentRecord, what: str, err: Exception):
     rec.outcome = f"{rec.outcome}; {what} failed: {err}"
 
 
+def _alive(paths: Paths, rec: AgentRecord) -> bool:
+    """Whose pid answers for this record depends on its state. While `running`, the record's
+    own pid is the worker's and the worker is the thing that must be alive. Once the record
+    reaches `landing` the worker has already exited by construction, so rec.pid is dead for a
+    perfectly healthy landing -- the dispatcher is doing the work now, and its pid is the one
+    in the lock file. Fall back to rec.pid only when no lock remains."""
+    if rec.state == "landing":
+        lock = claims.read_lock(paths, rec.ref)
+        if lock is not None:
+            return pid_alive(int(lock.get("pid", 0)))
+    return pid_alive(rec.pid)
+
+
 def reap(paths: Paths, kata: KataClient, target: str = "integration") -> list[str]:
     landing.ensure_integration(paths, target)
     report = []
     seen = set()
     for rec in AgentRecord.load_all(paths):
         seen.add(rec.ref)
-        if rec.state != "running" or pid_alive(rec.pid):
+        # A record stuck in `landing` is a dispatcher that died mid-land: same orphan handling
+        # as a dead worker, or the branch and claim are stranded with nothing to recover them.
+        if rec.state not in ("running", "landing") or _alive(paths, rec):
             continue
         rec.state = "orphaned"
         wt = Path(rec.worktree)

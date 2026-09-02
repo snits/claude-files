@@ -91,6 +91,28 @@ print(json.dumps({"type": "result", "subtype": "success", "total_cost_usd": 0.1,
                   "session_id": "fake-esc", "result": "OUTCOME: escalated needs-decision\ntwo defensible options"}))
 '''
 
+FAKE_CLAUDE_COMMIT_THEN_ESCALATE = r'''#!/usr/bin/env python3
+"""Fake worker: commits partial work, then escalates anyway. The branch is NOT reviewed."""
+import json, os, subprocess
+ref = os.environ.get("FAKE_REF", "x")
+open("worker-output.txt", "w").write("partial " + ref)
+subprocess.run(["git", "add", "worker-output.txt"], check=True)
+subprocess.run(["git", "commit", "-q", "-s", "-m", "wip: partial work for " + ref], check=True)
+print(json.dumps({"type": "result", "subtype": "success", "total_cost_usd": 0.3, "is_error": False,
+                  "session_id": "fake-" + ref, "result": "OUTCOME: escalated needs-decision\ntwo defensible options"}))
+'''
+
+FAKE_CLAUDE_COMMIT_THEN_BUDGET_ERROR = r'''#!/usr/bin/env python3
+"""Fake worker: commits partial work, then dies over budget with no OUTCOME line at all."""
+import json, os, subprocess
+ref = os.environ.get("FAKE_REF", "x")
+open("worker-output.txt", "w").write("partial " + ref)
+subprocess.run(["git", "add", "worker-output.txt"], check=True)
+subprocess.run(["git", "commit", "-q", "-s", "-m", "wip: partial work for " + ref], check=True)
+print(json.dumps({"type": "result", "subtype": "error_max_budget_usd", "total_cost_usd": 15.0,
+                  "is_error": True, "session_id": "fake-" + ref, "result": ""}))
+'''
+
 FAKE_CLAUDE_GATE_PASS = r'''#!/usr/bin/env python3
 """Fake gate: writes three PASS artifacts into <cwd>/.scratchpad, named per /verify-branch."""
 import json, os, sys, time

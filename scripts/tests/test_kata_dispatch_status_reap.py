@@ -85,6 +85,48 @@ def test_reap_orphaned_without_commits_is_removed(tmp_path, monkeypatch):
     assert k.owner("aaaa") is None
 
 
+def test_reap_recovers_record_stuck_in_landing(tmp_path, monkeypatch):
+    """A dispatcher that died mid-land leaves state=="landing". Before the fix reap skipped
+    anything not "running", so the branch, worktree and claim were stranded with nothing left
+    to recover them."""
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch, [{"short_id": "aaaa", "title": "t", "body": "b"}])
+    paths = state.Paths(repo); paths.ensure(); landing.ensure_integration(paths)
+    k = KataClient(repo)
+    assert claims.acquire(paths, "aaaa", "claude-dispatch-r1-aaaa", k)
+    rec = _record(paths, "aaaa", DEAD, commit=True)
+    rec.state = "landing"
+    rec.save(paths.agent("aaaa"))
+    lock = json.loads(paths.lock("aaaa").read_text())
+    lock["pid"] = DEAD                       # the dispatcher that was landing is gone
+    paths.lock("aaaa").write_text(json.dumps(lock))
+    lines = reap.reap(paths, k)
+    assert any("aaaa" in l and "kept" in l for l in lines), lines
+    assert Path(rec.worktree).exists()
+    assert "needs-review" in k.labels("aaaa") and k.owner("aaaa") is None and not paths.lock("aaaa").exists()
+    assert state.AgentRecord.load(paths.agent("aaaa")).state == "orphaned"
+
+
+def test_reap_leaves_a_live_landing_alone(tmp_path, monkeypatch):
+    """The other direction, and the one that costs a worktree if the fix reads the wrong pid:
+    during a healthy landing the worker has already exited, so rec.pid is dead by construction.
+    Only the lock's pid (the dispatcher's) says whether the landing is still in progress."""
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch, [{"short_id": "aaaa", "title": "t", "body": "b"}])
+    paths = state.Paths(repo); paths.ensure(); landing.ensure_integration(paths)
+    k = KataClient(repo)
+    assert claims.acquire(paths, "aaaa", "claude-dispatch-r1-aaaa", k)   # lock pid == os.getpid()
+    rec = _record(paths, "aaaa", DEAD, commit=True)
+    rec.state = "landing"
+    rec.save(paths.agent("aaaa"))
+    assert json.loads(paths.lock("aaaa").read_text())["pid"] == os.getpid()
+    lines = reap.reap(paths, k)
+    assert lines == [], lines
+    assert Path(rec.worktree).exists() and paths.lock("aaaa").exists()
+    assert k.owner("aaaa") == "claude-dispatch-r1-aaaa"
+    assert state.AgentRecord.load(paths.agent("aaaa")).state == "landing"
+
+
 def test_reap_stale_lock_without_record_respects_foreign_owner(tmp_path, monkeypatch):
     repo = make_repo(tmp_path)
     install_fake_kata(tmp_path, monkeypatch, [{"short_id": "aaaa", "title": "t", "body": "b"}])

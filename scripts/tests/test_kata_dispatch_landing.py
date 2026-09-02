@@ -4,8 +4,9 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from test_kata_dispatch_fakes import (FAKE_CLAUDE_ESCALATE, FAKE_CLAUDE_GATE_PASS, install_fake_claude,  # noqa: E402
-                                      install_fake_kata, make_repo)
+from test_kata_dispatch_fakes import (FAKE_CLAUDE_COMMIT_THEN_BUDGET_ERROR,  # noqa: E402
+                                      FAKE_CLAUDE_COMMIT_THEN_ESCALATE, FAKE_CLAUDE_ESCALATE,
+                                      FAKE_CLAUDE_GATE_PASS, install_fake_claude, install_fake_kata, make_repo)
 
 from kata_dispatch import claims, gate, gitops, landing, state, worker  # noqa: E402
 from kata_dispatch.kata import KataClient  # noqa: E402
@@ -53,6 +54,34 @@ def test_empty_branch_is_recorded_as_escalated_and_cleaned(tmp_path, monkeypatch
     assert not Path(rec.worktree).exists() and _git(["branch", "--list", "dispatch/ab12"], repo) == ""
     assert k.owner("ab12") is None
     assert _git(["rev-list", "--count", "main..integration"], repo) == "0"
+
+
+def test_escalation_with_commits_is_never_merged(tmp_path, monkeypatch):
+    """A worker that commits and THEN escalates has not produced a reviewed branch. Only
+    OUTCOME: reviewed-branch may reach the gate/merge path -- with the bug, the commits merge
+    onto integration under an escalation the dispatcher never read."""
+    repo, paths, k, rec = _setup(tmp_path, monkeypatch, FAKE_CLAUDE_COMMIT_THEN_ESCALATE)
+    rec = landing.land(paths, rec, k, gate.NO_GATE)
+    assert rec.state == "escalated", rec.outcome
+    assert "escalated" in rec.outcome and "1 commit(s)" in rec.outcome and "branch kept" in rec.outcome
+    assert _git(["rev-list", "--count", "main..integration"], repo) == "0", "nothing may merge"
+    assert Path(rec.worktree).exists() and _git(["branch", "--list", "dispatch/ab12"], repo) != ""
+    assert "needs-decision" in k.labels("ab12") and "needs-review" not in k.labels("ab12")
+    assert k.owner("ab12") is None and not paths.lock("ab12").exists()
+
+
+def test_budget_error_with_commits_is_blocked_not_merged(tmp_path, monkeypatch):
+    """No OUTCOME line at all, subtype error_max_budget_usd: blocked, branch kept, and the
+    subtype must reach rec.outcome -- parse_result's outcome is the literal 'unknown', so a
+    naive `outcome or subtype` fallback would silently swallow it."""
+    repo, paths, k, rec = _setup(tmp_path, monkeypatch, FAKE_CLAUDE_COMMIT_THEN_BUDGET_ERROR)
+    rec = landing.land(paths, rec, k, gate.NO_GATE)
+    assert rec.state == "blocked", rec.outcome
+    assert "error_max_budget_usd" in rec.outcome and "1 commit(s)" in rec.outcome
+    assert _git(["rev-list", "--count", "main..integration"], repo) == "0", "nothing may merge"
+    assert Path(rec.worktree).exists() and _git(["branch", "--list", "dispatch/ab12"], repo) != ""
+    assert "needs-review" in k.labels("ab12")
+    assert k.owner("ab12") is None and not paths.lock("ab12").exists()
 
 
 def test_gate_block_keeps_worktree_and_labels(tmp_path, monkeypatch):

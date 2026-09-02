@@ -33,15 +33,18 @@ def integrate(paths: Paths, test_cmd: str, target: str = "integration") -> tuple
         ensure_integration(paths, target)
     except (RuntimeError, subprocess.CalledProcessError, OSError) as e:
         return False, f"integration worktree not usable: {e}"
-    rb = gitops.git(["rebase", "main"], iw, check=False)
+    # --rebase-merges: everything landing.land puts on integration arrives as a --no-ff merge
+    # commit. A plain rebase flattens those away, destroying the record of which branch each
+    # change came from -- the only thing tying a landed commit back to its kata issue.
+    rb = gitops.git(["rebase", "--rebase-merges", "main"], iw, check=False)
     if rb.returncode != 0:
         gitops.git(["rebase", "--abort"], iw, check=False)
         return False, f"rebase of {target} onto main conflicts:\n{rb.stderr.strip()[-800:]}"
     logdir = paths.repo / ".scratchpad" / "tmp" / "dispatch"
     logdir.mkdir(parents=True, exist_ok=True)
     log = logdir / f"integrate-{int(time.time())}.log"
-    p = subprocess.run(["bash", "-c", test_cmd], cwd=str(iw), stdout=subprocess.PIPE,
-                        stderr=subprocess.STDOUT, text=True)
+    p = subprocess.run(["bash", "-c", test_cmd], cwd=str(iw), stdin=subprocess.DEVNULL,
+                        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
     log.write_text(p.stdout)
     if p.returncode != 0:
         tail = p.stdout.strip().splitlines()[-30:]

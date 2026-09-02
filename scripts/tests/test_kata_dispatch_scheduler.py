@@ -23,10 +23,22 @@ def test_wildcard_runs_alone():
     cs = [cand("w", WILDCARD), cand("c", {"z.py"})]
     picked, _ = scheduler.pick(cs, running_surfaces=[frozenset({"q.py"})], exclude=set())
     assert picked.ref == "c"
-    picked, _ = scheduler.pick(cs, running_surfaces=[], exclude=set())
-    assert picked.ref == "w"
     picked, _ = scheduler.pick([cand("c", {"z.py"})], running_surfaces=[WILDCARD], exclude=set())
     assert picked is None
+
+
+def test_narrow_surface_is_preferred_while_slots_are_free():
+    """A WILDCARD is pickable only with nothing running, so taking it ahead of a narrow
+    candidate idles every other slot behind it. List order alone must not decide."""
+    cs = [cand("w", WILDCARD), cand("c", {"z.py"})]
+    picked, _ = scheduler.pick(cs, running_surfaces=[], exclude=set())
+    assert picked.ref == "c"
+
+
+def test_wildcard_is_still_picked_when_it_is_the_only_candidate():
+    """Guards the deferral from turning into a refusal: a WILDCARD must still be dispatchable."""
+    picked, _ = scheduler.pick([cand("w", WILDCARD)], running_surfaces=[], exclude=set())
+    assert picked.ref == "w"
 
 
 def test_skip_labels_owner_epic_and_exclude():

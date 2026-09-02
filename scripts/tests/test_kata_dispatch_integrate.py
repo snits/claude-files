@@ -56,6 +56,29 @@ def test_rebases_onto_moved_main(tmp_path, monkeypatch):
     assert _git(["log", "--oneline", "main"], repo).count("\n") == 2   # init, main moved, landed
 
 
+def test_rebase_onto_moved_main_preserves_merge_commits(tmp_path, monkeypatch):
+    """Everything land() puts on integration is a --no-ff merge commit. A plain `git rebase`
+    flattens them; --rebase-merges keeps them, so `git log --merges main` still shows which
+    branch each change arrived on."""
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch)
+    paths = state.Paths(repo); paths.ensure(); landing.ensure_integration(paths)
+    iw = paths.integration_worktree
+    subprocess.run(["git", "checkout", "-q", "-b", "feat"], cwd=iw, check=True)
+    (iw / "feat.txt").write_text("f\n")
+    subprocess.run(["git", "add", "feat.txt"], cwd=iw, check=True)
+    subprocess.run(["git", "commit", "-q", "-m", "feat work"], cwd=iw, check=True)
+    subprocess.run(["git", "checkout", "-q", "integration"], cwd=iw, check=True)
+    subprocess.run(["git", "merge", "--no-ff", "-q", "-m", "Merge dispatch/feat", "feat"], cwd=iw, check=True)
+    # main moves, forcing a real rebase rather than a fast-forward
+    (repo / "main-moved.txt").write_text("m\n")
+    subprocess.run(["git", "add", "main-moved.txt"], cwd=repo, check=True)
+    subprocess.run(["git", "commit", "-q", "-m", "main moved"], cwd=repo, check=True)
+    ok, msg = integrate.integrate(paths, "test -f feat.txt && test -f main-moved.txt")
+    assert ok, msg
+    assert "Merge dispatch/feat" in _git(["log", "--merges", "--format=%s", "main"], repo)
+
+
 def test_refuses_while_agents_active(tmp_path, monkeypatch):
     repo = make_repo(tmp_path)
     install_fake_kata(tmp_path, monkeypatch)

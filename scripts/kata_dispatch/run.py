@@ -54,6 +54,14 @@ def _land_safe(paths: Paths, rec: AgentRecord, kata: KataClient, gate_fn, target
     except Exception as e:
         rec.state, rec.outcome = "blocked", f"landing raised: {e!r}"
         claims.release(paths, rec.ref, rec.actor, kata)
+        # Release first, then label -- same ordering as _abandon. Without the label a landing
+        # that raised (a gate TimeoutExpired is the likely one) is invisible in kata: the issue
+        # goes back to unowned and un-flagged, and the next run picks it up as if untouched.
+        try:
+            if "needs-review" not in kata.labels(rec.ref):
+                kata.label_add(rec.ref, rec.actor, "needs-review")
+        except Exception as le:
+            _record_failure(rec, "kata label", le)
         rec.save(paths.agent(rec.ref))
         return rec
 
@@ -114,7 +122,20 @@ def run(paths: Paths, kata: KataClient, opts: Options) -> list[AgentRecord]:
                         skipped[pick.ref] = "claim lost"
                         finished.append(AgentRecord(ref=pick.ref, actor=actor, run_id=run_id, branch="", worktree="", log="", state="skipped", outcome="claim lost"))
                         continue
-                    rec, proc = worker.spawn(paths, pick.ref, actor, run_id, cfg, opts.target)
+                    try:
+                        rec, proc = worker.spawn(paths, pick.ref, actor, run_id, cfg, opts.target)
+                    except Exception as e:
+                        # The claim is already ours at this point, so a spawn failure (a stale
+                        # dispatch/<ref> branch, a full disk) would otherwise leak it and kill
+                        # the whole run. The placeholder must land in `finished`, not only in
+                        # `skipped`: the fill loop's exclude set is built from `finished`, so
+                        # without it this ref gets re-picked forever.
+                        claims.release(paths, pick.ref, actor, kata)
+                        why = f"spawn failed: {e!r}"
+                        skipped[pick.ref] = why
+                        finished.append(AgentRecord(ref=pick.ref, actor=actor, run_id=run_id, branch="",
+                                                     worktree="", log="", state="skipped", outcome=why))
+                        continue
                     active[pick.ref] = (rec, proc, pick.surface)
                     dispatched += 1
                     skipped.pop(pick.ref, None)
@@ -138,6 +159,13 @@ def run(paths: Paths, kata: KataClient, opts: Options) -> list[AgentRecord]:
                 except Exception:
                     try:
                         proc.kill()
+                    except Exception:
+                        pass
+                    # Reap it: without a wait() the killed worker stays a zombie for the rest
+                    # of the dispatcher's life. Bounded, and in its own try so a wedged
+                    # (uninterruptible) process cannot stall the ledger behind it.
+                    try:
+                        proc.wait(timeout=5)
                     except Exception:
                         pass
                 try:
