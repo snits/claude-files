@@ -5,7 +5,7 @@ from dataclasses import dataclass
 
 from . import claims, gate, gitops, landing, scheduler, surface, worker
 from .kata import KataClient
-from .state import AgentRecord, Paths
+from .state import AgentRecord, Paths, branch_for
 from .status import rows
 
 
@@ -131,6 +131,21 @@ def run(paths: Paths, kata: KataClient, opts: Options) -> list[AgentRecord]:
                         # `skipped`: the fill loop's exclude set is built from `finished`, so
                         # without it this ref gets re-picked forever.
                         claims.release(paths, pick.ref, actor, kata)
+                        # spawn can fail after partially creating its worktree/branch (e.g. a
+                        # stale dispatch/<ref> branch makes `git worktree add -b` fail, but only
+                        # after the worktree checkout itself succeeded). Leaving that behind
+                        # would collide with every future dispatch of this ref, so clean it up
+                        # here -- each half wrapped so a failure in one doesn't skip the other.
+                        wt = paths.worktree(pick.ref)
+                        if wt.exists():
+                            try:
+                                gitops.worktree_remove(paths.repo, wt, force=True)
+                            except Exception:
+                                pass
+                        try:
+                            gitops.branch_delete_merged(paths.integration_worktree, branch_for(pick.ref))
+                        except Exception:
+                            pass
                         why = f"spawn failed: {e!r}"
                         skipped[pick.ref] = why
                         finished.append(AgentRecord(ref=pick.ref, actor=actor, run_id=run_id, branch="",

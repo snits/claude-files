@@ -42,6 +42,10 @@ def _safe_release(paths: Paths, rec: AgentRecord, kata: KataClient):
 
 
 def _escalate(paths: Paths, rec: AgentRecord, kata: KataClient, label: str, why: str, keep_worktree: bool):
+    # Save the terminal state/outcome BEFORE releasing the lock: once the lock is gone, a
+    # concurrent `reap` can observe this record and must never see state="landing" with no
+    # lock backing it (the earlier rec.save at the top of land() only recorded "landing").
+    rec.save(paths.agent(rec.ref))
     _safe_release(paths, rec, kata)
     if label:
         try:
@@ -158,6 +162,9 @@ def land(paths: Paths, rec: AgentRecord, kata: KataClient, gate_fn, target: str 
 
     rec.merge_commit = gitops.cite(repo, target)
     rec.state, rec.outcome = "done", "merged"
+    # Same save-before-release ordering as _escalate: the final state must be durable before
+    # the lock disappears, or a concurrent reap can see an unlocked "landing" record.
+    rec.save(paths.agent(rec.ref))
     _safe_release(paths, rec, kata)
     try:
         kata.comment(rec.ref, rec.actor, f"kata-dispatch run {rec.run_id}: landed on {target} as {rec.merge_commit}; gate: {verdict.detail}")

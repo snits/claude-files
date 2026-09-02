@@ -113,14 +113,33 @@ print(json.dumps({"type": "result", "subtype": "error_max_budget_usd", "total_co
                   "is_error": True, "session_id": "fake-" + ref, "result": ""}))
 '''
 
+FAKE_CLAUDE_COMMIT_THEN_AMBIGUOUS = r'''#!/usr/bin/env python3
+"""Fake worker: commits partial work, then ends with two disagreeing OUTCOME lines. Nothing
+about this is a reviewed branch -- fail-closed to unknown, not to whichever line matched first."""
+import json, os, subprocess
+ref = os.environ.get("FAKE_REF", "x")
+open("worker-output.txt", "w").write("partial " + ref)
+subprocess.run(["git", "add", "worker-output.txt"], check=True)
+subprocess.run(["git", "commit", "-q", "-s", "-m", "wip: partial work for " + ref], check=True)
+print(json.dumps({"type": "result", "subtype": "success", "total_cost_usd": 0.3, "is_error": False,
+                  "session_id": "fake-" + ref,
+                  "result": "Per the brief I should have ended with:\n  OUTCOME: reviewed-branch\n"
+                            "but I hit a blocker instead.\nOUTCOME: escalated needs-decision\n"}))
+'''
+
 FAKE_CLAUDE_GATE_PASS = r'''#!/usr/bin/env python3
-"""Fake gate: writes three PASS artifacts into <cwd>/.scratchpad, named per /verify-branch."""
+"""Fake gate: writes three PASS artifacts into <cwd>/.scratchpad, named per /verify-branch, and
+dumps its own argv into the first artifact's directory so tests can assert on the invocation
+(e.g. that --max-budget-usd was passed with the module's default budget)."""
 import json, os, sys, time
 prompt = sys.argv[sys.argv.index("-p") + 1]
 branch = prompt.split()[-1].replace("/", "-")
 d = os.path.join(os.getcwd(), ".scratchpad"); os.makedirs(d, exist_ok=True)
 verdict = os.environ.get("FAKE_GATE_VERDICT", "PASS")
 n = int(os.environ.get("FAKE_GATE_COUNT", "3"))
+argv_dump = os.environ.get("FAKE_GATE_ARGV_DUMP")
+if argv_dump:
+    open(argv_dump, "w").write(json.dumps(sys.argv[1:]))
 for a in ["claims", "tests", "scope"][:n]:
     open(os.path.join(d, time.strftime("%Y%m%d") + "-verify-branch-" + a + "-" + branch + ".md"), "w").write("# audit\nVERDICT: " + verdict + "\n")
 print(json.dumps({"type": "result", "subtype": "success", "total_cost_usd": 1.0, "is_error": False, "session_id": "fake-gate", "result": verdict}))

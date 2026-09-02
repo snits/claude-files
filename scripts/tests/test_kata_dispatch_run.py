@@ -148,6 +148,48 @@ def test_run_survives_a_spawn_failure_after_the_claim(tmp_path, monkeypatch):
     assert "c3" in ledger and "spawn failed" in ledger
 
 
+def test_spawn_failure_after_popen_cleans_up_its_own_worktree_and_branch(tmp_path, monkeypatch):
+    """worker.spawn can fail *after* `git worktree add -b` already created the worktree and
+    branch -- e.g. subprocess.Popen itself raising (claude binary missing, fork failure). That
+    must not leak a dispatch/<ref> worktree or branch behind the released claim."""
+    import subprocess as subprocess_mod
+
+    from kata_dispatch import worker as worker_mod
+
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch, ISSUES)
+    install_fake_claude(tmp_path, monkeypatch, FAKE_CLAUDE_SLOW)
+    paths = state.Paths(repo); paths.ensure()
+
+    # subprocess is one shared module object -- gitops' plain `git` calls go through the same
+    # Popen, so the fake must only intercept worker.spawn's own invocation (cmd[0] == "claude"),
+    # not every git subprocess the dispatcher and its gitops helpers run along the way.
+    real_popen = subprocess_mod.Popen
+    calls = {"n": 0}
+
+    def flaky_popen(*a, **kw):
+        cmd = a[0] if a else kw.get("args")
+        if isinstance(cmd, list) and cmd and cmd[0] == "claude":
+            calls["n"] += 1
+            if calls["n"] == 1:
+                raise FileNotFoundError("claude: command not found")
+        return real_popen(*a, **kw)
+
+    monkeypatch.setattr(worker_mod.subprocess, "Popen", flaky_popen)
+    recs = run.run(paths, KataClient(repo), _opts(issues=["c3", "e5"], agents=1))
+    by = {r.ref: r for r in recs}
+    assert "c3" not in by, "the never-spawned ref is not a dispatched agent"
+    assert by["e5"].state == "done", "the other ref must still land"
+
+    kata = KataClient(repo)
+    assert kata.owner("c3") is None and not paths.lock("c3").exists(), "claim must be released"
+    assert not paths.worktree("c3").exists(), "spawn-failure cleanup must remove its worktree"
+    branches = subprocess.run(["git", "branch", "--list", "dispatch/*"], cwd=repo, capture_output=True, text=True).stdout
+    assert "dispatch/c3" not in branches, "spawn-failure cleanup must remove its branch"
+    ledger = next((repo / ".scratchpad").glob("*-dispatch-t1-ledger.md")).read_text()
+    assert "c3" in ledger and "spawn failed" in ledger
+
+
 # Commits immediately (so the dispatcher has something to keep), then sleeps long enough that
 # a SIGINT sent to the dispatcher must interrupt it -- if the dispatcher didn't stop and
 # terminate the worker, the test would have to wait out the sleep.

@@ -60,7 +60,7 @@ def test_parse_result_reads_outcome_and_cost(tmp_path, monkeypatch):
     rec, proc = worker.spawn(paths, "ab12", "a", "r1", _cfg())
     proc.wait(timeout=30)
     r = worker.parse_result(Path(rec.log))
-    assert r == {"outcome": "escalated", "label": "needs-decision", "cost_usd": 0.1, "session_id": "fake-esc", "subtype": "success"}
+    assert r == {"outcome": "escalated", "label": "needs-decision", "cost_usd": 0.1, "session_id": "fake-esc", "subtype": "success", "note": ""}
 
 
 def test_parse_result_without_result_line_is_unknown(tmp_path):
@@ -104,3 +104,21 @@ def test_parse_result_no_marker_is_unknown_but_cost_parsed(tmp_path):
     r = worker.parse_result(log)
     assert r["outcome"] == "unknown"
     assert r["cost_usd"] == 0.05
+
+
+def test_parse_result_disagreeing_outcome_lines_fail_closed(tmp_path):
+    log = tmp_path / "e.jsonl"
+    _write_result_log(log, "Per the brief I should have ended with:\n  OUTCOME: reviewed-branch\n"
+                            "but I hit a blocker instead.\nOUTCOME: escalated needs-decision\n")
+    r = worker.parse_result(log)
+    assert r["outcome"] == "unknown"
+    assert r["label"] == ""
+    assert r["note"] == "ambiguous OUTCOME lines"
+
+
+def test_parse_result_agreeing_duplicate_outcome_lines_are_used(tmp_path):
+    log = tmp_path / "f.jsonl"
+    _write_result_log(log, "OUTCOME: no-change\nsome text\nOUTCOME: no-change\n")
+    r = worker.parse_result(log)
+    assert r["outcome"] == "no-change"
+    assert r["note"] == ""

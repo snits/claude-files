@@ -4,9 +4,10 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from test_kata_dispatch_fakes import (FAKE_CLAUDE_COMMIT_THEN_BUDGET_ERROR,  # noqa: E402
-                                      FAKE_CLAUDE_COMMIT_THEN_ESCALATE, FAKE_CLAUDE_ESCALATE,
-                                      FAKE_CLAUDE_GATE_PASS, install_fake_claude, install_fake_kata, make_repo)
+from test_kata_dispatch_fakes import (FAKE_CLAUDE_COMMIT_THEN_AMBIGUOUS,  # noqa: E402
+                                      FAKE_CLAUDE_COMMIT_THEN_BUDGET_ERROR, FAKE_CLAUDE_COMMIT_THEN_ESCALATE,
+                                      FAKE_CLAUDE_ESCALATE, FAKE_CLAUDE_GATE_PASS,
+                                      install_fake_claude, install_fake_kata, make_repo)
 
 from kata_dispatch import claims, gate, gitops, landing, state, worker  # noqa: E402
 from kata_dispatch.kata import KataClient  # noqa: E402
@@ -84,6 +85,20 @@ def test_budget_error_with_commits_is_blocked_not_merged(tmp_path, monkeypatch):
     assert k.owner("ab12") is None and not paths.lock("ab12").exists()
 
 
+def test_commit_then_ambiguous_outcome_is_blocked_not_merged(tmp_path, monkeypatch):
+    """Two disagreeing OUTCOME lines after a commit must fail closed (worker.parse_result ->
+    unknown), which routes here into the C2 branch: blocked, needs-review, worktree kept,
+    nothing merged."""
+    repo, paths, k, rec = _setup(tmp_path, monkeypatch, FAKE_CLAUDE_COMMIT_THEN_AMBIGUOUS)
+    rec = landing.land(paths, rec, k, gate.NO_GATE)
+    assert rec.state == "blocked", rec.outcome
+    assert "1 commit(s)" in rec.outcome and "branch kept" in rec.outcome
+    assert _git(["rev-list", "--count", "main..integration"], repo) == "0", "nothing may merge"
+    assert Path(rec.worktree).exists() and _git(["branch", "--list", "dispatch/ab12"], repo) != ""
+    assert "needs-review" in k.labels("ab12")
+    assert k.owner("ab12") is None and not paths.lock("ab12").exists()
+
+
 def test_gate_block_keeps_worktree_and_labels(tmp_path, monkeypatch):
     from test_kata_dispatch_fakes import FAKE_CLAUDE_COMMIT
     repo, paths, k, rec = _setup(tmp_path, monkeypatch, FAKE_CLAUDE_COMMIT)
@@ -122,6 +137,21 @@ def test_real_gate_reads_artifacts_fail_closed(tmp_path, monkeypatch):
     monkeypatch.setenv("FAKE_GATE_COUNT", "2")
     v = gate.run_gate(repo, "ab12", "dispatch/ab12", "integration", "sonnet", tmp_path / "gate3.jsonl")
     assert not v.passed and "no verdict" in v.detail
+
+
+def test_gate_passes_its_budget_flag_to_the_gate_session(tmp_path, monkeypatch):
+    """gate.run_gate must invoke `claude` with --max-budget-usd gate.BUDGET_USD -- not the
+    worker's per-issue budget -- so a runaway gate session can't outspend the whole run."""
+    repo = make_repo(tmp_path)
+    install_fake_claude(tmp_path, monkeypatch, FAKE_CLAUDE_GATE_PASS)
+    dump = tmp_path / "gate-argv.json"
+    monkeypatch.setenv("FAKE_GATE_ARGV_DUMP", str(dump))
+    v = gate.run_gate(repo, "ab12", "dispatch/ab12", "integration", "sonnet", tmp_path / "gate.jsonl")
+    assert v.passed
+    import json as _json
+    argv = _json.loads(dump.read_text())
+    assert "--max-budget-usd" in argv
+    assert argv[argv.index("--max-budget-usd") + 1] == str(gate.BUDGET_USD)
 
 
 def test_unverified_post_merge_containment_undoes_the_merge(tmp_path, monkeypatch):

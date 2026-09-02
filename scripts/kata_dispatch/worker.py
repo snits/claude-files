@@ -81,7 +81,7 @@ def spawn(paths: Paths, ref: str, actor: str, run_id: str, cfg: Config, target: 
 
 
 def parse_result(log_path: Path) -> dict:
-    out = {"outcome": "unknown", "label": "", "cost_usd": 0.0, "session_id": "", "subtype": ""}
+    out = {"outcome": "unknown", "label": "", "cost_usd": 0.0, "session_id": "", "subtype": "", "note": ""}
     try:
         lines = log_path.read_text().splitlines()
     except FileNotFoundError:
@@ -97,10 +97,21 @@ def parse_result(log_path: Path) -> dict:
         out["session_id"] = d.get("session_id", "")
         out["subtype"] = d.get("subtype", "")
         text = d.get("result") or ""
-        m = re.search(r"^[\s`*_>]*OUTCOME:\s*([A-Za-z-]+)(?:\s+([\w-]+))?", text, re.M)
-        if m:
-            out["outcome"] = m.group(1).lower()
-            if out["outcome"] == "escalated":
-                out["label"] = m.group(2) or ""
+        # An ambiguous result -- more than one OUTCOME line that don't all agree -- must fail
+        # closed to unknown rather than pick whichever regex match happened to be found first
+        # (re.search stops at the first match, silently preferring an earlier, possibly quoted
+        # or hypothetical, OUTCOME line over the worker's actual final answer).
+        matches = list(re.finditer(r"^[\s`*_>]*OUTCOME:\s*([A-Za-z-]+)(?:\s+([\w-]+))?", text, re.M))
+        if matches:
+            words = {m.group(1).lower() for m in matches}
+            if len(words) == 1:
+                m = matches[0]
+                out["outcome"] = m.group(1).lower()
+                if out["outcome"] == "escalated":
+                    out["label"] = m.group(2) or ""
+            else:
+                out["outcome"] = "unknown"
+                out["label"] = ""
+                out["note"] = "ambiguous OUTCOME lines"
         break
     return out
