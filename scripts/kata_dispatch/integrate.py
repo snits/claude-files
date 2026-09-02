@@ -19,10 +19,20 @@ def integrate(paths: Paths, test_cmd: str, target: str = "integration") -> tuple
     active = _active(paths)
     if active:
         return False, f"agents still active: {', '.join(active)}"
-    ensure_integration(paths, target)
-    iw = paths.integration_worktree
     if not gitops.is_clean(paths.repo):
         return False, "main checkout is dirty"
+    iw = paths.integration_worktree
+    if iw.exists():
+        # This worktree is dispatcher-owned and ephemeral; a prior red test run may have left
+        # build artifacts (tracked-file edits, untracked junk) behind. Reset it before
+        # ensure_integration's is_clean(iw) check runs, so a dirty leftover never blocks the
+        # next attempt.
+        gitops.git(["checkout", "--", "."], iw, check=False)
+        gitops.git(["clean", "-fdx"], iw, check=False)
+    try:
+        ensure_integration(paths, target)
+    except RuntimeError as e:
+        return False, f"integration worktree not usable: {e}"
     rb = gitops.git(["rebase", "main"], iw, check=False)
     if rb.returncode != 0:
         gitops.git(["rebase", "--abort"], iw, check=False)
@@ -30,10 +40,11 @@ def integrate(paths: Paths, test_cmd: str, target: str = "integration") -> tuple
     logdir = paths.repo / ".scratchpad" / "tmp" / "dispatch"
     logdir.mkdir(parents=True, exist_ok=True)
     log = logdir / f"integrate-{int(time.time())}.log"
-    p = subprocess.run(["bash", "-c", test_cmd], cwd=str(iw), capture_output=True, text=True)
-    log.write_text(p.stdout + p.stderr)
+    p = subprocess.run(["bash", "-c", test_cmd], cwd=str(iw), stdout=subprocess.PIPE,
+                        stderr=subprocess.STDOUT, text=True)
+    log.write_text(p.stdout)
     if p.returncode != 0:
-        tail = (p.stdout + p.stderr).strip().splitlines()[-30:]
+        tail = p.stdout.strip().splitlines()[-30:]
         return False, f"tests failed ({p.returncode}); log {log}\n" + "\n".join(tail)
     ff = gitops.git(["merge", "--ff-only", target], paths.repo, check=False)
     if ff.returncode != 0:

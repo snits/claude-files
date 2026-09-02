@@ -64,3 +64,62 @@ def test_refuses_while_agents_active(tmp_path, monkeypatch):
     rec.save(paths.agent("a"))
     ok, msg = integrate.integrate(paths, "true")
     assert not ok and "active" in msg
+
+
+def test_dirty_main_refuses_before_mutating(tmp_path, monkeypatch):
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch)
+    paths = state.Paths(repo); paths.ensure()
+    # make_repo() pre-creates "integration" for other tests' convenience; drop it here so this
+    # test can prove integrate() never (re)creates it when main is dirty.
+    subprocess.run(["git", "branch", "-D", "integration"], cwd=repo, check=True)
+    (repo / "dirty.txt").write_text("uncommitted\n")
+    ok, msg = integrate.integrate(paths, "true")
+    assert not ok and msg == "main checkout is dirty"
+    branches = _git(["branch", "--list", "integration"], repo)
+    assert branches == ""
+
+
+def test_dirty_integration_worktree_is_reset_between_runs(tmp_path, monkeypatch):
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch)
+    paths = state.Paths(repo); paths.ensure(); landing.ensure_integration(paths)
+    _land_something(paths)
+    ok, msg = integrate.integrate(paths, "touch junk.txt; false")
+    assert not ok, msg
+    assert (paths.integration_worktree / "junk.txt").exists()
+    ok, msg = integrate.integrate(paths, "test ! -e junk.txt")
+    assert ok, msg
+    assert not (paths.integration_worktree / "junk.txt").exists()
+
+
+def test_integration_worktree_on_wrong_branch_reported_not_usable(tmp_path, monkeypatch):
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch)
+    paths = state.Paths(repo); paths.ensure(); landing.ensure_integration(paths)
+    subprocess.run(["git", "checkout", "-b", "other"], cwd=paths.integration_worktree, check=True)
+    ok, msg = integrate.integrate(paths, "true")
+    assert not ok
+    assert "not usable" in msg
+
+
+def test_rebase_conflict_leaves_main_and_worktree_clean(tmp_path, monkeypatch):
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch)
+    paths = state.Paths(repo); paths.ensure(); landing.ensure_integration(paths)
+    iw = paths.integration_worktree
+    (iw / "src" / "app.py").write_text("def main():\n    return 'integration'\n")
+    subprocess.run(["git", "add", "src/app.py"], cwd=iw, check=True)
+    subprocess.run(["git", "commit", "-q", "-m", "integration edit"], cwd=iw, check=True)
+    (repo / "src" / "app.py").write_text("def main():\n    return 'main'\n")
+    subprocess.run(["git", "add", "src/app.py"], cwd=repo, check=True)
+    subprocess.run(["git", "commit", "-q", "-m", "main edit"], cwd=repo, check=True)
+    before = _git(["rev-parse", "main"], repo)
+    ok, msg = integrate.integrate(paths, "true")
+    assert not ok
+    assert "conflicts" in msg
+    assert _git(["rev-parse", "main"], repo) == before
+    rebase_path = subprocess.run(
+        ["git", "rev-parse", "--git-path", "rebase-merge"], cwd=iw, capture_output=True, text=True, check=True
+    ).stdout.strip()
+    assert not (iw / rebase_path).exists()
