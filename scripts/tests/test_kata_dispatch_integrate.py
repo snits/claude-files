@@ -103,6 +103,27 @@ def test_integration_worktree_on_wrong_branch_reported_not_usable(tmp_path, monk
     assert "not usable" in msg
 
 
+def test_integration_worktree_stray_directory_reported_not_usable(tmp_path, monkeypatch):
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch)
+    paths = state.Paths(repo); paths.ensure()
+    paths.integration_worktree.mkdir(parents=True, exist_ok=True)
+    ok, msg = integrate.integrate(paths, "true")
+    assert not ok
+    assert "not usable" in msg
+
+
+def test_integration_worktree_stray_file_reported_not_usable(tmp_path, monkeypatch):
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch)
+    paths = state.Paths(repo); paths.ensure()
+    paths.integration_worktree.parent.mkdir(parents=True, exist_ok=True)
+    paths.integration_worktree.write_text("not a worktree\n")
+    ok, msg = integrate.integrate(paths, "true")
+    assert not ok
+    assert "not usable" in msg
+
+
 def test_rebase_conflict_leaves_main_and_worktree_clean(tmp_path, monkeypatch):
     repo = make_repo(tmp_path)
     install_fake_kata(tmp_path, monkeypatch)

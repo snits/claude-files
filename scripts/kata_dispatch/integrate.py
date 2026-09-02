@@ -22,7 +22,7 @@ def integrate(paths: Paths, test_cmd: str, target: str = "integration") -> tuple
     if not gitops.is_clean(paths.repo):
         return False, "main checkout is dirty"
     iw = paths.integration_worktree
-    if iw.exists():
+    if iw.is_dir():
         # This worktree is dispatcher-owned and ephemeral; a prior red test run may have left
         # build artifacts (tracked-file edits, untracked junk) behind. Reset it before
         # ensure_integration's is_clean(iw) check runs, so a dirty leftover never blocks the
@@ -31,7 +31,7 @@ def integrate(paths: Paths, test_cmd: str, target: str = "integration") -> tuple
         gitops.git(["clean", "-fdx"], iw, check=False)
     try:
         ensure_integration(paths, target)
-    except RuntimeError as e:
+    except (RuntimeError, subprocess.CalledProcessError, OSError) as e:
         return False, f"integration worktree not usable: {e}"
     rb = gitops.git(["rebase", "main"], iw, check=False)
     if rb.returncode != 0:
