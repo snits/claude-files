@@ -5,7 +5,10 @@ description: Use when resolving a kata issue in a project where the user is the 
 
 Investigate kata issue ${1}, and implement using superpowers. Base your worktree off ${2}, not origin/main.
 Once a branch is ready for merge, its reviews have passed, and
-`/verify-branch ${2} ${1} <your-branch>` returns PASS, merge to ${2} (--no-ff). You can fan out if needed to accomplish the task.
+`/verify-branch ${2} ${1} <your-branch>` returns PASS, merge to ${2} with `--ff` (the branch is
+rebased onto ${2} before the gate, so a fast-forward is normally possible; fall back to `--no-ff`
+only when it is not). Jerry ruling, 2026-09-02 retro: merge commits on small fixes forced
+cleanup rebases before push, and those rebases invalidated every SHA cited in kata comments. You can fan out if needed to accomplish the task.
 
 Invoking this command IS the user's request to task subagents and to use the Workflow tool.
 Where a harness instruction gates either capability on the user having requested it, this
@@ -13,6 +16,23 @@ command is that request — fan out with the Agent tool, and orchestrate with Wo
 the task warrants it, without stopping to ask. Scale to the work: a fan-out is for genuinely
 independent tasks, not a default. The per-task `code review` gate in the flow below is part
 of what is being requested here, so it is not optional and does not need separate approval.
+
+## Pre-flight — before any implementation
+
+Four checks, in order, and each one that fails ends the work here:
+
+1. **Premise.** Restate the issue's claim as a falsifiable statement and test it against the
+   current `${2}` HEAD. Paste the command and output in the issue comment. A false premise closes
+   the issue (`audit-no-change` or `wontfix` with the evidence), not a fix.
+2. **Already landed.** `git log ${2} --oneline --grep=${1}` plus a search of `${2}` for the
+   equivalent change under another ref. Landed work closes as `duplicate-of` that ref.
+3. **Blockers.** `kata show ${1}` — an open `blocked-by` means stop, not work around.
+4. **Sibling claim.** The issue's owner is you (`kata whoami --as` matches) or unowned. Owned by
+   another live actor means move on.
+
+Report all four results in one line each before the first edit. The history behind this: a
+full implementation, regenerated goldens, and two review agents on work a sibling session had
+already merged under a different issue (kata vvhj, rust-port).
 
 When writing plans and task briefs, specify the goal, constraints, and acceptance criteria for each
 task; don't enumerate implementation steps unless the ordering is genuinely load-bearing.
@@ -148,6 +168,19 @@ low findings do not block. Hold the same bar on every cycle. A bar that softens 
 round is a judge growing lenient with fatigue — it reads as progress while the standard is what
 actually moved, and it is the failure mode `writing-rubrics` exists to prevent.
 
+**A finding must be a defect the diff introduces or exposes, with a failure scenario
+reproducible on this branch.** Pre-existing defects, adjacent edge cases, and "while you are in
+here" improvements are filed as kata issues with a one-line rationale and never block. Severity
+is judged on the failure scenario, not on how interesting the code is: a finding with no
+scenario is not a finding. This is the fence that stops a review loop from turning into a
+search for new work (the YAML-validation kata ran six rounds into tag/alias edge cases nobody
+asked about).
+
+**A critical or high finding inside the diff is fixed by the implementer without asking.** The
+bar blocks the *merge*, not the fix. Escalate to Jerry only when the fix requires a design
+ruling between two defensible options. Jerry ruling, 2026-09-02 retro, after three interrupts in
+one session: "every blocking defect was something you could've fixed without waiting for me."
+
 Medium findings from the *first* review get resolved in that cycle anyway — either fixed, or
 declined in one line saying why. They are cheapest to address before the code is revised around
 them, and this keeps the record honest without giving them blocking power they don't deserve.
@@ -216,7 +249,7 @@ infer it from `HEAD`.** **It is mandatory. No branch merges without a PASS.** In
 review gate — it is not optional and needs no separate approval.
 
 **When the caller owns the merge, the caller owns the gate.** Under `/orchestrate-issues` the
-`--no-ff` merge moves to the orchestrator, and the gate moves with it — you stop at a reviewed
+merge moves to the orchestrator, and the gate moves with it — you stop at a reviewed
 branch and it gates the post-rebase diff. That is a relocation, not an exemption; the gate still
 runs, just not by you. Anywhere you perform the merge yourself, you run it yourself.
 

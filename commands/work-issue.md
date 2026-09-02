@@ -12,6 +12,8 @@ re-examining one and re-applying the label every cycle is a loop that makes no p
 the issue under identical comments.
 
 If the issue has the information needed to work it, claim it and then work it using `/super-do`.
+Its pre-flight (premise, already-landed, blockers, sibling claim) runs before any edit; a failed
+check closes or skips the issue and you take the next one.
 On a failed claim, move to the next ready issue rather than proceeding unclaimed.
 
 **Claim with a per-instance actor: `kata claim <ref> --as claude-work-issue-<random-suffix>`.**

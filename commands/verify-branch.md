@@ -144,6 +144,12 @@ job — report it.
 **Stale** is its own verdict: the claim was true when written and the code has since moved. Cite
 both the claim and the current `file:line` that contradicts it.
 
+**A cited SHA that no longer resolves is not fabricated until the subject fails too.** Cites
+are upstream-style, `sha ("subject")`; a rebase kills the SHA and keeps the subject. Before
+calling one UNSUPPORTED, run `git log --all --grep='<subject>'` (fixed-string the subject). A
+subject match is a NOTE (`rebased`), not a block. A bare SHA with no subject that fails to
+resolve stays UNSUPPORTED — there is nothing left to check.
+
 **Output** a table — `claim | source (file:line or commit) | evidence location | VERIFIED /
 UNSUPPORTED / OVERCLAIM / STALE` — and a one-line verdict.
 
@@ -238,11 +244,22 @@ Against `git diff <merge-base>..${3}`:
    rationale is absent from both is a finding, even when the deletion looks obviously correct.
    Rationale lives in the record or it did not happen.
 
+4. **Reference parity.** When the issue, plan, or brief names a reference — a design board,
+   a prior implementation being ported, a screenshot, a doc section describing the behavior —
+   the branch is checked against that reference, not only against the issue text. List each
+   element of the reference (flags, help strings, layout, documented behavior) and mark it
+   PRESENT / MISSING / CHANGED in the branch. Doc sections that describe changed behavior are
+   in scope by default: a CLAUDE.md or README line the diff made false is a finding here, not
+   at final review. History: a Python-to-Rust port dropped help text and flags nobody listed,
+   a TUI shipped panes top/bottom against a side-by-side design board, and two doc sections
+   went false and were caught only after every functional gate had passed.
+
 **Output** a table — `change (file:line) | category | traceable to | UNTRACEABLE /
 SHOULD-NOT-BE-TRACKED / UNJUSTIFIED-DELETION / OK` — and a one-line verdict.
 
 **Verdict rule:** apply the bar above. SHOULD-NOT-BE-TRACKED and UNJUSTIFIED-DELETION always
-block; UNTRACEABLE blocks only on a behavior change, not on mechanical fallout.
+block; UNTRACEABLE blocks only on a behavior change, not on mechanical fallout. A MISSING
+reference element blocks; CHANGED blocks only when the change is not recorded in the issue.
 
 ## Artifacts — read the file, not the report
 

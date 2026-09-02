@@ -83,7 +83,8 @@ Expect to re-prompt anyway: idle notifications arrive with the report dropped (s
 chunked resend — asking for a *full* resend usually drops again.
 
 Run these in parallel alongside two more miners:
-- **journal/`.remember`** — mnemosyne entries and `~/claudes-home/.remember/` in window
+- **journal** — mnemosyne entries in window. (`.remember/` was the disabled `remember` plugin's
+  output; retired 2026-09-02 after three retros reporting it stale.)
 - **kata** — closed / deferred / `needs-review` / `needs-decision` deltas across projects in the
   window. `needs-decision` is the one to read as a backlog rather than a delta: `wakey` surfaces it
   per-project, so a ruling nobody is waiting on in a project Jerry hasn't opened lately is visible
