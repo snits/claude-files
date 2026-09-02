@@ -39,15 +39,28 @@ def acquire(paths: Paths, ref: str, actor: str, kata: KataClient) -> bool:
         _write_lock(lock, actor)
     except FileExistsError:
         return False
+    claimed = False
     try:
         if not kata.claim(ref, actor):
             lock.unlink(missing_ok=True)
             return False
+        claimed = True
+        # Guards against a claim that "succeeded" as a same-actor no-op on a stale
+        # owner, or a daemon-side surprise. If the owner isn't us, there's nothing
+        # of ours to undo.
         if kata.owner(ref) != actor:
-            kata.unassign_if_owner(ref, actor)
             lock.unlink(missing_ok=True)
             return False
     except Exception:
+        if claimed:
+            # Best-effort rollback of the kata claim we just took. Call unassign
+            # directly rather than through unassign_if_owner: that helper's own
+            # owner() read-back is exactly what may be raising here, and we know
+            # we're the owner since we just claimed as this actor one call ago.
+            try:
+                kata._run(["unassign", ref], actor=actor, check=False)
+            except Exception:
+                pass
         lock.unlink(missing_ok=True)
         raise
     return True

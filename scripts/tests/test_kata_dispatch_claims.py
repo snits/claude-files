@@ -40,6 +40,27 @@ def test_acquire_fails_when_kata_owned_by_other_and_unwinds_lock(tmp_path, monke
     assert KataClient(repo).owner("ab12") == "someone-else"
 
 
+def test_acquire_rolls_back_kata_claim_when_readback_raises(tmp_path, monkeypatch):
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch, [ISSUE])
+    paths = state.Paths(repo)
+    paths.ensure()
+    k = KataClient(repo)
+
+    from kata_dispatch.kata import KataError
+
+    def boom(self, ref):
+        raise KataError("read-back exploded")
+
+    with pytest.MonkeyPatch.context() as mp_ctx:
+        mp_ctx.setattr(KataClient, "owner", boom)
+        with pytest.raises(KataError):
+            claims.acquire(paths, "ab12", "claude-dispatch-r1-ab12", k)
+
+    assert not paths.lock("ab12").exists()
+    assert KataClient(repo).owner("ab12") is None
+
+
 def test_release_only_unassigns_own_claim(tmp_path, monkeypatch):
     repo = make_repo(tmp_path)
     install_fake_kata(tmp_path, monkeypatch, [ISSUE])
@@ -86,6 +107,63 @@ def test_stale_lock_detected_by_dead_pid(tmp_path, monkeypatch):
     paths.lock("zz99").write_text(json.dumps({"actor": "live", "pid": os.getpid(), "host": os.uname().nodename, "started": 0}))
     stale = claims.stale_locks(paths)
     assert [s["ref"] for s in stale] == ["ab12"]
+
+
+def test_ready_returns_issues_list(tmp_path, monkeypatch):
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch, [ISSUE, {"short_id": "cd34", "title": "other", "body": "b"}])
+    k = KataClient(repo)
+    refs = {i["short_id"] for i in k.ready()}
+    assert refs == {"ab12", "cd34"}
+
+
+def test_labels_from_show(tmp_path, monkeypatch):
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch, [
+        {"short_id": "ab12", "title": "t", "body": "b", "labels": ["needs-review", "retitle"]},
+        {"short_id": "cd34", "title": "t2", "body": "b2"},
+    ])
+    k = KataClient(repo)
+    assert k.labels("ab12") == {"needs-review", "retitle"}
+    assert k.labels("cd34") == set()
+
+
+def test_comment_and_label_add_call_fake(tmp_path, monkeypatch):
+    repo = make_repo(tmp_path)
+    st = install_fake_kata(tmp_path, monkeypatch, [ISSUE])
+    k = KataClient(repo)
+    k.comment("ab12", "claude-dispatch-r1-ab12", "hello there")
+    k.label_add("ab12", "claude-dispatch-r1-ab12", "needs-review")
+    calls = kata_calls(st)
+    assert ["comment", "ab12", "--body", "hello there", "--as", "claude-dispatch-r1-ab12"] in calls
+    assert ["label", "add", "ab12", "needs-review", "--as", "claude-dispatch-r1-ab12"] in calls
+
+
+def test_is_epic_open_child(tmp_path, monkeypatch):
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch, [{
+        "short_id": "ab12", "title": "epic", "body": "b",
+        "links": [{"type": "parent", "from": {"short_id": "kid1", "status": "open"}, "to": {"short_id": "ab12", "status": "open"}}],
+    }])
+    assert KataClient(repo).is_epic("ab12") is True
+
+
+def test_is_epic_closed_child(tmp_path, monkeypatch):
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch, [{
+        "short_id": "ab12", "title": "epic", "body": "b",
+        "links": [{"type": "parent", "from": {"short_id": "kid1", "status": "closed"}, "to": {"short_id": "ab12", "status": "open"}}],
+    }])
+    assert KataClient(repo).is_epic("ab12") is False
+
+
+def test_is_epic_link_for_other_ref(tmp_path, monkeypatch):
+    repo = make_repo(tmp_path)
+    install_fake_kata(tmp_path, monkeypatch, [{
+        "short_id": "ab12", "title": "epic", "body": "b",
+        "links": [{"type": "parent", "from": {"short_id": "kid1", "status": "open"}, "to": {"short_id": "zz99", "status": "open"}}],
+    }])
+    assert KataClient(repo).is_epic("ab12") is False
 
 
 @pytest.mark.skipif(not os.environ.get("KATA_DISPATCH_LIVE"), reason="set KATA_DISPATCH_LIVE=1 to race real kata")
