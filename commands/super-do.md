@@ -185,6 +185,13 @@ Medium findings from the *first* review get resolved in that cycle anyway — ei
 declined in one line saying why. They are cheapest to address before the code is revised around
 them, and this keeps the record honest without giving them blocking power they don't deserve.
 
+**The diff under review is `git diff ${2}...HEAD` — name that range, or `${2}..<your-branch>`, in
+every reviewer dispatch and every `/code-review` invocation.** A reviewer left to choose its own
+base diffs against `main`, and when `${2}` is an integration branch ahead of `main` it then reports
+findings on commits that already landed there under other issues. Observed 2026-09-02 on pcitopo
+run wf0902: three consecutive reviewers diffed `main...HEAD` and returned mostly findings on the
+previous issue's code, which the implementer then had to triage as out of scope.
+
 **Each review is a fresh dispatch that sees the diff and the brief. Nothing else.** Not the prior
 round's findings, not the implementer's reasoning, not the argument for why a finding was
 addressed. A reviewer shown its own earlier feedback grades the response to the feedback rather
