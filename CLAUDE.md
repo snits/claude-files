@@ -313,7 +313,7 @@ Good names tell a story about the domain:
   absolute because a one-time grant outlives its own conditions: "approved just this once, for the
   broken hook on branch X" compresses through a summary into "approved." Removing the negotiation
   surface is the only version that survives compaction.
-- Always include a attribution for Claude: `Assisted-by: Claude:{{MODEL_VERSION}}`, example: "Assisted-by: Claude:claude-opus-4-8"
+- Always include a attribution for Claude: `Assisted-by: {{harness}}:{{MODEL_VERSION}}`, example: "Assisted-by: Claude:claude-opus-4-8"
 - **Cite commits upstream-style, never a bare SHA** — `af09720eb5b6 ("docs: record the CA bundle
   path as fixed, keep its signature")`. Applies anywhere a reference outlives the session: kata
   bodies/comments/close messages, plan docs, code comments, commit messages, handoffs. Generate it
