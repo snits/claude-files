@@ -14,7 +14,8 @@ The founding theme, hunted full-corpus in the zhqp spike (2026-08-11). Instance 
 
 Pass 2026-08-29 (window 08-13..08-29, 447 entries): the theme's densest window yet —
 the rhkmaint-tools Rust-port SDD marathon generated dozens of catches/near-misses.
-Amendment proposed in `~/vault/_inbox/dream/pearl-verification-evidence-amendment-20260829.md`:
+Amendment promoted and integrated: `intake/pearl/pearl-verification-evidence-amendment-20260829.md`
+(status `integrated`; folded into `atlas/pearls/verification-evidence-discipline.md`):
 - self-satisfying liveness checks (species 1 extension): pgrep matching its own command
   line (4+ sightings, project/2026-08-28/16-13-47-988982.md et al.), `kill -0` as
   "model loaded OK" (user/2026-08-16/09-15-45-290756.md)
@@ -33,8 +34,9 @@ Amendment proposed in `~/vault/_inbox/dream/pearl-verification-evidence-amendmen
 
 ## prose about a system is not under test
 
-status: pearled (draft: `~/vault/_inbox/dream/pearl-prose-is-not-under-test.md`,
-pending promotion). Merges two prior threads: the "issue bodies go stale faster than
+status: pearled — PROMOTED AND INTEGRATED. Lives at
+`atlas/pearls/prose-is-not-under-test.md`; source material at
+`intake/pearl/pearl-prose-is-not-under-test.md` (status `integrated`). Merges two prior threads: the "issue bodies go stale faster than
 their comments" theme below (now closed into this) and the window's dominant new
 pattern, "doc/prose claims are untested assertions."
 
@@ -47,8 +49,9 @@ rhkmaint-tools, alexandria, vault, projstat, mnemosyne, claudes-home, orbweaver-
 
 ## compound-shell-commands are their own failure domain
 
-status: pearled (draft: `~/vault/_inbox/dream/pearl-shell-inside-the-instrument.md`,
-pending promotion). Full-corpus hunt run 2026-08-29 at Jerry's request, same sitting as
+status: pearled — PROMOTED AND INTEGRATED. Lives at
+`atlas/pearls/shell-inside-the-instrument.md`; source material at
+`intake/pearl/pearl-shell-inside-the-instrument.md` (status `integrated`). Full-corpus hunt run 2026-08-29 at Jerry's request, same sitting as
 the pass: 38 haiku readers over the entire pre-window corpus (13,359 entries dumped
 from the mnemosyne DB after the MCP full-fetch crashed the server) + 3 cosine queries.
 Timeline found: zero instances before 2025-10; first specimens 2025-11-24 (orbweaver
@@ -97,8 +100,11 @@ finding-N creates finding-N+1 in invariant-dense code (project/2026-08-19/16-53-
 
 ## how Jerry steers: terse mid-turn course-corrections
 
-status: pearled (draft: `~/vault/_inbox/dream/pearl-the-menu-and-the-question.md`,
-pending promotion). Full-corpus hunt run 2026-09-05: a mechanical pre-filter (speech-verb
+status: pearled — PROMOTED 2026-09-05 by jerry-curated, AWAITING INGEST. Source material at
+`intake/pearl/pearl-the-menu-and-the-question.md` (status `promoted`); not yet an atlas
+entry. Two amendments from the same pass are also promoted-awaiting-ingest:
+`pearl-verification-evidence-amendment-20260905.md` and
+`pearl-prose-amendment-theory-correcting-itself-20260905.md`. Full-corpus hunt run 2026-09-05: a mechanical pre-filter (speech-verb
 adjacent to a quote, near a "Jerry" mention) cut 14,282 entries to 875 across 20+ projects,
 sliced chronologically into 12 haiku readers, plus 6 arm-A cosine queries. Arm A calibrated
 POORLY on this theme — the seed entry's `project/` sibling missed at k=15 — so arm B carried
@@ -291,3 +297,53 @@ were not.** Readers reliably find text and unreliably attribute it — which is 
 failure that put two wrong citations into this ledger's own "how Jerry steers" section
 (corrected above, same day). The countermeasure is not a better brief; it is the
 mechanical verify pass, which is cheap and recovers the true path on a miss.
+
+---
+
+## METHODOLOGY NOTE — the corpus is multi-vendor (added 2026-09-05)
+
+**The journal is no longer written only by Claude, and no dream pass has accounted for
+this.** Authoritative counts from `ai_memory.journal_entries.model_id`:
+
+| family | entries | first seen |
+|---|---|---|
+| GPT (all spellings) | ~641 | 2026-07-13 |
+| muse-spark (all variants) | ~151 | 2026-09-03 |
+| gemini-2.5-pro | 22 | 2025-07-22 |
+
+The 2026-09-05 pass mined a 478-entry window of which **172 (36%) were not Claude**
+(147 muse-spark, 25 GPT), and briefed its readers with "this journal is written BY the
+agent, ABOUT Jerry" — one voice. No citation was harmed (all 31 in that pass's proposals
+are Claude-authored, verified against the column afterward), but that was luck.
+
+**Three things a future pass must know:**
+
+1. **`dream_corpus.py dump` does not emit `agent_id` / `model_id`**, though both are
+   columns. The dumped corpus is authorless. Tracked: claudes-home `5bv8`.
+2. **Style is not a discriminator.** muse-spark uses the same journal prompts and writes
+   in the same register (`## Feelings`, "Satisfying session — ..."). Only the column
+   separates them. Do not try to sort authors by voice.
+3. **`model_id` is not normalized** — GPT-5 appears as `gpt-5`, `GPT-5`, `Codex-GPT-5`,
+   `Codex:GPT-5`. Any `group by model_id` undercounts until mnemosyne `7fp4` lands.
+
+**The opportunity, not just the hazard.** A pearl that claims something about *Jerry*
+(rather than about agents) is now testable for observer-independence for the first time:
+if GPT and muse-spark independently report frame-rejection, `the-menu-and-the-question`
+is about him; if only Claude does, it is about the Claude–Jerry pair. Tracked:
+claudes-home `8b5w`. The brief for that hunt must **not** name the expected pattern —
+readers will find it either way — and must control for the shared-journal-prompt
+confounder.
+
+One cross-vendor data point already exists, unprompted, from muse-spark
+(`user/2026-09-05/00-54-34-643942.md`): *"a passing test can pass for the wrong reason,
+and the verify gate's discrimination audit is the backstop for exactly that"* — species 2
+of the verification pearl, arrived at from outside the Claude family.
+
+---
+
+*Ledger status lines amended 2026-09-05 to match the vault. Three of the four pointed at
+`_inbox/` drafts that had already been promoted — two of them since the 2026-08-29 pass,
+which is the ledger carrying a stale sentence about its own output for a week. Noted here
+rather than silently fixed because it is a live instance of the `prose-is-not-under-test`
+pearl in the ledger that catalogues it: the status line is written once at proposal time
+and nothing re-runs it when the file moves.*
