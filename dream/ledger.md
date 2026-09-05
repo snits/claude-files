@@ -347,3 +347,26 @@ which is the ledger carrying a stale sentence about its own output for a week. N
 rather than silently fixed because it is a live instance of the `prose-is-not-under-test`
 pearl in the ledger that catalogues it: the status line is written once at proposal time
 and nothing re-runs it when the file moves.*
+
+### Addendum, same day: agentsview is the right instrument, and it closes the experiment for now
+
+Jerry pointed at agentsview rather than the journal. `~/.agentsview/sessions.db`
+(SQLite, read-only via `file:...?mode=ro`) has `sessions.agent` = harness and
+`sessions.user_message_count` = Jerry's actual turn count, which measures the
+conversational seat directly instead of the journal's "did this entry name him" proxy.
+
+Sessions with a real back-and-forth (`user_message_count >= 5`), since 2026-06-01:
+
+    claude 726 of 12604 | codex 45 of 1228 | opencode 6 of 322 | antigravity-cli 3 of 147
+
+**opencode — muse-spark's harness — has six**, and 277 of its 322 sessions have a parent
+(dispatched subagent, not lead). The muse-spark arm of the observer-independence
+experiment has no sample at all; codex's 45 is the only viable arm. Claude sessions
+average 3.6 user turns all-time, every other harness 1.2–1.3.
+
+Also: journal rows carry **no session id** (`metadata` is `{}`), so journal↔session joins
+must be heuristic on (project, timestamp, harness). A future hunt may prefer reading
+agentsview `messages` directly for non-Claude arms — which also sheds the
+shared-journal-prompt confounder, since muse-spark writes to the same journal prompts.
+
+Full detail and the revised plan on claudes-home `8b5w`.
