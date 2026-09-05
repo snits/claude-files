@@ -279,10 +279,13 @@ user/2026-09-03/12-52-48-571548.md). The lesson that emerged is the interesting 
 a discipline that depends on vigilance at a high-load moment will fail at high load."
 
 **Instance from this pass's own machinery (2026-09-05):** 12 haiku readers were briefed
-that fabricating a quote or a path was the single worst thing they could do. Of 312
+that fabricating a quote or a path was the single worst thing they could do. Of 337
 (path, quote) pairs they returned, a mechanical re-verify against the corpus scored
-173 OK, 30 right-quote-wrong-path, 74 quote-not-found-verbatim, 16 paths that do not
-exist in the corpus at all. One reader fabricated 14 paths, including three of the five
+193 OK, 30 right-quote-wrong-path, 78 quote-not-found-verbatim, 16 paths that do not
+exist in the corpus at all. (First tallied as 312/173/74 on 2026-09-05 from 11 of the 12
+reports — the 12th landed after the extraction ran. Re-tallied the same day across all
+twelve; the 12th added no fabricated paths, so the finding below is unchanged and only
+the clean count moved.) One reader fabricated 14 paths, including three of the five
 quotes in its own "most striking" list. **The quotes were nearly all real; the citations
 were not.** Readers reliably find text and unreliably attribute it — which is exactly the
 failure that put two wrong citations into this ledger's own "how Jerry steers" section
