@@ -97,23 +97,29 @@ finding-N creates finding-N+1 in invariant-dense code (project/2026-08-19/16-53-
 
 ## how Jerry steers: terse mid-turn course-corrections
 
-status: ripe (3+ projects across 3 windows: rhkmaint-tools, alexandria, claudes-home,
-vault, kriegspiel; pearl drafting deferred — one pearl per pass, editor's call. This is
-the "observations about how Jerry functions" thread from zhqp's framing and deserves
-its own hunt with different arms — his messages, not agent reflections, are the raw
-material.)
+status: pearled (draft: `~/vault/_inbox/dream/pearl-the-menu-and-the-question.md`,
+pending promotion). Full-corpus hunt run 2026-09-05: a mechanical pre-filter (speech-verb
+adjacent to a quote, near a "Jerry" mention) cut 14,282 entries to 875 across 20+ projects,
+sliced chronologically into 12 haiku readers, plus 6 arm-A cosine queries. Arm A calibrated
+POORLY on this theme — the seed entry's `project/` sibling missed at k=15 — so arm B carried
+the hunt; recorded here so a future pass does not trust an arm-A miss on Jerry-vocabulary
+queries. Span 2025-07-18 → 2026-09-04; every era's reader independently reported the same
+core: he rejects frames rather than picking from menus.
 
 New instance families this window:
 - mechanism-questions that dissolve symptom-treatment ("what is the process doing that
   requires more vram?", project/2026-08-16/16-51-24-408889.md; "What is sorting
-  something by hash order?", project/2026-08-20/16-27-30-289344.md — four artifacts had
-  agreed and none checked the premise)
+  something by hash order?", project/2026-08-20/20-02-58-885850.md — four artifacts had
+  agreed and none checked the premise) [citation corrected 2026-09-05: the path previously
+  recorded here, project/2026-08-20/16-27-30-289344.md, does not contain the quote —
+  `verify` returns NOQUOTE there and OK at 20-02-58]
 - disjunctions containing the answer (project/2026-08-18/16-06-41-042314.md)
 - incredulity as data ("wait the docling code is running tesseract??",
   user/2026-08-15/19-24-54-652294.md)
 - pushback on ceremony, not caution ("I'm not sure it is a blocker",
   project/2026-08-15/22-53-56-201184.md); rejection of manufactured needs-decision
-  balance ("why not just fix the dependency?", project/2026-08-21/20-02-58-885850.md)
+  balance ("why not just fix the dependency?", project/2026-08-20/20-02-58-885850.md) [date corrected
+  2026-09-05 from 2026-08-21; same timestamp, wrong day]
 - re-litigation shutdown ("That was the ruling that was already made before",
   project/2026-08-28/23-26-52-040846.md); directive-in-second-clause misread as
   consolation (project/2026-08-29/01-57-09-722849.md)
@@ -175,3 +181,110 @@ Python, compile error in Rust (project/2026-08-27/19-21-32-689210.md); goldens s
 per hunk, not per file (project/2026-08-27/21-57-40-007887.md). Countermeasure already
 formulated in-corpus: "for derived artifacts the merge resolution is re-derive from the
 merged source."
+
+## a PASS is a worse moment for scrutiny than a BLOCK
+
+status: watching (new 2026-09-05; rhkmaint-tools + projstat so far, but named
+independently by two agents in adjacent entries, and it rhymes with the
+"how Jerry steers" pearl's central asymmetry from a completely different direction)
+
+Verification attention is inversely proportional to how comfortable the verdict feels.
+"A PASS is a *worse* moment for scrutiny than a BLOCK, and that asymmetry is worth
+naming" (user/2026-09-04/12-13-28-143175.md); "a PASS with a note actively disperses
+[attention], because the verdict does the thinking for you"
+(user/2026-09-04/12-18-21-479179.md). Cross-ref: the pearl `the-menu-and-the-question`
+makes the same shape claim about Jerry's one-word approvals. If a third domain shows up,
+the general form ("agreement is not evidence; disagreement is") is pearl-shaped.
+
+## reachability, not existence, bounds a permissive component
+
+status: watching (new 2026-09-05; rhkmaint-tools, 3 instances in one window)
+
+"a 'permissive' component downstream of a strict validator is not permissive. Its
+tolerance is bounded by the strictest thing in the pipeline ahead of it... compare their
+REACHABLE input sets, not their declared schemas" (project/2026-08-30/10-25-01-025284.md).
+Also: "The reachability question is not 'who calls this today' but 'what is already
+scheduled to call this.' An open issue in the backlog is a caller with a date on it"
+(project/2026-08-29/13-45-05-117807.md). Third: two adoption shapes yielding opposite
+conclusions about deny_unknown_fields, repeatedly collapsed into one
+(project/2026-08-30/11-20-40-496944.md).
+
+## a count is a defect generator; state the invariant
+
+status: watching (new 2026-09-05; rhkmaint-tools, 4 instances)
+
+Replacing one wrong list with a slightly-less-wrong list produces the next wrong list.
+"The enumerate-and-count ledger style is the defect generator. The durable fix isn't a
+longer list, it's a stated invariant... Provable from two type signatures; no member list
+needed" (project/2026-08-29/15-48-59-325553.md). Six review rounds each correcting the
+prior round's completeness claim, resolved only by removing every completeness claim
+(project/2026-08-29/17-19-40-797322.md). Counts stated without method
+(project/2026-08-30/16-04-17-213567.md, project/2026-09-02/13-16-43-889869.md).
+Closely related to the promoted `prose-is-not-under-test` pearl's "born false"
+half — candidate amendment rather than its own pearl.
+
+## a reviewer's diagnosis and their prescription are separable
+
+status: watching (new 2026-09-05; rhkmaint-tools, 2 instances, both self-noticed)
+
+"A reviewer's diagnosis and their prescription are separable. Advisor located a real bug
+precisely and proposed a fix (stamp on success only) that would have reintroduced the
+original incident this whole session existed to fix" (user/2026-08-30/00-15-33-715617.md).
+"Review findings carry two claims, and reviewers are more reliable on the first. [...]
+Apply the diagnosis, re-derive the prescription" (user/2026-08-30/11-20-40-496576.md).
+
+## two artifacts disagreeing has no tiebreaker
+
+status: watching (new 2026-09-05; orbweaver-rs, 2 instances same session).
+OPEN EXTENSION to the promoted `verification-evidence-discipline` pearl, not a contradiction.
+
+The pearl ranks artifact over report. It is silent on two independently-produced artifacts
+disagreeing with each other. "The verify-branch gate has a rule for a report disagreeing
+with its own artifact — the artifact wins... It has no rule for two *runs* disagreeing with
+each other... There is no evidence hierarchy to appeal to there, only the source"
+(user/2026-09-03/01-30-50-023338.md); "recency is not evidence... the tiebreak has to be
+the source, never the timestamp" (user/2026-09-03/01-27-54-813835.md).
+
+## a fail-closed rule needs its own failure-mode audit
+
+status: watching (new 2026-09-05; rhkmaint-tools, 1 strong instance — listed because it
+qualifies a rule the verification pearl endorses)
+
+"The fail-closed rule (missing artifact = BLOCK) is correct and should stay; the defect is
+that a mandated write can fail for reasons unrelated to the audit, turning a correct rule
+into a false-BLOCK generator" (user/2026-09-03/01-44-36-231785.md). The whole
+verify-branch issue cluster in kata (4ky9/x56b/pzh2/n8zs) is this one mechanism.
+
+## the human is a concurrent writer in the shared checkout
+
+status: watching (new 2026-09-05; rhkmaint-tools, 2 instances same night)
+
+"in a repo where a human is actively working, `git log`, `git status`, and `.git/config`
+are *live* state, not a snapshot. My habit is to read them once at startup and then reason
+from that reading for the rest of the session" (user/2026-09-03/03-04-58-836300.md;
+also 03-08-37-217958.md). Two state changes were attributed to the agent's own actions
+or a daemon when Jerry had made them. Related to `shell-inside-the-instrument` species 3
+(cwd drift) but the mechanism is concurrency, not the shell.
+
+## reading a rule is not applying it
+
+status: watching (carried; new instances 2026-09-05 — now rhkmaint-tools + claudes-home +
+projstat, and the *method* of this pass supplied one more, below)
+
+New this window: three separate confident extensions of a truncated identifier into a
+fabricated complete one within ~24 hours, each with the relevant memory already in context
+(user/2026-09-02/13-16-43-889337.md, user/2026-09-03/02-10-01-846906.md,
+user/2026-09-03/12-52-48-571548.md). The lesson that emerged is the interesting part:
+"The fix that has a chance is structural: remove the opportunity rather than add a check...
+a discipline that depends on vigilance at a high-load moment will fail at high load."
+
+**Instance from this pass's own machinery (2026-09-05):** 12 haiku readers were briefed
+that fabricating a quote or a path was the single worst thing they could do. Of 312
+(path, quote) pairs they returned, a mechanical re-verify against the corpus scored
+173 OK, 30 right-quote-wrong-path, 74 quote-not-found-verbatim, 16 paths that do not
+exist in the corpus at all. One reader fabricated 14 paths, including three of the five
+quotes in its own "most striking" list. **The quotes were nearly all real; the citations
+were not.** Readers reliably find text and unreliably attribute it — which is exactly the
+failure that put two wrong citations into this ledger's own "how Jerry steers" section
+(corrected above, same day). The countermeasure is not a better brief; it is the
+mechanical verify pass, which is cheap and recovers the true path on a miss.
