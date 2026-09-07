@@ -11,6 +11,7 @@ import hashlib
 import json
 import re
 import tomllib
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -148,3 +149,48 @@ def scan_metrics_session(path: Path) -> SessionMetrics:
     for sub in subagent_files(path):
         _scan_lines(sub, facts, top_level=False)
     return facts
+
+
+def _remedy_record(remedy: Remedy, landed: Callable[[str], dt.date | None]) -> dict:
+    from_kata = landed(remedy.ref)
+    if from_kata is not None:
+        return {"ref": remedy.ref, "landed": from_kata.isoformat(), "source": "kata"}
+    if remedy.landed is not None:
+        return {"ref": remedy.ref, "landed": remedy.landed.isoformat(), "source": "registry"}
+    return {"ref": remedy.ref, "landed": None, "source": "none"}
+
+
+def build_row(
+    sessions: list[SessionMetrics],
+    patterns: list[Pattern],
+    *,
+    window_start: str,
+    window_end: str,
+    computed_at: str,
+    registry_sha256: str,
+    landed: Callable[[str], dt.date | None],
+) -> dict:
+    """One metrics row. Only interactive sessions count; hits count only in eligible ones."""
+    interactive = [s for s in sessions if s.interactive]
+    out: dict = {}
+    for pattern in patterns:
+        versions: dict[str, dict[str, int]] = {}
+        for session in interactive:
+            if not session.eligible_for(pattern.eligible):
+                continue
+            bucket = versions.setdefault(session.version, {"hits": 0, "eligible": 0})
+            bucket["eligible"] += 1
+            bucket["hits"] += sum(1 for text in session.errors if pattern.detector.search(text))
+        out[pattern.name] = {
+            "versions": versions,
+            "remedies": [_remedy_record(r, landed) for r in pattern.remedies],
+        }
+    return {
+        "window_start": window_start,
+        "window_end": window_end,
+        "computed_at": computed_at,
+        "registry_sha256": registry_sha256,
+        "stale_registry": False,
+        "sessions_interactive": len(interactive),
+        "patterns": out,
+    }

@@ -201,3 +201,70 @@ def test_subagent_files_lists_only_that_sessions_dir(tmp_path):
     a = write_session(tmp_path / "abc" / "subagents", "agent-1.jsonl", [])
     write_session(tmp_path / "other" / "subagents", "agent-2.jsonl", [])
     assert rm.subagent_files(parent) == [a]
+
+
+def make_patterns() -> list[rm.Pattern]:
+    return [
+        rm.Pattern("worktree-guard-shape", re.compile("too complex to verify"), "isolated", [rm.Remedy("8j5h")]),
+        rm.Pattern("sleep-block", re.compile(r"Blocked: sleep \d+"), "ran_bash", [rm.Remedy("note", dt.date(2026, 8, 1))]),
+        rm.Pattern("classifier-denial", re.compile("auto mode classifier"), "any", []),
+    ]
+
+
+def make_session(version="2.1.259", interactive=True, isolated=False, ran_bash=False, errors=()):
+    return rm.SessionMetrics(Path("/x"), version, interactive, isolated, ran_bash, list(errors))
+
+
+ROW_KW = dict(window_start="2026-09-01T00:00:00Z", window_end="2026-09-07T00:00:00Z",
+              computed_at="2026-09-07T00:00:01Z", registry_sha256="ab" * 32)
+
+
+def test_build_row_counts_hits_and_eligible_per_version():
+    sessions = [
+        make_session(isolated=True, ran_bash=True, errors=[GUARD, GUARD, SLEEP]),
+        make_session(isolated=True, ran_bash=True),
+        make_session(version="2.1.258", ran_bash=True, errors=[SLEEP]),
+        make_session(interactive=False, isolated=True, errors=[GUARD]),  # headless: ignored
+    ]
+    row = rm.build_row(sessions, make_patterns(), landed=lambda ref: None, **ROW_KW)
+    assert row["sessions_interactive"] == 3
+    guard = row["patterns"]["worktree-guard-shape"]["versions"]
+    assert guard == {"2.1.259": {"hits": 2, "eligible": 2}}
+    sleep = row["patterns"]["sleep-block"]["versions"]
+    assert sleep == {"2.1.259": {"hits": 1, "eligible": 2}, "2.1.258": {"hits": 1, "eligible": 1}}
+    assert row["patterns"]["classifier-denial"]["versions"] == {
+        "2.1.259": {"hits": 0, "eligible": 2},
+        "2.1.258": {"hits": 0, "eligible": 1},
+    }
+
+
+def test_build_row_hits_only_count_in_eligible_sessions():
+    # A guard string in a session the detector does not consider isolated is a quote, not a refusal.
+    sessions = [make_session(isolated=False, ran_bash=True, errors=[GUARD])]
+    row = rm.build_row(sessions, make_patterns(), landed=lambda ref: None, **ROW_KW)
+    assert row["patterns"]["worktree-guard-shape"]["versions"] == {}
+
+
+def test_build_row_remedy_landed_prefers_kata_then_registry():
+    lookups = {"8j5h": dt.date(2026, 9, 3)}
+    row = rm.build_row([make_session()], make_patterns(), landed=lookups.get, **ROW_KW)
+    assert row["patterns"]["worktree-guard-shape"]["remedies"] == [
+        {"ref": "8j5h", "landed": "2026-09-03", "source": "kata"}
+    ]
+    assert row["patterns"]["sleep-block"]["remedies"] == [
+        {"ref": "note", "landed": "2026-08-01", "source": "registry"}
+    ]
+
+
+def test_build_row_unlanded_remedy_has_no_date():
+    patterns = [rm.Pattern("p", re.compile("x"), "any", [rm.Remedy("open1")])]
+    row = rm.build_row([make_session()], patterns, landed=lambda ref: None, **ROW_KW)
+    assert row["patterns"]["p"]["remedies"] == [{"ref": "open1", "landed": None, "source": "none"}]
+
+
+def test_build_row_carries_window_and_hash():
+    row = rm.build_row([], make_patterns(), landed=lambda ref: None, **ROW_KW)
+    assert row["window_start"] == ROW_KW["window_start"]
+    assert row["registry_sha256"] == ROW_KW["registry_sha256"]
+    assert row["stale_registry"] is False
+    assert json.loads(json.dumps(row)) == row
