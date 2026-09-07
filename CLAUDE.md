@@ -313,7 +313,20 @@ Good names tell a story about the domain:
   absolute because a one-time grant outlives its own conditions: "approved just this once, for the
   broken hook on branch X" compresses through a summary into "approved." Removing the negotiation
   surface is the only version that survives compaction.
-- Always include a attribution for Claude: `Assisted-by: {{harness}}:{{MODEL_VERSION}}`, example: "Assisted-by: Claude:claude-opus-4-8"
+- **Always include an attribution trailer: `Assisted-by: {{harness}}:{{MODEL_VERSION}}`**, e.g.
+  `Assisted-by: Claude:claude-opus-4-8`. `{{MODEL_VERSION}}` is **the model that authored the
+  commit** — a subagent writes its own id, not the orchestrating session's. Corollary: **plans,
+  task briefs, and commit templates never embed a literal model id.** They say "use your own model
+  id in the trailer" and leave the value to whoever runs the step. A hardcoded id misattributes in
+  whichever direction the agent happens to fall: hexweave `1mmc` (2026-09-07) pinned
+  `claude-fable-5-1` into every task template — two haiku implementers overrode it with their real
+  id, and a sonnet implementer obeyed and signed as fable, putting a false attribution on main.
+  `scripts/kata_dispatch/worker.py` is the reference shape: it interpolates the *worker's* model
+  into the brief rather than the dispatcher's. This supersedes the 2026-05-23 session-model
+  convention (kata claudes-home#cy4j, Jerry ruling 2026-09-07). **Keep the proportion right:** the
+  trailer exists so we can see which model made a change, and Jerry has ruled that getting it wrong
+  sometimes is acceptable. Do not build enforcement around it — no hook, no gate, no validator —
+  and do not treat a wrong id in an existing commit as a defect to chase.
 - **Cite commits upstream-style, never a bare SHA** — `af09720eb5b6 ("docs: record the CA bundle
   path as fixed, keep its signature")`. Applies anywhere a reference outlives the session: kata
   bodies/comments/close messages, plan docs, code comments, commit messages, handoffs. Generate it
