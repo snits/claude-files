@@ -515,3 +515,24 @@ def test_trend_pattern_absent_from_earlier_row_renders_one_line():
     block = out.split("## worktree-guard-shape", 1)[1].split("## ", 1)[0]
     data_lines = [l for l in block.splitlines() if re.match(r"^[ !]\d{4}-\d{2}-\d{2}", l)]
     assert len(data_lines) == 1
+
+
+def test_cli_append_then_trend(tmp_path, capsys):
+    projects = tmp_path / "projects"
+    populate(projects, "a.jsonl", [human("go"), tool_use("Bash"), tool_error(SLEEP)], ts(2026, 9, 3))
+    reg = write_registry(tmp_path, MINIMAL_REGISTRY)
+    metrics = tmp_path / "m.jsonl"
+    common = ["--metrics-path", str(metrics), "--projects-dir", str(projects), "--registry", str(reg), "--no-kata"]
+    assert rm.main(["--append", "--since", "2026-09-01", *common]) == 0
+    assert rm.main(["--trend", *common]) == 0
+    out = capsys.readouterr().out
+    assert "## sleep-block" in out
+    assert re.search(r"\s+1\s+1\s+1\.00", out)
+
+
+def test_cli_append_without_since_on_empty_file_errors(tmp_path, capsys):
+    reg = write_registry(tmp_path, MINIMAL_REGISTRY)
+    rc = rm.main(["--append", "--metrics-path", str(tmp_path / "m.jsonl"), "--projects-dir", str(tmp_path),
+                  "--registry", str(reg), "--no-kata"])
+    assert rc == 2
+    assert "--since" in capsys.readouterr().err

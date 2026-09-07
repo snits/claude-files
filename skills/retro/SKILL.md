@@ -29,6 +29,19 @@ sit unworked is worse than approving fewer, because the filed-and-ignored ones m
 retro's evidence noisier without changing anything. If the previous retro's remedies are
 mostly unworked, say so up front and consider capping this retro's approvals.
 
+Then append this window's metrics row and paste the trend under the remedy-status lines:
+
+```bash
+python3 ~/.claude/skills/retro/retro_metrics.py --append   # tiles from the previous row
+python3 ~/.claude/skills/retro/retro_metrics.py --trend
+```
+
+The trend is per pattern, per window, split by Claude Code version when a window mixes
+versions. Read the version split before proposing a remedy for any refusal class: on
+2026-09-02, 326 of 467 worktree-guard refusals were a harness bug fixed in 2.1.257, not a
+process failure. Patterns and their remedies live in `patterns.toml`; add a remedy's kata
+ref there when the retro approves it, and its landed date follows the issue's close.
+
 **2. Prefilter (deterministic, do this before dispatching anything).**
 
 ```bash

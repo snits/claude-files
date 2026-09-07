@@ -6,11 +6,13 @@ Spec: ~/claudes-home/docs/superpowers/specs/2026-09-07-retro-pattern-metrics-des
 
 from __future__ import annotations
 
+import argparse
 import datetime as dt
 import hashlib
 import json
 import re
 import subprocess
+import sys
 import tomllib
 from collections.abc import Callable
 from dataclasses import dataclass, field
@@ -339,3 +341,41 @@ def render_trend(rows: list[dict]) -> str:
             out.append("! = computed under an older registry; run --rebuild")
         out.append("")
     return "\n".join(out) + "\n"
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--append", action="store_true", help="compute one row for the window and append it (default)")
+    mode.add_argument("--rebuild", action="store_true", help="recompute every row under the current registry")
+    mode.add_argument("--trend", action="store_true", help="print trend tables for the recap")
+    parser.add_argument("--since", help="ISO date for the first row's window start (append only)")
+    parser.add_argument("--metrics-path", type=Path, default=METRICS_PATH)
+    parser.add_argument("--projects-dir", type=Path, default=mt.PROJECTS_DIR)
+    parser.add_argument("--registry", type=Path, default=REGISTRY_PATH)
+    parser.add_argument("--no-kata", action="store_true", help="tests only: skip kata lookups for landed dates")
+    args = parser.parse_args(argv)
+
+    landed = (lambda ref: None) if args.no_kata else landed_date
+    try:
+        if args.trend:
+            sys.stdout.write(render_trend(read_rows(args.metrics_path)))
+        elif args.rebuild:
+            rows = rebuild_rows(metrics_path=args.metrics_path, projects_dir=args.projects_dir,
+                                registry_path=args.registry, landed=landed)
+            print(f"rebuilt {len(rows)} rows")
+        else:
+            since = _parse_iso(args.since) if args.since else None
+            if since is not None and since.tzinfo is None:
+                since = since.replace(tzinfo=UTC)
+            row = append_row(metrics_path=args.metrics_path, projects_dir=args.projects_dir,
+                             registry_path=args.registry, since=since, now=dt.datetime.now(UTC), landed=landed)
+            print(f"appended row {row['window_start']} → {row['window_end']}: {row['sessions_interactive']} interactive sessions")
+    except ValueError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
