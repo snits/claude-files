@@ -536,3 +536,79 @@ def test_cli_append_without_since_on_empty_file_errors(tmp_path, capsys):
                   "--registry", str(reg), "--no-kata"])
     assert rc == 2
     assert "--since" in capsys.readouterr().err
+
+
+# --- F1: worktree pattern registry ---
+
+def test_shipped_worktree_patterns_are_disjoint():
+    patterns = {p.name: p for p in rm.load_registry(rm.REGISTRY_PATH)}
+    guard = patterns["worktree-guard-shape"].detector
+    trap = patterns["worktree-cwd-trap"].detector
+
+    too_complex = (
+        "This session is isolated in the worktree /x, but this command names git in a form "
+        "too complex to verify that it stays inside the worktree. Refusing to run it"
+    )
+    assert bool(guard.search(too_complex)) is True
+    assert bool(trap.search(too_complex)) is False
+
+    cwd_trap = (
+        "This session is isolated in the worktree /x, but this command's working directory "
+        "resolved to the shared checkout. Refusing to run it"
+    )
+    assert bool(guard.search(cwd_trap)) is False
+    assert bool(trap.search(cwd_trap)) is True
+
+    sed_shape = (
+        "This session is isolated in the worktree /x, but this command runs sed with a value "
+        "computed at runtime. Refusing to run it"
+    )
+    assert bool(guard.search(sed_shape)) is True
+    assert bool(trap.search(sed_shape)) is False
+
+
+# --- F2: write_rows preserves key order ---
+
+def test_write_rows_preserves_pattern_order(tmp_path):
+    patterns = [
+        rm.Pattern("zeta", re.compile("x"), "any", []),
+        rm.Pattern("alpha", re.compile("x"), "any", []),
+    ]
+    row = rm.build_row([make_session()], patterns, landed=lambda ref: None, **ROW_KW)
+    path = tmp_path / "m.jsonl"
+    rm.write_rows(path, [row])
+    rows = rm.read_rows(path)
+    assert list(rows[0]["patterns"]) == ["zeta", "alpha"]
+
+
+# --- F3/F4: CLI flag guards ---
+
+def test_cli_since_with_trend_errors(tmp_path, capsys):
+    reg = write_registry(tmp_path, MINIMAL_REGISTRY)
+    with pytest.raises(SystemExit) as exc:
+        rm.main(["--trend", "--since", "2026-09-01", "--metrics-path", str(tmp_path / "m.jsonl"),
+                 "--projects-dir", str(tmp_path), "--registry", str(reg)])
+    assert exc.value.code == 2
+    assert "--since" in capsys.readouterr().err
+
+
+def test_cli_since_with_rebuild_errors(tmp_path, capsys):
+    reg = write_registry(tmp_path, MINIMAL_REGISTRY)
+    with pytest.raises(SystemExit) as exc:
+        rm.main(["--rebuild", "--since", "2026-09-01", "--metrics-path", str(tmp_path / "m.jsonl"),
+                 "--projects-dir", str(tmp_path), "--registry", str(reg)])
+    assert exc.value.code == 2
+
+
+def test_cli_no_kata_against_real_metrics_path_errors(capsys):
+    with pytest.raises(SystemExit) as exc:
+        rm.main(["--trend", "--no-kata"])
+    assert exc.value.code == 2
+    assert "--no-kata" in capsys.readouterr().err
+
+
+def test_cli_no_kata_with_metrics_path_still_works(tmp_path, capsys):
+    reg = write_registry(tmp_path, MINIMAL_REGISTRY)
+    rc = rm.main(["--trend", "--no-kata", "--metrics-path", str(tmp_path / "m.jsonl"),
+                  "--projects-dir", str(tmp_path), "--registry", str(reg)])
+    assert rc == 0

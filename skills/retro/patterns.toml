@@ -4,10 +4,11 @@
 # detector  — Python regex applied to each tool-result error text
 # eligible  — which sessions count in the denominator: isolated | ran_bash | any
 # remedies  — kata refs; `landed` is used only when the ref does not resolve in kata
+# remedies refs are claudes-home kata issues; for a remedy tracked anywhere else, use landed = "YYYY-MM-DD"
 
 [[pattern]]
 name = "worktree-guard-shape"
-detector = "This session is isolated in the worktree .* names git in a form too complex to verify"
+detector = "(?s)^(?!.*shared checkout).*isolated in the worktree"
 eligible = "isolated"
 remedies = [{ ref = "8j5h" }]
 

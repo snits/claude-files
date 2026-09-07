@@ -241,7 +241,7 @@ def read_rows(path: Path) -> list[dict]:
 
 def write_rows(path: Path, rows: list[dict]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text("".join(json.dumps(row, sort_keys=True) + "\n" for row in rows))
+    path.write_text("".join(json.dumps(row) + "\n" for row in rows))
 
 
 def _sessions_between(start: dt.datetime, end: dt.datetime, projects_dir: Path) -> list[SessionMetrics]:
@@ -278,7 +278,11 @@ def append_row(*, metrics_path: Path, projects_dir: Path, registry_path: Path,
 
 
 def rebuild_rows(*, metrics_path: Path, projects_dir: Path, registry_path: Path, landed) -> list[dict]:
-    """Recompute every row under the current registry; keep and flag rows with no transcripts left."""
+    """Recompute every row under the current registry; keep and flag rows with no transcripts left.
+
+    A recomputed row gets a fresh `computed_at`: it dates the row's current content; window
+    tiling keys on `window_end`.
+    """
     rebuilt = []
     for old in read_rows(metrics_path):
         start, end = _parse_iso(old["window_start"]), _parse_iso(old["window_end"])
@@ -355,6 +359,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--registry", type=Path, default=REGISTRY_PATH)
     parser.add_argument("--no-kata", action="store_true", help="tests only: skip kata lookups for landed dates")
     args = parser.parse_args(argv)
+
+    if args.since and (args.trend or args.rebuild):
+        parser.error("--since applies to --append only")
+    if args.no_kata and args.metrics_path == METRICS_PATH:
+        parser.error("--no-kata is for tests; pass --metrics-path")
 
     landed = (lambda ref: None) if args.no_kata else landed_date
     try:

@@ -41,6 +41,9 @@ versions. Read the version split before proposing a remedy for any refusal class
 2026-09-02, 326 of 467 worktree-guard refusals were a harness bug fixed in 2.1.257, not a
 process failure. Patterns and their remedies live in `patterns.toml`; add a remedy's kata
 ref there when the retro approves it, and its landed date follows the issue's close.
+Only interactive sessions (at least one human turn in the top-level transcript) count, so
+headless kata-dispatch runs are excluded, and a session counts in the window it last wrote to,
+not the one it started in.
 
 **2. Prefilter (deterministic, do this before dispatching anything).**
 
