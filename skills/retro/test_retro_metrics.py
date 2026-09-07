@@ -5,6 +5,7 @@ from __future__ import annotations
 import datetime as dt
 import json
 import re
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -268,3 +269,33 @@ def test_build_row_carries_window_and_hash():
     assert row["registry_sha256"] == ROW_KW["registry_sha256"]
     assert row["stale_registry"] is False
     assert json.loads(json.dumps(row)) == row
+
+
+def fake_run(payload: dict | None, returncode=0):
+    def run(cmd, **kw):
+        out = json.dumps(payload) if payload is not None else ""
+        return subprocess.CompletedProcess(cmd, returncode, stdout=out, stderr="")
+    return run
+
+
+def test_landed_date_reads_closed_at():
+    run = fake_run({"issue": {"status": "closed", "closed_at": "2026-09-03T00:00:07.439Z"}})
+    assert rm.landed_date("8j5h", run=run) == dt.date(2026, 9, 3)
+
+
+def test_landed_date_open_issue_is_none():
+    run = fake_run({"issue": {"status": "open", "closed_at": None}})
+    assert rm.landed_date("wqvh", run=run) is None
+
+
+def test_landed_date_unresolvable_ref_is_none():
+    assert rm.landed_date("coach-hook", run=fake_run(None, returncode=3)) is None
+
+
+def test_landed_date_passes_workspace():
+    seen = {}
+    def run(cmd, **kw):
+        seen["cmd"] = cmd
+        return subprocess.CompletedProcess(cmd, 3, stdout="", stderr="")
+    rm.landed_date("x", workspace=Path("/w"), run=run)
+    assert seen["cmd"] == ["kata", "show", "x", "--json", "--workspace", "/w"]

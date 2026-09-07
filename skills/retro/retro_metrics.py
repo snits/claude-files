@@ -10,6 +10,7 @@ import datetime as dt
 import hashlib
 import json
 import re
+import subprocess
 import tomllib
 from collections.abc import Callable
 from dataclasses import dataclass, field
@@ -19,6 +20,7 @@ import mine_transcripts as mt
 
 REGISTRY_PATH = Path(__file__).parent / "patterns.toml"
 ELIGIBILITY = ("isolated", "ran_bash", "any")
+KATA_WORKSPACE = Path.home() / "claudes-home"
 
 
 @dataclass(frozen=True)
@@ -149,6 +151,24 @@ def scan_metrics_session(path: Path) -> SessionMetrics:
     for sub in subagent_files(path):
         _scan_lines(sub, facts, top_level=False)
     return facts
+
+
+def landed_date(ref: str, *, workspace: Path = KATA_WORKSPACE, run=subprocess.run) -> dt.date | None:
+    """Close date of a kata issue, or None if it is open or the ref does not resolve."""
+    result = run(
+        ["kata", "show", ref, "--json", "--workspace", str(workspace)],
+        capture_output=True, text=True,
+    )
+    if result.returncode != 0 or not result.stdout.strip():
+        return None
+    try:
+        issue = json.loads(result.stdout)["issue"]
+    except (json.JSONDecodeError, KeyError, TypeError):
+        return None
+    closed_at = issue.get("closed_at") if issue.get("status") == "closed" else None
+    if not closed_at:
+        return None
+    return dt.datetime.fromisoformat(closed_at.replace("Z", "+00:00")).date()
 
 
 def _remedy_record(remedy: Remedy, landed: Callable[[str], dt.date | None]) -> dict:
