@@ -412,6 +412,11 @@ def test_trend_totals_and_rate():
     assert "## worktree-guard-shape" in out
     assert re.search(r"2026-09-02\s+326\s+140\s+2\.33", out)
     assert "2.1.235" not in out  # single version: no sub-row
+    lines = out.splitlines()
+    header = next(l for l in lines if "window_end" in l)
+    data = next(l for l in lines if "2026-09-02" in l)
+    assert header.index("window_end") == 1
+    assert data.index("2026-09-02") == 1
 
 
 def test_trend_version_subrows_when_mixed():
@@ -431,7 +436,7 @@ def test_trend_marks_first_window_after_landed():
     ]
     lines = rm.render_trend(rows).splitlines()
     marked = [l for l in lines if "◄ 8j5h landed 2026-09-03" in l]
-    assert len(marked) == 1 and marked[0].startswith("2026-09-07")
+    assert len(marked) == 1 and marked[0].lstrip().startswith("2026-09-07")
 
 
 def test_trend_zero_eligible_prints_dash():
@@ -449,3 +454,64 @@ def test_trend_unlanded_remedy_has_no_marker():
     remedies = [{"ref": "open1", "landed": None, "source": "none"}]
     out = rm.render_trend([make_row("2026-09-02", {"v": {"hits": 1, "eligible": 1}}, remedies)])
     assert "◄" not in out
+
+
+def test_trend_block_order_follows_last_row():
+    row1 = {
+        "window_start": "2026-01-01T00:00:00Z", "window_end": "2026-09-02T00:00:00Z",
+        "computed_at": "2026-09-02T00:00:01Z", "registry_sha256": "x" * 64, "stale_registry": False,
+        "sessions_interactive": 10,
+        "patterns": {
+            "a": {"versions": {"v": {"hits": 1, "eligible": 1}}, "remedies": []},
+            "b": {"versions": {"v": {"hits": 1, "eligible": 1}}, "remedies": []},
+        },
+    }
+    row2 = {
+        "window_start": "2026-09-02T00:00:00Z", "window_end": "2026-09-09T00:00:00Z",
+        "computed_at": "2026-09-09T00:00:01Z", "registry_sha256": "x" * 64, "stale_registry": False,
+        "sessions_interactive": 10,
+        "patterns": {
+            "b": {"versions": {"v": {"hits": 1, "eligible": 1}}, "remedies": []},
+            "c": {"versions": {"v": {"hits": 1, "eligible": 1}}, "remedies": []},
+        },
+    }
+    out = rm.render_trend([row1, row2])
+    headings = re.findall(r"^## (\S+)", out, re.M)
+    assert headings == ["b", "c", "a"]
+
+
+def test_trend_missing_remedies_key_renders_no_markers():
+    row = {
+        "window_start": "2026-01-01T00:00:00Z", "window_end": "2026-09-02T00:00:00Z",
+        "computed_at": "2026-09-02T00:00:01Z", "registry_sha256": "x" * 64, "stale_registry": False,
+        "sessions_interactive": 10,
+        "patterns": {"worktree-guard-shape": {"versions": {"v": {"hits": 1, "eligible": 1}}}},
+    }
+    out = rm.render_trend([row])
+    assert re.search(r"2026-09-02\s+1\s+1\s+1\.00", out)
+    assert "◄" not in out
+
+
+def test_trend_marker_not_on_landed_day_itself():
+    remedies = [{"ref": "8j5h", "landed": "2026-09-07", "source": "kata"}]
+    rows = [
+        make_row("2026-09-07", {"v": {"hits": 1, "eligible": 1}}, remedies),
+        make_row("2026-09-14", {"v": {"hits": 1, "eligible": 1}}, remedies),
+    ]
+    lines = rm.render_trend(rows).splitlines()
+    marked = [l for l in lines if "◄ 8j5h landed 2026-09-07" in l]
+    assert len(marked) == 1 and marked[0].lstrip().startswith("2026-09-14")
+
+
+def test_trend_pattern_absent_from_earlier_row_renders_one_line():
+    row1 = {
+        "window_start": "2026-01-01T00:00:00Z", "window_end": "2026-09-02T00:00:00Z",
+        "computed_at": "2026-09-02T00:00:01Z", "registry_sha256": "x" * 64, "stale_registry": False,
+        "sessions_interactive": 10,
+        "patterns": {},
+    }
+    row2 = make_row("2026-09-09", {"v": {"hits": 1, "eligible": 1}})
+    out = rm.render_trend([row1, row2])
+    block = out.split("## worktree-guard-shape", 1)[1].split("## ", 1)[0]
+    data_lines = [l for l in block.splitlines() if re.match(r"^[ !]\d{4}-\d{2}-\d{2}", l)]
+    assert len(data_lines) == 1
