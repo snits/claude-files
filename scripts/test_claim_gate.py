@@ -304,3 +304,80 @@ def test_other_stdin_executing_programs_keep_the_body():
     assert should_gate("fish <<EOF\ngit commit -m x\nEOF") is True
     assert should_gate("parallel <<EOF\ngit commit -m x\nEOF") is True
     assert should_gate("make -f - <<'EOF'\nall:\n\tgit commit -m x\nEOF") is True
+
+
+# --- kata hs5n: a `#` comment must end at its newline, not swallow what follows ---
+#
+# Every test below is pinned to a mutation of claim_gate.py it is known to kill; a test
+# that no mutation kills asserts nothing. The first cut of these used a newline between
+# the `#` and the `git commit` canary, which put the canary outside a comment's blast
+# radius and made four of them pass with the code under test deleted. Same-line `&&` is
+# what discriminates: keep it.
+
+
+def test_comment_line_does_not_swallow_following_commit():
+    assert should_gate("# commit the fix\ngit commit -m x") is True
+
+
+def test_comment_line_does_not_swallow_following_kata_close():
+    assert should_gate("# wrap up\nkata close ab12 --done") is True
+
+
+def test_comment_line_does_not_swallow_following_kata_comment():
+    assert should_gate("# note\nkata comment ab12 --body 'RULING (Jerry): x'") is True
+
+
+def test_trailing_comment_does_not_swallow_the_next_line():
+    assert should_gate("git status  # look first\ngit commit -m x") is True
+
+
+def test_comment_inside_a_run_heredoc_body_does_not_swallow_the_body():
+    assert should_gate("bash <<EOF\n# note\ngit commit -m x\nEOF") is True
+
+
+def test_commented_out_commit_still_does_not_gate():
+    """A commit genuinely inside a comment is not a claim being made."""
+    assert should_gate("git status  # then git commit -m x") is False
+
+
+def test_hash_inside_a_word_is_not_a_comment():
+    assert should_gate("echo a#b && git commit -m x") is True
+
+
+def test_hash_in_single_quotes_is_not_a_comment():
+    assert should_gate("echo 'a # b' && git commit -m x") is True
+
+
+def test_hash_in_double_quotes_is_not_a_comment():
+    assert should_gate('echo "a # b" && git commit -m x') is True
+
+
+def test_quoted_hash_in_an_argument_does_not_comment_out_what_follows():
+    assert should_gate("git tag -m 'v1 #42' && git commit -m x") is True
+
+
+def test_hash_after_an_escaped_space_is_still_inside_the_word():
+    """`x\\ #y` is one word, so the `#` opens nothing."""
+    assert should_gate("echo x\\ #y && git commit -m x") is True
+
+
+def test_backslash_is_literal_inside_single_quotes():
+    """`'a\\'` closes at the second quote, so the later `#` is a real comment."""
+    assert should_gate("echo 'a\\' x # y && git commit -m z") is False
+
+
+def test_comment_after_a_closed_quote_is_a_comment():
+    assert should_gate("echo 'a' # c && git commit -m x") is False
+
+
+def test_heredoc_bodies_are_dropped_before_comments_are_stripped():
+    """An unbalanced quote in a dropped body must not desync the comment stripper.
+
+    Stripping comments first would leave this `#` unstripped -- the apostrophe in the
+    body opens a quote that never closes -- and the commented-out commit would gate.
+    """
+    assert should_gate("cat <<EOF\ndon't\nEOF\n# git commit -m x") is False
+
+
+def test_multiline_quoted_argument_containing_a_hash_line():
+    assert should_gate("echo 'a\n# b' && git commit -m x") is True

@@ -108,18 +108,60 @@ def _without_heredoc_bodies(command: str) -> str:
     return "\n".join(out)
 
 
+def _without_comments(text: str) -> str:
+    """Drop shell comments, so a `#` ends at its newline instead of at end of input.
+
+    shlex applies its comment character to the whole string and `_segments` joins lines
+    before tokenizing, so one comment line would otherwise swallow every command after
+    it -- a miss, and a miss costs more than a spare reminder. A `#` opens a comment only
+    outside quotes and after whitespace or at the start, so `a#b` stays one word. Real
+    bash also opens one after a metacharacter (`true;#c`), which this does not; that and
+    an unterminated quote both leave text in place, and leftover text can only cost a
+    spare reminder, because `_segments` clears shlex's own commenters so nothing a strip
+    misses can swallow what follows. Runs after heredoc bodies are removed: a dropped
+    body may hold unbalanced quotes that would confuse the quote tracking here.
+    """
+    out: list[str] = []
+    quote: str | None = None
+    prev_is_space = True
+    i = 0
+    while i < len(text):
+        ch = text[i]
+        if quote != "'" and ch == "\\" and i + 1 < len(text):
+            out.append(ch)
+            out.append(text[i + 1])
+            prev_is_space = False
+            i += 2
+            continue
+        if quote is None and ch == "#" and prev_is_space:
+            while i < len(text) and text[i] != "\n":
+                i += 1
+            continue
+        if quote is None and ch in "'\"":
+            quote = ch
+        elif quote == ch:
+            quote = None
+        out.append(ch)
+        prev_is_space = ch.isspace()
+        i += 1
+    return "".join(out)
+
+
 def _segments(command: str) -> list[list[str]]:
     """Quote-aware split into shell segments (lists of tokens).
 
     shlex in punctuation mode keeps quoted text intact and emits `&&`, `||`, `;`, `|`
     as their own tokens, so a separator inside a quoted argument never splits a command.
-    Heredoc bodies are removed first (see _without_heredoc_bodies). Newlines are
-    treated as `;`. Unbalanced quotes fall back to a whitespace split.
+    Heredoc bodies are removed first (see _without_heredoc_bodies), then comments (see
+    _without_comments); shlex's own comment handling is switched off, so any `#` that
+    survives is quoted or mid-word and becomes an ordinary token. Newlines are treated
+    as `;`. Unbalanced quotes fall back to a whitespace split.
     """
-    text = _without_heredoc_bodies(command).replace("\n", " ; ")
+    text = _without_comments(_without_heredoc_bodies(command)).replace("\n", " ; ")
     try:
         lex = shlex.shlex(text, posix=True, punctuation_chars=True)
         lex.whitespace_split = True
+        lex.commenters = ""
         tokens = list(lex)
     except ValueError:
         tokens = [t.strip("\"'") for t in text.split()]
