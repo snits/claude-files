@@ -299,3 +299,12 @@ def test_landed_date_passes_workspace():
         return subprocess.CompletedProcess(cmd, 3, stdout="", stderr="")
     rm.landed_date("x", workspace=Path("/w"), run=run)
     assert seen["cmd"] == ["kata", "show", "x", "--json", "--workspace", "/w"]
+
+
+@pytest.mark.parametrize(
+    "payload",
+    [{"issue": None}, {"issue": "x"}, {"nope": 1}, {"issue": {"status": "closed", "closed_at": "garbage"}},
+     {"issue": {"status": "closed", "closed_at": 42}}],
+)
+def test_landed_date_malformed_payload_is_none(payload):
+    assert rm.landed_date("x", run=fake_run(payload)) is None

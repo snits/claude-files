@@ -165,10 +165,15 @@ def landed_date(ref: str, *, workspace: Path = KATA_WORKSPACE, run=subprocess.ru
         issue = json.loads(result.stdout)["issue"]
     except (json.JSONDecodeError, KeyError, TypeError):
         return None
-    closed_at = issue.get("closed_at") if issue.get("status") == "closed" else None
-    if not closed_at:
+    if not isinstance(issue, dict):
         return None
-    return dt.datetime.fromisoformat(closed_at.replace("Z", "+00:00")).date()
+    closed_at = issue.get("closed_at") if issue.get("status") == "closed" else None
+    if not isinstance(closed_at, str) or not closed_at:
+        return None
+    try:
+        return dt.datetime.fromisoformat(closed_at.replace("Z", "+00:00")).date()
+    except ValueError:
+        return None
 
 
 def _remedy_record(remedy: Remedy, landed: Callable[[str], dt.date | None]) -> dict:
