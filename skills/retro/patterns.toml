@@ -1,0 +1,36 @@
+# Deterministic patterns the retro tracks across windows. See
+# ~/claudes-home/docs/superpowers/specs/2026-09-07-retro-pattern-metrics-design.md
+#
+# detector  — Python regex applied to each tool-result error text
+# eligible  — which sessions count in the denominator: isolated | ran_bash | any
+# remedies  — kata refs; `landed` is used only when the ref does not resolve in kata
+
+[[pattern]]
+name = "worktree-guard-shape"
+detector = "This session is isolated in the worktree .* names git in a form too complex to verify"
+eligible = "isolated"
+remedies = [{ ref = "8j5h" }]
+
+[[pattern]]
+name = "worktree-cwd-trap"
+detector = "working directory resolved to the shared checkout"
+eligible = "isolated"
+remedies = [{ ref = "8j5h" }]
+
+[[pattern]]
+name = "sleep-block"
+detector = "Blocked: sleep \\d+ followed by"
+eligible = "ran_bash"
+remedies = []
+
+[[pattern]]
+name = "eval-eq-error"
+detector = "\\(eval\\):\\d+: == not found"
+eligible = "ran_bash"
+remedies = []
+
+[[pattern]]
+name = "classifier-denial"
+detector = "denied by the Claude Code auto mode classifier"
+eligible = "any"
+remedies = []
