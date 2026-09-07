@@ -5,7 +5,7 @@ No mocks: feed strings to should_gate, and synthetic stdin/stdout to main.
 import io
 import json
 
-from claim_gate import GATE_TEXT, main, should_gate
+from claim_gate import GATE_TEXT, _without_heredoc_bodies, main, should_gate
 
 
 def test_git_commit_gates():
@@ -175,3 +175,132 @@ def test_background_ampersand_separates_segments():
 
 def test_newline_separates_segments():
     assert should_gate("foo --dry-run\ngit commit -m x") is True
+
+
+# --- heredoc bodies are data, not commands (kata 8n8g) ---
+
+def test_prose_heredoc_naming_the_verbs_does_not_gate():
+    """Notes written through a heredoc: an apostrophe in prose is an unbalanced quote."""
+    cmd = "cat >> notes.md <<'EOF'\nJerry's ruling: land it with git commit -s\nEOF"
+    assert should_gate(cmd) is False
+
+
+def test_heredoc_with_triple_quotes_in_body_does_not_gate():
+    """An odd apostrophe in the body pushes shlex into the unbalanced-quote fallback,
+    which strips quotes and frees the verbs as bare tokens."""
+    cmd = "python3 - <<'EOF'\nnew = '''an agent's text'''\ns = \"git commit -m x\"\nEOF"
+    assert should_gate(cmd) is False
+
+
+def test_kata_close_inside_heredoc_body_does_not_gate():
+    cmd = "cat > notes.md <<EOF\nthen run kata close abc4 --done\nEOF"
+    assert should_gate(cmd) is False
+
+
+def test_commit_message_from_heredoc_still_gates():
+    """The command receiving the heredoc is the real commit; only its body is data."""
+    cmd = "git commit -s -q -F - <<'EOF'\nscripts: do the thing\n\nbody\nEOF"
+    assert should_gate(cmd) is True
+
+
+def test_command_after_heredoc_terminator_still_gates():
+    cmd = "cat > f <<EOF\nnote\nEOF\ngit commit -m y"
+    assert should_gate(cmd) is True
+
+
+def test_dash_heredoc_with_tab_indented_terminator_is_stripped():
+    cmd = "cat > f <<-EOF\n\tgit commit -m x\n\tEOF"
+    assert should_gate(cmd) is False
+
+
+def test_unmatched_terminator_keeps_the_lines_and_gates():
+    """A terminator that never appears means the << was probably not a heredoc.
+    Keeping the lines can only cost a spare reminder; dropping them could hide a
+    real commit."""
+    assert should_gate("cat > f <<EOF\ngit commit -m x") is True
+
+
+def test_heredoc_fed_to_a_shell_is_commands_and_gates():
+    """A miss costs a false record: bash <<EOF runs its body."""
+    assert should_gate("bash <<'EOF'\ngit commit -m x\nEOF") is True
+    assert should_gate("ssh host <<EOF\nkata close abc4 --done\nEOF") is True
+
+
+def test_heredoc_fed_to_a_shell_respects_dry_run_per_body_line():
+    cmd = "bash <<'EOF'\ngit commit --dry-run -m x\nEOF"
+    assert "git commit --dry-run -m x" in _without_heredoc_bodies(cmd)
+    assert should_gate(cmd) is False
+
+
+def test_heredoc_operator_inside_quotes_is_not_a_heredoc():
+    """A quoted << must not swallow the lines that follow it."""
+    assert should_gate('echo "see <<EOF in the docs"\ngit commit -m x\nEOF') is True
+
+
+def test_arithmetic_left_shift_is_not_a_heredoc():
+    assert should_gate("echo $((1<<2))\ngit commit -m x\n2") is True
+    assert should_gate("x=$((y<<8))\nkata close abc4 --done\n8") is True
+
+
+def test_heredoc_fed_to_a_shell_by_path_is_commands_and_gates():
+    assert should_gate("/bin/bash <<'EOF'\ngit commit -m x\nEOF") is True
+    assert should_gate("/usr/bin/env sh <<EOF\nkata close abc4 --done\nEOF") is True
+
+
+def test_unbalanced_operator_line_strips_nothing():
+    """When the operator line's own quotes do not balance, a << may be inside them;
+    dropping text on that path would be a miss, so nothing is treated as a body."""
+    assert should_gate("echo it's << EOF\ngit commit -m x\nEOF") is True
+
+
+def test_two_heredocs_on_one_line_both_strip_in_order():
+    cmd = "diff <(cat <<A) <(cat <<B)\ngit commit -m x\nA\nkata close abc4 --done\nB"
+    assert should_gate(cmd) is False
+
+
+def test_dash_heredoc_with_quoted_terminator_is_stripped():
+    assert should_gate("cat > f <<-'EOF'\n\tgit commit -m x\n\tEOF") is False
+
+
+def test_terminator_with_trailing_whitespace_does_not_end_the_body():
+    """bash requires the terminator alone on its line; 'EOF ' is still body."""
+    assert should_gate("cat > f <<EOF\nEOF \ngit commit -m x\nEOF") is False
+
+
+def test_left_shift_in_square_or_triple_parens_is_not_a_heredoc():
+    assert should_gate("x=$[1<<2]\ngit commit -m x\n2") is True
+    assert should_gate("echo $(((1<<2)))\ngit commit -m x\n2") is True
+
+
+def test_let_shift_is_a_heredoc_to_bash_but_keeps_the_commit_line():
+    """bash reads `let x=1<<2` as a heredoc wanting `2`; the terminator never comes,
+    so the lines stay and the spare reminder is the tolerated cost."""
+    assert should_gate("let x=1<<2\ngit commit -m x") is True
+
+
+def test_heredoc_after_arithmetic_on_the_same_line_is_stripped():
+    assert should_gate("echo $((1<<2));cat <<EOF\ngit commit -m x\nEOF") is False
+
+
+def test_heredoc_fed_to_a_privileged_or_evaluating_shell_gates():
+    assert should_gate("sudo -s <<'EOF'\ngit commit -m x\nEOF") is True
+    assert should_gate("su - <<'EOF'\ngit commit -m x\nEOF") is True
+
+
+def test_heredoc_line_inside_an_open_multiline_quote_is_not_an_operator():
+    """The << is text inside a quoted argument opened on an earlier line."""
+    cmd = "kata comment abc4 --body 'see:\ncat <<EOF\nRULING: use x\nEOF\n'"
+    assert should_gate(cmd) is True
+    cmd = "echo 'doc:\nusage: cat <<EOF\n' && git commit -am x\nEOF"
+    assert should_gate(cmd) is True
+
+
+def test_runner_after_the_terminator_in_a_continued_pipeline_keeps_the_body():
+    assert should_gate("cat <<'EOF' |\ngit commit -m x\nEOF\nbash") is True
+    assert should_gate("cat <<'EOF' |\nnote about git commit\nEOF\nwc -l") is False
+
+
+def test_other_stdin_executing_programs_keep_the_body():
+    assert should_gate("fish <<EOF\ngit commit -m x\nEOF") is True
+    assert should_gate("parallel <<EOF\ngit commit -m x\nEOF") is True
+    assert should_gate("make -f - <<'EOF'\nall:\n\tgit commit -m x\nEOF") is True

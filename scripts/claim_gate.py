@@ -24,15 +24,99 @@ GATE_TEXT = (
 
 SEPARATOR_TOKENS = {"&&", "||", ";", ";;", "|", "&"}
 
+# Commands that run their heredoc body as shell: the body stays in as command lines.
+BODY_RUNNERS = {"bash", "sh", "zsh", "dash", "ksh", "mksh", "ash", "fish", "csh", "tcsh", "ssh",
+                "sudo", "su", "eval", "at", "batch", "parallel", "make"}
+
+
+def _line_tokens(line: str) -> list[str] | None:
+    """shlex tokens for one line, or None when its quotes are unbalanced."""
+    try:
+        lex = shlex.shlex(line, posix=True, punctuation_chars=True)
+        lex.whitespace_split = True
+        return list(lex)
+    except ValueError:
+        return None
+
+
+def _heredoc_terminators(tokens: list[str]) -> list[tuple[str, bool]]:
+    """(terminator, strips_leading_tabs) for each heredoc operator in a line's tokens.
+
+    A `<<` inside `(( ))` arithmetic is a shift, not an operator. Punctuation runs such
+    as `(((` or `));` arrive as one token, so depth is tracked by paren pairs inside it.
+    """
+    found: list[tuple[str, bool]] = []
+    arithmetic_depth = 0
+    for i, tok in enumerate(tokens):
+        arithmetic_depth += tok.count("((")
+        arithmetic_depth = max(0, arithmetic_depth - tok.count("))"))
+        if tok != "<<" or arithmetic_depth or i + 1 >= len(tokens):
+            continue
+        word, dash = tokens[i + 1], False
+        if word.startswith("-"):
+            dash = True
+            word = word[1:] or (tokens[i + 2] if i + 2 < len(tokens) else "")
+        if word:
+            found.append((word, dash))
+    return found
+
+
+def _body_end(lines: list[str], start: int, word: str, dash: bool) -> int | None:
+    """Index of the line terminating a heredoc body that starts at `start`, or None."""
+    for j in range(start, len(lines)):
+        candidate = lines[j].lstrip("\t") if dash else lines[j]
+        if candidate == word:
+            return j
+    return None
+
+
+def _runs_body(tokens: list[str]) -> bool:
+    return any(tok.rsplit("/", 1)[-1] in BODY_RUNNERS for tok in tokens)
+
+
+def _without_heredoc_bodies(command: str) -> str:
+    """Drop heredoc bodies: they are data handed to a program, not commands.
+
+    Only a body whose terminator line exists is dropped; a `<<` with no matching
+    terminator was probably not a heredoc, and keeping its lines costs at most a spare
+    reminder where dropping them could hide a real commit. The body of a heredoc fed to
+    a shell (`bash <<EOF`, `sudo -s <<EOF`, `cat <<EOF | bash`) is commands, so it is
+    kept as ordinary lines. A line is an operator line only if the shell text kept so
+    far, through that line, has balanced quotes: an unbalanced line, or one inside a
+    quote opened earlier, may hold a quoted `<<`, and strips nothing.
+    """
+    lines = command.split("\n")
+    out: list[str] = []
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        out.append(line)
+        i += 1
+        tokens = _line_tokens(line)
+        if tokens is None or _line_tokens("\n".join(out)) is None:
+            continue
+        for word, dash in _heredoc_terminators(tokens):
+            end = _body_end(lines, i, word, dash)
+            if end is None:
+                break
+            runs_body = _runs_body(tokens)
+            if not runs_body and tokens[-1] in ("|", "|&") and end + 1 < len(lines):
+                runs_body = _runs_body(_line_tokens(lines[end + 1]) or [])
+            if runs_body:
+                out.extend(lines[i:end])
+            i = end + 1
+    return "\n".join(out)
+
 
 def _segments(command: str) -> list[list[str]]:
     """Quote-aware split into shell segments (lists of tokens).
 
     shlex in punctuation mode keeps quoted text intact and emits `&&`, `||`, `;`, `|`
     as their own tokens, so a separator inside a quoted argument never splits a command.
-    Newlines are treated as `;`. Unbalanced quotes fall back to a whitespace split.
+    Heredoc bodies are removed first (see _without_heredoc_bodies). Newlines are
+    treated as `;`. Unbalanced quotes fall back to a whitespace split.
     """
-    text = command.replace("\n", " ; ")
+    text = _without_heredoc_bodies(command).replace("\n", " ; ")
     try:
         lex = shlex.shlex(text, posix=True, punctuation_chars=True)
         lex.whitespace_split = True
