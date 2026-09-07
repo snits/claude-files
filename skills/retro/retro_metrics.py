@@ -8,10 +8,13 @@ from __future__ import annotations
 
 import datetime as dt
 import hashlib
+import json
 import re
 import tomllib
 from dataclasses import dataclass, field
 from pathlib import Path
+
+import mine_transcripts as mt
 
 REGISTRY_PATH = Path(__file__).parent / "patterns.toml"
 ELIGIBILITY = ("isolated", "ran_bash", "any")
@@ -65,3 +68,83 @@ def load_registry(path: Path = REGISTRY_PATH) -> list[Pattern]:
 
 def registry_hash(path: Path = REGISTRY_PATH) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+WORKTREE_CWD = re.compile(r"/\.?worktrees/")
+
+
+@dataclass
+class SessionMetrics:
+    """What one session (top-level transcript plus its subagents) contributes to a row."""
+
+    path: Path
+    version: str = "unknown"
+    interactive: bool = False
+    isolated: bool = False
+    ran_bash: bool = False
+    errors: list[str] = field(default_factory=list)
+
+    def eligible_for(self, test: str) -> bool:
+        return {"isolated": self.isolated, "ran_bash": self.ran_bash, "any": True}[test]
+
+
+def subagent_files(path: Path) -> list[Path]:
+    """In-process subagent transcripts belonging to this session, sorted."""
+    return sorted((path.parent / path.stem / "subagents").glob("*.jsonl"))
+
+
+def _scan_lines(path: Path, facts: SessionMetrics, *, top_level: bool) -> None:
+    with path.open("r", errors="replace") as handle:
+        for raw in handle:
+            raw = raw.strip()
+            if not raw:
+                continue
+            try:
+                entry = json.loads(raw)
+            except json.JSONDecodeError:
+                continue
+            if not isinstance(entry, dict):
+                continue
+
+            if top_level and facts.version == "unknown" and entry.get("version"):
+                facts.version = str(entry["version"])
+            cwd = entry.get("cwd")
+            if isinstance(cwd, str) and WORKTREE_CWD.search(cwd):
+                facts.isolated = True
+
+            kind = entry.get("type")
+            message = entry.get("message", {}) if isinstance(entry.get("message"), dict) else {}
+            content = message.get("content")
+
+            if kind == "attachment":
+                snapshot = entry.get("attachment", {}).get("snapshot", {})
+                if isinstance(snapshot, dict) and snapshot.get("isWorktree") is True:
+                    facts.isolated = True
+            elif kind == "assistant" and isinstance(content, list):
+                for block in content:
+                    if not isinstance(block, dict) or block.get("type") != "tool_use":
+                        continue
+                    name = block.get("name")
+                    if name == "Bash":
+                        facts.ran_bash = True
+                    elif name == "EnterWorktree":
+                        facts.isolated = True
+                    elif name == "Agent" and block.get("input", {}).get("isolation") == "worktree":
+                        facts.isolated = True
+            elif kind == "user" and not entry.get("isMeta"):
+                error = mt._tool_error_of(content)
+                if error is not None:
+                    facts.errors.append(error)
+                    continue
+                if top_level:
+                    text = mt._text_of(content).strip()
+                    if text and not any(marker in text for marker in mt.HARNESS_MARKERS):
+                        facts.interactive = True
+
+
+def scan_metrics_session(path: Path) -> SessionMetrics:
+    facts = SessionMetrics(path=path)
+    _scan_lines(path, facts, top_level=True)
+    for sub in subagent_files(path):
+        _scan_lines(sub, facts, top_level=False)
+    return facts
