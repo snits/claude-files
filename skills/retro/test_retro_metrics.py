@@ -565,6 +565,15 @@ def test_shipped_worktree_patterns_are_disjoint():
     )
     assert bool(guard.search(via_c)) is True
     assert bool(trap.search(via_c)) is False
+
+    # The most confusable shape (110 of 533 in the first window): "changes directory to" is not
+    # "working directory resolved to".
+    cd_shared = (
+        "This agent is isolated in the worktree /x, but this command changes directory to the "
+        "shared checkout (/home/j/proj) before running. Refusing to run it"
+    )
+    assert bool(guard.search(cd_shared)) is True
+    assert bool(trap.search(cd_shared)) is False
     assert bool(trap.search(cwd_trap)) is True
 
     sed_shape = (
