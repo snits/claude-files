@@ -270,7 +270,11 @@ fourth review pass would not have found any of them.
 not the path — that is precisely the fourth attempt `/super-do` already refuses.
 
 - **PASS** — proceed to `finishing-a-development-branch` and merge. Name the merge base SHA and
-  the three artifact paths in the outcome comment on the issue.
+  the three artifact paths in the outcome comment on the issue. Before closing, strip any
+  `needs-review` / `needs-decision` / `needsinfo` the issue still wears (a one-line comment
+  saying why, then `kata label rm <ref> <label>`) — a closed issue wearing an open-work label
+  re-routes itself to a loop that cannot act on it (kata claudes-home `0rsz`;
+  `~/.claude/scripts/kata_label_sweep.py` catches the ones that slip).
 - **BLOCK** — do not merge, do not close. Comment the numbered defect list on the kata issue,
   label it `needs-review`, and report to Jerry. Same escalation path as the review cap, for the
   same reason: findings this gate surfaces are decisions, not work items to clear on your own

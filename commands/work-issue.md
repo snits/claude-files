@@ -14,6 +14,9 @@ the issue under identical comments.
 If the issue has the information needed to work it, claim it and then work it using `/super-do`.
 Its pre-flight (premise, already-landed, blockers, sibling claim) runs before any edit; a failed
 check closes or skips the issue and you take the next one.
+When the work lands and you close the issue, strip any `needs-review` / `needs-decision` /
+`needsinfo` it still wears first (comment, then `kata label rm`) — a closed issue wearing an
+open-work label re-routes itself to a loop that cannot act on it (kata claudes-home `0rsz`).
 On a failed claim, move to the next ready issue rather than proceeding unclaimed.
 
 **Claim with a per-instance actor: `kata claim <ref> --as claude-work-issue-<random-suffix>`.**

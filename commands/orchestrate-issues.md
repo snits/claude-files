@@ -136,6 +136,9 @@ in the worktree or escalate — never carry them to the root.
 
 Verify the landing rather than assuming it: `<target>..<agent-branch>` empty and
 `git diff <target> <agent-branch>` empty. Cite the merge commit upstream-style in the ledger.
+Before closing the issue, strip any `needs-review` / `needs-decision` / `needsinfo` it still
+wears (comment, then `kata label rm`) — a closed issue wearing an open-work label re-routes
+itself to a loop that cannot act on it (kata claudes-home `0rsz`).
 
 ## Escalation — record it, do not resolve it
 
