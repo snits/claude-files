@@ -557,6 +557,14 @@ def test_shipped_worktree_patterns_are_disjoint():
         "resolved to the shared checkout. Refusing to run it"
     )
     assert bool(guard.search(cwd_trap)) is False
+
+    # Other shapes also name the shared checkout without being the cwd trap; they are guard-shape.
+    via_c = (
+        "This agent is isolated in the worktree /x, but this command redirects git to the "
+        "shared checkout via -C. Refusing to run it"
+    )
+    assert bool(guard.search(via_c)) is True
+    assert bool(trap.search(via_c)) is False
     assert bool(trap.search(cwd_trap)) is True
 
     sed_shape = (

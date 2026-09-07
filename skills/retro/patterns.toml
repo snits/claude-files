@@ -8,7 +8,7 @@
 
 [[pattern]]
 name = "worktree-guard-shape"
-detector = "(?s)^(?!.*shared checkout).*isolated in the worktree"
+detector = "(?s)^(?!.*working directory resolved to the shared checkout).*isolated in the worktree"
 eligible = "isolated"
 remedies = [{ ref = "8j5h" }]
 
