@@ -19,8 +19,10 @@ from pathlib import Path
 import mine_transcripts as mt
 
 REGISTRY_PATH = Path(__file__).parent / "patterns.toml"
+METRICS_PATH = Path.home() / ".claude" / "retro" / "metrics.jsonl"
 ELIGIBILITY = ("isolated", "ran_bash", "any")
 KATA_WORKSPACE = Path.home() / "claudes-home"
+UTC = dt.timezone.utc
 
 
 @dataclass(frozen=True)
@@ -219,3 +221,71 @@ def build_row(
         "sessions_interactive": len(interactive),
         "patterns": out,
     }
+
+
+def _iso(moment: dt.datetime) -> str:
+    return moment.astimezone(UTC).isoformat(timespec="seconds").replace("+00:00", "Z")
+
+
+def _parse_iso(text: str) -> dt.datetime:
+    return dt.datetime.fromisoformat(text.replace("Z", "+00:00"))
+
+
+def read_rows(path: Path) -> list[dict]:
+    if not path.exists():
+        return []
+    return [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+
+
+def write_rows(path: Path, rows: list[dict]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("".join(json.dumps(row, sort_keys=True) + "\n" for row in rows))
+
+
+def _sessions_between(start: dt.datetime, end: dt.datetime, projects_dir: Path) -> list[SessionMetrics]:
+    out = []
+    for path in mt.sessions_in_window(start.timestamp(), projects_dir):
+        if path.stat().st_mtime > end.timestamp():
+            continue
+        out.append(scan_metrics_session(path))
+    return out
+
+
+def compute_row(*, window_start: dt.datetime, window_end: dt.datetime, projects_dir: Path,
+                registry_path: Path, landed, computed_at: dt.datetime | None = None) -> dict:
+    sessions = _sessions_between(window_start, window_end, projects_dir)
+    return build_row(
+        sessions, load_registry(registry_path),
+        window_start=_iso(window_start), window_end=_iso(window_end),
+        computed_at=_iso(computed_at or dt.datetime.now(UTC)),
+        registry_sha256=registry_hash(registry_path), landed=landed,
+    )
+
+
+def append_row(*, metrics_path: Path, projects_dir: Path, registry_path: Path,
+               since: dt.datetime | None, now: dt.datetime, landed) -> dict:
+    rows = read_rows(metrics_path)
+    if since is None:
+        if not rows:
+            raise ValueError("no previous row to tile from; pass --since for the first row")
+        since = _parse_iso(rows[-1]["window_end"])
+    row = compute_row(window_start=since, window_end=now, projects_dir=projects_dir,
+                      registry_path=registry_path, landed=landed, computed_at=now)
+    write_rows(metrics_path, rows + [row])
+    return row
+
+
+def rebuild_rows(*, metrics_path: Path, projects_dir: Path, registry_path: Path, landed) -> list[dict]:
+    """Recompute every row under the current registry; keep and flag rows with no transcripts left."""
+    rebuilt = []
+    for old in read_rows(metrics_path):
+        start, end = _parse_iso(old["window_start"]), _parse_iso(old["window_end"])
+        if not _sessions_between(start, end, projects_dir):
+            kept = dict(old)
+            kept["stale_registry"] = kept["registry_sha256"] != registry_hash(registry_path)
+            rebuilt.append(kept)
+            continue
+        rebuilt.append(compute_row(window_start=start, window_end=end, projects_dir=projects_dir,
+                                   registry_path=registry_path, landed=landed))
+    write_rows(metrics_path, rebuilt)
+    return rebuilt

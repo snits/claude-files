@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import datetime as dt
 import json
+import os
 import re
 import subprocess
 from pathlib import Path
@@ -308,3 +309,89 @@ def test_landed_date_passes_workspace():
 )
 def test_landed_date_malformed_payload_is_none(payload):
     assert rm.landed_date("x", run=fake_run(payload)) is None
+
+
+# --- append/rebuild ---
+
+UTC = dt.timezone.utc
+
+
+def ts(y, m, d, h=0):
+    return dt.datetime(y, m, d, h, tzinfo=UTC)
+
+
+def populate(projects_dir: Path, name: str, entries: list[dict], mtime: dt.datetime) -> Path:
+    path = write_session(projects_dir / "proj", name, entries)
+    os.utime(path, (mtime.timestamp(), mtime.timestamp()))
+    return path
+
+
+def test_append_first_row_uses_since(tmp_path):
+    projects = tmp_path / "projects"
+    populate(projects, "a.jsonl", [human("go"), tool_use("Bash"), tool_error(SLEEP)], ts(2026, 9, 3))
+    reg = write_registry(tmp_path, MINIMAL_REGISTRY)
+    metrics = tmp_path / "metrics.jsonl"
+    row = rm.append_row(metrics_path=metrics, projects_dir=projects, registry_path=reg,
+                        since=ts(2026, 9, 1), now=ts(2026, 9, 7), landed=lambda r: None)
+    assert row["window_start"] == "2026-09-01T00:00:00Z"
+    assert row["window_end"] == "2026-09-07T00:00:00Z"
+    assert row["patterns"]["sleep-block"]["versions"] == {"2.1.259": {"hits": 1, "eligible": 1}}
+    assert rm.read_rows(metrics) == [row]
+
+
+def test_append_tiles_from_previous_row(tmp_path):
+    projects = tmp_path / "projects"
+    reg = write_registry(tmp_path, MINIMAL_REGISTRY)
+    metrics = tmp_path / "metrics.jsonl"
+    rm.append_row(metrics_path=metrics, projects_dir=projects, registry_path=reg,
+                  since=ts(2026, 9, 1), now=ts(2026, 9, 7), landed=lambda r: None)
+    populate(projects, "late.jsonl", [human("go"), tool_use("Bash"), tool_error(SLEEP)], ts(2026, 9, 8))
+    row = rm.append_row(metrics_path=metrics, projects_dir=projects, registry_path=reg,
+                        since=None, now=ts(2026, 9, 10), landed=lambda r: None)
+    assert row["window_start"] == "2026-09-07T00:00:00Z"
+    assert row["patterns"]["sleep-block"]["versions"]["2.1.259"]["hits"] == 1
+    assert len(rm.read_rows(metrics)) == 2
+
+
+def test_append_without_since_and_without_rows_fails(tmp_path):
+    with pytest.raises(ValueError, match="--since"):
+        rm.append_row(metrics_path=tmp_path / "m.jsonl", projects_dir=tmp_path, registry_path=write_registry(tmp_path, MINIMAL_REGISTRY),
+                      since=None, now=ts(2026, 9, 10), landed=lambda r: None)
+
+
+def test_sessions_after_window_end_are_excluded(tmp_path):
+    projects = tmp_path / "projects"
+    populate(projects, "future.jsonl", [human("go"), tool_use("Bash"), tool_error(SLEEP)], ts(2026, 9, 9))
+    reg = write_registry(tmp_path, MINIMAL_REGISTRY)
+    row = rm.append_row(metrics_path=tmp_path / "m.jsonl", projects_dir=projects, registry_path=reg,
+                        since=ts(2026, 9, 1), now=ts(2026, 9, 7), landed=lambda r: None)
+    assert row["sessions_interactive"] == 0
+
+
+def test_rebuild_recomputes_under_current_registry(tmp_path):
+    projects = tmp_path / "projects"
+    populate(projects, "a.jsonl", [human("go"), tool_use("Bash"), tool_error(SLEEP)], ts(2026, 9, 3))
+    reg = write_registry(tmp_path, MINIMAL_REGISTRY)
+    metrics = tmp_path / "metrics.jsonl"
+    old = rm.append_row(metrics_path=metrics, projects_dir=projects, registry_path=reg,
+                        since=ts(2026, 9, 1), now=ts(2026, 9, 7), landed=lambda r: None)
+    # Detector change: the regex now matches nothing.
+    reg.write_text(MINIMAL_REGISTRY.replace('Blocked: sleep \\\\d+ followed by', "NEVER-MATCHES"))
+    rows = rm.rebuild_rows(metrics_path=metrics, projects_dir=projects, registry_path=reg, landed=lambda r: None)
+    assert rows[0]["registry_sha256"] != old["registry_sha256"]
+    assert rows[0]["patterns"]["sleep-block"]["versions"] == {"2.1.259": {"hits": 0, "eligible": 1}}
+    assert rows[0]["window_start"] == old["window_start"]
+    assert rows[0]["stale_registry"] is False
+    assert rm.read_rows(metrics) == rows
+
+
+def test_rebuild_keeps_row_with_no_transcripts_and_flags_it(tmp_path):
+    reg = write_registry(tmp_path, MINIMAL_REGISTRY)
+    metrics = tmp_path / "metrics.jsonl"
+    old = rm.append_row(metrics_path=metrics, projects_dir=tmp_path / "empty", registry_path=reg,
+                        since=ts(2026, 9, 1), now=ts(2026, 9, 7), landed=lambda r: None)
+    reg.write_text(MINIMAL_REGISTRY + "\n# changed\n")
+    rows = rm.rebuild_rows(metrics_path=metrics, projects_dir=tmp_path / "empty", registry_path=reg, landed=lambda r: None)
+    assert rows[0]["registry_sha256"] == old["registry_sha256"]
+    assert rows[0]["stale_registry"] is True
+    assert rows[0]["patterns"] == old["patterns"]
