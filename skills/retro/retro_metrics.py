@@ -10,9 +10,12 @@ import argparse
 import datetime as dt
 import hashlib
 import json
+import os
 import re
+import stat
 import subprocess
 import sys
+import tempfile
 import tomllib
 from collections.abc import Callable
 from dataclasses import dataclass, field
@@ -240,8 +243,32 @@ def read_rows(path: Path) -> list[dict]:
 
 
 def write_rows(path: Path, rows: list[dict]) -> None:
+    """Write to a sibling temp file and rename it over `path`, so a crash mid-write
+    leaves the previous rows in place instead of a torn file. A symlink is followed,
+    and the file keeps its existing mode (or the umask default when new)."""
+    path = path.resolve()
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text("".join(json.dumps(row) + "\n" for row in rows))
+    text = "".join(json.dumps(row) + "\n" for row in rows)
+    if path.exists():
+        mode = stat.S_IMODE(path.stat().st_mode)
+    else:
+        umask = os.umask(0)
+        os.umask(umask)
+        mode = 0o666 & ~umask
+    fd, tmp_name = tempfile.mkstemp(prefix=path.name + ".", dir=path.parent)
+    try:
+        with os.fdopen(fd, "w") as handle:
+            handle.write(text)
+            handle.flush()
+            os.fchmod(handle.fileno(), mode)
+            os.fsync(handle.fileno())
+        os.replace(tmp_name, path)
+    except BaseException:
+        try:
+            os.unlink(tmp_name)
+        except OSError:
+            pass
+        raise
 
 
 def _sessions_between(start: dt.datetime, end: dt.datetime, projects_dir: Path) -> list[SessionMetrics]:

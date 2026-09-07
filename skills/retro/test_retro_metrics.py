@@ -359,6 +359,73 @@ def test_append_without_since_and_without_rows_fails(tmp_path):
                       since=None, now=ts(2026, 9, 10), landed=lambda r: None)
 
 
+def test_write_rows_failure_leaves_the_existing_file_intact(tmp_path, monkeypatch):
+    """A write that dies before the new content is in place must not tear metrics.jsonl."""
+    metrics = tmp_path / "metrics.jsonl"
+    rm.write_rows(metrics, [{"a": 1}, {"b": 2}])
+    before = metrics.read_bytes()
+
+    def refuse(*args, **kwargs):
+        raise OSError("simulated crash before the new file is in place")
+
+    monkeypatch.setattr(os, "replace", refuse)
+    with pytest.raises(OSError, match="simulated"):
+        rm.write_rows(metrics, [{"c": 3}])
+    assert metrics.read_bytes() == before
+    assert [p.name for p in tmp_path.iterdir()] == ["metrics.jsonl"]
+
+
+def test_write_rows_failure_during_the_write_itself_leaves_the_file_intact(tmp_path, monkeypatch):
+    metrics = tmp_path / "metrics.jsonl"
+    rm.write_rows(metrics, [{"a": 1}])
+    before = metrics.read_bytes()
+
+    def refuse(fd):
+        raise OSError("simulated disk error while flushing the temp file")
+
+    monkeypatch.setattr(os, "fsync", refuse)
+    with pytest.raises(OSError, match="simulated"):
+        rm.write_rows(metrics, [{"c": 3}])
+    assert metrics.read_bytes() == before
+    assert [p.name for p in tmp_path.iterdir()] == ["metrics.jsonl"]
+
+
+def test_write_rows_leaves_no_temporary_file_behind(tmp_path):
+    metrics = tmp_path / "nested" / "metrics.jsonl"
+    rm.write_rows(metrics, [{"a": 1}])
+    assert rm.read_rows(metrics) == [{"a": 1}]
+    assert [p.name for p in metrics.parent.iterdir()] == ["metrics.jsonl"]
+
+
+def test_write_rows_keeps_the_existing_file_mode(tmp_path):
+    metrics = tmp_path / "metrics.jsonl"
+    metrics.write_text("")
+    metrics.chmod(0o640)
+    rm.write_rows(metrics, [{"a": 1}])
+    assert oct(metrics.stat().st_mode & 0o777) == "0o640"
+
+
+def test_write_rows_new_file_honours_umask_not_mkstemp_default(tmp_path):
+    umask = 0o027
+    old = os.umask(umask)
+    try:
+        metrics = tmp_path / "metrics.jsonl"
+        rm.write_rows(metrics, [{"a": 1}])
+        assert metrics.stat().st_mode & 0o777 == 0o666 & ~umask == 0o640
+    finally:
+        os.umask(old)
+
+
+def test_write_rows_through_a_symlink_writes_the_target(tmp_path):
+    real = tmp_path / "real.jsonl"
+    rm.write_rows(real, [{"a": 1}])
+    link = tmp_path / "metrics.jsonl"
+    link.symlink_to(real)
+    rm.write_rows(link, [{"b": 2}])
+    assert link.is_symlink()
+    assert rm.read_rows(real) == [{"b": 2}]
+
+
 def test_sessions_after_window_end_are_excluded(tmp_path):
     projects = tmp_path / "projects"
     populate(projects, "future.jsonl", [human("go"), tool_use("Bash"), tool_error(SLEEP)], ts(2026, 9, 9))
