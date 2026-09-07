@@ -395,3 +395,57 @@ def test_rebuild_keeps_row_with_no_transcripts_and_flags_it(tmp_path):
     assert rows[0]["registry_sha256"] == old["registry_sha256"]
     assert rows[0]["stale_registry"] is True
     assert rows[0]["patterns"] == old["patterns"]
+
+
+def make_row(end, versions, remedies=(), stale=False):
+    return {
+        "window_start": "2026-01-01T00:00:00Z", "window_end": f"{end}T00:00:00Z",
+        "computed_at": f"{end}T00:00:01Z", "registry_sha256": "x" * 64, "stale_registry": stale,
+        "sessions_interactive": 10,
+        "patterns": {"worktree-guard-shape": {"versions": versions, "remedies": list(remedies)}},
+    }
+
+
+def test_trend_totals_and_rate():
+    rows = [make_row("2026-09-02", {"2.1.235": {"hits": 326, "eligible": 140}})]
+    out = rm.render_trend(rows)
+    assert "## worktree-guard-shape" in out
+    assert re.search(r"2026-09-02\s+326\s+140\s+2\.33", out)
+    assert "2.1.235" not in out  # single version: no sub-row
+
+
+def test_trend_version_subrows_when_mixed():
+    rows = [make_row("2026-09-07", {"2.1.258": {"hits": 3, "eligible": 2}, "2.1.259": {"hits": 14, "eligible": 3}})]
+    out = rm.render_trend(rows)
+    assert re.search(r"2026-09-07\s+17\s+5\s+3\.40", out)
+    assert re.search(r"^\s+2\.1\.258\s+3\s+2\s+1\.50", out, re.M)
+    assert re.search(r"^\s+2\.1\.259\s+14\s+3\s+4\.67", out, re.M)
+
+
+def test_trend_marks_first_window_after_landed():
+    remedies = [{"ref": "8j5h", "landed": "2026-09-03", "source": "kata"}]
+    rows = [
+        make_row("2026-09-02", {"v": {"hits": 1, "eligible": 1}}, remedies),
+        make_row("2026-09-07", {"v": {"hits": 1, "eligible": 1}}, remedies),
+        make_row("2026-09-14", {"v": {"hits": 1, "eligible": 1}}, remedies),
+    ]
+    lines = rm.render_trend(rows).splitlines()
+    marked = [l for l in lines if "◄ 8j5h landed 2026-09-03" in l]
+    assert len(marked) == 1 and marked[0].startswith("2026-09-07")
+
+
+def test_trend_zero_eligible_prints_dash():
+    out = rm.render_trend([make_row("2026-09-02", {"v": {"hits": 0, "eligible": 0}})])
+    assert re.search(r"2026-09-02\s+0\s+0\s+-", out)
+
+
+def test_trend_flags_stale_rows():
+    out = rm.render_trend([make_row("2026-09-02", {"v": {"hits": 1, "eligible": 1}}, stale=True)])
+    assert re.search(r"^!2026-09-02", out, re.M)
+    assert "computed under an older registry" in out
+
+
+def test_trend_unlanded_remedy_has_no_marker():
+    remedies = [{"ref": "open1", "landed": None, "source": "none"}]
+    out = rm.render_trend([make_row("2026-09-02", {"v": {"hits": 1, "eligible": 1}}, remedies)])
+    assert "◄" not in out

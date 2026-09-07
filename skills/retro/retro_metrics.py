@@ -289,3 +289,51 @@ def rebuild_rows(*, metrics_path: Path, projects_dir: Path, registry_path: Path,
                                    registry_path=registry_path, landed=landed))
     write_rows(metrics_path, rebuilt)
     return rebuilt
+
+
+def _rate(hits: int, eligible: int) -> str:
+    return f"{hits / eligible:.2f}" if eligible else "-"
+
+
+def render_trend(rows: list[dict]) -> str:
+    if not rows:
+        return "(no metrics rows yet)\n"
+    names: list[str] = []
+    for row in rows:
+        for name in row["patterns"]:
+            if name not in names:
+                names.append(name)
+    out: list[str] = []
+    for name in names:
+        out.append(f"## {name}")
+        out.append(f"{'window_end':<12} {'hits':>5}  {'eligible':>8}  {'rate':<6}")
+        marked: set[str] = set()
+        any_stale = False
+        for row in rows:
+            pat = row["patterns"].get(name)
+            if pat is None:
+                continue
+            end = row["window_end"][:10]
+            versions = pat["versions"]
+            hits = sum(v["hits"] for v in versions.values())
+            eligible = sum(v["eligible"] for v in versions.values())
+            markers = []
+            for remedy in pat["remedies"]:
+                landed = remedy.get("landed")
+                if landed and end > landed and remedy["ref"] not in marked:
+                    marked.add(remedy["ref"])
+                    markers.append(f"◄ {remedy['ref']} landed {landed}")
+            prefix = "!" if row.get("stale_registry") else ""
+            any_stale = any_stale or bool(prefix)
+            line = f"{prefix}{end:<12} {hits:>5}  {eligible:>8}  {_rate(hits, eligible):<6}"
+            if markers:
+                line += " " + ", ".join(markers)
+            out.append(line.rstrip())
+            if len(versions) > 1:
+                for version in sorted(versions):
+                    v = versions[version]
+                    out.append(f"  {version:<10} {v['hits']:>5}  {v['eligible']:>8}  {_rate(v['hits'], v['eligible']):<6}".rstrip())
+        if any_stale:
+            out.append("! = computed under an older registry; run --rebuild")
+        out.append("")
+    return "\n".join(out) + "\n"
