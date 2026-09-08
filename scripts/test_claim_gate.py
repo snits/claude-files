@@ -392,3 +392,34 @@ def test_heredoc_bodies_are_dropped_before_comments_are_stripped():
 
 def test_multiline_quoted_argument_containing_a_hash_line():
     assert should_gate("echo 'a\n# b' && git commit -m x") is True
+
+
+# --- kata 8vqx: a backslash-newline is a line continuation, not a separator ---
+#
+# `_segments` rewrites every newline to `;` before tokenizing. A backslash-newline
+# must be removed first, the way bash joins the lines, or the rewrite drops a `;`
+# between `git` and `commit` and the verb pair is never adjacent in one segment.
+# Each canary keeps the verb pair split across the continuation: a wrapped command
+# whose verbs are already on one line would gate either way and assert nothing.
+
+
+def test_continuation_between_the_verb_and_its_subcommand_still_gates():
+    assert should_gate("git \\\n  commit -m x") is True
+
+
+def test_continuation_before_kata_close_still_gates():
+    assert should_gate("kata \\\n  close ab12 --done --message y") is True
+
+
+def test_continuation_inside_a_longer_pipeline_still_gates():
+    assert should_gate("cd /tmp && git \\\n  commit -s -m x") is True
+
+
+def test_a_bare_newline_still_separates_commands():
+    """Only a backslash-newline joins; a plain newline must stay a separator."""
+    assert should_gate("echo git\ncommit -m x") is False
+
+
+def test_continuation_joins_the_words_it_touches():
+    """bash makes `git\\<newline>commit` the single word `gitcommit`, not a verb pair."""
+    assert should_gate("git\\\ncommit -m x") is False

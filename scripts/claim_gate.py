@@ -155,9 +155,13 @@ def _segments(command: str) -> list[list[str]]:
     Heredoc bodies are removed first (see _without_heredoc_bodies), then comments (see
     _without_comments); shlex's own comment handling is switched off, so any `#` that
     survives is quoted or mid-word and becomes an ordinary token. Newlines are treated
-    as `;`. Unbalanced quotes fall back to a whitespace split.
+    as `;`, but a backslash-newline is removed first: bash joins those lines, so rewriting
+    it to `;` would split a verb from its subcommand -- a miss. Joining can only make
+    verbs adjacent, never separate them, so the strip errs toward a spare reminder.
+    Unbalanced quotes fall back to a whitespace split.
     """
-    text = _without_comments(_without_heredoc_bodies(command)).replace("\n", " ; ")
+    text = _without_comments(_without_heredoc_bodies(command))
+    text = text.replace("\\\n", "").replace("\n", " ; ")
     try:
         lex = shlex.shlex(text, posix=True, punctuation_chars=True)
         lex.whitespace_split = True
