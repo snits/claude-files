@@ -370,15 +370,16 @@ with `wc -c` that it is non-empty and with `tail -1` that its last line is the v
 an unchecked success is not a success.
 
 **A rung that fails verification leaves residue — clear it before descending.** A half-landed
-write (zero-byte, or truncated short of its verdict line) is not nothing: it is a file the lead
-scores as a non-qualifying artifact, so leaving it behind turns a refused write into a block the
-later rungs cannot undo, no matter how complete the table you go on to return. So whenever the
-`wc -c` / `tail -1` check fails, delete the file at the path you just checked — `rm -f <that
-path>` — and confirm it is gone before trying the next rung. Clear it wherever it sits: the lead
-classifies from any location it can find a file in, your own worktree included, so a file that
-failed its check is residue at the worktree root exactly as it is at the destination. If the
-removal is itself refused, say so under `Deviations` and name the path, so the lead knows that
-file is residue and not your artifact.
+write (zero-byte, or truncated short of its verdict line) is not nothing: the lead reads it as an
+empty or unreadable artifact and blocks, so leaving it behind turns a refused write into a block
+the later rungs cannot undo, no matter how complete the table you go on to return. So whenever
+the `wc -c` / `tail -1` check fails, delete the file at the path you just checked — `rm -f <that
+path>` — and confirm it is gone before trying the next rung. Clear it at either location the lead
+looks in: the destination, and your own worktree root, which the lead searches when the
+destination holds nothing. If the
+removal is itself refused, say so under `Deviations` and name the path — the lead is told below
+to treat a path you named as residue as no artifact at all, so disclosing it is what keeps a file
+you could not delete from being scored as your report.
 
 1. **`Write` to the pasted absolute path.** Often refused; costs one turn to find out.
 2. **Write the report body to a script file that does raw file I/O (`open` / `write`), then
@@ -422,9 +423,13 @@ produced by an auditor that did not know its own conclusion, and no rule for pre
 them recovers a verdict you can trust. This is stated as a precedence rule because the two
 sentences were previously separate and gave opposite outcomes for the same input.
 
+**A path the auditor named as residue under `Deviations` is not its artifact.** Ignore that file
+entirely — it is the wreckage of a refused write, and the auditor said so precisely to stop you
+reading it as a delivery. Then apply the rule below to what remains.
+
 **Before declaring an artifact missing, look for it.** Auditors given an absolute path have
-still written under their own worktree. Search for the basename under `.worktrees/` and
-`.claude/worktrees/` — and do it *before* removing any agent worktree, because a worktree the
+still written under their own worktree. **The destination is authoritative; consult the auditor's worktree only when the destination
+holds nothing.** Search for the basename under `.worktrees/` and `.claude/worktrees/` — and do it *before* removing any agent worktree, because a worktree the
 harness finds unchanged is auto-cleaned and takes the artifact with it.
 
 **When an auditor returns inline at rung 4, the lead persists the report verbatim at the
@@ -433,65 +438,28 @@ that the lead transcribed it. That header is the evidentiary distinction the art
 exists to preserve: it marks the file as a transcription rather than an auditor-written
 artifact, so a later reader is not misled about which it is.
 
-**Fail closed, scoped to what the rule is actually for.** The rule exists to keep a crashed
-auditor distinguishable from a silent one.
+**Fail closed.** A missing artifact, an unreadable or empty one, or a report with no `VERDICT:`
+line is **BLOCK** — recorded as "auditor did not return a verdict", never as a pass. An auditor
+that crashed and one that found nothing are indistinguishable from silence, and only one of them
+is safe. A zero-byte file at exit 0 is a recorded failure mode, which is why "empty" is named
+alongside "unreadable": it is the one shape that looks like delivery from outside.
 
-This is written as an **ordered procedure, not a table of conditions.** A table was tried and
-failed: its rows were overlapping predicates rather than a partition, so outcomes fell into gaps
-between them — twice, and the second time the gap swallowed the *ordinary* outcome. A procedure
-is total by construction. Run these three steps in order for each auditor.
+**One exception, and only one.** A complete table carrying a literal `VERDICT:` line that arrives
+**inline** because the ladder above was refused at every rung, and which the lead persists
+verbatim under a provenance header, counts as delivered. A sandbox that refused every write is
+not a dropped report, and reading it as one manufactures a BLOCK with nothing to do with the
+branch under audit. What the rule targets is a report that never arrived — not one the sandbox
+would not let land.
 
-**Step 1 — find the auditor's table and verdict. Take the first that applies.**
-
-1. **An artifact exists** at the expected path, or was recovered from the auditor's worktree.
-   That artifact is the evidence, whatever the report did or did not do. It qualifies only if it
-   is readable, non-empty, carries a complete table, and its last line is the verdict line; an
-   artifact failing any of those is **BLOCK** (a zero-byte file at exit 0 is a recorded failure
-   mode, and it is the one shape that looks like delivery from outside).
-2. **No artifact, but a report arrived** carrying a complete table and a verdict line. The lead
-   persists it verbatim under a provenance header and that becomes the artifact. This covers
-   every reason no file exists — the ladder was refused to its last rung, or a write succeeded
-   and the worktree was auto-cleaned before recovery. A sandbox that refused every write is not
-   a dropped report, and neither is an artifact destroyed after the fact.
-3. **Anything else.** **BLOCK**, recorded as "auditor did not return a verdict". This step is
-   a genuine `else` and takes every remaining case without further conditions — neither report
-   nor artifact (the crashed auditor the rule was written for), a report with no verdict line,
-   a report whose table is truncated or partial, and any outcome you cannot place at all.
-   Nothing reaches the end of step 1 unclassified.
-
-**Step 2 — contradiction check, run regardless of how step 1 resolved.** If an artifact *and* a
-report both carry verdict lines and the two **disagree**, that is **BLOCK**. Neither side wins:
-one of them came from an auditor that did not know its own conclusion, and no rule for preferring
-one recovers a verdict you can trust. This is a separate step, not a branch of step 1, so that no
-ordering of cases can route around it.
-
-**Step 3 — `Delivered` is not `PASS`.** Step 1 establishes only that the auditor *reported*. The
-verdict it carried is then aggregated normally, and a delivered `VERDICT: BLOCK` blocks the merge
-like any other.
-
-Note what step 1 does *not* consult: the report's presence, absence, or completeness plays no
-part when an artifact exists. That is deliberate. Keying delivery on both axes made the
-classification non-monotonic — a good artifact scored worse when accompanied by a truncated
-report than when accompanied by no report at all.
-
-**A step-1 BLOCK is a delivery failure, not a branch defect.** Step 1 emits a BLOCK in two
-places — its first case, on an artifact that exists but does not qualify, and its third case, on
-anything else — and both say the same thing: no verdict you can trust arrived. Neither is a
-statement about the code. The verdict section below asks for a numbered defect list with a
-`file:line` per entry; a delivery failure has none. Record it as `auditor <name>: no verdict
-delivered — <what was seen>`, exempt from the `file:line` requirement, and say plainly in the
-escalation that it is not a finding against the branch.
-
-**A step-3 BLOCK is the opposite, and is not exempt.** There the auditor delivered a verdict and
-the verdict was BLOCK: that is a finding against the branch, and it enters the numbered defect
-list like any other finding.
-
-The scoping is deliberate. What was measured is the *exposure*, not the BLOCKs: on 2026-09-07
-the mandated write was refused for five of six auditors, and every one recovered only through a
-fallback its dispatch brief happened to supply. A brief without that fallback would have
-produced BLOCKs on branches nothing was wrong with, and the bar section above already rules that
-one false BLOCK in front of Jerry costs more than the gate buys in a month. Recorded on kata
-`bxeh`, which asked for this call and noted Jerry had not made it.
+This is deliberately a single rule with a single exception rather than a decision procedure over
+outcomes. A three-step procedure was tried here and withdrawn: five independent review passes
+each found a new gap or contradiction in it, two of them introduced by a careful fix to the
+previous one, because the classification couples the artifact axis and the report axis tightly
+enough that every repair perturbs it elsewhere. The write ladder is what actually prevents the
+false BLOCKs this section was rewritten for — on its first live run rung 1 was refused for all
+three auditors and all three artifacts landed anyway — so the classification does not have to
+carry that weight. Reworking it is tracked as kata `claudes-home#eqgn`; do not extend this rule
+in place without reading that issue first.
 
 ### Cleanup
 
