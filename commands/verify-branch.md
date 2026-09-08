@@ -90,9 +90,9 @@ chances to audit a different diff than the one being merged.
 
 **Compute the artifact directory here too, as an absolute path in the primary checkout, and
 paste that absolute path into each brief.** Do not write `${PROJECT_ROOT}/.scratchpad/` into a
-brief and leave the agent to expand it. Every auditor works from a detached audit worktree it
-creates itself, where that variable expands to the *audit tree's* root — so an artifact written
-through it lands inside a tree the lead removes during cleanup, taking the report with it. An
+brief and leave the agent to expand it. All three auditors work from an audit worktree they create
+themselves, where that variable expands to the *audit tree's* root — so an artifact written
+through it lands inside a tree that is removed when the audit ends, taking the report with it. An
 absolute path in the primary checkout is outside every audit tree and survives their removal.
 
 ```
@@ -121,8 +121,11 @@ that is the target branch, and the branch under audit is somewhere else entirely
 reads source files from its cwd is therefore reading the wrong tree, and one that tries to *run*
 the code finds the files simply absent. Nothing announces this.
 
-**So every brief states that fact, and every auditor that needs to execute or mutate code creates
-its own detached worktree at `${3}` before doing so:**
+**So every brief states that fact, and all three auditors create a detached worktree at `${3}`
+and work from it.** Each has its own reason: the test-quality auditor mutates, the claim-verifier
+runs commands to verify `COMMAND_RESULT` claims, and the scope auditor's `ls-files` check reads
+the index of whatever tree it runs in. An auditor that genuinely only reads the diff loses
+nothing by having one.
 
 ```
 git worktree add --detach <primary>/.claude/worktrees/audit-<issue>-<auditor> ${3}
@@ -185,18 +188,28 @@ Every brief carries, verbatim:
   get this, not only the mutation auditor: the one that improvised into a live tree was the
   claim-verifier, which had not been told.
 
-- **The cwd assertion, verbatim, for any auditor that will run or mutate code.** Nothing
-  sandboxes these agents — their cwd is the live primary checkout — so the instruction not to
-  borrow another tree is the only thing standing between a mis-stepped `cd` and a mutation in
-  real work. An instruction is not a control; assert it and fail closed:
+- **The cwd assertion, verbatim, in ALL THREE briefs — not only the mutation auditor's.**
+  Nothing sandboxes these agents — their cwd is the live primary checkout — so the instruction
+  not to borrow another tree is the only thing standing between a mis-stepped `cd` and a command
+  running against real work. An instruction is not a control; assert it and fail closed:
 
   ```
   test "$(git rev-parse --show-toplevel)" = "<the audit worktree path>" || { echo ABORT; exit 1; }
   ```
 
   Run it after `cd`, immediately before the first command that runs or changes anything, and
-  abort on mismatch rather than continuing. This replaces the containment isolation used to
-  provide (`jhby`).
+  abort on mismatch rather than continuing.
+
+  **All three, because all three can run commands.** The claim-verifier follows `verify-claims`,
+  which categorises claims as `COMMAND_RESULT` and verifies them by running the command — and it
+  is the auditor that actually improvised into a live tree on hexweave `enb2`. The scope auditor
+  runs `git ls-files` against a working tree. Scoping this to the mutation auditor would leave the
+  recorded offender uncovered.
+
+  **This is the containment available without a sandbox — not a replacement for one.** `exit 1`
+  ends a shell, not the agent, so it stops an honest mis-`cd` (the `enb2` shape) and does not stop
+  an agent that ignores the brief. Isolation was harness-enforced; this is compliance-enforced.
+  Do not describe it as equivalent (`jhby`).
 - **`file:line` evidence for every finding, and "not found" rather than an inferred mechanism.**
 - A `Deviations` section: when an edge case forces it off the brief, take the conservative
   option and record the deviation.
@@ -334,8 +347,16 @@ Against `git diff <merge-base>..${3}`:
    broad `git add -A`. **That is not detectable from a diff — staging method leaves no trace in
    history.** This is the substitute, and the substitution is stated here so a later reader
    knows the literal check was impossible rather than forgotten. Check instead:
-   - `git ls-files -i -c --exclude-standard` — every tracked file that .gitignore says should
-     not be. Any hit is a force-added ignored file, which is the actual harm `add -A` causes.
+   - `git -C <your audit worktree> ls-files -i -c --exclude-standard` — every tracked file that
+     .gitignore says should not be. Any hit is a force-added ignored file, which is the actual
+     harm `add -A` causes.
+
+     **This one needs a checkout parked on `${3}`, so create your audit worktree even though you
+     mutate nothing.** `ls-files` reads the index of whatever tree it runs in, and your cwd is the
+     primary checkout — under `/orchestrate-issues` that is parked on the *target* branch. Run it
+     there and a file force-added on `${3}` does not appear and you report clean: failure in the
+     direction that makes the problem look absent, which is the same disqualifier that rules out
+     bare `check-ignore` below. Assert the cwd first, as above.
 
      **Do not use a bare `git check-ignore` here. It skips tracked files by default**, so on
      exactly the force-added file you are hunting it exits 1 and prints nothing — failing in the
@@ -425,10 +446,12 @@ tail -1 <path>    # exactly VERDICT: PASS or VERDICT: BLOCK
 half-landed write (zero-byte, or truncated short of its verdict line) is not nothing: the lead
 reads it as an empty or unreadable artifact and blocks, so leaving it behind turns a failed write
 into a block that nothing later can undo, however complete the table you go on to return. `rm -f
-<that path>`, confirm it is gone, then retry the write once. If the removal is itself refused,
-say so under `Deviations` and name the path — the lead is told below to treat a path you named as
-residue as no artifact at all, so disclosing it is what keeps a file you could not delete from
-being scored as your report.
+<that path>`, confirm it is gone, then retry the write once. **Clear it at either location the
+lead looks in** — the destination, and your audit worktree, which the lead searches when the
+destination holds nothing. A half-landed file left inside your audit tree is one the lead is told
+to go and read. If the removal is itself refused, say so under `Deviations` and name the path —
+the lead is told below to treat a path you named as residue as no artifact at all, so disclosing
+it is what keeps a file you could not delete from being scored as your report.
 
 **If the write still cannot be made to land, return the complete table inline with the
 `VERDICT:` line last, and say so in `Deviations`.** This is a legitimate terminus, not a failure;
@@ -447,26 +470,29 @@ agent's *explanation* of a refusal as a hypothesis, and the refusal itself as th
 **Aggregate from the files, not from the returned reports.** The harness sometimes delivers only
 an idle notification and drops an agent's final report; the artifact is what survives that.
 
-**Where a report and its artifact disagree, the artifact wins — always, including on the
-`VERDICT:` line.** The artifact is the evidence and the report is a summary of it, and the
-standing rule is that the evidence for a claim is the artifact itself, never a summary of it.
-A verdict disagreement is not an exception to that rule; it is the case the rule was written for.
+**Where a report and its artifact disagree, the answer depends on what disagrees.** On findings,
+tables, or detail, the artifact is the evidence and the report is a summary of it — the artifact
+wins, per the standing rule that the evidence for a claim is the artifact itself, never a summary
+of it. **On the `VERDICT:` line itself, the disagreement is a BLOCK** and neither side wins — one
+of the two was produced by an auditor that did not know its own conclusion, and no rule for
+preferring one of them recovers a verdict you can trust. This is stated as a precedence rule
+because the two sentences were previously separate and gave opposite outcomes for the same input.
 
-**A `VERDICT:` disagreement is a BLOCK, and it is a real finding against the branch — not a
-delivery failure.** It is **not** exempt from the per-entry `file:line` requirement, and it does
-not escalate as "the auditor did not return a verdict" the way a missing artifact does:
+**That BLOCK is a real finding against the branch, not a delivery failure** — ruled on kata
+`claudes-home#eqgn` (Jerry, 2026-09-08). It is **not** exempt from the per-entry `file:line`
+requirement, and it does not escalate as "the auditor did not return a verdict" the way a missing
+artifact does:
 
-- Take the **artifact's** verdict as the verdict, and its table as the findings, citations intact.
+- Carry the **artifact's** table forward as the findings, citations intact. The artifact
+  qualified: it holds a complete table that may contain genuine findings, and discarding them
+  would mislead the reader about what the gate actually found.
 - Record the report's contradiction alongside, as a delivery defect against that auditor.
-- Do not escalate this as "not a finding against the branch". The artifact qualified — it carries
-  a complete table that may hold genuine findings, and discarding them would mislead the reader
-  about what the gate actually found.
+- Do not escalate this as "not a finding against the branch".
 
-The considered alternative was to route it as a delivery failure, on the reasoning that an auditor
+The verdict is BLOCK either way; what this rules is that the defect list is not empty. The
+considered alternative was to route it as a delivery failure, on the reasoning that an auditor
 contradicting itself may be confused throughout and its table is therefore suspect. Rejected: a
-suspect table with citations is checkable, and a citation-free escalation is not. Ruling recorded
-on kata `claudes-home#eqgn` (Jerry, 2026-09-08). This is stated as a precedence rule because the
-sentences were previously separate and gave opposite outcomes for the same input.
+suspect table with citations is checkable, and a citation-free escalation is not.
 
 **A path the auditor named as residue under `Deviations` is not its artifact.** Ignore that file
 entirely — it is the wreckage of a refused write, and the auditor said so precisely to stop you
