@@ -154,7 +154,13 @@ def word_re(s, dirlike=False):
     The lookahead is symmetric with the strict lookbehind so 'src/utils.py' no longer
     matches inside 'src/utils.py-old' or 'src/utils.py.bak'.
     """
-    tail = r"(?![\w/.-])" if not dirlike else r"(?![\w/-])"
+    # Reject a following word char, '-' or '/', and a '.' only when it starts another
+    # suffix ('foo.py.bak'). A trailing sentence period must still match -- rejecting it
+    # was a regression that silently dropped 6 real hits.
+    if dirlike:
+        tail = r"(?![\w-])"          # a dir is usually written 'name/', so allow '/'
+    else:
+        tail = r"(?![\w/-])(?!\.\w)"
     return re.compile(r"(?:(?<![\w/.-])|(?<=/))" + re.escape(s) + tail)
 
 
