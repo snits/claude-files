@@ -100,6 +100,12 @@ but nothing recovers an artifact that landed and was then cleaned away.
 mkdir -p "$(git rev-parse --show-toplevel)/.scratchpad"
 ```
 
+**Invoke this gate from the primary checkout, not from inside a feature worktree.** Agent
+worktrees are cut from the session's cwd, so a gate launched from within a worktree gives its
+auditors a `.scratchpad` symlink pointing at *that* worktree rather than the primary checkout —
+and the artifacts then die with it. This costs nothing to observe and removes a whole class of
+path confusion before dispatch.
+
 ## The three auditors — dispatch concurrently, one message, three Agent calls
 
 All three run in parallel. Each gets `isolation: "worktree"` — they read and (for the mutation
@@ -112,9 +118,12 @@ this in its brief; otherwise it burns turns rediscovering it, exactly as `/orche
 warns about agents escalating on plumbing.
 
 **Do not let an auditor place its worktree, or any scratch directory, under `.scratchpad`.**
-Inside an agent worktree `.scratchpad` is a **symlink back to the primary checkout**, so a tree
-created beneath it resolves outside the isolation sandbox and every subsequent write and
-version-control command in it is refused. Say in each brief: put scratch directories at the
+Where `worktree.symlinkDirectories` lists it in settings — it is set for `.scratchpad` and
+`.superpowers` in `~/.claude/settings.json`, and projects set it too — an agent worktree's
+`.scratchpad` is a **symlink back to the checkout the worktree was cut from**, so a tree created
+beneath it resolves outside the isolation sandbox and every subsequent write and version-control
+command in it is refused. Where the setting is absent it is a real directory; `readlink -f` says
+which, and the instruction is the same either way because the cost of being wrong is asymmetric. Say in each brief: put scratch directories at the
 agent worktree *root*, which is a real directory. Observed 2026-09-07 (hs5n test-quality
 auditor), which recovered by moving its tree to `<agent-worktree-root>/audit-<issue>`.
 
@@ -123,8 +132,13 @@ Every brief carries, verbatim:
 - The merge-base SHA and the target branch.
 - The kata ref and the issue body text (paste it — the agent cannot see this conversation, and
   handing it only a ref invites it to invent the scope it is auditing against).
-- **The artifact path it must write, and the write ladder in full** (see "Artifacts" below).
-  Paste the ladder into the brief rather than citing it — the agent cannot read this file.
+- **The artifact path it must write, the write ladder in full, and the verdict-line rule**
+  (all three under "Artifacts" below). Paste them into the brief rather than citing them — the
+  agent cannot read this file. Omitting the verdict-line rule is the specific mistake that
+  reintroduces the defect this gate was fixed for: the auditor never learns the last line must
+  be the literal string, and the aggregator's grep then finds nothing and blocks.
+- **For the test-quality auditor: the mutation the maintainer already ran**, taken from the
+  commit message or the issue, with the instruction to pick a different one.
 - **Every input path the brief cites, resolved into the primary checkout first.** A brief that
   points an auditor at a matrix, fixture, or prior report living under a feature worktree cites
   something that dies when that tree is cleaned. The rule the "Establish the base" step applies
@@ -184,11 +198,11 @@ For every test added or modified in `<merge-base>..${3}`:
 
 1. Identify the code path the test covers.
 2. Apply one targeted mutation to that path — invert a condition, change a boundary, return a
-   constant, drop a call. The mutation must be one the test *claims* to catch. **Where the
-   commit message or the issue records a mutation the maintainer already ran, the brief names
-   it and says "pick a different one".** Re-running a mutation whose result is already written
-   down spends an Opus run to reproduce a known answer; picking a fresh one is what surfaced
-   the `ywpn` DesertRiparian coverage gap (orbweaver-rs, 2026-09-02).
+   constant, drop a call. The mutation must be one the test *claims* to catch. **Where the brief
+   names a mutation the maintainer already ran, pick a different one** — and where it names
+   none, check the commit message yourself before choosing. Re-running a mutation whose result
+   is already written down spends an Opus run to reproduce a known answer; picking a fresh one
+   is what surfaced the `ywpn` DesertRiparian coverage gap (orbweaver-rs, 2026-09-02).
 3. Run the test. **Read the runner's actual exit reason, not the first error string.** A compile
    or import error is NOT evidence the test discriminates: a compile failure and an assertion
    failure look alike at a glance and mean opposite things. If the run did not compile, fix the
@@ -217,8 +231,10 @@ mutation then survives the audit and lands in someone else's test run. Measured 
 exact mutation numbers (177/16) while a fresh worktree of the same commit passed (139/0);
 `cargo clean -p <crate>` did not clear it because it is profile-scoped, `cargo clean --release`
 did. Interpreted-language dependency trees (`node_modules`, `.venv`) cache no such
-path-keyed compiled output and are safe to link. Choosing the second is exactly the case the inverse-Edit rule above
-was written for, since the diff you would destroy is the real one. Record which you did under
+path-keyed compiled output and are safe to link.
+
+Running the mutations in the primary checkout — the second move — is exactly the case the
+inverse-Edit rule above was written for, since the diff you would destroy is the real one. Record which you did under
 `Deviations`. Reporting "could not run the suite" is a BLOCK, and an honest one; guessing is not.
 
 Also report, without mutating:
@@ -294,7 +310,9 @@ reference element blocks; CHANGED blocks only when the change is not recorded in
 
 Each auditor writes its full table to
 `<primary-checkout>/.scratchpad/{YYYYMMDD}-verify-branch-{auditor}-{branch}.md` — the absolute
-path resolved above and pasted into its brief — **before** it returns.
+path resolved above and pasted into its brief — **before** it returns, or, when every rung of
+the ladder below is refused, returns that table inline for the lead to persist. One of the two
+always happens; there is no run where the table simply does not arrive.
 
 **The last line of the artifact file must be exactly `VERDICT: PASS` or `VERDICT: BLOCK`, and
 the auditor confirms it with `tail -1` before returning.** The returned report ends with the
@@ -304,27 +322,45 @@ the rule below read its own ambiguity as a BLOCK. Measured twice — rhkmaint-to
 (2026-09-04) and the `g45s` gate (2026-09-07), where `grep -o 'VERDICT: [A-Z]*'` on the
 claim-verifier's artifact returned nothing while its inline report carried the line.
 The aggregator **greps the file for that literal line**; it does not interpret a `## Verdict`
-heading or read prose off the tail.
+heading or read prose off the tail. It does **not** fall back to the returned report's verdict
+when the artifact has none — `z17a` raised that fallback as an option and it is deliberately not
+taken, because it would restore exactly the ambiguity the two-place requirement removes. An
+artifact with no verdict line is handled by the fail-closed rule below, not by consulting the
+report.
 
 ### The write ladder — paste it into every brief
 
 The mandated write is refused for isolated auditors more often than it succeeds, and **no single
-mechanism survives every refusal on record.** Three distinct guards refuse, independently:
-the Write tool's canonical-path check (which refuses the primary-checkout path *and* the
-worktree's own `.scratchpad`, since that is a symlink resolving to the same place); the
-worktree command-shape guard (which refuses a heredoc whose *body* merely quotes a
-version-control invocation); and a subagent rule against writing report files at all. A
-Python script file worked six times of six on 2026-09-07 and was refused once as "too complex
-to verify" on rhkmaint-tools `rmmg`; a heredoc through the symlink worked first-try on hexweave
-`jbpt` and was refused on `ms79`. So this is a ladder, not a prescription. Each auditor tries in
-order and stops at the first that lands:
+mechanism survives every refusal on record.** Two guards are confirmed to refuse it,
+independently: the Write tool's canonical-path check (which refuses the primary-checkout path
+*and*, where `.scratchpad` is a symlink, the worktree's own copy of that path); and the worktree
+command-shape guard, which refuses a Bash invocation whose *body* merely quotes a version-control
+shape — something audit reports routinely contain as evidence. A Python script file worked six
+times of six on 2026-09-07 and was refused once as "too complex to verify" (`n8zs`); a heredoc
+through the symlink worked first-try on hexweave `zbzd` and was refused on `ms79`.
+
+**One reported mechanism is disproven and is recorded here so it is not re-derived:** an auditor
+attributed its refusal to "a subagent rule against writing report files at all." No such rule is
+in evidence — `wcs3`'s CORRECTION lists four isolated agents writing report `.md` files to that
+exact directory in one batch. The refusal was real; the auditor's diagnosis of it was not. Treat
+an agent's *explanation* of a refusal as a hypothesis, and the refusal itself as the datum.
+
+So this is a ladder, not a prescription. Each auditor tries in order and stops at the first that
+lands — **and "lands" means verified, not attempted**: after any rung that writes a file, confirm
+with `wc -c` that it is non-empty and with `tail -1` that its last line is the verdict. A
+`cat > file` heredoc has been recorded writing a **zero-byte file at exit 0 with no error**, so
+an unchecked success is not a success.
 
 1. **`Write` to the pasted absolute path.** Often refused; costs one turn to find out.
-2. **Write the report body to a script file, then execute that script as a plain command.** Not
-   a heredoc — the heredoc form is refused when the report body quotes version-control shapes,
-   which audit reports routinely do.
+2. **Write the report body to a script file that does raw file I/O (`open` / `write`), then
+   execute that script as a plain command.** No heredoc anywhere — not as the Bash invocation
+   *and not inside the script*, since the guard fires on the report body's content wherever it
+   appears, and the body is what carries the version-control shapes.
 3. **Write the file at the agent worktree *root*** (a real directory — not under `.scratchpad`,
-   see above) **and copy it to the absolute path.**
+   see above) **and copy it to the absolute path. Report that in-worktree absolute path in your
+   return message whether or not the copy appeared to succeed** — a copy that reports success
+   and leaves the file only in the worktree is indistinguishable from one that worked, and the
+   lead needs the path to recover the artifact before the worktree is auto-cleaned.
 4. **Return the complete table inline, with the `VERDICT:` line last.** This rung cannot be
    refused. It is a legitimate terminus, not a failure — say so in `Deviations` and name the
    rungs that were refused.
@@ -336,8 +372,14 @@ practice persisted the report by hand.
 ### Aggregation
 
 **Aggregate from the files, not from the returned reports.** The harness sometimes delivers only
-an idle notification and drops an agent's final report; the artifact is what survives that. If a
-report and its artifact disagree, the artifact is the evidence and the report is a summary of it.
+an idle notification and drops an agent's final report; the artifact is what survives that.
+
+**Where a report and its artifact disagree, the answer depends on what disagrees.** On findings,
+tables, or detail, the artifact is the evidence and the report is a summary of it. **On the
+`VERDICT:` line itself, the disagreement is a BLOCK** and neither side wins — one of the two was
+produced by an auditor that did not know its own conclusion, and no rule for preferring one of
+them recovers a verdict you can trust. This is stated as a precedence rule because the two
+sentences were previously separate and gave opposite outcomes for the same input.
 
 **Before declaring an artifact missing, look for it.** Auditors given an absolute path have
 still written under their own worktree. Search for the basename under `.worktrees/` and
@@ -353,17 +395,21 @@ artifact, so a later reader is not misled about which it is.
 **Fail closed, scoped to what the rule is actually for.** The rule exists to keep a crashed
 auditor distinguishable from a silent one, and it keeps its teeth:
 
-- **BLOCK** — no report and no artifact; a report with no `VERDICT:` line; a truncated or
-  partial table; an artifact that disagrees with its own report. Recorded as "auditor did not
-  return a verdict", never as a pass.
+- **BLOCK** — no report and no artifact; an artifact that is empty, truncated, or unreadable;
+  a report or artifact with no `VERDICT:` line; a partial table; an artifact whose verdict
+  disagrees with its report's. Recorded as "auditor did not return a verdict", never as a pass.
+  The empty-artifact case is listed explicitly because a zero-byte file at exit 0 is a recorded
+  failure mode and it is the one shape that looks like delivery from the outside.
 - **Delivered** — a complete table plus a literal `VERDICT:` line, arriving inline and persisted
   under a provenance header. A sandbox that refused every write is not a dropped report, and
   reading it as one manufactures a BLOCK with nothing to do with the branch under audit.
 
-The scoping is deliberate: the strict reading has a *measured* failure mode (false BLOCKs on
-five of six auditors, 2026-09-07) and the bar section above already rules that one false BLOCK
-in front of Jerry costs more than the gate buys in a month. Recorded on kata `bxeh`, which asked
-for this call.
+The scoping is deliberate. What was measured is the *exposure*, not the BLOCKs: on 2026-09-07
+the mandated write was refused for five of six auditors, and every one recovered only through a
+fallback its dispatch brief happened to supply. A brief without that fallback would have
+produced BLOCKs on branches nothing was wrong with, and the bar section above already rules that
+one false BLOCK in front of Jerry costs more than the gate buys in a month. Recorded on kata
+`bxeh`, which asked for this call and noted Jerry had not made it.
 
 ### Cleanup
 
@@ -372,6 +418,12 @@ untracked `.superpowers/` tree. Their worktrees then show `?? .superpowers` and 
 `git worktree remove`. **`--force` is expected for the read-only auditors** — the copies are
 indistinguishable from the originals, so check that the canonical `.superpowers/sdd` is intact
 afterwards rather than assuming the removal took the right one.
+
+**Open, and deliberately not asserted here:** whether that untracked copy makes a read-only
+auditor's worktree count as *changed* for the harness's auto-clean test — which would mean the
+"unchanged worktrees are auto-cleaned" warning above rarely fires in practice. Nobody has
+measured it. Do not reason from either answer; recover artifacts before removing worktrees
+regardless, which is correct under both.
 
 ## The verdict
 
