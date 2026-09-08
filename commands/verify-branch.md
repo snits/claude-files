@@ -145,6 +145,13 @@ Every brief carries, verbatim:
   to outputs applies to inputs: copy or resolve each one before dispatch, and cite the resolved
   path. Observed 2026-09-07 on rhkmaint-tools `ebbv`, where a cited matrix existed only inside
   the feature worktree and survived only because an auditor noticed and read it live.
+- **The blocking / non-blocking bar, pasted in full** (the "what blocks, and what is only
+  reported" section). Each auditor's Verdict rule says "apply the bar above" — an auditor that
+  never receives it improvises the split, which is precisely the drift the bar was centralised
+  to prevent.
+- **For the test-quality auditor: that its audit worktree must be detached** — the branch under
+  audit is already checked out in the primary checkout, so `git worktree add` refuses it —
+  **and that the tree goes at the agent worktree root, never under `.scratchpad`.**
 - **`file:line` evidence for every finding, and "not found" rather than an inferred mechanism.**
 - A `Deviations` section: when an edge case forces it off the brief, take the conservative
   option and record the deviation.
@@ -311,18 +318,25 @@ reference element blocks; CHANGED blocks only when the change is not recorded in
 Each auditor writes its full table to
 `<primary-checkout>/.scratchpad/{YYYYMMDD}-verify-branch-{auditor}-{branch}.md` — the absolute
 path resolved above and pasted into its brief — **before** it returns, or, when every rung of
-the ladder below is refused, returns that table inline for the lead to persist. One of the two
-always happens; there is no run where the table simply does not arrive.
+the ladder below is refused, returns that table inline for the lead to persist. Either is
+compliance. Neither happening is a real outcome with its own classification below, not an
+impossibility.
 
-**The last line of the artifact file must be exactly `VERDICT: PASS` or `VERDICT: BLOCK`, and
-the auditor confirms it with `tail -1` before returning.** The returned report ends with the
-same line. Both, not either: the line was previously specified against the returned message and
-consumed from the file, so an auditor that complied exactly produced a verdict-less artifact and
-the rule below read its own ambiguity as a BLOCK. Measured twice — rhkmaint-tools `3ykm`
-(2026-09-04) and the `g45s` gate (2026-09-07), where `grep -o 'VERDICT: [A-Z]*'` on the
-claim-verifier's artifact returned nothing while its inline report carried the line.
-The aggregator **greps the file for that literal line**; it does not interpret a `## Verdict`
-heading or read prose off the tail. It does **not** fall back to the returned report's verdict
+**The last line of the artifact file must be exactly `VERDICT: PASS` or `VERDICT: BLOCK`**, and
+an auditor that wrote a file confirms it with `tail -1` before returning. The returned report
+ends with the same line. Both, not either: the line was previously specified against the returned
+message and consumed from the file, so an auditor that complied exactly produced a verdict-less
+artifact and the rule below read its own ambiguity as a BLOCK. Measured three times — orbweaver-rs
+`37f3`/`ywpn` (2026-09-02, claim-verifier) and the `g45s` gate (2026-09-07, claim-verifier, where
+`grep -o 'VERDICT: [A-Z]*'` on the artifact returned nothing while its inline report carried the
+line), and rhkmaint-tools `3ykm` (2026-09-04, test-quality).
+
+**The aggregator reads the artifact's LAST LINE — `tail -1` — not a grep of the whole file.** A
+grep-anywhere check is weaker than the requirement it enforces: audit reports quote verdict lines
+as evidence (this command file contains one), so an artifact truncated mid-write, having lost its
+own final verdict, still matches a bare grep and is scored as delivered. Match on the last line or
+the check does not discriminate. It does not interpret a `## Verdict` heading or read prose off
+the tail. It does **not** fall back to the returned report's verdict
 when the artifact has none — `z17a` raised that fallback as an option and it is deliberately not
 taken, because it would restore exactly the ambiguity the two-place requirement removes. An
 artifact with no verdict line is handled by the fail-closed rule below, not by consulting the
@@ -335,9 +349,11 @@ mechanism survives every refusal on record.** Two guards are confirmed to refuse
 independently: the Write tool's canonical-path check (which refuses the primary-checkout path
 *and*, where `.scratchpad` is a symlink, the worktree's own copy of that path); and the worktree
 command-shape guard, which refuses a Bash invocation whose *body* merely quotes a version-control
-shape — something audit reports routinely contain as evidence. A Python script file worked six
-times of six on 2026-09-07 and was refused once as "too complex to verify" (`n8zs`); a heredoc
-through the symlink worked first-try on hexweave `zbzd` and was refused on `ms79`.
+shape — something audit reports routinely contain as evidence. On 2026-09-07 all six artifacts
+landed, each recovering through one of two fallbacks its brief supplied — a script file, or a
+write-inside-the-worktree plus copy — and the script-file form has been refused elsewhere as "too
+complex to verify" (`n8zs`); a heredoc through the symlink worked first-try on hexweave `zbzd`
+and was refused on `ms79`. No rung is reliable alone, which is the whole reason this is a ladder.
 
 **One reported mechanism is disproven and is recorded here so it is not re-derived:** an auditor
 attributed its refusal to "a subagent rule against writing report files at all." No such rule is
@@ -353,11 +369,16 @@ an unchecked success is not a success.
 
 1. **`Write` to the pasted absolute path.** Often refused; costs one turn to find out.
 2. **Write the report body to a script file that does raw file I/O (`open` / `write`), then
-   execute that script as a plain command.** No heredoc anywhere — not as the Bash invocation
-   *and not inside the script*, since the guard fires on the report body's content wherever it
-   appears, and the body is what carries the version-control shapes.
-3. **Write the file at the agent worktree *root*** (a real directory — not under `.scratchpad`,
-   see above) **and copy it to the absolute path. Report that in-worktree absolute path in your
+   execute that script as a plain command.** Rung 1's refusal is *path*-scoped — the canonical-path
+   guard rejects the destination, not the tool — so `Write` still works for a script placed
+   **inside your own worktree**; put it there and have it write to the absolute destination.
+   No heredoc anywhere: not as the Bash invocation *and not inside the script*, since the guard
+   fires on the report body's content wherever it appears, and the body is what carries the
+   version-control shapes.
+3. **Write the file at the agent worktree *root*** — a real directory. Never under
+   `.scratchpad`, which in an agent worktree is often a symlink back to the checkout the
+   worktree was cut from, so anything beneath it resolves outside your sandbox and is refused.
+   **Then copy it to the absolute path, and report that in-worktree absolute path in your
    return message whether or not the copy appeared to succeed** — a copy that reports success
    and leaves the file only in the worktree is indistinguishable from one that worked, and the
    lead needs the path to recover the artifact before the worktree is auto-cleaned.
@@ -393,16 +414,26 @@ exists to preserve: it marks the file as a transcription rather than an auditor-
 artifact, so a later reader is not misled about which it is.
 
 **Fail closed, scoped to what the rule is actually for.** The rule exists to keep a crashed
-auditor distinguishable from a silent one, and it keeps its teeth:
+auditor distinguishable from a silent one. It is written as a table rather than prose because
+prose bullets cannot be checked for exhaustiveness, and the outcome that fell through the gap
+twice while this file was being written was the *ordinary* one. **Every run of every auditor
+lands on exactly one row. An outcome you cannot place is itself a BLOCK** — report it as
+"unclassified auditor outcome" and say what you saw.
 
-- **BLOCK** — no report and no artifact; an artifact that is empty, truncated, or unreadable;
-  a report or artifact with no `VERDICT:` line; a partial table; an artifact whose verdict
-  disagrees with its report's. Recorded as "auditor did not return a verdict", never as a pass.
-  The empty-artifact case is listed explicitly because a zero-byte file at exit 0 is a recorded
-  failure mode and it is the one shape that looks like delivery from the outside.
-- **Delivered** — a complete table plus a literal `VERDICT:` line, arriving inline and persisted
-  under a provenance header. A sandbox that refused every write is not a dropped report, and
-  reading it as one manufactures a BLOCK with nothing to do with the branch under audit.
+| What the lead has | Classification |
+|---|---|
+| Artifact exists, complete table, last line is the verdict — report also arrived and agrees | **Delivered** |
+| Artifact exists, complete table, last line is the verdict — **report never arrived** | **Delivered.** This is the dropped-report case the artifact rule exists for; the artifact is the evidence and a missing report does not diminish it |
+| Artifact recovered from the auditor's worktree (rung 3, copy-out silently failed), complete, verdict last | **Delivered**, noting the recovery |
+| No artifact; report arrived complete with a verdict line, lead persists it under a provenance header (rung 4) | **Delivered.** A sandbox that refused every write is not a dropped report, and reading it as one manufactures a BLOCK with nothing to do with the branch |
+| Artifact exists but is empty, truncated, or unreadable | **BLOCK** — a zero-byte file at exit 0 is a recorded failure mode, and it is the one shape that looks like delivery from outside |
+| Artifact exists, last line is not a verdict line | **BLOCK.** Do not consult the report for it — see the rule above |
+| Report arrived with no verdict line, and no artifact | **BLOCK** |
+| Neither report nor artifact | **BLOCK** — the crashed auditor this rule was written for |
+| Artifact and report both carry verdicts, and they **disagree** | **BLOCK.** Neither side wins: one of them came from an auditor that did not know its own conclusion |
+
+A `Delivered` row means the auditor reported; it does not mean PASS. The verdict it carries is
+then aggregated normally, and a `Delivered` BLOCK verdict blocks the merge like any other.
 
 The scoping is deliberate. What was measured is the *exposure*, not the BLOCKs: on 2026-09-07
 the mandated write was refused for five of six auditors, and every one recovered only through a
@@ -419,11 +450,11 @@ untracked `.superpowers/` tree. Their worktrees then show `?? .superpowers` and 
 indistinguishable from the originals, so check that the canonical `.superpowers/sdd` is intact
 afterwards rather than assuming the removal took the right one.
 
-**Open, and deliberately not asserted here:** whether that untracked copy makes a read-only
-auditor's worktree count as *changed* for the harness's auto-clean test — which would mean the
-"unchanged worktrees are auto-cleaned" warning above rarely fires in practice. Nobody has
-measured it. Do not reason from either answer; recover artifacts before removing worktrees
-regardless, which is correct under both.
+**The `.superpowers` copy does NOT make a read-only auditor's worktree count as *changed*
+for the harness's auto-clean test** (Jerry ruling, 2026-09-07). So auto-clean does fire for the
+two read-only auditors, and the warning above is the common case rather than a rare one:
+**recover every artifact before removing or allowing the removal of an auditor's worktree.**
+Rung 3's in-worktree path exists for exactly this window.
 
 ## The verdict
 
