@@ -181,6 +181,16 @@ bar blocks the *merge*, not the fix. Escalate to Jerry only when the fix require
 ruling between two defensible options. Jerry ruling, 2026-09-02 retro, after three interrupts in
 one session: "every blocking defect was something you could've fixed without waiting for me."
 
+**A fix closes the defect class, not the instance the reviewer happened to name.** Before
+reporting a finding fixed, grep the diff and the touched crate or package for the same shape
+and list every sibling site in the fix report as fixed or explicitly ruled out. A fix report
+with no sibling line is incomplete, and the reviewer's brief says so. Retro 2026-09-08: five
+instances in three projects where the named site was fixed and the next round found the
+sibling — a raw wire enum fixed in two files and found in a third (hexwalker), an overflow
+hardened at three additions and found four lines away, a GIT_DIR leak fixed and 2/10 tests
+still failing under the repro (orbweaver-rs), and one defect dispatched for fixing twice in
+the same plan (claudes-home kata-dispatch).
+
 Medium findings from the *first* review get resolved in that cycle anyway — either fixed, or
 declined in one line saying why. They are cheapest to address before the code is revised around
 them, and this keeps the record honest without giving them blocking power they don't deserve.

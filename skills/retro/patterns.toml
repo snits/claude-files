@@ -10,7 +10,7 @@
 name = "worktree-guard-shape"
 detector = "(?s)^(?!.*working directory resolved to the shared checkout).*isolated in the worktree"
 eligible = "isolated"
-remedies = [{ ref = "8j5h" }]
+remedies = [{ ref = "8j5h" }, { ref = "jhby" }]
 
 [[pattern]]
 name = "worktree-cwd-trap"
@@ -28,10 +28,12 @@ remedies = []
 name = "eval-eq-error"
 detector = "\\(eval\\):\\d+: == not found"
 eligible = "ran_bash"
-remedies = []
+# ~/.zshrc: [[ -n "$CLAUDECODE" ]] && unsetopt EQUALS — retro 2026-09-08 C4
+remedies = [{ ref = "33sm" }]
 
 [[pattern]]
 name = "classifier-denial"
 detector = "denied by the Claude Code auto mode classifier"
 eligible = "any"
-remedies = []
+# self-matches sessions that read this file (retro 2026-09-08 C3, kata kt3x)
+remedies = [{ ref = "kt3x" }]
