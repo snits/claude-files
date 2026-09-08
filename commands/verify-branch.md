@@ -92,8 +92,7 @@ chances to audit a different diff than the one being merged.
 paste that absolute path into each brief.** Do not write `${PROJECT_ROOT}/.scratchpad/` into a
 brief and leave the agent to expand it. Each auditor runs with `isolation: "worktree"`, where
 that expands to the *worktree* root — and a worktree the harness finds unchanged is auto-cleaned,
-which for the two read-only auditors deletes the artifact along with it — silently, after the
-auditor reported success. The write ladder below keeps a refused write from costing the report,
+which deletes the artifact along with it — silently, after the auditor reported success. The write ladder below keeps a refused write from costing the report,
 but nothing recovers an artifact that landed and was then cleaned away.
 
 ```
@@ -111,11 +110,39 @@ path confusion before dispatch.
 All three run in parallel. Each gets `isolation: "worktree"` — they read and (for the mutation
 auditor) mutate independently, and a shared checkout makes that unsafe.
 
-**The branch under audit is already checked out in the primary checkout**, and `git worktree add`
-refuses a branch that is checked out elsewhere. So the mutation auditor's worktree must be
-detached — `git worktree add --detach <path> <branch>` — or created on a throwaway branch. Say
-this in its brief; otherwise it burns turns rediscovering it, exactly as `/orchestrate-issues`
-warns about agents escalating on plumbing.
+**The harness worktree an auditor receives is NOT parked on `${3}`.** It is cut from the
+session's cwd, so it holds whatever that had checked out — under `/super-do` that is the target
+branch, and the branch under audit is somewhere else entirely. An auditor that reads source files
+from its own worktree is therefore reading the wrong tree, and one that tries to *run* the code
+finds the files simply absent. Nothing in the harness announces this.
+
+**So every brief states that fact, and every auditor that needs to execute or mutate code creates
+its own detached worktree at `${3}` before doing so:**
+
+```
+git worktree add --detach <primary>/.claude/worktrees/audit-<issue>-<auditor> ${3}
+```
+
+`--detach` is unconditional, not a special case for the mutation auditor: `git worktree add`
+refuses a branch that is checked out **anywhere** — the primary checkout, an implementer's agent
+worktree, another auditor's tree — and which of those holds it varies by caller. Detaching side-steps
+the question entirely.
+
+**Place it as a sibling under the primary checkout's `.claude/worktrees/`, not inside the agent's
+own worktree.** Nesting a git worktree within a git worktree is its own source of confusion, and
+the auditor cannot clean it up afterwards — `git worktree remove` across trees is refused for an
+isolated agent. **The lead prunes these after aggregating; they do not remove themselves.**
+Observed 2026-09-07 (hexweave `enb2`), where the test-quality auditor deviated from an
+earlier instruction to place it at the agent worktree root, for exactly this reason, and said so.
+
+**Borrowing another tree is prohibited — say so in the brief.** Not the primary checkout, not an
+implementer's worktree, not a sibling auditor's. The failure this closes: on hexweave `enb2` the
+claim-verifier needed to run mutations, found its own worktree on `main` without the branch's
+files, and ran them in the **implementer's live worktree** instead. It reverted correctly and the
+lead verified the tree clean before merging — but a dropped revert there merges a mutation into
+the target branch, and the auditor had no instruction telling it not to. An auditor that cannot
+create its own worktree reports that as a Deviation and says what it could not verify; it does
+not go looking for a tree that already has the files.
 
 **Do not let an auditor place its worktree, or any scratch directory, under `.scratchpad`.**
 Where `worktree.symlinkDirectories` lists it in settings — it is set for `.scratchpad` and
@@ -123,9 +150,11 @@ Where `worktree.symlinkDirectories` lists it in settings — it is set for `.scr
 `.scratchpad` is a **symlink back to the checkout the worktree was cut from**, so a tree created
 beneath it resolves outside the isolation sandbox and every subsequent write and version-control
 command in it is refused. Where the setting is absent it is a real directory; `readlink -f` says
-which, and the instruction is the same either way because the cost of being wrong is asymmetric. Say in each brief: put scratch directories at the
-agent worktree *root*, which is a real directory. Observed 2026-09-07 (hs5n test-quality
-auditor), which recovered by moving its tree to `<agent-worktree-root>/audit-<issue>`.
+which, and the instruction is the same either way because the cost of being wrong is asymmetric.
+Say in each brief: put scratch *files* at the agent worktree root, which is a real directory —
+and put an audit *worktree* at the sibling path above, never at the agent worktree root and never
+under `.scratchpad`. Observed 2026-09-07 (hs5n test-quality auditor), which recovered by moving
+its tree out of `.scratchpad`.
 
 Every brief carries, verbatim:
 
@@ -149,9 +178,12 @@ Every brief carries, verbatim:
   reported" section). Each auditor's Verdict rule says "apply the bar above" — an auditor that
   never receives it improvises the split, which is precisely the drift the bar was centralised
   to prevent.
-- **For the test-quality auditor: that its audit worktree must be detached** — the branch under
-  audit is already checked out in the primary checkout, so `git worktree add` refuses it —
-  **and that the tree goes at the agent worktree root, never under `.scratchpad`.**
+- **That its harness worktree is not on `${3}`; that if it needs to execute or mutate code it
+  creates its own detached worktree at `${3}` under the primary checkout's `.claude/worktrees/`,
+  which the lead prunes; and that borrowing any other tree — the primary checkout, an
+  implementer's worktree, a sibling auditor's — is prohibited.** All three auditors get this,
+  not only the mutation auditor: the one that improvised into a live tree was the claim-verifier,
+  which had not been told.
 - **`file:line` evidence for every finding, and "not found" rather than an inferred mechanism.**
 - A `Deviations` section: when an edge case forces it off the brief, take the conservative
   option and record the deviation.
@@ -223,11 +255,14 @@ For every test added or modified in `<merge-base>..${3}`:
    projects, each one journaled and each one repeated. The mutation is small and you know it;
    reverse it by hand.
 
-**If the suite cannot run in the worktree**, say so rather than scoring tests you never
-executed. A fresh worktree has no `node_modules`, `target/`, `.venv`, or build cache, and a cold
-build may be slower than the audit. Two acceptable moves, in order: cold-build in your own
-worktree — a few minutes is acceptable — or, if that is not workable, run the mutations in the
-primary checkout instead.
+**If the suite cannot run in your detached audit worktree**, say so rather than scoring tests you
+never executed. A fresh worktree has no `node_modules`, `target/`, `.venv`, or build cache, and a
+cold build may be slower than the audit — **cold-build it anyway; a few minutes is acceptable.**
+That is the only acceptable move. Running the mutations in the primary checkout, in an
+implementer's worktree, or in a sibling auditor's tree is prohibited: those trees hold work that
+is not yours, and a mutation left behind by a dropped revert merges into the target branch. If
+the cold build genuinely cannot be made to work, report that under `Deviations`, say which tests
+you could not score, and let the verdict reflect what you actually verified.
 
 **Never share a compiled-artifact directory across trees**: not `target/`, not
 `CARGO_TARGET_DIR`, not a build cache keyed on source paths. Cargo's dep-info records
@@ -240,9 +275,7 @@ exact mutation numbers (177/16) while a fresh worktree of the same commit passed
 did. Interpreted-language dependency trees (`node_modules`, `.venv`) cache no such
 path-keyed compiled output and are safe to link.
 
-Running the mutations in the primary checkout — the second move — is exactly the case the
-inverse-Edit rule above was written for, since the diff you would destroy is the real one. Record which you did under
-`Deviations`. Reporting "could not run the suite" is a BLOCK, and an honest one; guessing is not.
+Reporting "could not run the suite" is a BLOCK, and an honest one; guessing is not.
 
 Also report, without mutating:
 
@@ -463,17 +496,36 @@ in place without reading that issue first.
 
 ### Cleanup
 
-Agents dispatched with `isolation: "worktree"` receive a full copy of the primary checkout's
-untracked `.superpowers/` tree. Their worktrees then show `?? .superpowers` and refuse a plain
-`git worktree remove`. **`--force` is expected for the read-only auditors** — the copies are
+Two kinds of tree need clearing, and only one of them cleans itself.
+
+**The harness worktrees.** Agents dispatched with `isolation: "worktree"` receive a full copy of
+the primary checkout's untracked `.superpowers/` tree. Their worktrees then show `?? .superpowers`
+and refuse a plain `git worktree remove`. **`--force` is expected** — the copies are
 indistinguishable from the originals, so check that the canonical `.superpowers/sdd` is intact
 afterwards rather than assuming the removal took the right one.
 
-**The `.superpowers` copy does NOT make a read-only auditor's worktree count as *changed*
-for the harness's auto-clean test** (Jerry ruling, 2026-09-07). So auto-clean does fire for the
-two read-only auditors, and the warning above is the common case rather than a rare one:
-**recover every artifact before removing or allowing the removal of an auditor's worktree.**
-Rung 3's in-worktree path exists for exactly this window.
+**The `.superpowers` copy does NOT make an auditor's worktree count as *changed* for the
+harness's auto-clean test** (Jerry ruling, 2026-09-07). So auto-clean does fire, and the warning
+above is the common case rather than a rare one: **recover every artifact before removing or
+allowing the removal of an auditor's worktree.** Rung 3's in-worktree path exists for exactly
+this window.
+
+**The audit worktrees the auditors created**, at
+`<primary>/.claude/worktrees/audit-<issue>-<auditor>`. These do **not** auto-clean and their
+creators cannot remove them — `git worktree remove` across trees is refused for an isolated
+agent, so an auditor that made one says so in its report and leaves it. **The lead prunes them,
+after aggregating the artifacts:**
+
+```
+git worktree list                       # every audit-* tree is yours to clear
+git worktree remove --force <path>      # per audit tree
+git worktree prune
+git worktree list                       # confirm only the primary checkout remains
+```
+
+Left behind, they are detached checkouts of a branch that may since have been deleted — they
+hold refs alive, they confuse the next `git worktree list`, and on the next gate run a stale
+`audit-<issue>` path collides with the new one.
 
 ## The verdict
 
