@@ -366,6 +366,17 @@ def test_backslash_is_literal_inside_single_quotes():
     assert should_gate("echo 'a\\' x # y && git commit -m z") is False
 
 
+def test_backslash_escapes_a_quote_inside_double_quotes():
+    """A backslash escapes inside `"..."`, so `\\"` does not close the quote.
+
+    The `#` therefore stays inside the argument and opens no comment, leaving the
+    `git commit` on the same line to gate. The same-line `&&` is required: a newline
+    before the commit would put the canary outside a comment's blast radius, and the
+    test would pass either way (see hs5n).
+    """
+    assert should_gate('echo "a\\" # b" && git commit -m x') is True
+
+
 def test_comment_after_a_closed_quote_is_a_comment():
     assert should_gate("echo 'a' # c && git commit -m x") is False
 
