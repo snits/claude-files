@@ -133,6 +133,28 @@ We have started a new session. Please go through the following steps:
      expected state, not a problem to fix. `MEMORY.md absent` with a nonzero count *is* a
      problem: every one of those files is orphaned, so the listing that follows is the full set.
 
+   - Check whether any memories describe code that has since been deleted:
+     `python3 ~/.claude/scripts/memory_sweep.py --quiet-when-clean`
+     A batch of memories can die at a single commit — a language port, a feature removal, a
+     re-vendor, a crate rename — and nothing else notices. They keep loading, read as current,
+     and mislead; the orphan check above cannot see this, because the files are indexed and
+     load fine, they are just describing code that is gone. The sweep takes its dead paths from
+     the deleting commit, so there is no tokenizer and no guessing at which words are paths.
+     It prints nothing when clean and covers every project, not just this one.
+
+     **The output is a review list, never a verdict.** A memory may cite a dead path
+     deliberately — `feedback` memories often cite the file where a lesson was learned, as
+     historical evidence, and those are correct to keep. Read each one before editing, and
+     retire it only when the memory's *claim* died with the code, not merely its citation.
+     A `[directory gone - renamed or moved?]` line means a whole top-level directory vanished,
+     which usually means a rename: the memories naming it may need the new name rather than
+     deletion.
+
+     After acting on the list, run `python3 ~/.claude/scripts/memory_sweep.py --advance` to
+     record the current commits as swept, or the same candidates return next session. Do not
+     advance a list you did not act on. If it reports projects that COULD NOT BE CHECKED,
+     those are gaps, not zeroes.
+
 5. **Propose the Session Plan:**
    - From the handoff, `kata ready --no-label deferred` output, and journal context, close with a one-line committed proposal naming the session goal and the first work item, e.g. "Goal: finish chunk streaming. First: kata 12gg."
    - Use `--no-label deferred` for the ready listing; drop the flag only when deliberately reviewing the deferred set.
