@@ -61,3 +61,6 @@ session-handoff.md
 .last-update-result.json
 last-evaluated-version
 ide/
+
+# memory_sweep.py runtime state (per-machine watermarks, not shared config)
+memory-sweep/
