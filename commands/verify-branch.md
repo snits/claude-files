@@ -369,6 +369,17 @@ with `wc -c` that it is non-empty and with `tail -1` that its last line is the v
 `cat > file` heredoc has been recorded writing a **zero-byte file at exit 0 with no error**, so
 an unchecked success is not a success.
 
+**A rung that fails verification leaves residue — clear it before descending.** A half-landed
+write (zero-byte, or truncated short of its verdict line) is not nothing: it is a file the lead
+scores as a non-qualifying artifact, so leaving it behind turns a refused write into a block the
+later rungs cannot undo, no matter how complete the table you go on to return. So whenever the
+`wc -c` / `tail -1` check fails, delete the file at the path you just checked — `rm -f <that
+path>` — and confirm it is gone before trying the next rung. Clear it wherever it sits: the lead
+classifies from any location it can find a file in, your own worktree included, so a file that
+failed its check is residue at the worktree root exactly as it is at the destination. If the
+removal is itself refused, say so under `Deviations` and name the path, so the lead knows that
+file is residue and not your artifact.
+
 1. **`Write` to the pasted absolute path.** Often refused; costs one turn to find out.
 2. **Write the report body to a script file that does raw file I/O (`open` / `write`), then
    execute that script as a plain command.** Rung 1's refusal is *path*-scoped — the canonical-path
@@ -386,7 +397,11 @@ an unchecked success is not a success.
    the file only in your worktree is indistinguishable from one that worked. **Report the
    in-worktree absolute path in your return message either way** — a copy that reports success
    and leaves the file only in the worktree is indistinguishable from one that worked, and the
-   lead needs the path to recover the artifact before the worktree is auto-cleaned.
+   lead needs the path to recover the artifact before the worktree is auto-cleaned. **This rung
+   writes in two places, so check both** — the file at your worktree root gets the same `wc -c` /
+   `tail -1` check, and you report that path only if it passes. If the root file is what
+   half-landed, it is residue at a location the lead recovers from: clear it too, and do not
+   cite it.
 4. **Return the complete table inline, with the `VERDICT:` line last.** This rung cannot be
    refused. It is a legitimate terminus, not a failure — say so in `Deviations` and name the
    rungs that were refused.
@@ -459,10 +474,17 @@ part when an artifact exists. That is deliberate. Keying delivery on both axes m
 classification non-monotonic — a good artifact scored worse when accompanied by a truncated
 report than when accompanied by no report at all.
 
-**A step-3 BLOCK is a delivery failure, not a branch defect.** The verdict section below asks for
-a numbered defect list with a `file:line` per entry; a delivery failure has none. Record it as
-`auditor <name>: no verdict delivered — <what was seen>`, exempt from the `file:line` requirement,
-and say plainly in the escalation that it is not a finding against the branch.
+**A step-1 BLOCK is a delivery failure, not a branch defect.** Step 1 emits a BLOCK in two
+places — its first case, on an artifact that exists but does not qualify, and its third case, on
+anything else — and both say the same thing: no verdict you can trust arrived. Neither is a
+statement about the code. The verdict section below asks for a numbered defect list with a
+`file:line` per entry; a delivery failure has none. Record it as `auditor <name>: no verdict
+delivered — <what was seen>`, exempt from the `file:line` requirement, and say plainly in the
+escalation that it is not a finding against the branch.
+
+**A step-3 BLOCK is the opposite, and is not exempt.** There the auditor delivered a verdict and
+the verdict was BLOCK: that is a finding against the branch, and it enters the numbered defect
+list like any other finding.
 
 The scoping is deliberate. What was measured is the *exposure*, not the BLOCKs: on 2026-09-07
 the mandated write was refused for five of six auditors, and every one recovered only through a
