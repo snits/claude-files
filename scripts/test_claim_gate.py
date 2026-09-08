@@ -451,9 +451,41 @@ def test_dry_run_inside_the_same_quoted_argument_does_not_gate():
     assert should_gate("bash -c 'git commit --dry-run -m x'") is False
 
 
-def test_a_quoted_argument_without_a_verb_pair_does_not_gate():
-    assert should_gate("echo 'hello world how are you'") is False
+def test_a_verb_pair_quoted_for_a_non_runner_does_not_gate():
+    """The scan is scoped to BODY_RUNNERS, so `echo` is not read into.
+
+    The verb pair must be present for this to assert anything: an argument with no
+    verbs is False whether the scan is scoped, unscoped or absent.
+    """
+    assert should_gate("echo 'git commit -m x'") is False
 
 
-def test_a_single_word_quoted_argument_is_unaffected():
-    assert should_gate("echo 'commit'") is False
+def test_a_two_word_hidden_command_still_gates():
+    """Pins the multi-word boundary from the miss side: `git commit` is two words."""
+    assert should_gate("bash -c 'git commit'") is True
+
+
+# --- kata 8vqx, the interactions the issue asked to have pinned rather than eyeballed ---
+#
+# The continuation strip is a blind text replace that runs after heredoc removal and
+# before quote-aware tokenizing, so neither interaction is structurally prevented.
+
+
+def test_heredoc_removal_leaves_a_later_continuation_intact():
+    """Bodies are dropped first; the continuation after them must still join."""
+    assert should_gate("cat <<EOF\nbody line\nEOF\ngit \\\n  commit -m x") is True
+
+
+def test_a_commit_inside_a_heredoc_body_is_not_a_command():
+    """The body is data handed to `cat`, so nothing in it gates."""
+    assert should_gate("cat <<EOF\ngit commit -m x\nEOF") is False
+
+
+def test_continuation_inside_a_runner_argument_gates():
+    """bash joins the continuation inside `-c`, so the hidden command is a real commit."""
+    assert should_gate("bash -c 'git \\\ncommit -m x'") is True
+
+
+def test_continuation_inside_a_plain_quoted_argument_does_not_gate():
+    """`echo` runs nothing, so joining its argument's lines must not manufacture a gate."""
+    assert should_gate("echo 'git \\\ncommit -m x'") is False
