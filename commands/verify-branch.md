@@ -136,7 +136,7 @@ Every brief carries, verbatim:
   (all three under "Artifacts" below). Paste them into the brief rather than citing them — the
   agent cannot read this file. Omitting the verdict-line rule is the specific mistake that
   reintroduces the defect this gate was fixed for: the auditor never learns the last line must
-  be the literal string, and the aggregator's grep then finds nothing and blocks.
+  be the literal string, and the aggregator's `tail -1` then finds no verdict and blocks.
 - **For the test-quality auditor: the mutation the maintainer already ran**, taken from the
   commit message or the issue, with the instruction to pick a different one.
 - **Every input path the brief cites, resolved into the primary checkout first.** A brief that
@@ -339,8 +339,10 @@ the check does not discriminate. It does not interpret a `## Verdict` heading or
 the tail. It does **not** fall back to the returned report's verdict
 when the artifact has none — `z17a` raised that fallback as an option and it is deliberately not
 taken, because it would restore exactly the ambiguity the two-place requirement removes. An
-artifact with no verdict line is handled by the fail-closed rule below, not by consulting the
-report.
+artifact with no verdict line blocks; the lead does not recover it by consulting the report.
+**Returning inline with no artifact at all is different and is not a failure** — see rung 4. You
+are never penalised for a write the sandbox refused, only for a table or a verdict you did not
+produce.
 
 ### The write ladder — paste it into every brief
 
@@ -371,15 +373,18 @@ an unchecked success is not a success.
 2. **Write the report body to a script file that does raw file I/O (`open` / `write`), then
    execute that script as a plain command.** Rung 1's refusal is *path*-scoped — the canonical-path
    guard rejects the destination, not the tool — so `Write` still works for a script placed
-   **inside your own worktree**; put it there and have it write to the absolute destination.
+   **inside your own worktree**. Put a `python3` script there and have it `open()` the absolute
+   destination and `write()` the body; invoke it as `python3 <path-to-script>`.
    No heredoc anywhere: not as the Bash invocation *and not inside the script*, since the guard
    fires on the report body's content wherever it appears, and the body is what carries the
    version-control shapes.
 3. **Write the file at the agent worktree *root*** — a real directory. Never under
    `.scratchpad`, which in an agent worktree is often a symlink back to the checkout the
    worktree was cut from, so anything beneath it resolves outside your sandbox and is refused.
-   **Then copy it to the absolute path, and report that in-worktree absolute path in your
-   return message whether or not the copy appeared to succeed** — a copy that reports success
+   **Then copy it to the absolute path. Verify the DESTINATION, not the copy you started from**
+   — `wc -c` and `tail -1` against the absolute path, since a `cp` that reports success and leaves
+   the file only in your worktree is indistinguishable from one that worked. **Report the
+   in-worktree absolute path in your return message either way** — a copy that reports success
    and leaves the file only in the worktree is indistinguishable from one that worked, and the
    lead needs the path to recover the artifact before the worktree is auto-cleaned.
 4. **Return the complete table inline, with the `VERDICT:` line last.** This rung cannot be
@@ -414,26 +419,50 @@ exists to preserve: it marks the file as a transcription rather than an auditor-
 artifact, so a later reader is not misled about which it is.
 
 **Fail closed, scoped to what the rule is actually for.** The rule exists to keep a crashed
-auditor distinguishable from a silent one. It is written as a table rather than prose because
-prose bullets cannot be checked for exhaustiveness, and the outcome that fell through the gap
-twice while this file was being written was the *ordinary* one. **Every run of every auditor
-lands on exactly one row. An outcome you cannot place is itself a BLOCK** — report it as
-"unclassified auditor outcome" and say what you saw.
+auditor distinguishable from a silent one.
 
-| What the lead has | Classification |
-|---|---|
-| Artifact exists, complete table, last line is the verdict — report also arrived and agrees | **Delivered** |
-| Artifact exists, complete table, last line is the verdict — **report never arrived** | **Delivered.** This is the dropped-report case the artifact rule exists for; the artifact is the evidence and a missing report does not diminish it |
-| Artifact recovered from the auditor's worktree (rung 3, copy-out silently failed), complete, verdict last | **Delivered**, noting the recovery |
-| No artifact; report arrived complete with a verdict line, lead persists it under a provenance header (rung 4) | **Delivered.** A sandbox that refused every write is not a dropped report, and reading it as one manufactures a BLOCK with nothing to do with the branch |
-| Artifact exists but is empty, truncated, or unreadable | **BLOCK** — a zero-byte file at exit 0 is a recorded failure mode, and it is the one shape that looks like delivery from outside |
-| Artifact exists, last line is not a verdict line | **BLOCK.** Do not consult the report for it — see the rule above |
-| Report arrived with no verdict line, and no artifact | **BLOCK** |
-| Neither report nor artifact | **BLOCK** — the crashed auditor this rule was written for |
-| Artifact and report both carry verdicts, and they **disagree** | **BLOCK.** Neither side wins: one of them came from an auditor that did not know its own conclusion |
+This is written as an **ordered procedure, not a table of conditions.** A table was tried and
+failed: its rows were overlapping predicates rather than a partition, so outcomes fell into gaps
+between them — twice, and the second time the gap swallowed the *ordinary* outcome. A procedure
+is total by construction. Run these three steps in order for each auditor.
 
-A `Delivered` row means the auditor reported; it does not mean PASS. The verdict it carries is
-then aggregated normally, and a `Delivered` BLOCK verdict blocks the merge like any other.
+**Step 1 — find the auditor's table and verdict. Take the first that applies.**
+
+1. **An artifact exists** at the expected path, or was recovered from the auditor's worktree.
+   That artifact is the evidence, whatever the report did or did not do. It qualifies only if it
+   is readable, non-empty, carries a complete table, and its last line is the verdict line; an
+   artifact failing any of those is **BLOCK** (a zero-byte file at exit 0 is a recorded failure
+   mode, and it is the one shape that looks like delivery from outside).
+2. **No artifact, but a report arrived** carrying a complete table and a verdict line. The lead
+   persists it verbatim under a provenance header and that becomes the artifact. This covers
+   every reason no file exists — the ladder was refused to its last rung, or a write succeeded
+   and the worktree was auto-cleaned before recovery. A sandbox that refused every write is not
+   a dropped report, and neither is an artifact destroyed after the fact.
+3. **Anything else.** **BLOCK**, recorded as "auditor did not return a verdict". This step is
+   a genuine `else` and takes every remaining case without further conditions — neither report
+   nor artifact (the crashed auditor the rule was written for), a report with no verdict line,
+   a report whose table is truncated or partial, and any outcome you cannot place at all.
+   Nothing reaches the end of step 1 unclassified.
+
+**Step 2 — contradiction check, run regardless of how step 1 resolved.** If an artifact *and* a
+report both carry verdict lines and the two **disagree**, that is **BLOCK**. Neither side wins:
+one of them came from an auditor that did not know its own conclusion, and no rule for preferring
+one recovers a verdict you can trust. This is a separate step, not a branch of step 1, so that no
+ordering of cases can route around it.
+
+**Step 3 — `Delivered` is not `PASS`.** Step 1 establishes only that the auditor *reported*. The
+verdict it carried is then aggregated normally, and a delivered `VERDICT: BLOCK` blocks the merge
+like any other.
+
+Note what step 1 does *not* consult: the report's presence, absence, or completeness plays no
+part when an artifact exists. That is deliberate. Keying delivery on both axes made the
+classification non-monotonic — a good artifact scored worse when accompanied by a truncated
+report than when accompanied by no report at all.
+
+**A step-3 BLOCK is a delivery failure, not a branch defect.** The verdict section below asks for
+a numbered defect list with a `file:line` per entry; a delivery failure has none. Record it as
+`auditor <name>: no verdict delivered — <what was seen>`, exempt from the `file:line` requirement,
+and say plainly in the escalation that it is not a finding against the branch.
 
 The scoping is deliberate. What was measured is the *exposure*, not the BLOCKs: on 2026-09-07
 the mandated write was refused for five of six auditors, and every one recovered only through a
