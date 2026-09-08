@@ -192,14 +192,44 @@ def _has_verb_after(tokens: list[str], first: str, second: str) -> bool:
     return second in tokens[idx + 1:]
 
 
+def _hidden_commands(tokens: list[str]) -> list[list[str]]:
+    """The words of any multi-word token, when the segment hands it to a program that runs it.
+
+    shlex keeps a quoted argument whole -- that is what stops a separator inside one
+    from splitting a command -- so `bash -c 'git commit -m x'` hides its verb pair in a
+    single token, where `_has_verb_after` cannot see it. Splitting that token on
+    whitespace exposes the verbs without evaluating anything.
+
+    Scoped to BODY_RUNNERS, the same programs whose heredoc bodies stay in as commands,
+    because the question is identical: does this program run what it is handed? Scanning
+    every quoted argument instead would read `kata comment --body "... kata close ..."`
+    as a close, and bodies here routinely discuss these very verbs -- a gate that fires
+    on ordinary prose is a gate that gets ignored. Within a runner's argument the scan
+    still errs cheaply: quoting and separators inside are ignored, so it can only add a
+    gate, and a `--dry-run` in the same token is still seen.
+    """
+    if not _runs_body(tokens):
+        return []
+    return [tok.split() for tok in tokens if len(tok.split()) > 1]
+
+
+def _gates(tokens: list[str]) -> bool:
+    """True if one command's tokens are a claim landing in a durable record."""
+    has_dry_run = "--dry-run" in tokens
+    if _has_verb_after(tokens, "git", "commit") and not has_dry_run:
+        return True
+    if _has_verb_after(tokens, "kata", "close") and not has_dry_run:
+        return True
+    if _has_verb_after(tokens, "kata", "comment") and COMMENT_PREFIX_RE.search(" ".join(tokens)):
+        return True
+    return False
+
+
 def should_gate(command: str) -> bool:
     for tokens in _segments(command):
-        has_dry_run = "--dry-run" in tokens
-        if _has_verb_after(tokens, "git", "commit") and not has_dry_run:
+        if _gates(tokens):
             return True
-        if _has_verb_after(tokens, "kata", "close") and not has_dry_run:
-            return True
-        if _has_verb_after(tokens, "kata", "comment") and COMMENT_PREFIX_RE.search(" ".join(tokens)):
+        if any(_gates(hidden) for hidden in _hidden_commands(tokens)):
             return True
     return False
 

@@ -423,3 +423,37 @@ def test_a_bare_newline_still_separates_commands():
 def test_continuation_joins_the_words_it_touches():
     """bash makes `git\\<newline>commit` the single word `gitcommit`, not a verb pair."""
     assert should_gate("git\\\ncommit -m x") is False
+
+
+# --- kata gh26: verbs hidden inside a quoted argument ---
+#
+# shlex keeps a quoted argument whole, which is what makes a separator inside one
+# harmless. The cost is that `bash -c 'git commit -m x'` puts the verb pair inside a
+# single token where _has_verb_after cannot see it. Each canary below hides the pair
+# in the quoted argument only: a command whose verbs also appear unquoted would gate
+# either way and assert nothing.
+
+
+def test_commit_inside_a_shell_dash_c_argument_gates():
+    assert should_gate("bash -c 'git commit -m x'") is True
+
+
+def test_commit_inside_an_eval_argument_gates():
+    assert should_gate('eval "git commit -m x"') is True
+
+
+def test_kata_close_inside_a_quoted_argument_gates():
+    assert should_gate("ssh host 'kata close ab12 --done --message y'") is True
+
+
+def test_dry_run_inside_the_same_quoted_argument_does_not_gate():
+    """The scan reads the whole hidden command, so its --dry-run still counts."""
+    assert should_gate("bash -c 'git commit --dry-run -m x'") is False
+
+
+def test_a_quoted_argument_without_a_verb_pair_does_not_gate():
+    assert should_gate("echo 'hello world how are you'") is False
+
+
+def test_a_single_word_quoted_argument_is_unaffected():
+    assert should_gate("echo 'commit'") is False
