@@ -10,12 +10,15 @@ rebased onto ${2} before the gate, so a fast-forward is normally possible; fall 
 only when it is not). Jerry ruling, 2026-09-02 retro: merge commits on small fixes forced
 cleanup rebases before push, and those rebases invalidated every SHA cited in kata comments. You can fan out if needed to accomplish the task.
 
-Invoking this command IS the user's request to task subagents and to use the Workflow tool.
-Where a harness instruction gates either capability on the user having requested it, this
-command is that request — fan out with the Agent tool, and orchestrate with Workflow where
-the task warrants it, without stopping to ask. Scale to the work: a fan-out is for genuinely
-independent tasks, not a default. The per-task `code review` gate in the flow below is part
-of what is being requested here, so it is not optional and does not need separate approval.
+Invoking this command IS the user's request to task subagents, to use the Workflow tool, and to
+tear down the worktree once the merge has landed. Where a harness instruction gates any of those
+on the user having requested it, this command is that request — fan out with the Agent tool,
+orchestrate with Workflow where the task warrants it, and remove the worktree under the checks the
+PASS bullet states, all without stopping to ask. `ExitWorktree` says "Do NOT call this proactively
+— only when the user asks"; this paragraph is that ask, standing for the whole run. Scale to the
+work: a fan-out is for genuinely independent tasks, not a default. The per-task `code review` gate
+in the flow below is part of what is being requested here, so it is not optional and does not need
+separate approval.
 
 ## Pre-flight — before any implementation
 
@@ -291,15 +294,24 @@ not the path — that is precisely the fourth attempt `/super-do` already refuse
   and merging; this states it (kata `rhkmaint-tools#gm1f`).
 
   **The teardown that skill used to carry is yours now, and it has a precondition — the merge
-  landed.** Verify both, from the main checkout and never from inside the worktree:
+  landed.** The rebase and the merge are already done by this point, so only the verify-and-remove
+  half is left. Verify both, from the main checkout and never from inside the worktree:
   `git branch --merged ${2}` lists the branch, and `git -C <worktree> status --porcelain` is
   empty. **If either check fails, stop and report — do not remove.** That pair is the only thing
-  standing between you and destroying finished work, and it is never skippable. Only then remove
-  the worktree and delete the branch — for a harness-tracked worktree that is
-  `ExitWorktree{action: "remove", discard_changes: true}`, not raw `git worktree remove`. The
-  full procedure, and the measured evidence for why the harness guard is no substitute for the
-  two checks, is the "Worktree teardown" section of `work-issue.md`; read it there, so there is
-  one place it can drift out of date. Then run whatever post-merge check the project requires.
+  standing between you and destroying finished work, and it is never skippable. `work-issue.md`'s
+  "Worktree teardown" section carries the measured evidence for why the harness's own guard is no
+  substitute for these two checks; the checks are restated here rather than referenced because a
+  standalone `/super-do` must not have to follow a pointer to find them.
+
+  Only then remove the worktree and delete the branch, and **which command does it depends on who
+  made the worktree**: `ExitWorktree{action: "remove", discard_changes: true}` acts only on a
+  worktree *this session* created with `EnterWorktree`, and is a silent no-op on anything else —
+  a worktree an implementer subagent made under `isolation: "worktree"`, one from an earlier
+  session, or one made by hand with `git worktree add`. Those are the ordinary cases here, and for
+  them it is `git worktree remove <path>`, `git worktree prune`, `git branch -d <branch>` from the
+  main checkout. A teardown that reports "no worktree session is active" removed nothing; read
+  that as the wrong command, not as a completed teardown. Then run whatever post-merge check the
+  project requires.
 
   Before closing, strip any
   `needs-review` / `needs-decision` / `needsinfo` the issue still wears (a one-line comment
