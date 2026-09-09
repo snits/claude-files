@@ -279,8 +279,16 @@ fourth review pass would not have found any of them.
 **It runs once. There is no fix-and-retry cycle**, and re-running it after fixing its findings is
 not the path — that is precisely the fourth attempt `/super-do` already refuses.
 
-- **PASS** — proceed to `finishing-a-development-branch` and merge. Name the merge base SHA and
-  the three artifact paths in the outcome comment on the issue. Before closing, strip any
+- **PASS** — merge with the `--ff` procedure this command's opening paragraph states, then name
+  the merge base SHA and the three artifact paths in the outcome comment on the issue.
+  **Do not route the merge through `finishing-a-development-branch`.** That skill presents a
+  four-option menu and waits for a choice, which is the opposite instruction to merge-on-PASS; its
+  Option 1 then runs `git checkout <base-branch>` and a plain `git merge`, contradicting both the
+  `--ff` ruling above and any project whose rules forbid an agent checking out the shared checkout.
+  It also cannot be given a `/super-do` exception that survives: it is a version-pinned plugin under
+  `plugins/`, which `~/.claude` gitignores, so an edit there is untracked and dies at the next
+  plugin update. Sessions were already resolving this collision in favor of the user invocation
+  and merging; this states it (kata `rhkmaint-tools#gm1f`). Before closing, strip any
   `needs-review` / `needs-decision` / `needsinfo` the issue still wears (a one-line comment
   saying why, then `kata label rm <ref> <label>`) — a closed issue wearing an open-work label
   re-routes itself to a loop that cannot act on it (kata claudes-home `0rsz`;
