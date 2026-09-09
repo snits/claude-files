@@ -296,22 +296,23 @@ not the path — that is precisely the fourth attempt `/super-do` already refuse
   **The teardown that skill used to carry is yours now, and it has a precondition — the merge
   landed.** The rebase and the merge are already done by this point, so only the verify-and-remove
   half is left. Verify both, from the main checkout and never from inside the worktree:
-  `git branch --merged ${2}` lists the branch, and `git -C <worktree> status --porcelain` is
-  empty. **If either check fails, stop and report — do not remove.** That pair is the only thing
-  standing between you and destroying finished work, and it is never skippable. `work-issue.md`'s
-  "Worktree teardown" section carries the measured evidence for why the harness's own guard is no
-  substitute for these two checks; the checks are restated here rather than referenced because a
-  standalone `/super-do` must not have to follow a pointer to find them.
+  `git branch --merged ${2}` lists `<your-branch>`, and `git -C <worktree-path> status
+  --porcelain` is empty. **If either check fails, stop and report — do not remove.** That pair is
+  the only thing standing between you and destroying finished work, and it is never skippable.
+  `work-issue.md`'s "Worktree teardown" section carries the measured evidence for why the
+  harness's own guard is no substitute for these two checks; the checks are restated here rather
+  than referenced because a standalone `/super-do` must not have to follow a pointer to find
+  them.
 
   Only then remove the worktree and delete the branch, and **which command does it depends on who
   made the worktree**: `ExitWorktree{action: "remove", discard_changes: true}` acts only on a
   worktree *this session* created with `EnterWorktree`, and is a silent no-op on anything else —
   a worktree an implementer subagent made under `isolation: "worktree"`, one from an earlier
   session, or one made by hand with `git worktree add`. Those are the ordinary cases here, and for
-  them it is `git worktree remove <path>`, `git worktree prune`, `git branch -d <branch>` from the
-  main checkout. A teardown that reports "no worktree session is active" removed nothing; read
-  that as the wrong command, not as a completed teardown. Then run whatever post-merge check the
-  project requires.
+  them it is `git worktree remove <worktree-path>`, `git worktree prune`, `git branch -d
+  <your-branch>` from the main checkout. A teardown that reports "no worktree session is active"
+  removed nothing; read that as the wrong command, not as a completed teardown, and run that
+  three-command sequence instead. Then run whatever post-merge check the project requires.
 
   Before closing, strip any
   `needs-review` / `needs-decision` / `needsinfo` the issue still wears (a one-line comment
