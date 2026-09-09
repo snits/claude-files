@@ -291,10 +291,17 @@ not the path — that is precisely the fourth attempt `/super-do` already refuse
   and merging; this states it (kata `rhkmaint-tools#gm1f`).
 
   **The teardown that skill used to carry is yours now, and it has a precondition — the merge
-  landed.** From the main checkout, never from inside the worktree: confirm `git branch --merged
-  ${2}` lists the branch, confirm `git -C <worktree> status --porcelain` is empty, then
-  `git worktree remove <path>`, `git worktree prune`, `git branch -d <branch>`. Run whatever
-  post-merge check the project requires. Before closing, strip any
+  landed.** Verify both, from the main checkout and never from inside the worktree:
+  `git branch --merged ${2}` lists the branch, and `git -C <worktree> status --porcelain` is
+  empty. **If either check fails, stop and report — do not remove.** That pair is the only thing
+  standing between you and destroying finished work, and it is never skippable. Only then remove
+  the worktree and delete the branch — for a harness-tracked worktree that is
+  `ExitWorktree{action: "remove", discard_changes: true}`, not raw `git worktree remove`. The
+  full procedure, and the measured evidence for why the harness guard is no substitute for the
+  two checks, is the "Worktree teardown" section of `work-issue.md`; read it there, so there is
+  one place it can drift out of date. Then run whatever post-merge check the project requires.
+
+  Before closing, strip any
   `needs-review` / `needs-decision` / `needsinfo` the issue still wears (a one-line comment
   saying why, then `kata label rm <ref> <label>`) — a closed issue wearing an open-work label
   re-routes itself to a loop that cannot act on it (kata claudes-home `0rsz`;
