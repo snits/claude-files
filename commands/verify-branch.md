@@ -174,7 +174,8 @@ Every brief carries, verbatim:
 - The kata ref, the issue body text, **and any issue comments that record a scope, design, or
   verification decision** (paste them — the agent cannot see this conversation, and handing it
   only a ref invites it to invent the scope it is auditing against). The comments are not
-  optional padding: the scope bar treats "recorded in the issue" as exonerating, and the
+  optional padding: the scope auditor's verdict rule treats "recorded in the issue" as
+  exonerating for a CHANGED reference element, and the
   claim-verifier is told below that its extraction sources include the issue's comments. An
   auditor given only the body cannot check either, and scores a recorded decision as a finding.
 - **The artifact path it must write, the write-and-verify rule, and the verdict-line rule**
@@ -395,10 +396,7 @@ Against `git diff <merge-base>..${3}`:
 
 4. **Reference parity.** When the issue, plan, or brief names a reference — a design board,
    a prior implementation being ported, a screenshot, a doc section describing the behavior —
-   the branch is checked against that reference, not only against the issue text. **When the
-   brief states that no reference exists, record this check N/A and move on**; when it says
-   nothing either way, that omission is itself a Deviation to report, not a licence to infer
-   one. List each
+   the branch is checked against that reference, not only against the issue text. List each
    element of the reference (flags, help strings, layout, documented behavior) and mark it
    PRESENT / MISSING / CHANGED in the branch. Doc sections that describe changed behavior are
    in scope by default: a CLAUDE.md or README line the diff made false is a finding here, not
@@ -406,12 +404,24 @@ Against `git diff <merge-base>..${3}`:
    a TUI shipped panes top/bottom against a side-by-side design board, and two doc sections
    went false and were caught only after every functional gate had passed.
 
+   **When no reference is in play, this check records `N/A` — never MISSING.** Two cases reach
+   that outcome and both take it: the brief states that no reference exists, or the brief is
+   silent on the question. The silent case is additionally a `Deviation` — say that the brief
+   did not state it — but the Deviation is the whole of the response, and it is not a licence
+   to go looking for a reference to check against. MISSING means an element of a named
+   reference is absent from the branch; it never means the reference itself was never named.
+   The distinction is load-bearing because MISSING blocks: without it, a lead's assembly
+   omission fails closed onto the branch, which blocks a merge for a defect the branch does not
+   have.
+
 **Output** a table — `change (file:line) | category | traceable to | UNTRACEABLE /
 SHOULD-NOT-BE-TRACKED / UNJUSTIFIED-DELETION / OK` — and a one-line verdict.
 
 **Verdict rule:** apply the bar above. SHOULD-NOT-BE-TRACKED and UNJUSTIFIED-DELETION always
 block; UNTRACEABLE blocks only on a behavior change, not on mechanical fallout. A MISSING
 reference element blocks; CHANGED blocks only when the change is not recorded in the issue.
+**`N/A` on reference parity does not block** — it is the recorded outcome when no reference was
+named, and the fail-closed rule above does not reach it: there is no finding to be unsure about.
 
 ## Artifacts — read the file, not the report
 
