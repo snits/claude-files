@@ -165,8 +165,8 @@ Every brief carries, verbatim:
   this file is scoped to `<merge-base>..<branch under audit>`, so the brief must carry that
   branch as an expanded name — not the target branch, which no auditor command uses, and never
   a placeholder for the agent to expand. A brief that reaches an auditor still holding an
-  unexpanded placeholder invites the one recovery :15-27 forbids by name: substituting `HEAD`
-  empties the range, every auditor audits nothing, and all three return PASS.
+  unexpanded placeholder invites the one recovery this gate forbids by name: substituting
+  `HEAD` empties the range, every auditor audits nothing, and all three return PASS.
 - **The auditor's own section from this file — Role, procedure, output-table columns, and
   verdict rule — pasted in full.** Everything else on this list is context; this is the task.
   The agent cannot read this file, so a brief carrying only a bar, a path and an issue body
