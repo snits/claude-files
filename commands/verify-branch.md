@@ -184,7 +184,8 @@ Every brief carries, verbatim:
   reintroduces the defect this gate was fixed for: the auditor never learns the last line must
   be the literal string, and the aggregator's `tail -1` then finds no verdict and blocks.
 - **For the test-quality auditor: the mutation the maintainer already ran**, taken from the
-  commit message or the issue, with the instruction to pick a different one.
+  commit message or the issue, with the instruction to pick a different one — or an explicit
+  statement that none was run, which is the normal case on a branch that adds no tests.
 - **Every input path the brief cites, resolved into the primary checkout first.** A brief that
   points an auditor at a matrix, fixture, or prior report living under a feature worktree cites
   something that dies when that tree is cleaned. The rule the "Establish the base" step applies
@@ -229,6 +230,8 @@ Every brief carries, verbatim:
   a blocking category, so an auditor handed nothing cannot tell an absent reference from a
   forgotten one. Saying "no reference" is what closes that; silence is not.
 - **`file:line` evidence for every finding, and "not found" rather than an inferred mechanism.**
+  A recorded non-finding outcome (`N/A` on reference parity, `NO-TESTS-IN-DIFF`) is the
+  exception: it has no `file:line`, and none is invented for it.
 - A `Deviations` section: when an edge case forces it off the brief, take the conservative
   option and record the deviation.
 
@@ -290,13 +293,28 @@ This is the containment. On hexweave `enb2` an auditor that found its own tree w
 in the implementer's live worktree instead; it reverted correctly, but a dropped revert there
 merges a mutation into the target branch.
 
+**First establish whether the diff adds or modifies any test function or block.** That is the
+deciding question; `git diff --name-only <merge-base>..${3}` only tells you which files to look
+inside, and a changed test file whose test functions are untouched (a fixture module, a helper)
+still counts as none. A diff that only *deletes* tests also counts as none — there is nothing
+left to mutate. Name what you searched. **If there are none, the mutation procedure does not
+run — not its numbered steps, not the suite-run and cold-build contingency, not the "Also
+report, without mutating" checks; the Output template and the Verdict rule still apply.** Emit
+the output table with a single row — `NO-TESTS-IN-DIFF (searched: <what>) | — | — | — |
+NO-TESTS-IN-DIFF` — and write it to the artifact as the table. A
+docs-only, config-only, or prose-only branch has no test discrimination to audit, and nothing on
+it can be NON-DISCRIMINATING or UNFALSIFIABLE. The row exists so the verdict line has a table to
+summarize and the artifact says what was looked for: an honest auditor that found nothing must
+not be mistaken, from outside, for one that produced nothing.
+
 For every test added or modified in `<merge-base>..${3}`:
 
 1. Identify the code path the test covers.
 2. Apply one targeted mutation to that path — invert a condition, change a boundary, return a
    constant, drop a call. The mutation must be one the test *claims* to catch. **Where the brief
-   names a mutation the maintainer already ran, pick a different one** — and where it names
-   none, check the commit message yourself before choosing. Re-running a mutation whose result
+   names a mutation the maintainer already ran, pick a different one**; where it states that
+   none was run, take that as settled; where it is silent, check the commit message yourself
+   before choosing. Re-running a mutation whose result
    is already written down spends an Opus run to reproduce a known answer; picking a fresh one
    is what surfaced the `ywpn` DesertRiparian coverage gap (orbweaver-rs, 2026-09-02).
 3. Run the test. **Read the runner's actual exit reason, not the first error string.** A compile
@@ -343,12 +361,17 @@ Also report, without mutating:
   the count without adding discrimination.
 
 **Output** a table — `test (file:line) | code path | mutation applied | test result | DISCRIMINATES
-/ NON-DISCRIMINATING / UNFALSIFIABLE / DUPLICATE` — a confirmation that every mutation was
-reversed by inverse Edit and `git status --porcelain` is back to its pre-audit state, and a
-one-line verdict.
+/ NON-DISCRIMINATING / UNFALSIFIABLE / DUPLICATE / NO-TESTS-IN-DIFF` — a confirmation that every
+mutation was reversed by inverse Edit and `git status --porcelain` is back to its pre-audit
+state — on the no-tests path the words "no mutations applied" stand in for that whole
+confirmation — and a one-line verdict.
 
 **Verdict rule:** apply the bar above. NON-DISCRIMINATING and UNFALSIFIABLE block; DUPLICATE
-does not.
+does not. **NO-TESTS-IN-DIFF is non-blocking, and the bar's fail-closed clause does not reach
+it** — there is no finding to be unsure about. That row is emitted only when the diff adds or
+modifies no test function, so it is always the whole table, and the artifact's last line is then
+a literal `VERDICT: PASS`. This auditor does not score missing coverage: a branch that changes
+behavior without testing it passes here.
 
 ### 3. scope-auditor — Sonnet
 
@@ -591,14 +614,16 @@ hold refs alive, they confuse the next `git worktree list`, and on the next gate
 Aggregate into one PASS or BLOCK and a single numbered defect list across all three auditors,
 most severe first, each entry naming its auditor, its `file:line`, and whether it is **blocking**
 or **reported**. Non-blocking findings still appear in the list — suppressing them would make
-this gate the only reviewer that saw them.
+this gate the only reviewer that saw them. A recorded non-finding outcome — `N/A` on reference
+parity, `NO-TESTS-IN-DIFF` — is named in the PASS or BLOCK statement and not numbered: neither
+is a defect, and neither has a `file:line` to cite.
 
 **PASS requires all three to return PASS.** Any BLOCK is a BLOCK — there is no override, no
 majority, and no "two of three is close enough." A PASS carrying non-blocking findings is still
 a PASS; report them and merge.
 
-**On PASS:** say so, name the merge base SHA and the three artifact paths, and proceed to the
-merge.
+**On PASS:** say so, name the merge base SHA, the three artifact paths, and any recorded
+non-finding outcome, and proceed to the merge.
 
 **On BLOCK:** do not merge and do not close the issue. Take `/super-do`'s existing escalation
 path rather than inventing one — comment the numbered defect list on the kata issue, label it
