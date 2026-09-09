@@ -68,10 +68,10 @@ completed."
 ## The pre-merge gate is mandatory
 
 **No branch this loop produces merges without `/verify-branch <target-branch> <kata#ref>`
-returning PASS.** The gate itself lives in `/super-do`, between the last completed task and
-`finishing-a-development-branch`, because that is where the merge actually happens — this loop
-delegates the work and never merges on its own. Read the gate's terms there; they are not
-restated here, so there is one place they can drift out of date.
+returning PASS.** The gate itself lives in `/super-do`, immediately before the merge, because
+that is where the merge actually happens — this loop delegates the work and never merges on its
+own. Read the gate's terms there; they are not restated here, so there is one place they can
+drift out of date.
 
 What this loop owns is refusing to route around it. If `/super-do` returns without a recorded
 gate verdict, treat the branch as unmerged and BLOCK — do not merge it yourself, do not close

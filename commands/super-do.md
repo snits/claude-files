@@ -93,7 +93,7 @@ digraph high-level-flow {
 	"verify-branch gate" [shape=box];
 	"gate verdict?" [shape=diamond];
 	"escalate: needs-review" [shape=doublecircle];
-	"finish-development-branch" [shape=box];
+	"merge --ff and tear down" [shape=box];
 	"work done" [shape=doublecircle];
 	
 	"start work" -> "investigate kata issue";
@@ -115,9 +115,9 @@ digraph high-level-flow {
 	"all tasks complete?" -> "branch simplify pass" [label="yes"];
 	"branch simplify pass" -> "verify-branch gate";
 	"verify-branch gate" -> "gate verdict?";
-	"gate verdict?" -> "finish-development-branch" [label="PASS"];
+	"gate verdict?" -> "merge --ff and tear down" [label="PASS"];
 	"gate verdict?" -> "escalate: needs-review" [label="BLOCK"];
-	"finish-development-branch" -> "work done";	
+	"merge --ff and tear down" -> "work done";	
 }
 
 digraph task-implementation-flow {
@@ -259,9 +259,9 @@ behavior, or that you judge a false positive, is noted rather than applied.
 
 ## The pre-merge verification gate
 
-`/verify-branch ${2} ${1} <your-branch>` runs between the last completed task and
-`finishing-a-development-branch`. **Name your branch as the third argument — never let the gate
-infer it from `HEAD`.** **It is mandatory. No branch merges without a PASS.** Invoking
+`/verify-branch ${2} ${1} <your-branch>` runs between the last completed task and the merge.
+**Name your branch as the third argument — never let the gate infer it from `HEAD`.**
+**It is mandatory. No branch merges without a PASS.** Invoking
 `/super-do` is the request that authorizes its three subagents, exactly as it authorizes the code
 review gate — it is not optional and needs no separate approval.
 
@@ -288,7 +288,13 @@ not the path — that is precisely the fourth attempt `/super-do` already refuse
   It also cannot be given a `/super-do` exception that survives: it is a version-pinned plugin under
   `plugins/`, which `~/.claude` gitignores, so an edit there is untracked and dies at the next
   plugin update. Sessions were already resolving this collision in favor of the user invocation
-  and merging; this states it (kata `rhkmaint-tools#gm1f`). Before closing, strip any
+  and merging; this states it (kata `rhkmaint-tools#gm1f`).
+
+  **The teardown that skill used to carry is yours now, and it has a precondition — the merge
+  landed.** From the main checkout, never from inside the worktree: confirm `git branch --merged
+  ${2}` lists the branch, confirm `git -C <worktree> status --porcelain` is empty, then
+  `git worktree remove <path>`, `git worktree prune`, `git branch -d <branch>`. Run whatever
+  post-merge check the project requires. Before closing, strip any
   `needs-review` / `needs-decision` / `needsinfo` the issue still wears (a one-line comment
   saying why, then `kata label rm <ref> <label>`) — a closed issue wearing an open-work label
   re-routes itself to a loop that cannot act on it (kata claudes-home `0rsz`;
