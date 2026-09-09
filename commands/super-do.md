@@ -14,8 +14,7 @@ Invoking this command IS the user's request to task subagents, to use the Workfl
 tear down the worktree once the merge has landed. Where a harness instruction gates any of those
 on the user having requested it, this command is that request — fan out with the Agent tool,
 orchestrate with Workflow where the task warrants it, and remove the worktree under the checks the
-PASS bullet states, all without stopping to ask. `ExitWorktree` says "Do NOT call this proactively
-— only when the user asks"; this paragraph is that ask, standing for the whole run. Scale to the
+PASS bullet states, all without stopping to ask. Scale to the
 work: a fan-out is for genuinely independent tasks, not a default. The per-task `code review` gate
 in the flow below is part of what is being requested here, so it is not optional and does not need
 separate approval.
@@ -304,15 +303,15 @@ not the path — that is precisely the fourth attempt `/super-do` already refuse
   than referenced because a standalone `/super-do` must not have to follow a pointer to find
   them.
 
-  Only then remove the worktree and delete the branch, and **which command does it depends on who
-  made the worktree**: `ExitWorktree{action: "remove", discard_changes: true}` acts only on a
-  worktree *this session* created with `EnterWorktree`, and is a silent no-op on anything else —
-  a worktree an implementer subagent made under `isolation: "worktree"`, one from an earlier
-  session, or one made by hand with `git worktree add`. Those are the ordinary cases here, and for
-  them it is `git worktree remove <worktree-path>`, `git worktree prune`, `git branch -d
-  <your-branch>` from the main checkout. A teardown that reports "no worktree session is active"
-  removed nothing; read that as the wrong command, not as a completed teardown, and run that
-  three-command sequence instead. Then run whatever post-merge check the project requires.
+  Only then remove the worktree and delete the branch, always with raw git from the main
+  checkout: `git worktree remove <worktree-path>`, `git worktree prune`, `git branch -d
+  <your-branch>`. Never `ExitWorktree` — it acts only on a worktree *this session* created with
+  `EnterWorktree` and is a silent no-op on everything else (an implementer subagent's
+  `isolation: "worktree"` tree, an earlier session's, a hand-made `git worktree add`), which is
+  every worktree this command produces; a teardown that reports "no worktree session is active"
+  removed nothing. One path, no provenance branching for the lead to get wrong (kata
+  claudes-home `vtyd`, Jerry ruling 2026-09-09). Never force past a refusal from either
+  command. Then run whatever post-merge check the project requires.
 
   Before closing, strip any
   `needs-review` / `needs-decision` / `needsinfo` the issue still wears (a one-line comment

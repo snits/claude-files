@@ -90,26 +90,37 @@ When the issue was worked in a worktree, teardown has a precondition. Run it in 
    - `git branch --merged <target>` lists the worktree branch — the commits are on the target.
    - `git -C <worktree> status --porcelain` is empty — nothing uncommitted, untracked scratch
      included. Commit it or explicitly stash it; do not leave it to the guard.
-4. Only then `ExitWorktree{action: "remove", discard_changes: true}`.
+4. Only then, from the main checkout: `git worktree remove <worktree-path>`, `git worktree
+   prune`, `git branch -d <branch>`. Always these three raw git commands — never
+   `ExitWorktree`. That tool acts only on a worktree *this session* created with
+   `EnterWorktree` and is a silent no-op on everything else (a subagent's `isolation:
+   "worktree"` tree, a hand-made `git worktree add`, a prior session's), which is every
+   worktree these loops produce; a run that used it "completed" teardown while the worktree
+   survived (kata claudes-home `vtyd`, Jerry ruling 2026-09-09: one path, no provenance
+   branching for the lead to get wrong).
 
 If either check in step 3 fails, **stop and report** — do not remove. Step 3 is the only thing
 standing between you and destroying finished work. It is never skippable.
 
-**Step 3 is the safety property, not the harness guard.** The two checks exist because
-`discard_changes: true` deletes the branch *and* the working tree, while the guard that would
-otherwise stop you is unreliable in one direction and silent in the other:
+**Step 3 is the safety property; nothing else is.** `git worktree remove` plus `git branch -d`
+delete the working tree and the branch, and raw git's only guards are `worktree remove`'s
+refusal on a dirty tree and `branch -d`'s on an unmerged branch — never answer either with
+`--force` / `-D`. The
+harness's own `ExitWorktree` guard, which this step once relied on, is no substitute either;
+it is unreliable in one direction and silent in the other:
 
 - Its commit count is commits not reachable from `origin/<default-branch>` — divergence from the
   *remote*, not unmerged work. Local merges never clear it; only a push does. So it fires on
   branches that are fully merged and safe, and its message ("Removing will discard this work
   permanently") is wrong in exactly that case. The `branch --merged` check is what tells you the
   commits are safe.
-- Its uncommitted-files clause is accurate, and it is the clause you are overriding when you
-  pass the flag. Nothing else will warn you. The `status --porcelain` check is what makes the
-  override harmless.
+- Its uncommitted-files clause is accurate, and `git worktree remove` makes the same refusal on
+  a dirty tree. Nothing else will warn you. The `status --porcelain` check is what keeps that
+  refusal from ever being the thing that saved you.
 
-Never pass `discard_changes: true` to skip step 3, or because the guard fired and you want past
-it. Verify both, then pass it; the flag is what you use *after* verifying, not instead of.
+Never force past a refusal (`git worktree remove --force`, `git branch -D`) to skip step 3, or
+because a guard fired and you want past it. Verify both, then remove; force is not part of
+the sequence at all.
 
 Measured 2026-08-16 over every session transcript (kata claudes-home `qcqb`): 118 refusals —
 93 cited commits alone, 22 cited commits plus uncommitted files, 3 cited uncommitted files
