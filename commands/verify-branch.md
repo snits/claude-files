@@ -161,9 +161,22 @@ cannot see. `.scratchpad` holds the artifact *file*; `.claude/worktrees/` holds 
 
 Every brief carries, verbatim:
 
-- The merge-base SHA and the target branch.
-- The kata ref and the issue body text (paste it — the agent cannot see this conversation, and
-  handing it only a ref invites it to invent the scope it is auditing against).
+- **The merge-base SHA, and the branch under audit named literally.** Every auditor command in
+  this file is scoped to `<merge-base>..<branch under audit>`, so the brief must carry that
+  branch as an expanded name — not the target branch, which no auditor command uses, and never
+  a placeholder for the agent to expand. A brief that reaches an auditor still holding an
+  unexpanded placeholder invites the one recovery :15-27 forbids by name: substituting `HEAD`
+  empties the range, every auditor audits nothing, and all three return PASS.
+- **The auditor's own section from this file — Role, procedure, output-table columns, and
+  verdict rule — pasted in full.** Everything else on this list is context; this is the task.
+  The agent cannot read this file, so a brief carrying only a bar, a path and an issue body
+  hands it no work to do.
+- The kata ref, the issue body text, **and any issue comments that record a scope, design, or
+  verification decision** (paste them — the agent cannot see this conversation, and handing it
+  only a ref invites it to invent the scope it is auditing against). The comments are not
+  optional padding: the scope bar treats "recorded in the issue" as exonerating, and the
+  claim-verifier is told below that its extraction sources include the issue's comments. An
+  auditor given only the body cannot check either, and scores a recorded decision as a finding.
 - **The artifact path it must write, the write-and-verify rule, and the verdict-line rule**
   (all three under "Artifacts" below). Paste them into the brief rather than citing them — the
   agent cannot read this file. Omitting the verdict-line rule is the specific mistake that
@@ -210,6 +223,10 @@ Every brief carries, verbatim:
   ends a shell, not the agent, so it stops an honest mis-`cd` (the `enb2` shape) and does not stop
   an agent that ignores the brief. Isolation was harness-enforced; this is compliance-enforced.
   Do not describe it as equivalent (`jhby`).
+- **For the scope auditor: the reference the branch is checked against and a list of its
+  elements — or an explicit statement that no reference exists.** Reference parity makes MISSING
+  a blocking category, so an auditor handed nothing cannot tell an absent reference from a
+  forgotten one. Saying "no reference" is what closes that; silence is not.
 - **`file:line` evidence for every finding, and "not found" rather than an inferred mechanism.**
 - A `Deviations` section: when an edge case forces it off the brief, take the conservative
   option and record the deviation.
@@ -378,7 +395,10 @@ Against `git diff <merge-base>..${3}`:
 
 4. **Reference parity.** When the issue, plan, or brief names a reference — a design board,
    a prior implementation being ported, a screenshot, a doc section describing the behavior —
-   the branch is checked against that reference, not only against the issue text. List each
+   the branch is checked against that reference, not only against the issue text. **When the
+   brief states that no reference exists, record this check N/A and move on**; when it says
+   nothing either way, that omission is itself a Deviation to report, not a licence to infer
+   one. List each
    element of the reference (flags, help strings, layout, documented behavior) and mark it
    PRESENT / MISSING / CHANGED in the branch. Doc sections that describe changed behavior are
    in scope by default: a CLAUDE.md or README line the diff made false is a finding here, not
