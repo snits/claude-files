@@ -482,7 +482,7 @@ event read 0, and all 165 with one read ≥1). `kata show --json` does not expos
 kata issues are open or closed — there is no `in_progress` status; claim an issue to signal you are working it.
 
 ```bash
-kata claim <ref> --as claude-<agent-name>           # Take ownership (see actor caveat below)
+kata claim <ref> --as {{model}}-<agent-name>           # Take ownership (see actor caveat below)
 kata comment <ref> --body "comment"                 # Add a comment
 kata close <ref> --done --message "<scope + verification>" --commit <sha>   # Close verified work
 ```

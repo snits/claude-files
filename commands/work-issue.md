@@ -19,7 +19,7 @@ When the work lands and you close the issue, strip any `needs-review` / `needs-d
 open-work label re-routes itself to a loop that cannot act on it (kata claudes-home `0rsz`).
 On a failed claim, move to the next ready issue rather than proceeding unclaimed.
 
-**Claim with a per-instance actor: `kata claim <ref> --as claude-work-issue-<random-suffix>`.**
+**Claim with a per-instance actor: `kata claim <ref> --as {{model}}-work-issue-<random-suffix>`.**
 Pick the suffix once at loop start and reuse it for every claim in that run. Claiming is atomic
 *per distinct actor string* — not per session, and not per loop type. `KATA_AUTHOR=claude` is set
 in the environment, so every Claude agent that does not override it resolves to the same actor,

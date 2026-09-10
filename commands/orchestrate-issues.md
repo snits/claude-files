@@ -51,7 +51,7 @@ not arrived.
 Claim on the agent's behalf before dispatching, with an actor string unique **per issue**:
 
 ```
-kata claim <ref> --as claude-orch-<run-suffix>-<ref>
+kata claim <ref> --as {{model}}-orch-<run-suffix>-<ref>
 ```
 
 Pick `<run-suffix>` once at loop start. Claiming is atomic per distinct actor string, and
