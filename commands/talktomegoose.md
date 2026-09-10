@@ -68,6 +68,8 @@ We have started a new session. Please go through the following steps:
      Deferred issues are hidden from `kata ready` by the `deferred` label, so this is the only
      thing that brings them back. Report any `DEFERRED UNDATED` line too — a `deferred` label
      with no `defer_until` never resurfaces on its own.
+   - Refresh understanding of kata use:
+     `kata quickstart`
    - Surface kata issues waiting on a ruling from Jerry:
      `kata list --label needs-decision --agent`
      These are blocked on a choice, not on work — `work-issue` and `triage-issue` both skip them
