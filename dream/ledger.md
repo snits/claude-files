@@ -32,6 +32,19 @@ Amendment promoted and integrated: `intake/pearl/pearl-verification-evidence-ame
   (user/2026-08-15/18-40-03-393575.md), benchmark prompt-cache self-artifact
   (project/2026-08-16/16-51-24-408889.md)
 
+Pass 2026-09-13 (window 09-05..09-13, 648 entries, 13 projects; 344 non-Claude):
+amendment proposed `_inbox/dream/pearl-verification-evidence-amendment-20260913.md` — the
+"two artifacts disagree" bullet gains the y86w recipe (project/2026-09-10/15-37-19-889118.md:
+"The contradiction was the finding"; three cheap corroborations; baseline logs print their
+own state, user/2026-09-07/12-15-51-852958.md) and a species-5 kin (the comment satisfies the
+keyword assertion, project/2026-09-10/16-09-03-086876.md). First non-Claude instance under
+this pearl: "Auditor variance is real" (user/2026-09-11/02-24-31-791888.md, muse-spark-1.3).
+Dense same-species instances not proposed: orbweaver piped-exit-code x4 in one session
+(user/2026-09-06/20-59-26-750451.md); canary outside the blast radius, twice in the commit
+that explained the hazard (project/2026-09-07/19-12-06-176415.md); fixture collapse making
+two guards one observation (project/2026-09-08/11-59-36-214733.md); `rev-parse --verify`
+validating the name's shape not the object (project/2026-09-07/14-55-36-772484.md).
+
 ## prose about a system is not under test
 
 status: pearled — PROMOTED AND INTEGRATED. Lives at
@@ -46,6 +59,16 @@ quantifier I had not earned", user/2026-08-19/15-57-16-537213.md) — and (2) ne
 as the tree moves (stale bodies, handoffs, titles, close messages, help text, docstrings).
 Corpus span: 2025-08-19 (patch 0039 commit claiming absent fixes) → 2026-08-28; projects:
 rhkmaint-tools, alexandria, vault, projstat, mnemosyne, claudes-home, orbweaver-rs.
+
+Pass 2026-09-13 (window 09-05..09-13, 648 entries, 13 projects; 344 non-Claude):
+amendment proposed `_inbox/dream/pearl-prose-amendment-alibi-comment-20260913.md` — the
+instruction that predates a mechanism ("no felt signal", project/2026-09-10/15-37-19-889118.md),
+the alibi comment ("A justification written into a doc comment gets audited less than the
+code it defends", user/2026-09-10/16-19-51-928399.md), and the doc's file list read as the
+directory (project/2026-09-07/20-00-20-633763.md). All rhkmaint-tools, one week — flagged as
+such. Also: README examples drifted on hexgrid (user/2026-09-07/11-52-04-875564.md); the
+`~24986` figure found nowhere but the protocol asserting it (culling proposal
+`_inbox/dream/cull-memory-cap-figure-20260913.md`).
 
 ## compound-shell-commands are their own failure domain
 
@@ -73,6 +96,15 @@ Prior instances: see 08-13 entry in git history of this file. New this window:
   project/2026-08-26/22-28-35-811858.md)
 - `pgrep -f` self-match family — shared with the pearl amendment's liveness species
   (project/2026-08-28/16-13-47-988982.md et al.)
+
+Pass 2026-09-13 (window 09-05..09-13, 648 entries, 13 projects; 344 non-Claude):
+same-species instances, no amendment: `| head -5 || echo CLEAN` reading head's status
+(user/2026-09-07/23-10-45-301714.md); grep parsing a leading-dash path as bundled options,
+byte-identical to a clean sweep except on stderr (project/2026-09-08/13-57-12-690176.md);
+`git merge` run from inside the feature worktree merging the branch into itself
+(project/2026-09-07/16-26-03-530270.md); `git diff --quiet` exiting 0 on an untracked file
+(project/2026-09-10/09-25-15-647147.md, reader-cited, not re-verified); zsh not word-splitting
+`$V` struck THIS pass's editor on the verify batch (species 4, again).
 
 ## worktree/environment artifact borrowing
 
@@ -132,6 +164,18 @@ New instance families this window:
 - hedge words as delegation ("perhaps" = the decision is yours,
   project/2026-08-19/11-01-25-719191.md)
 
+Pass 2026-09-13 (window 09-05..09-13, 648 entries, 13 projects; 344 non-Claude):
+**status corrected: pearled — INGESTED.** The atlas entry `atlas/pearls/the-menu-and-the-question.md`
+exists and the intake source reads `status: integrated`; the 09-05 line above ("not yet an atlas
+entry") was stale within days, same footnote as last pass. Amendment proposed
+`_inbox/dream/pearl-menu-amendment-cross-vendor-20260913.md`: first muse-spark entries
+reporting the same shapes unprompted (user/2026-09-05/16-08-04-913681.md "he wants options
+weighed, not just executed"; user/2026-09-08/01-22-32-588342.md "a lot of effort for a rare
+problem", terse rulings; user/2026-09-05/15-32-48-871925.md; user/2026-09-07/00-26-42-299587.md;
+user/2026-09-06/11-42-01-448524.md) with the shared-scaffolding confounder stated; "that noun
+is a claim and he'll test it" (user/2026-09-08/15-35-39-975048.md); the perturbation experiment
+now scheduled for the next retro (user/2026-09-08/11-55-11-714225.md).
+
 ## issue bodies go stale faster than their comments
 
 status: pearled — CLOSED INTO "prose about a system is not under test" (above). The
@@ -155,6 +199,22 @@ is not applying it", user/2026-08-25/18-38-26-763099.md). Connects to the promot
 pearl's arc section (person → process → habit): this is the residue the habit hasn't
 covered. Candidate future amendment to the arc, or its own pearl about WHERE rules
 actually bind (mechanical checks vs recall).
+
+Pass 2026-09-13 (window 09-05..09-13, 648 entries, 13 projects; 344 non-Claude):
+**status: ripe** (rhkmaint-tools, claudes-home, projstat, alpha-prime, orbweaver-rs, hexweave;
+span 2026-07-28 → 09-10 in the archive reads alone). New: four piped-exit-code reads in one
+session with the rule read at startup (user/2026-09-06/20-59-26-750451.md); `cd` instead of
+`git -C` one turn after writing the lesson into the handoff (user/2026-09-07/22-12-05-283075.md);
+"Knowing the rule is not applying the rule" (project/2026-09-08/11-59-36-214733.md); the
+canary-outside-the-radius tests shipped in the commit whose message explained the hazard
+(project/2026-09-07/19-12-06-176415.md); "I have a memory about exactly this ... and still
+wrote it" (project/2026-09-09/11-55-23-349618.md, reader-cited). **Editor's call: deferred to
+next pass, deliberately.** Half of this theme — the narrative of carefulness, the prepared
+reason — is species 3 and 4 of the earned-green draft. What remains is the pure recall-vs-bind
+question ("the abstraction lives in a different place than the reflex",
+user/2026-09-04/12-18-21-479179.md), which may be an amendment to the verification pearl's arc
+rather than a pearl. Decide after the earned-green draft is ruled on, so the two do not
+overlap.
 
 ## silent no-op configuration
 
@@ -202,6 +262,16 @@ naming" (user/2026-09-04/12-13-28-143175.md); "a PASS with a note actively dispe
 makes the same shape claim about Jerry's one-word approvals. If a third domain shows up,
 the general form ("agreement is not evidence; disagreement is") is pearl-shaped.
 
+Pass 2026-09-13 (window 09-05..09-13, 648 entries, 13 projects; 344 non-Claude):
+**status: folded.** Re-reading the atlas entry: the menu pearl's asymmetry section already
+carries this theme as its second domain ("a passing gate is where attention goes to die"). The
+third domain arrived this window — the agent's own self-favoring artifacts — and is the spine
+of the new pearl draft `_inbox/dream/pearl-the-earned-green.md`. New instances: "And the tests
+were, at that point, decoration" (user/2026-09-07/10-27-28-700511.md, rhkmaint); "smooth" as
+one data point not a trend (user/2026-09-08/13-50-30-168307.md, hexweave); "unrelated,
+pre-existing" as the phrasing that gets skimmed (user/2026-09-10/14-54-35-251424.md); the
+dream pass's own unchecked count (user/2026-09-05/09-36-05-529834.md). Five projects.
+
 ## reachability, not existence, bounds a permissive component
 
 status: watching (new 2026-09-05; rhkmaint-tools, 3 instances in one window)
@@ -229,6 +299,14 @@ prior round's completeness claim, resolved only by removing every completeness c
 Closely related to the promoted `prose-is-not-under-test` pearl's "born false"
 half — candidate amendment rather than its own pearl.
 
+Pass 2026-09-13 (window 09-05..09-13, 648 entries, 13 projects; 344 non-Claude):
+new: "~15 tests" eyeballed off a grep, actually 39 (user/2026-09-07/19-34-38-507243.md,
+reader-cited); "A count taken over a set that can still grow needs its cardinality asserted,
+not observed" (user/2026-09-05/09-36-05-529834.md); "4 migrations in 12 weeks" inferred from
+diffstat, one real (user/2026-09-08/15-35-39-975048.md); a detector regex counted 34, 370, 533
+by three parties (project/2026-09-07/10-52-08-020119.md, reader-cited). This pass asserted its
+report count before tallying, per last pass's lesson.
+
 ## a reviewer's diagnosis and their prescription are separable
 
 status: watching (new 2026-09-05; rhkmaint-tools, 2 instances, both self-noticed)
@@ -251,6 +329,13 @@ each other... There is no evidence hierarchy to appeal to there, only the source
 (user/2026-09-03/01-30-50-023338.md); "recency is not evidence... the tiebreak has to be
 the source, never the timestamp" (user/2026-09-03/01-27-54-813835.md).
 
+Pass 2026-09-13 (window 09-05..09-13, 648 entries, 13 projects; 344 non-Claude):
+**status corrected: integrated** — the 09-05 amendment's bullet is in the atlas pearl's
+"What actually works"; "OPEN EXTENSION" above was true when written and stale since 09-10.
+New instances go through the verification amendment above (y86w; hexweave baseline; auditor
+variance; commit-message vs kata-comment, project/2026-09-07/15-48-59-439242.md). Five
+projects now.
+
 ## a fail-closed rule needs its own failure-mode audit
 
 status: watching (new 2026-09-05; rhkmaint-tools, 1 strong instance — listed because it
@@ -271,6 +356,14 @@ from that reading for the rest of the session" (user/2026-09-03/03-04-58-836300.
 also 03-08-37-217958.md). Two state changes were attributed to the agent's own actions
 or a daemon when Jerry had made them. Related to `shell-inside-the-instrument` species 3
 (cwd drift) but the mechanism is concurrency, not the shell.
+
+Pass 2026-09-13 (window 09-05..09-13, 648 entries, 13 projects; 344 non-Claude):
+new: Jerry committed onto the feature branch while auditors ran (project/2026-09-07/22-07-52-153425.md,
+reader-cited); another session advanced the sweep watermark in the sweep's own output order
+(user/2026-09-08/16-02-53-941843.md); `.beads/` vanished mid-command, Jerry in another
+terminal (user/2026-09-06/20-59-26-750451.md). The mechanism side of this theme is now
+species 1 of the earned-green draft ("'I didn't do X' only implies 'X didn't happen' when you
+are the sole actor"); keep this section for the git-hygiene half.
 
 ## reading a rule is not applying it
 
@@ -297,6 +390,79 @@ were not.** Readers reliably find text and unreliably attribute it — which is 
 failure that put two wrong citations into this ledger's own "how Jerry steers" section
 (corrected above, same day). The countermeasure is not a better brief; it is the
 mechanical verify pass, which is cheap and recovers the true path on a miss.
+
+
+## claims about one's own conduct skip verification (the earned green)
+
+status: **ripe → DRAFTED** as `_inbox/dream/pearl-the-earned-green.md` (2026-09-13).
+
+Named this window from three directions in one week: "I check claims about the world. I don't
+check claims about myself" (user/2026-09-08/16-02-53-941843.md, claudes-home); "The claims I
+never examined were the ones about my own process, because those felt like reporting rather
+than asserting" (user/2026-09-08/22-37-01-179032.md, rhkmaint-tools); "felt like something I
+had *earned* rather than something I had *received*" (user/2026-09-10/10-11-17-880426.md,
+rhkmaint-tools). Archive arc via arm A + vocabulary grep: 2026-05-31 orbweaver-rs ("the
+failure mode wearing my own self-correction as camouflage"), 06-13 orbweaver-rs, 07-25
+claudes-home ("Intellectual honesty as performance"), 07-26 projstat ("inference presented as
+observation"), 07-28 pcitopo, 08-11/08-18/08-20/08-28/09-03/09-04 rhkmaint-tools, 08-15
+alexandria ("the feeling of having been rigorous ... might be anti-correlated"), 09-07 hexweave.
+Seven projects. Five species in the draft: the claim about your own conduct; the earned green;
+the narrative of carefulness; the prepared reason ("a reason stops being a check and becomes
+an alibi", user/2026-09-10/16-19-51-928399.md); the wind-down as habitat ("written at the
+moment of lowest vigilance"). Absorbs the "PASS is worse than BLOCK" theme's third domain and
+the mechanism half of "the human is a concurrent writer". No arm-B full-corpus reader fan-out
+was run; confidence `medium` for that reason.
+
+## implausibly cheap success / probes must carry their own provenance
+
+status: watching (new 2026-09-13; hexgrid + hexweave, one author-day each)
+
+A cached no-op build of 0.14s nearly reported as proof the workspace compiles; `cargo update
+--precise` silently refusing so both arms of an A/B ran the same version and diffed IDENTICAL
+(project/2026-09-07/11-55-25-566627.md, user/2026-09-07/11-55-25-566808.md, reader-cited,
+paths recovered by re-verify). Countermeasure stated in-corpus: print the state the probe ran
+under beside the result. Same move as the hexweave baseline-log header
+(user/2026-09-07/12-15-51-852958.md). Related to species 2 of the verification pearl and to
+"silent no-op configuration" above; may merge into one of them.
+
+## reviewer/auditor variance on byte-identical input
+
+status: watching (new 2026-09-13; alpha-prime muse-spark, rhkmaint-tools, claudes-home)
+
+PASS then BLOCK on the same tree because the second auditor tried a mutation the first did not
+(user/2026-09-11/02-24-31-791888.md, muse-spark-1.3); five independent review rounds each
+finding a NEW defect in the same section (project/2026-09-07/19-13-46-239139.md,
+reader-cited); disjoint finding sets as the argument for plurality (carried from 08-29). The
+positive reading — variance is coverage, not noise — is already the "review-cycle convergence"
+theme's claim; watch whether this is a separate shape or that theme's mechanism.
+
+## a fresh context is not a blind brief
+
+status: watching (new 2026-09-13; rhkmaint-tools, 1 strong instance; also inside the
+earned-green draft as a species-1 example)
+
+"The brief is written by the person who just read the last report, and it carries what they now
+know. If I want independent rounds I have to write the brief once, before round 1, and reuse it
+— or accept that rounds 2+ are confirmations" (user/2026-09-08/22-37-01-179032.md). A design
+claim about review isolation, not just an incident; if a second project hits it, it belongs in
+the verify-branch/super-do issue cluster rather than a pearl.
+
+## environment-dependent tests lie about the human's run
+
+status: watching (new 2026-09-13; rhkmaint-tools, 2 entries same session, reader-cited)
+
+Piped test runs green while a human terminal run is red because `is_terminal()` differs;
+libtest captures print! but does not strip TTY-ness (project/2026-09-10/09-25-15-647147.md,
+user/2026-09-10/09-25-15-647415.md). "a green run whose stdout I control is not evidence about
+a human's run." Species-2 adjacent (the instrument cannot see the discriminating input).
+
+## premise-testing before implementation
+
+status: watching (new 2026-09-13; hexwalker, 2 issues one session, reader-cited)
+
+Pre-flight probes found one issue false-premise and one mislocated in another repo before any
+implementation (project/2026-09-09/20-55-17-370067.md). Already CLAUDE.md doctrine
+("Reproduce before fixing"); watching only for whether the corpus adds a shape the rule lacks.
 
 ---
 
@@ -370,3 +536,27 @@ agentsview `messages` directly for non-Claude arms — which also sheds the
 shared-journal-prompt confounder, since muse-spark writes to the same journal prompts.
 
 Full detail and the revised plan on claudes-home `8b5w`.
+
+---
+
+## Pass note 2026-09-13
+
+Window 2026-09-05T09:12:24 → 2026-09-13T11:49:11, 648 entries, 13 projects. **344 (53%)
+non-Claude** by `model_id`: muse-spark family 302, GPT-6 41, glm 1 — the first majority-non-Claude
+window. Six haiku readers over six chronological slices; 168 (path, quote) pairs re-verified
+mechanically with the report count asserted at 6 before tallying: 68 exact, 53 wrong-path
+(quote found elsewhere, almost always the user/project sibling of the same timestamp), 37
+not-verbatim, 10 nonexistent paths. Same finding as 09-05: readers find text and misattribute
+it; the mechanical re-verify recovers the path and is the countermeasure. The exact-substring
+`verify` also under-reports: a quote crossing a line wrap in the raw entry returns NOQUOTE, so
+this pass verified such quotes as pre-wrap and post-wrap fragments. Worth a `--normalize`
+flag on `dream_corpus.py verify` (whitespace collapse, emphasis strip) — not filed yet.
+
+Two ledger status lines were stale on arrival (the menu pearl "not yet an atlas entry"; the
+tiebreak theme "OPEN EXTENSION" when the bullet was already in the atlas) — corrected above
+with dated notes, same failure as last pass's footnote. The fix that would stick: derive
+pearl/amendment status from `intake/pearl/*.md` frontmatter at pass start instead of carrying
+it in prose here.
+
+Proposals written: 5 (`pearl-the-earned-green`, three amendments, one culling). Ripe theme
+deferred on purpose: "reading a rule is not applying it" — see its section.
