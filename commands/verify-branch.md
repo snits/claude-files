@@ -117,8 +117,9 @@ git show ${3}:commands/verify-branch.md                                # brief f
 
 Everything you paste into the three briefs from this file comes from the branch copy, not from
 the file you are reading now. Each brief opens with one line naming the source, and each auditor
-writes it as the first line of its artifact: `briefed from ${3}:commands/verify-branch.md at
-$(git rev-parse ${3}), not the main copy`. That line is what keeps a branch approving itself
+writes it as the first line of its artifact: `briefed from <branch>:commands/verify-branch.md at
+<tip SHA>, not the main copy`, with both expanded by you (`git rev-parse ${3}` gives the SHA),
+never left for the auditor. That line is what keeps a branch approving itself
 under its own rules visible to the reader of the artifacts; it never touches the `VERDICT:` last
 line.
 
