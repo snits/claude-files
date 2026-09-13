@@ -115,11 +115,12 @@ git diff --name-only <merge-base>..${3} -- commands/verify-branch.md   # non-emp
 git show ${3}:commands/verify-branch.md                                # brief from THIS text
 ```
 
-Take every auditor section and the write rule from the branch copy, not from the file you are
-reading now. Each brief opens with one line naming the source, and each auditor copies it into
-its artifact header: `briefed from ${3}:commands/verify-branch.md at $(git rev-parse ${3}), not
-the main copy`. That line is what keeps a branch approving itself under its own rules visible to
-the reader of the artifacts; it never touches the `VERDICT:` last line.
+Everything you paste into the three briefs from this file comes from the branch copy, not from
+the file you are reading now. Each brief opens with one line naming the source, and each auditor
+writes it as the first line of its artifact: `briefed from ${3}:commands/verify-branch.md at
+$(git rev-parse ${3}), not the main copy`. That line is what keeps a branch approving itself
+under its own rules visible to the reader of the artifacts; it never touches the `VERDICT:` last
+line.
 
 ## The three auditors — dispatch concurrently, one message, three Agent calls
 
@@ -175,7 +176,8 @@ scratchpad store, so a checkout beneath it is swept in wholesale — the failure
 scratchpad conventions call out, and a git worktree is exactly the shape the type allowlist
 cannot see. `.scratchpad` holds the artifact *file*; `.claude/worktrees/` holds the trees.
 
-Every brief carries, verbatim:
+Every brief carries, verbatim (from the branch copy of this file when the range touches it — see
+"Establish the base first"):
 
 - **The merge-base SHA, and the branch under audit named literally.** Every auditor command in
   this file is scoped to `<merge-base>..<branch under audit>`, so the brief must carry that
