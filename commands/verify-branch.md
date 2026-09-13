@@ -105,6 +105,21 @@ launched from inside a worktree hangs both off *that* tree rather than the prima
 artifacts then die when it is cleaned, and the audit trees are nested rather than siblings. This
 costs nothing to observe and removes a whole class of path confusion before dispatch.
 
+**When the range touches this file, brief from the branch copy and say so.** `/verify-branch`
+resolves from `commands/` on the primary checkout, so a branch that changes the gate is otherwise
+audited by the gate it is replacing, and the rule it adds is never exercised on the branch that
+adds it (w0tv, 2026-09-09: the test-quality brief had to carry `NO-TESTS-IN-DIFF` by hand). So:
+
+```
+git diff --name-only <merge-base>..${3} -- commands/verify-branch.md   # non-empty: this rule applies
+git show ${3}:commands/verify-branch.md                                # brief from THIS text
+```
+
+Take every auditor section and the write rule from the branch copy, not from the file you are
+reading now. Each brief opens with, and the verdict statement repeats, one line naming the source:
+`briefed from ${3}:commands/verify-branch.md at <tip SHA>, not the main copy`. The disclosure is
+what keeps a branch approving itself under its own rules visible to the reader of the artifacts.
+
 ## The three auditors — dispatch concurrently, one message, three Agent calls
 
 All three run in parallel. **None of them takes `isolation: "worktree"`.** Isolation was removed
