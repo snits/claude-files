@@ -116,9 +116,10 @@ git show ${3}:commands/verify-branch.md                                # brief f
 ```
 
 Take every auditor section and the write rule from the branch copy, not from the file you are
-reading now. Each brief opens with, and the verdict statement repeats, one line naming the source:
-`briefed from ${3}:commands/verify-branch.md at <tip SHA>, not the main copy`. The disclosure is
-what keeps a branch approving itself under its own rules visible to the reader of the artifacts.
+reading now. Each brief opens with one line naming the source, and each auditor copies it into
+its artifact header: `briefed from ${3}:commands/verify-branch.md at $(git rev-parse ${3}), not
+the main copy`. That line is what keeps a branch approving itself under its own rules visible to
+the reader of the artifacts; it never touches the `VERDICT:` last line.
 
 ## The three auditors — dispatch concurrently, one message, three Agent calls
 
