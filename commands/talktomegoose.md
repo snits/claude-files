@@ -119,7 +119,7 @@ We have started a new session. Please go through the following steps:
          echo "MEMORY.md absent, $N memory files"
          find . -maxdepth 1 -name '*.md' -printf '%f\n' | sort
        else
-         echo "MEMORY.md $(wc -c < MEMORY.md) bytes (truncates near ~24986), $N files"
+         echo "MEMORY.md $(wc -c < MEMORY.md) bytes / $(wc -l < MEMORY.md) lines (caps: 25000 on trimmed string length, 200 lines — CC 2.1.270), $N files"
          comm -3 <(find . -maxdepth 1 -name '*.md' ! -name MEMORY.md -printf '%f\n' | sort) \
                  <(grep -oE '\]\([a-zA-Z0-9_.-]+\.md\)' MEMORY.md | tr -d '](' | sed 's/)//' | sort -u)
        fi
@@ -127,9 +127,12 @@ We have started a new session. Please go through the following steps:
      ```
      Left column = a memory file no index line points at; it never loads, ever. Right column =
      an index line whose file is gone. Both print nothing when clean. An oversized `MEMORY.md`
-     is silently truncated on load, which orphans whatever falls off the end. Report the size
-     line and any orphans; fix them in this session rather than deferring — a memory that
-     never loads is the same as one never written.
+     is silently truncated on load, which orphans whatever falls off the end — the binary's own
+     warning says "everything past the limit is silently dropped each time the index is loaded."
+     There are two caps, not one, and the 200-line cap binds first on a one-line-per-entry index:
+     see memory `reference_memory_index_load_caps` for the constants and how to re-derive them
+     against a new binary. Report the size line and any orphans; fix them in this session rather
+     than deferring — a memory that never loads is the same as one never written.
 
      A new project reports `no memory dir` or `MEMORY.md absent, 0 memory files` — that is the
      expected state, not a problem to fix. `MEMORY.md absent` with a nonzero count *is* a

@@ -376,8 +376,10 @@ kata create "Task 1: ChunkData implementation" --parent <parent-ref>
 Flags that get guessed wrong (verified against `--help`, not memory):
 
 - `create` takes `--body` / `--body-file` / `--body-stdin`. There is no `--description`.
+- `--body-file -` is not stdin. Use `--body-stdin` (on `create` and `comment`) for heredoc
+  bodies. Three super-do sessions guessed the dash form in one week (retro 2026-09-15).
 - `edit` takes only `--body <string>` — **no `--body-file` / `--body-stdin`** (those are
-  `create`-only). Long bodies go through `--body "$(cat file.md)"`.
+  `create`/`comment`-only). Long bodies go through `--body "$(cat file.md)"`.
 - Evidence flags live on `close` only: `--commit`, `--pr`, `--test`, `--reviewed`, or the
   general `--evidence commit:<sha>` form. There is no `--reviewed-paths`.
 - `comment` cannot set relationships. Use `kata edit <ref> --related <ref> --comment "..."`.
