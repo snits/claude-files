@@ -365,6 +365,10 @@ Project resolution walks up from the current directory to find a committed `.kat
 
 kata has no issue "type" flag — structure comes from parent/child links and labels.
 
+**When the issue reports incorrect behavior in code that already landed, label it `bug` at
+filing time** — `kata label add <ref> bug`, since there is no `--label` flag on `create`. It is
+the one type label we keep; see "Labels" below for what it does and does not mean.
+
 ```bash
 # Create a parent issue for a phase or major feature
 kata create "Phase 2: Chunk System"
@@ -553,6 +557,29 @@ A fifth, `retitle`, is deliberately outside this table because it is **not** a b
 the title misleads, a replacement is proposed in a comment, and Jerry plus the session lead
 sweep them together. It must never gate `ready`, `work-issue`, or `triage-issue` — the work is
 workable, only its name is wrong. See "Amending a stale body" above.
+
+A sixth, `bug`, sits outside the table for a different reason: it is a **type**, not a state. It
+marks incorrect behavior in code that already landed — not a missing feature, not a chore or
+refactor, and not a finding on work that never merged. Our code only; defects in upstream or
+third-party code are tracked without it. Like `retitle` it must never gate `ready`,
+`work-issue`, or `triage-issue`.
+
+Added 2026-09-15, and it did not exist before that date — verified across all 5,063 issues in 40
+projects. So **do not retro-label closed issues.** Guessing bug-from-title across 3,974 closed
+issues would manufacture a classification nobody can trust, which is precisely the failure the
+label exists to avoid. The population starts empty and fills going forward.
+
+**What `bug` is not for.** It is a discriminator for triage and `kata ready`, so a defect report
+can be told apart from a feature request. It is **not** a defect-rate metric, and an escape rate
+computed over it would be worthless — a label applied by agent judgment measures labeling
+discipline, not code quality. Rationale, so nobody rebuilds this: on 2026-09-15 four candidate
+detectors for "how much good code vs buggy code" were tested and all four measured themselves —
+`/insights` friction labels measured the extractor (three spellings of `tool_failure` in one
+month), commit subjects measured commit convention (0.5% in pcitopo vs 31.9% in projstat), git
+blame churn measured velocity (under subagent-driven development, lines rewritten within days is
+the design), and kata had no discriminator at all. Escape rate needs a detector downstream of the
+gates that is independent of them; we do not have one, and `bug` is not it. Working notes:
+`claudes-home/.scratchpad/20260915-insights-friction-timeseries.md`.
 
 `needsinfo` and `needs-decision` are the pair that gets conflated, because both look like "I can't
 proceed." Judge the gap, not the phrasing: **an issue that states its options in full and argues
