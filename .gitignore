@@ -64,3 +64,5 @@ ide/
 
 # memory_sweep.py runtime state (per-machine watermarks, not shared config)
 memory-sweep/
+skills/synced/
+chrome/
