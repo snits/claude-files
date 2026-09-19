@@ -240,9 +240,15 @@ here rather than per-task because it is the only point that can see **cross-task
 task N re-implementing a helper task 1 wrote is the signature failure of fresh-context
 subagents — and because it must sit *upstream* of the mandatory gate so no fix merges unaudited.
 
-**Skip it when the branch touches two or fewer files** — a direct-track one-file fix has no
-cross-task surface, and the per-task code review already covered local cleanup. Say you skipped
-it and why, in one line.
+**Run it on the direct track too; file count is not the criterion.** The per-task code review
+is an intent-blind correctness pass, so this is the only point in the flow that asks whether the
+change is simpler than it needs to be — and a one-file fix that adds a helper, a thread body, a
+retry loop, or a test fixture has exactly the surface that pass exists for. Skip it only when the
+diff is a handful of lines with no new function, closure, control flow, or test helper (a
+one-line guard, a message change, a renamed constant), and say so in one line naming the diff's
+size and shape. Superseded on 2026-09-19 (Jerry, rhkmaint-tools `pwav` session): the prior
+"two or fewer files" skip excused a one-file change adding a stderr reader thread and two test
+helpers, which is precisely what a simplify pass should see.
 
 Two constraints are load-bearing:
 
