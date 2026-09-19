@@ -15,7 +15,7 @@ const VOTES_PER_CLAIM = 3
 const REFUTATIONS_REQUIRED = 2
 const ARGS = (args && typeof args === "object") ? args : { question: args }
 const MAX_FETCH = Number.isInteger(ARGS.maxFetch) && ARGS.maxFetch > 0 ? ARGS.maxFetch : 15
-const MAX_VERIFY_CLAIMS = Number.isInteger(ARGS.maxVerifyClaims) && ARGS.maxVerifyClaims > 0 ? ARGS.maxVerifyClaims : 60
+const MAX_VERIFY_CLAIMS = Number.isInteger(ARGS.maxVerifyClaims) && ARGS.maxVerifyClaims > 0 ? ARGS.maxVerifyClaims : 40
 
 // ─── Schemas ───
 const SCOPE_SCHEMA = {
