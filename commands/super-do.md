@@ -213,6 +213,15 @@ is the mechanism; an instruction to stay objective is not a substitute for it.
 **Cap the loop at 3 review cycles.** Stop earlier when a cycle returns the same blocking findings
 as the one before it — the loop has stopped converging and another pass buys nothing.
 
+**On a prose or spec file, when a round's blocking findings all sit in text the previous round's
+fix added, the next fix removes clauses or moves a rule to where it is consumed; it adds no new
+explanatory sentence.** A sentence describing what another section says is replaced by the rule
+living in that section. Explanatory prose written to answer a finding is where the next round's
+finding comes from: claudes-home `w0tv` (2026-09-09) failed HIGH in rounds 2 and 3 on sentences
+the prior round's fix had added, and converged in one round once Jerry ruled round 4 to be
+deletion-shaped. Retro 2026-09-15: two verify-branch.md edits reached round 3 or 4 that week
+(claudes-home `gs4a`, `w0tv`), and two rhkmaint-tools tasks reached round 3 (`11zm`, `v6fn`).
+
 When the cap is reached with blocking findings outstanding, or the loop stops converging: **stop.
 Do not merge, and do not close the issue.** Comment the surviving findings on the kata issue,
 label it `needs-review`, and report to Jerry. An implementation that three reviews could not clear
