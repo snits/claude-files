@@ -383,8 +383,9 @@ CLAUDE.md flag claim trusted with the memory saying the first was wrong
 "Reading the rule didn't help because I didn't recognize the moment as an instance of it"
 (project/2026-09-15/21-28-02-412623.md); probe from the wrong cwd twice with the explicit-paths
 memory in context (project/2026-09-15/21-35-26-252122.md); the SHA structural fix prescribed
-on 09-03 recurring as prose on 09-17 (project/2026-09-17/01-59-13-936019.md). Seven projects,
-all Claude-authored; no cross-vendor instance.
+on 09-03 recurring as prose on 09-17 (project/2026-09-17/01-59-13-936019.md). Seven projects;
+quoted instances all Claude-authored, one reader-returned muse-spark candidate
+(user/2026-09-15/17-26-53-776199.md) recorded in the draft's Sources.
 
 New this window: three separate confident extensions of a truncated identifier into a
 fabricated complete one within ~24 hours, each with the relevant memory already in context
