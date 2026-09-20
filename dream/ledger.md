@@ -370,6 +370,22 @@ are the sole actor"); keep this section for the git-hygiene half.
 status: watching (carried; new instances 2026-09-05 — now rhkmaint-tools + claudes-home +
 projstat, and the *method* of this pass supplied one more, below)
 
+**Pass 2026-09-19: status: ripe → DRAFTED** as `_inbox/dream/pearl-where-the-rule-lives.md`.
+(This section and the earlier one of the same name are one theme; the earlier section carries
+the 09-13 ripeness note. Both stay for their instance lists; status lives here.) Full-corpus
+arm A (five cosine queries) plus twelve vocabulary greps; arc 2025-11-15 (orbweaver, colima
+delete --force with the skill loaded) → 2026-07-25 (rule broken in the commit that wrote it)
+→ 08-29 ("vigilance did not work") → 09-15 (the measurement: mechanized rules stopped
+recurring, prose rules did not, user/2026-09-15/21-35-26-252315.md). Window instances: the
+1387 transcribed with the memory loaded (project/2026-09-13/13-09-31-691517.md); the second
+CLAUDE.md flag claim trusted with the memory saying the first was wrong
+(user/2026-09-13/19-52-14-699711.md); guessed `kata` command routed around instead of --help,
+"Reading the rule didn't help because I didn't recognize the moment as an instance of it"
+(project/2026-09-15/21-28-02-412623.md); probe from the wrong cwd twice with the explicit-paths
+memory in context (project/2026-09-15/21-35-26-252122.md); the SHA structural fix prescribed
+on 09-03 recurring as prose on 09-17 (project/2026-09-17/01-59-13-936019.md). Seven projects,
+all Claude-authored; no cross-vendor instance.
+
 New this window: three separate confident extensions of a truncated identifier into a
 fabricated complete one within ~24 hours, each with the relevant memory already in context
 (user/2026-09-02/13-16-43-889337.md, user/2026-09-03/02-10-01-846906.md,
@@ -560,3 +576,92 @@ it in prose here.
 
 Proposals written: 5 (`pearl-the-earned-green`, three amendments, one culling). Ripe theme
 deferred on purpose: "reading a rule is not applying it" — see its section.
+
+
+---
+
+## Pass note 2026-09-19
+
+Window 2026-09-13T11:49:11 → 2026-09-19T21:20:20, 461 entries, 11 projects (rhkmaint-tools 201,
+alexandria 76, orbweaver-rs 50, claudes-home 38, hexweave 31, hexweave-demo 22, alpha-prime 16,
+kernel-tests 15, stellarconquest 7, tacmap 4, vault 1). **143 (31%) non-Claude** by `model_id`:
+muse-spark family 86, GPT-6/gpt-6-astra 47, gpt-5.6-luna 8, gpt-5 2. Four haiku readers over
+four chronological slices (~157 KB each; brief and slices kept at
+`~/claudes-home/.scratchpad/dream/20260919-readers/`, the same package handed to Jerry for the
+muse-spark comparison per kata d36r). 131 (path, quote) pairs re-verified with the new
+`dream_corpus.py reverify` (report count asserted at 4 first): 43 exact, 10 normalized-exact,
+35 wrong-path recovered, 32 not verbatim, 11 nonexistent paths. Same shape as 09-05 and 09-13;
+the recovery step stays mandatory. Of 104 distinct cited/recovered paths, 96 Claude, 7
+muse-spark-1.3, 1 GPT-6 — readers under-selected the non-Claude third of the window, or the
+non-Claude third holds fewer instances; not separable from here.
+
+**Pearl/amendment status at pass start (kata d719, produced by hand this pass):** 13 files in
+`intake/pearl/`, all `status: integrated`; 5 atlas pearls (verification-evidence-discipline,
+prose-is-not-under-test, shell-inside-the-instrument, the-menu-and-the-question,
+the-earned-green); `_inbox/dream/` empty. The 09-13 draft was promoted and integrated within
+the week. No status line in this ledger was stale on arrival — first pass for which that is
+true, because the 09-13 corrections pointed at intake files rather than restating status.
+
+**Job A, amendments proposed (5):**
+- `pearl-verification-evidence-amendment-20260919.md` — relocated vacuity
+  (user/2026-09-18/22-51-23-799432.md), the second-implementation check
+  (user/2026-09-15/22-55-29-397968.md), the symmetric-pair break-test
+  (project/2026-09-19/19-58-59-511349.md), the exit code shared by every phase
+  (user/2026-09-19/01-11-12-910525.md). Same-species, not proposed: "a vote count is not a
+  read" (project/2026-09-19/18-56-35-447935.md); zero-of-every-tag
+  (project/2026-09-18/23-43-27-460369.md); `?? fallback` overriding a correct negative
+  (project/2026-09-16/00-00-32-570545.md); the `2>/dev/null` verification loop with no positive
+  control (project/2026-09-15/21-28-02-412623.md).
+- `pearl-earned-green-amendment-20260919.md` — first post-promotion window: "self-criticism
+  doesn't feel like a claim. It feels like humility" (user/2026-09-15/21-40-09-043029.md); "The
+  feeling of having verified is not correlated with coverage" (user/2026-09-15/22-55-29-397968.md);
+  the 14s tell (user/2026-09-19/01-11-12-910525.md); "most careless right after I feel done"
+  (user/2026-09-14/21-03-25-862309.md); and a candidate species 6, the rigorous loop
+  (user/2026-09-15/23-00-26-221112.md) — offered to the menu pearl too; one home, Jerry's call.
+- `pearl-menu-amendment-cost-question-20260919.md` — the cost question ("how many times has
+  this been an issue?", project/2026-09-15/23-00-26-221093.md); the present-tense cut
+  (user/2026-09-15/00-15-27-322565.md); the premise held loosely
+  (user/2026-09-16/00-00-32-570474.md). Readers returned every Jerry intervention unclassified
+  (theme H, 14 rows, 11 verified or recovered).
+- `pearl-prose-amendment-decoration-and-copy-20260919.md` — decoration on a measured claim
+  (user/2026-09-18/22-51-23-799432.md); citation copied from the retro
+  (user/2026-09-19/12-22-05-947835.md); comment in the reviewer's framing
+  (user/2026-09-14/23-44-03-338462.md); "the tracker launders a guess into a fact"
+  (project/2026-09-18/19-13-38-197297.md).
+- `pearl-shell-amendment-empty-expansion-destructive-20260919.md` — `kata edit --body
+  "$(broken)"` blanking a body with output suppressed (project/2026-09-19/19-58-59-511349.md);
+  four PIPESTATUS recurrences in one week (09-13, 09-15, 09-17, 09-18) plus `git commit | head`
+  SIGPIPE (project/2026-09-16/13-47-13-449224.md).
+
+**Job B, ledger deltas:** "reading a rule" → DRAFTED (above). "review-cycle convergence": new
+mechanism instance — when N issues share a defect and each was filed against the commit that
+fixed the previous one, *"the filing mechanism is the finding"* (user/2026-09-15/23-00-26-221112.md);
+resolved by excluding CLAUDE.md from roborev diffs; kata `761g` (gate depth by change class)
+is the open work item. "implausibly cheap success": the 14s arm-B run (user/2026-09-19/01-11-12-910525.md);
+`roborev config validate` saying valid about a file it did not load (same entry family) —
+now three projects (hexgrid, hexweave, orbweaver-rs), watch for ripeness next pass.
+"environment-dependent tests": second instance and first cross-vendor — bash `[[ =~ ]]` with a
+quoted RHS literalizes on bash 5.3.9 and is a regex under zsh; the "measured on bash" claim had
+run in the harness's zsh (project/2026-09-16/15-29-25-862152.md, user/2026-09-16/15-29-25-862369.md,
+muse-spark-1.3). "premise-testing": Jerry's own premise wrong and held loosely
+(user/2026-09-16/00-00-32-570474.md) — the shape the CLAUDE.md rule lacks is "the premise came
+from the human". "a fresh context is not a blind brief": four code-review rounds verifying prose
+against the author's own fact list; only the auditor that reproduced found the misattribution
+(project/2026-09-15/19-25-26-813876.md) — second instance, same project. "the human is a
+concurrent writer": Jerry editing .env while the agent read it (user/2026-09-15/17-26-53-776199.md,
+muse-spark-1.3 — first cross-vendor instance of this theme); compacts that ran against main
+before the merge (user/2026-09-18/18-16-51-477889.md). "reviewer/auditor variance": a roborev
+job whose review content was a previous hook reply about four other jobs, "a ghost"
+(user/2026-09-18/18-16-51-477889.md) — a different shape (delivery, not variance); filed
+nowhere, noted here.
+
+**No culling proposal.** Two candidates checked: the retracted "his casual asides are the real
+priority" lesson (user/2026-09-15/21-40-09-043029.md) never reached a memory file
+(`grep -il 'casual aside' memory/*.md` → none); the incomplete `nvidia-ctk cdi generate` form
+the same session wrote into a memory was already corrected in
+`reference_devcontainer_template_start_bugs.md` (it carries `sudo` and `--output`).
+
+**Process:** `dream_corpus.py verify --normalize` and `reverify` landed this pass (kata jedg);
+the 09-13 reverify script had not been preserved, so it was rebuilt into the tool. Reader brief
+did not name expected patterns for theme H. muse-spark package written for d36r; the pass did
+not wait on it.
