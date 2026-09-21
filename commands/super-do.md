@@ -26,6 +26,18 @@ Four checks, in order, and each one that fails ends the work here:
 1. **Premise.** Restate the issue's claim as a falsifiable statement and test it against the
    current `${2}` HEAD. Paste the command and output in the issue comment. A false premise closes
    the issue (`audit-no-change` or `wontfix` with the evidence), not a fix.
+   **The premise is the claim the work depends on, not whether the work can be done.** "The
+   tasks are unimplemented and the blockers are closed" is repo state, and it is always true
+   of a ready issue; it is not the premise. For a bug, the premise is the misbehaviour; for a
+   plan or spike, it is the measured symptom the design exists to fix, and the number it was
+   measured at. Name the commit that number was taken at (`git log -S` on the issue or spec if
+   it does not say), and if any commit since then touched the mechanism, re-measure the one
+   read that carries the premise on HEAD before doing anything else — a five-minute probe run,
+   not a sweep. A closed blocker can be the thing that invalidated the premise: orbweaver-rs
+   jrz4 (2026-09-21) ran a 40-minute five-arm spike whose spec baseline ("100% at-floor in
+   the westerlies interior") had been measured before its own blocker 1h5g landed; the OFF arm
+   already read 11%, and the verdict rule was unsatisfiable before the first arm ran. The
+   pre-flight passed because it tested implementability, not validity.
 2. **Already landed.** `git log ${2} --oneline --grep=${1}` plus a search of `${2}` for the
    equivalent change under another ref. Landed work closes as `duplicate-of` that ref.
 3. **Blockers.** `kata show ${1}` — an open `blocked-by` means stop, not work around.
