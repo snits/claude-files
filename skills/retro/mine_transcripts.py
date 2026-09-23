@@ -38,6 +38,18 @@ TEAMMATE_MARKER = "<teammate-message"
 
 MAX_TOOL_ERRORS_SHOWN = 15
 
+# claude -p / SDK-driven runs (roborev review jobs, kata-dispatch workers) are automated:
+# nobody is at the keyboard to correct course, so their turns carry no retro signal even
+# when they contain text. 561 of 637 top-level sessions in the 2026-09-15..09-23 window
+# were sdk-cli, all roborev jobs, and none of the 77 cli/desktop sessions were sdk-cli --
+# excluding by entrypoint rather than "has any text" trades away the (unobserved) case of a
+# human typing through the SDK.
+SDK_CLI_ENTRYPOINT = "sdk-cli"
+
+# A looping headless/subagent run can emit the same failure hundreds of times; showing all
+# of them would swamp the slice for one distinct signal. Cap per source file.
+MAX_SUBAGENT_ERRORS_SHOWN = 5
+
 # A turn text repeated verbatim as the opener of at least this many distinct
 # sessions is a template — an agent launch prompt, a probe, a batch job — not
 # something typed that many times. Ranking on raw turn counts lets one template
@@ -57,10 +69,12 @@ class SessionFacts:
     parse_failures: int = 0
     human_turns: list[dict] = field(default_factory=list)
     tool_errors: list[dict] = field(default_factory=list)
+    sdk_cli_turns: int = 0
 
     @property
     def is_interactive(self) -> bool:
-        """Sessions with no human turns are headless runs carrying no correction signal."""
+        """Headless runs carry no correction signal: no human turns, or every turn was
+        emitted by an sdk-cli entrypoint (an automated `claude -p` run, not someone typing)."""
         return bool(self.human_turns)
 
 
@@ -125,6 +139,9 @@ def scan_session(path: Path) -> SessionFacts:
             text = _text_of(content).strip()
             if not text or any(marker in text for marker in HARNESS_MARKERS):
                 continue
+            if entry.get("entrypoint") == SDK_CLI_ENTRYPOINT:
+                facts.sdk_cli_turns += 1
+                continue
             facts.human_turns.append(
                 {
                     "line": lineno,
@@ -156,6 +173,81 @@ def sessions_in_window(since: float, projects_dir: Path = PROJECTS_DIR) -> list[
             except OSError:
                 continue
     return found
+
+
+def subagent_files(path: Path) -> list[Path]:
+    """In-process subagent transcripts belonging to this top-level session, sorted."""
+    return sorted((path.parent / path.stem / "subagents").glob("*.jsonl"))
+
+
+def scan_tool_errors(path: Path) -> list[dict]:
+    """Failed tool results in `path`, ignoring every other kind of entry.
+
+    Used for subagent transcripts and headless sessions, neither of which should ever
+    contribute a "human turn" -- a subagent's own prompt text is not Jerry typing, and a
+    headless session's text turns were already excluded by entrypoint in `scan_session`.
+    """
+    errors: list[dict] = []
+    try:
+        handle = path.open("r", errors="replace")
+    except OSError:
+        return errors
+    with handle:
+        for lineno, raw in enumerate(handle, start=1):
+            raw = raw.strip()
+            if not raw:
+                continue
+            try:
+                entry = json.loads(raw)
+            except json.JSONDecodeError:
+                continue
+            if not isinstance(entry, dict) or entry.get("type") != "user":
+                continue
+            content = entry.get("message", {}).get("content")
+            error = _tool_error_of(content)
+            if error is not None:
+                errors.append({"line": lineno, "text": error[:400], "ts": entry.get("timestamp")})
+    return errors
+
+
+def _distinct_first_n(errors: list[dict], n: int) -> list[dict]:
+    """First `n` errors with distinct (whitespace-normalized) text, in encounter order."""
+    seen: set[str] = set()
+    out: list[dict] = []
+    for err in errors:
+        key = _normalize(err["text"])
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(err)
+        if len(out) >= n:
+            break
+    return out
+
+
+def _subagent_error_lines(session_path: Path) -> tuple[list[str], int, int, int]:
+    """[SUBAGENT TOOL ERROR] lines for one session's subagent files, plus (total, files, shown).
+
+    `total` counts every raw error hit (dedup applies only to what's printed); `files` counts
+    subagent transcripts that contributed at least one error; `shown` is the printed count.
+    """
+    lines: list[str] = []
+    total = 0
+    files_with_errors = 0
+    shown = 0
+    for sub_path in subagent_files(session_path):
+        raw = scan_tool_errors(sub_path)
+        if not raw:
+            continue
+        files_with_errors += 1
+        total += len(raw)
+        for err in _distinct_first_n(raw, MAX_SUBAGENT_ERRORS_SHOWN):
+            shown += 1
+            lines.append(
+                f"- {sub_path}:{err['line']} [SUBAGENT TOOL ERROR] "
+                f"{' '.join(err['text'].split())[:300]}"
+            )
+    return lines, total, files_with_errors, shown
 
 
 def _emit_json(interactive: list[SessionFacts], headless: list[SessionFacts], since: float):
@@ -218,6 +310,54 @@ def distinct_turn_count(sessions: list[SessionFacts], templates: set[str]) -> in
     return len(seen - templates)
 
 
+def _emit_session_block(s: SessionFacts, templates: set[str]) -> None:
+    print(f"\n### {s.path}")
+    if s.parse_failures:
+        print(f"_[{s.parse_failures} unparseable lines skipped]_")
+    for turn in s.human_turns:
+        text = _normalize(turn["text"])
+        tag = " [TEAMMATE]" if turn["speaker"] == "teammate" else ""
+        if text in templates:
+            tag += " [TEMPLATE]"
+        print(f"- {s.path}:{turn['line']}{tag} {text[:600]}")
+    for err in s.tool_errors[:MAX_TOOL_ERRORS_SHOWN]:
+        print(
+            f"- {s.path}:{err['line']} [TOOL ERROR] "
+            f"{' '.join(err['text'].split())[:300]}"
+        )
+    hidden = len(s.tool_errors) - MAX_TOOL_ERRORS_SHOWN
+    if hidden > 0:
+        print(f"- _[{hidden} further tool errors not shown]_")
+    _emit_subagent_block(s)
+
+
+def _emit_headless_session_block(s: SessionFacts) -> None:
+    reason = "sdk-cli" if s.sdk_cli_turns else "no human turns"
+    print(f"\n### {s.path} [HEADLESS: {reason}]")
+    if s.parse_failures:
+        print(f"_[{s.parse_failures} unparseable lines skipped]_")
+    for err in s.tool_errors[:MAX_TOOL_ERRORS_SHOWN]:
+        print(
+            f"- {s.path}:{err['line']} [HEADLESS TOOL ERROR] "
+            f"{' '.join(err['text'].split())[:300]}"
+        )
+    hidden = len(s.tool_errors) - MAX_TOOL_ERRORS_SHOWN
+    if hidden > 0:
+        print(f"- _[{hidden} further tool errors not shown]_")
+    _emit_subagent_block(s)
+
+
+def _emit_subagent_block(s: SessionFacts) -> None:
+    lines, total, files_with_errors, shown = _subagent_error_lines(s.path)
+    for l in lines:
+        print(l)
+    if total:
+        print(
+            f"- _{total} subagent tool errors across {files_with_errors} subagents "
+            f"({shown} shown)_"
+        )
+
+
 def _emit_markdown(
     scanned: list[SessionFacts], interactive: list[SessionFacts], headless: list[SessionFacts]
 ):
@@ -225,8 +365,13 @@ def _emit_markdown(
     turns = sum(len(s.human_turns) for s in interactive)
     errors = sum(len(s.tool_errors) for s in interactive)
     templates = template_openers(interactive)
+    no_turns = sum(1 for s in headless if not s.sdk_cli_turns)
+    sdk_cli = sum(1 for s in headless if s.sdk_cli_turns)
     print(f"# Transcript mine: {len(scanned)} sessions, {raw_bytes / 1048576:.1f} MB raw")
-    print(f"# {len(interactive)} interactive / {len(headless)} headless (no human turns)")
+    print(
+        f"# {len(interactive)} interactive / {len(headless)} headless "
+        f"({no_turns} no human turns, {sdk_cli} sdk-cli)"
+    )
     print(f"# {turns} human turns, {errors} tool errors")
     if templates:
         print(
@@ -238,6 +383,9 @@ def _emit_markdown(
     by_project: dict[str, list[SessionFacts]] = {}
     for s in interactive:
         by_project.setdefault(s.project, []).append(s)
+    headless_by_project: dict[str, list[SessionFacts]] = {}
+    for s in headless:
+        headless_by_project.setdefault(s.project, []).append(s)
 
     for project, group in sorted(
         by_project.items(), key=lambda kv: -distinct_turn_count(kv[1], templates)
@@ -249,28 +397,18 @@ def _emit_markdown(
             f"{distinct} distinct)"
         )
         for s in group:
-            print(f"\n### {s.path}")
-            if s.parse_failures:
-                print(f"_[{s.parse_failures} unparseable lines skipped]_")
-            for turn in s.human_turns:
-                text = _normalize(turn["text"])
-                tag = " [TEAMMATE]" if turn["speaker"] == "teammate" else ""
-                if text in templates:
-                    tag += " [TEMPLATE]"
-                print(f"- {s.path}:{turn['line']}{tag} {text[:600]}")
-            for err in s.tool_errors[:MAX_TOOL_ERRORS_SHOWN]:
-                print(
-                    f"- {s.path}:{err['line']} [TOOL ERROR] "
-                    f"{' '.join(err['text'].split())[:300]}"
-                )
-            hidden = len(s.tool_errors) - MAX_TOOL_ERRORS_SHOWN
-            if hidden > 0:
-                print(f"- _[{hidden} further tool errors not shown]_")
+            _emit_session_block(s, templates)
+        for s in headless_by_project.pop(project, []):
+            _emit_headless_session_block(s)
 
-    if headless:
-        print(f"\n## Headless sessions (no human turns, not mined): {len(headless)}")
-        for s in headless:
-            print(f"- {s.path}")
+    # Projects that only had headless sessions still get their subagent/headless tool
+    # errors attributed -- ranking on distinct human turns does not apply, so these are
+    # unranked and printed after the ranked projects.
+    for project in sorted(headless_by_project):
+        group = headless_by_project[project]
+        print(f"\n## {project}  ({len(group)} headless sessions, no interactive sessions)")
+        for s in group:
+            _emit_headless_session_block(s)
 
 
 def _join_dashed_values(argv: list[str]) -> list[str]:

@@ -17,8 +17,11 @@ def write_session(directory, name, entries):
     return path
 
 
-def human(text):
-    return {"type": "user", "message": {"role": "user", "content": text}}
+def human(text, entrypoint=None):
+    entry = {"type": "user", "message": {"role": "user", "content": text}}
+    if entrypoint is not None:
+        entry["entrypoint"] = entrypoint
+    return entry
 
 
 def assistant(text):
@@ -176,6 +179,22 @@ class TestHeadlessClassification:
         path = write_session(tmp_path, "s.jsonl", [human("hi")])
         assert mt.scan_session(path).is_interactive is True
 
+    def test_sdk_cli_entrypoint_turns_are_headless(self, tmp_path):
+        """A claude -p / SDK-driven run carries no correction signal even with text."""
+        path = write_session(tmp_path, "s.jsonl", [human("run the review", entrypoint="sdk-cli")])
+        facts = mt.scan_session(path)
+        assert facts.is_interactive is False
+        assert facts.human_turns == []
+
+    def test_cli_entrypoint_turns_remain_interactive(self, tmp_path):
+        path = write_session(tmp_path, "s.jsonl", [human("hi", entrypoint="cli")])
+        assert mt.scan_session(path).is_interactive is True
+
+    def test_missing_entrypoint_is_not_headless(self, tmp_path):
+        """Every fixture predating this field lacks it; absence must not read as sdk-cli."""
+        path = write_session(tmp_path, "s.jsonl", [human("hi")])
+        assert mt.scan_session(path).is_interactive is True
+
 
 class TestWindowSelection:
     def test_selects_only_sessions_modified_in_window(self, tmp_path):
@@ -286,3 +305,93 @@ class TestReporting:
             ]
         )
         assert "scoped turn" in capsys.readouterr().out
+
+
+class TestSubagentToolErrors:
+    def test_subagent_errors_are_tagged_and_pointed_at_the_subagent_file(self, tmp_path, capsys):
+        project = tmp_path / "-home-jsnitsel-devel-thing"
+        project.mkdir()
+        parent = write_session(project, "abc.jsonl", [human("go")])
+        (project / "abc" / "subagents").mkdir(parents=True)
+        sub = write_session(
+            project / "abc" / "subagents", "agent-1.jsonl", [tool_result("boom", is_error=True)]
+        )
+
+        mt.main(["--projects-dir", str(tmp_path), "--days", "7"])
+        out = capsys.readouterr().out
+        assert f"{sub}:1 [SUBAGENT TOOL ERROR] boom" in out
+        assert "1 subagent tool errors across 1 subagents (1 shown)" in out
+
+    def test_subagent_errors_never_become_human_turns(self, tmp_path, capsys):
+        """A subagent's own prompt text is not Jerry typing, even if it parses as one."""
+        project = tmp_path / "-home-jsnitsel-devel-thing"
+        project.mkdir()
+        write_session(project, "abc.jsonl", [human("go")])
+        (project / "abc" / "subagents").mkdir(parents=True)
+        write_session(project / "abc" / "subagents", "agent-1.jsonl", [human("do the task")])
+
+        mt.main(["--projects-dir", str(tmp_path), "--days", "7"])
+        out = capsys.readouterr().out
+        assert "do the task" not in out
+
+    def test_subagent_errors_cap_at_first_n_distinct(self, tmp_path, capsys):
+        project = tmp_path / "-home-jsnitsel-devel-thing"
+        project.mkdir()
+        write_session(project, "abc.jsonl", [human("go")])
+        entries = [tool_result(f"distinct err {i}", is_error=True) for i in range(8)]
+        (project / "abc" / "subagents").mkdir(parents=True)
+        sub = write_session(project / "abc" / "subagents", "agent-1.jsonl", entries)
+
+        mt.main(["--projects-dir", str(tmp_path), "--days", "7"])
+        out = capsys.readouterr().out
+        assert out.count("[SUBAGENT TOOL ERROR]") == mt.MAX_SUBAGENT_ERRORS_SHOWN
+        assert f"8 subagent tool errors across 1 subagents ({mt.MAX_SUBAGENT_ERRORS_SHOWN} shown)" in out
+
+    def test_subagent_errors_dedup_repeated_text(self, tmp_path, capsys):
+        project = tmp_path / "-home-jsnitsel-devel-thing"
+        project.mkdir()
+        write_session(project, "abc.jsonl", [human("go")])
+        entries = [tool_result("same error", is_error=True) for _ in range(3)]
+        (project / "abc" / "subagents").mkdir(parents=True)
+        write_session(project / "abc" / "subagents", "agent-1.jsonl", entries)
+
+        mt.main(["--projects-dir", str(tmp_path), "--days", "7"])
+        out = capsys.readouterr().out
+        assert out.count("[SUBAGENT TOOL ERROR]") == 1
+        assert "3 subagent tool errors across 1 subagents (1 shown)" in out
+
+
+class TestHeadlessToolErrors:
+    def test_sdk_cli_session_tool_errors_are_mined_and_tagged(self, tmp_path, capsys):
+        project = tmp_path / "-home-jsnitsel-devel-thing"
+        project.mkdir()
+        path = write_session(
+            project,
+            "a.jsonl",
+            [human("run it", entrypoint="sdk-cli"), tool_result("ENOENT", is_error=True)],
+        )
+
+        mt.main(["--projects-dir", str(tmp_path), "--days", "7"])
+        out = capsys.readouterr().out
+        assert f"{path}:2 [HEADLESS TOOL ERROR] ENOENT" in out
+        assert "run it" not in out  # headless human-turn text is never printed
+
+    def test_no_human_turn_headless_session_prints_no_tool_error_tag(self, tmp_path, capsys):
+        """A session with zero turns at all is headless for the old reason, not sdk-cli."""
+        project = tmp_path / "-home-jsnitsel-devel-thing"
+        project.mkdir()
+        write_session(project, "a.jsonl", [assistant("automated"), tool_result("x", is_error=True)])
+
+        mt.main(["--projects-dir", str(tmp_path), "--days", "7"])
+        out = capsys.readouterr().out
+        assert "[HEADLESS: no human turns]" in out
+
+    def test_header_splits_headless_reasons(self, tmp_path, capsys):
+        project = tmp_path / "-home-jsnitsel-devel-thing"
+        project.mkdir()
+        write_session(project, "a.jsonl", [human("run it", entrypoint="sdk-cli")])
+        write_session(project, "b.jsonl", [assistant("automated")])
+
+        mt.main(["--projects-dir", str(tmp_path), "--days", "7"])
+        out = capsys.readouterr().out
+        assert "2 headless (1 no human turns, 1 sdk-cli)" in out

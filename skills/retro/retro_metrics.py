@@ -93,14 +93,14 @@ class SessionMetrics:
     isolated: bool = False
     ran_bash: bool = False
     errors: list[str] = field(default_factory=list)
+    headless: bool = False
 
     def eligible_for(self, test: str) -> bool:
         return {"isolated": self.isolated, "ran_bash": self.ran_bash, "any": True}[test]
 
 
-def subagent_files(path: Path) -> list[Path]:
-    """In-process subagent transcripts belonging to this session, sorted."""
-    return sorted((path.parent / path.stem / "subagents").glob("*.jsonl"))
+# Shared with mine_transcripts.py, which cannot import back (rm already imports mt).
+subagent_files = mt.subagent_files
 
 
 def _scan_lines(path: Path, facts: SessionMetrics, *, top_level: bool) -> None:
@@ -150,6 +150,8 @@ def _scan_lines(path: Path, facts: SessionMetrics, *, top_level: bool) -> None:
                     text = mt._text_of(content).strip()
                     if text and not any(marker in text for marker in mt.HARNESS_MARKERS):
                         facts.interactive = True
+                        if entry.get("entrypoint") == mt.SDK_CLI_ENTRYPOINT:
+                            facts.headless = True
 
 
 def scan_metrics_session(path: Path) -> SessionMetrics:
@@ -157,6 +159,8 @@ def scan_metrics_session(path: Path) -> SessionMetrics:
     _scan_lines(path, facts, top_level=True)
     for sub in subagent_files(path):
         _scan_lines(sub, facts, top_level=False)
+    # sdk-cli (claude -p) runs are automated: no correction signal even with text turns.
+    facts.interactive = facts.interactive and not facts.headless
     return facts
 
 

@@ -158,6 +158,52 @@ def test_scan_harness_turns_are_not_human(tmp_path):
     assert rm.scan_metrics_session(path).interactive is False
 
 
+def sdk_cli_human(text, **kw):
+    entry = human(text, **kw)
+    entry["entrypoint"] = "sdk-cli"
+    return entry
+
+
+def test_scan_sdk_cli_entrypoint_is_headless_not_interactive(tmp_path):
+    """A claude -p / roborev job carries no correction signal even with real text."""
+    path = write_session(tmp_path, "s.jsonl", [sdk_cli_human("review this branch")])
+    facts = rm.scan_metrics_session(path)
+    assert facts.headless is True
+    assert facts.interactive is False
+
+
+def test_scan_cli_entrypoint_stays_interactive(tmp_path):
+    entry = human("go")
+    entry["entrypoint"] = "cli"
+    path = write_session(tmp_path, "s.jsonl", [entry])
+    facts = rm.scan_metrics_session(path)
+    assert facts.headless is False
+    assert facts.interactive is True
+
+
+def test_scan_missing_entrypoint_stays_interactive(tmp_path):
+    """Every pre-existing fixture lacks entrypoint; absence must not read as sdk-cli."""
+    path = write_session(tmp_path, "s.jsonl", [human("go")])
+    facts = rm.scan_metrics_session(path)
+    assert facts.headless is False
+    assert facts.interactive is True
+
+
+def test_append_row_excludes_sdk_cli_session_from_denominator(tmp_path):
+    projects = tmp_path / "projects"
+    populate(projects, "cli.jsonl", [human("go"), tool_use("Bash"), tool_error(SLEEP)], ts(2026, 9, 3))
+    populate(
+        projects, "headless.jsonl",
+        [sdk_cli_human("go"), tool_use("Bash"), tool_error(SLEEP)], ts(2026, 9, 4),
+    )
+    reg = write_registry(tmp_path, MINIMAL_REGISTRY)
+    metrics = tmp_path / "metrics.jsonl"
+    row = rm.append_row(metrics_path=metrics, projects_dir=projects, registry_path=reg,
+                        since=ts(2026, 9, 1), now=ts(2026, 9, 7), landed=lambda r: None)
+    assert row["sessions_interactive"] == 1
+    assert row["patterns"]["sleep-block"]["versions"] == {"2.1.259": {"hits": 1, "eligible": 1}}
+
+
 def test_scan_ran_bash(tmp_path):
     with_bash = write_session(tmp_path, "b.jsonl", [human("go"), tool_use("Bash")])
     without = write_session(tmp_path, "r.jsonl", [human("go"), tool_use("Read")])
@@ -181,6 +227,30 @@ def test_scan_isolated_signals(tmp_path, entries):
 def test_scan_not_isolated_by_default(tmp_path):
     path = write_session(tmp_path, "s.jsonl", [human("go"), env_snapshot(False), tool_use("Bash")])
     assert rm.scan_metrics_session(path).isolated is False
+
+
+def tool_success(text, **kw):
+    return line(
+        {
+            "type": "user",
+            "message": {
+                "role": "user",
+                "content": [
+                    {"type": "tool_result", "tool_use_id": "toolu_1", "is_error": False, "content": text}
+                ],
+            },
+        },
+        **kw,
+    )
+
+
+def test_successful_tool_result_matching_detector_text_does_not_count(tmp_path):
+    """kt3x part 2: a passing tool_result that merely echoes a detector string is not a hit."""
+    path = write_session(tmp_path, "s.jsonl", [human("go"), tool_use("Bash"), tool_success(SLEEP)])
+    facts = rm.scan_metrics_session(path)
+    assert facts.errors == []
+    row = rm.build_row([facts], make_patterns(), landed=lambda ref: None, **ROW_KW)
+    assert row["patterns"]["sleep-block"]["versions"] == {"2.1.259": {"hits": 0, "eligible": 1}}
 
 
 def test_scan_collects_error_texts(tmp_path):

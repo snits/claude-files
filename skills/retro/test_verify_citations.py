@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 
+import mine_transcripts as mt
 import verify_citations as vc
 
 
@@ -92,6 +93,16 @@ class TestAnnotationTags:
         result = vc.verify_one(str(path), 1, "[TOOL ERROR] Exit code 2 deposition_spike")
         assert result.status == "OK"
 
+    def test_subagent_tool_error_tag_is_stripped(self, tmp_path):
+        path = write_transcript(tmp_path, [human("Exit code 2 subagent failure")])
+        result = vc.verify_one(str(path), 1, "[SUBAGENT TOOL ERROR] Exit code 2 subagent")
+        assert result.status == "OK"
+
+    def test_headless_tool_error_tag_is_stripped(self, tmp_path):
+        path = write_transcript(tmp_path, [human("ENOENT no such file")])
+        result = vc.verify_one(str(path), 1, "[HEADLESS TOOL ERROR] ENOENT no such file")
+        assert result.status == "OK"
+
     def test_teammate_tag_is_stripped(self, tmp_path):
         path = write_transcript(tmp_path, [human("Another Claude session sent a message")])
         result = vc.verify_one(str(path), 1, "[TEAMMATE] Another Claude session sent")
@@ -147,6 +158,52 @@ class TestVerification:
         }
         path = write_transcript(tmp_path, [entry])
         assert vc.verify_one(str(path), 1, "ENOENT boom").status == "OK"
+
+
+class TestSubagentCitationsResolveEndToEnd:
+    def test_mined_subagent_error_line_verifies_clean(self, tmp_path, capsys):
+        """A [SUBAGENT TOOL ERROR] line straight out of mine_transcripts.py must resolve.
+
+        No text has a stray backtick -- QUOTE stops at the first one, so a quote
+        containing "`" would truncate and the test would prove nothing.
+        """
+        project = tmp_path / "projects" / "-home-jsnitsel-devel-thing"
+        project.mkdir(parents=True)
+        parent = project / "abc.jsonl"
+        parent.write_text(
+            json.dumps({"type": "user", "message": {"role": "user", "content": "go"}}) + "\n"
+        )
+        sub_dir = project / "abc" / "subagents"
+        sub_dir.mkdir(parents=True)
+        (sub_dir / "agent-1.jsonl").write_text(
+            json.dumps(
+                {
+                    "type": "user",
+                    "message": {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "tool_result",
+                                "tool_use_id": "x",
+                                "is_error": True,
+                                "content": "ENOENT no such file or directory boom",
+                            }
+                        ],
+                    },
+                }
+            )
+            + "\n"
+        )
+
+        mt.main(["--projects-dir", str(project.parent), "--days", "7"])
+        mined = capsys.readouterr().out
+        line = next(l for l in mined.splitlines() if "[SUBAGENT TOOL ERROR]" in l)
+        pointer, tag_and_text = line[len("- "):].split(" ", 1)
+
+        report = tmp_path / "r.md"
+        report.write_text(f"- `{pointer}`: `{tag_and_text}`\n")
+        assert vc.main([str(report)]) == 0
+        assert "1 OK" in capsys.readouterr().out
 
 
 class TestReporting:

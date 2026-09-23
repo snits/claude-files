@@ -46,7 +46,9 @@ class Result:
 
 # Tags the prefilter adds to slice entries. Miners copy them along with the
 # text, but they are annotations and appear nowhere in the raw transcript.
-ANNOTATION_TAGS = re.compile(r"\[(?:TOOL ERROR|TEAMMATE)\]:?\s*")
+ANNOTATION_TAGS = re.compile(
+    r"\[(?:SUBAGENT TOOL ERROR|HEADLESS TOOL ERROR|TOOL ERROR|TEAMMATE)\]:?\s*"
+)
 
 
 def _strip_annotations(quote: str) -> str:
