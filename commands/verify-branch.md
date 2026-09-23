@@ -649,3 +649,25 @@ path rather than inventing one — comment the numbered defect list on the kata 
 `needs-review`, and report to Jerry. Do not fix the defects and re-run: this gate is a single
 pass, and an auditor's finding is input to a decision, not a work item you clear on your own
 authority.
+
+**Exception — mechanical BLOCK:** when the sole blocking finding is a mechanical fix with no
+scope or design choice (pq26 ruling, 2026-09-02), fix it on the branch and re-gate once; merge
+on PASS. Re-run with `-rerun` artifact names so both runs survive. **Byte-identical exemption
+(srcx ruling, 2026-09-04):** when the fix provably touched no code — an empty
+`git diff <anchor> <branch>` where the anchor ref was created before the fix and the diff
+output is pasted into the gate record — the test-quality auditor is exempt; the claims and
+scope auditors always re-run. A self-assessed "message-only" is not evidence of an empty diff.
+**Comment-only exemption (srcx ruling, 2026-09-23):** when that diff is non-empty but changes
+only comments, the test-quality auditor does not re-run by default; the claims and scope
+auditors still re-run. "Comment-only" is the lead's judgment, not a mechanical proof, so paste
+the diff into the gate record where the judgment can be checked afterward. The lead may run the
+test-quality auditor anyway when warranted, and records why. Any change beyond comments
+re-runs all three. A mechanical comment-only classifier is filed as `hmrh`, for if this
+judgment gets abused.
+
+**Issue-body BLOCK exemption (w69c ruling, 2026-09-04):** when the sole blocking finding
+targets the kata issue text rather than the branch — a wrong parenthetical, stale line numbers
+in the body, anything the branch cannot fix because it is not on the branch — and the
+correction is fully determined, amend the issue body and merge the bit-identical audited SHA
+with no re-gate. Paste `git rev-parse` of the branch tip before and after into the gate record
+to show nothing moved. This is standing policy, not a judgment call per run.
