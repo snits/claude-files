@@ -11,6 +11,7 @@ from pathlib import Path
 
 import pytest
 
+import mine_transcripts as mt
 import retro_metrics as rm
 
 
@@ -180,6 +181,16 @@ def test_scan_cli_entrypoint_stays_interactive(tmp_path):
     facts = rm.scan_metrics_session(path)
     assert facts.headless is False
     assert facts.interactive is True
+
+
+def test_scan_mixed_entrypoints_count_the_human_turn(tmp_path):
+    """A session begun by claude -p and continued interactively is interactive, as the miner says."""
+    later = human("no, that's the wrong file")
+    later["entrypoint"] = "cli"
+    path = write_session(tmp_path, "s.jsonl", [sdk_cli_human("review this branch"), later])
+    facts = rm.scan_metrics_session(path)
+    assert facts.interactive is True
+    assert mt.scan_session(path).is_interactive is True
 
 
 def test_scan_missing_entrypoint_stays_interactive(tmp_path):

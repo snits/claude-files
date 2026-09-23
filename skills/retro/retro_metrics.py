@@ -149,9 +149,12 @@ def _scan_lines(path: Path, facts: SessionMetrics, *, top_level: bool) -> None:
                 if top_level:
                     text = mt._text_of(content).strip()
                     if text and not any(marker in text for marker in mt.HARNESS_MARKERS):
-                        facts.interactive = True
+                        # Per turn, as mine_transcripts does: an sdk-cli (claude -p) prompt is
+                        # automated, but a later cli turn in the same transcript is a human one.
                         if entry.get("entrypoint") == mt.SDK_CLI_ENTRYPOINT:
                             facts.headless = True
+                        else:
+                            facts.interactive = True
 
 
 def scan_metrics_session(path: Path) -> SessionMetrics:
@@ -159,8 +162,6 @@ def scan_metrics_session(path: Path) -> SessionMetrics:
     _scan_lines(path, facts, top_level=True)
     for sub in subagent_files(path):
         _scan_lines(sub, facts, top_level=False)
-    # sdk-cli (claude -p) runs are automated: no correction signal even with text turns.
-    facts.interactive = facts.interactive and not facts.headless
     return facts
 
 
