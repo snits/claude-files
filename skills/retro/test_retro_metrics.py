@@ -73,6 +73,7 @@ def test_shipped_registry_loads():
         "sleep-block",
         "eval-eq-error",
         "classifier-denial",
+        "zsh-nomatch",
     }
 
 

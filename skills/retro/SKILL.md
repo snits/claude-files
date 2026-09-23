@@ -41,9 +41,11 @@ versions. Read the version split before proposing a remedy for any refusal class
 2026-09-02, 326 of 467 worktree-guard refusals were a harness bug fixed in 2.1.257, not a
 process failure. Patterns and their remedies live in `patterns.toml`; add a remedy's kata
 ref there when the retro approves it, and its landed date follows the issue's close.
-Only interactive sessions (at least one human turn in the top-level transcript) count, so
-headless kata-dispatch runs are excluded, and a session counts in the window it last wrote to,
-not the one it started in.
+Only interactive sessions (at least one human turn in the top-level transcript) count, and a
+session counts in the window it last wrote to, not the one it started in. `claude -p` runs
+(`entrypoint: sdk-cli`: roborev reviews, kata-dispatch) are headless even though their prompt
+looks like a human turn. They and in-process subagents contribute tool errors to the prefilter,
+tagged `[HEADLESS TOOL ERROR]` / `[SUBAGENT TOOL ERROR]`, but never human turns or denominators.
 
 **2. Prefilter (deterministic, do this before dispatching anything).**
 
