@@ -341,6 +341,10 @@ Good names tell a story about the domain:
 
 ## Worktree & Git Hygiene
 
+- **Worktrees live in `<project>/.worktrees/<slug>`** — the normal location, gitignored per project
+  (Jerry ruling, 2026-09-25). This supersedes the 2026-08-16 alexandria "keep using external"
+  ruling (`~/devel/<project>-<slug>`), which was only ever recorded in model memory. Cleanup at
+  branch finish (merge or abandon) is mandatory: `git worktree remove` plus delete the branch.
 - Enter the worktree BEFORE making any edit; if `git rev-parse --show-toplevel` is not the worktree path, stop and cd first.
 - Never use `git add -A`; stage explicit paths so untracked symlinks and scratch files are not swept in.
 - When reverting a deliberately introduced mutant, revert only the mutated file — never `git revert`/`git checkout .` over your own test edits.
