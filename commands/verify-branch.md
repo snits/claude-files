@@ -326,7 +326,8 @@ it can be NON-DISCRIMINATING or UNFALSIFIABLE. The row exists so the verdict lin
 summarize and the artifact says what was looked for: an honest auditor that found nothing must
 not be mistaken, from outside, for one that produced nothing.
 
-For every test added or modified in `<merge-base>..${3}`:
+For every test added or modified in `<merge-base>..${3}` (on a re-gate, only the narrower set
+under "Test-quality re-gate scope" in The verdict; the lead's brief names it):
 
 1. Identify the code path the test covers.
 2. Apply one targeted mutation to that path — invert a condition, change a boundary, return a
@@ -664,6 +665,27 @@ the diff into the gate record where the judgment can be checked afterward. The l
 test-quality auditor anyway when warranted, and records why. Any change beyond comments
 re-runs all three. A mechanical comment-only classifier is filed as `hmrh`, for if this
 judgment gets abused.
+
+**Test-quality re-gate scope (pgns ruling, 2026-09-25).** When the test-quality auditor re-runs
+on a re-gate, whether after a mechanical fix or a fix Jerry ruled on, it does **not** re-sample
+the whole branch. Its scope is two sets:
+
+- (a) tests added or modified in `<previously audited tip>..${3}`;
+- (b) every test named in a blocking finding of the prior run. For each one, it confirms the
+  prior run's mutation now fails and applies one fresh mutation.
+
+The lead pastes the previously audited tip, the prior run's artifact path and the list for (b)
+into the brief. A new survivor inside (a) or (b) blocks under the normal bar. A survivor found
+outside them is **reported, not blocking**: the lead files it as a follow-up issue linked to the
+work item, and the merge proceeds. The claims and scope auditors re-run over the full
+`<merge-base>..${3}` range as before. The re-gate still runs once.
+
+Rationale: mutation sampling over a large branch always finds a fresh survivor somewhere. So a
+re-gate that re-samples everything tests how many mutants the auditor tried, not whether the fix
+worked, and it cannot terminate. orbweaver-rs `rm46` (about 2,300 lines) ran three test-quality
+passes. Each found new, real, pre-existing survivors in tests the previous pass had never
+touched, and none of them came from the fix under re-gate. It took a human stop rule to finish.
+The first run already sampled the whole branch; the re-gate's job is to check the fix.
 
 **Issue-body BLOCK exemption (w69c ruling, 2026-09-04):** when the sole blocking finding
 targets the kata issue text rather than the branch — a wrong parenthetical, stale line numbers
