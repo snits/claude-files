@@ -356,8 +356,8 @@ silently", a rate whose denominator absorbed automated sessions reading as impro
 before a branch touched them (project/2026-09-26/04-43-14-450863.md, rhkmaint-tools); CLAUDE.md
 claims 802 pytest, measured 225, "unexamined discrepancy" (project/2026-09-25/21-07-13-328301.md,
 alexandria); fabricated trailing digits in a pre-registration value
-(user/2026-09-24/12-10-38-010079.md, orbweaver-rs). With the earlier rhkmaint rows this meets the
-ripeness rule (five projects, two months). **Routed, not drafted:** the ledger has held since
+(user/2026-09-24/12-10-38-010079.md, orbweaver-rs). With the earlier rhkmaint-tools and claudes-home rows this
+meets the ripeness rule (four projects: rhkmaint-tools, claudes-home, orbweaver-rs, alexandria). **Routed, not drafted:** the ledger has held since
 09-05 that this is the prose pearl's "born false" half, and the prose pearl already carries
 counts under "Interrogate the shape". Proposed as part of `pearl-prose-amendment-20260927.md`.
 
@@ -556,7 +556,7 @@ two entries. Window instances, five projects with the 09-08 and 09-15 rhkmaint r
 you brief is not a stranger" (user/2026-09-19/22-19-11-107003.md, vault); code reviewers
 isolated from prior reasoning, claims auditors given evidence sources, "do not conflate those
 input policies" (user/2026-09-20/11-48-19-300775.md, hexwalker, **gpt-6-astra**, the first
-non-Claude instance); "Two witnesses who read the same wrong sign are one witness"
+non-Claude instance among the theme's rows; the 09-08 and 09-15 rows are Claude); "Two witnesses who read the same wrong sign are one witness"
 (user/2026-09-23/15-19-34-998789.md, claudes-home); a sealed lead diagnosis beaten by a fresh
 agent's, "Context is not always an advantage" (user/2026-09-26/13-40-57-790377.md, orbweaver-rs).
 Plus the author-chosen mutation family (three projects), which the amendment argues is the same
@@ -900,7 +900,7 @@ verification amendment), "when a knob moves nothing, the knob is in the wrong st
 
 **Ripe this pass:** "a fresh context is not a blind brief" (five projects) → folded into the
 earned-green amendment, not drafted as a new pearl, since it is that pearl's own line. "a count is
-a defect generator" (five projects) → routed to the prose amendment, per the 09-05 ledger note.
+a defect generator" (four projects) → routed to the prose amendment, per the 09-05 ledger note.
 "premise-testing" (4+ projects) → routed as three shapes to the verification and prose amendments.
 No new pearl drafted; none of the three passed the editor's bar for standing apart from an existing
 pearl, and a new pearl would require the full-corpus hunt (arm A + arm B), which this pass did not
