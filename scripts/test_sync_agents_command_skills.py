@@ -2,7 +2,7 @@
 
 Run against real temporary directory trees — no mocks.
 """
-from sync_agents_command_skills import sync
+from sync_agents_command_skills import sync, sync_commands
 
 
 def make_tree(tmp_path):
@@ -68,3 +68,66 @@ def test_missing_skills_root_syncs_nothing(tmp_path):
     (commands / "verify-branch.md").write_text("x\n")
 
     assert sync(commands, tmp_path / "absent") == []
+
+
+def test_linked_skill_file_is_replaced_by_a_copy(tmp_path):
+    # Codex skips a SKILL.md that is a symlink, so a link must become a file.
+    commands, skills = make_tree(tmp_path)
+    (commands / "work-issue.md").write_text("loop\n")
+    (skills / "work-issue").mkdir()
+    (skills / "work-issue" / "SKILL.md").symlink_to(commands / "work-issue.md")
+
+    assert sync(commands, skills) == ["work-issue"]
+    copy = skills / "work-issue" / "SKILL.md"
+    assert not copy.is_symlink()
+    assert copy.read_text() == "loop\n"
+
+
+def make_command_tree(tmp_path):
+    commands = tmp_path / "claude" / "commands"
+    mirror = tmp_path / "agents" / "commands"
+    commands.mkdir(parents=True)
+    mirror.mkdir(parents=True)
+    return commands, mirror
+
+
+def test_stale_command_copy_is_refreshed(tmp_path):
+    commands, mirror = make_command_tree(tmp_path)
+    (commands / "super-do.md").write_text("new\n")
+    (mirror / "super-do.md").write_text("old\n")
+
+    assert sync_commands(commands, mirror) == ["super-do.md"]
+    assert (mirror / "super-do.md").read_text() == "new\n"
+
+
+def test_linked_command_becomes_a_regular_file(tmp_path):
+    commands, mirror = make_command_tree(tmp_path)
+    (commands / "groom.md").write_text("groom\n")
+    (mirror / "groom.md").symlink_to(commands / "groom.md")
+
+    assert sync_commands(commands, mirror) == ["groom.md"]
+    assert not (mirror / "groom.md").is_symlink()
+    assert (mirror / "groom.md").read_text() == "groom\n"
+
+
+def test_identical_command_copy_is_left_alone(tmp_path):
+    commands, mirror = make_command_tree(tmp_path)
+    (commands / "dead-code.md").write_text("same\n")
+    (mirror / "dead-code.md").write_text("same\n")
+
+    assert sync_commands(commands, mirror) == []
+
+
+def test_command_copy_without_a_source_is_untouched(tmp_path):
+    commands, mirror = make_command_tree(tmp_path)
+    (mirror / "orphan.md").write_text("keep\n")
+
+    assert sync_commands(commands, mirror) == []
+    assert (mirror / "orphan.md").read_text() == "keep\n"
+
+
+def test_missing_command_mirror_syncs_nothing(tmp_path):
+    commands, _ = make_command_tree(tmp_path)
+    (commands / "groom.md").write_text("x\n")
+
+    assert sync_commands(commands, tmp_path / "absent") == []
