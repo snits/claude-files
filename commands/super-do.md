@@ -167,7 +167,10 @@ digraph task-implementation-flow {
 	"green phase" -> "implement code";
 	"implement code" -> "did test pass? green";
 	"did test pass? green" -> "implement code" [label="no"];
-	"did test pass? green" -> "code review" [label="yes"];
+	"did test pass? green" -> "mutation test the change" [label="yes"];
+	"mutation test the change" -> "did mutation stay green?";
+	"did mutation stay green" -> "implement test" [label="yes"];
+	"did mutation stay green" -> "code review" [label="no"];
 	"code review" -> "task done" [label="code review passes"];
 	"code review" -> "implement code" [label="code review fails"];
 }
