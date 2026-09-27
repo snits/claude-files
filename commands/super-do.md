@@ -72,8 +72,8 @@ Any one of those is enough — they are triggers, not a score.
 Go straight to the task-implementation flow below, treating the issue's acceptance criteria as the
 task's. Do not route this track through `subagent-driven-development` — that skill gates on having
 an implementation plan and sends you back to brainstorm when there isn't one, which is the cost this
-gate exists to avoid. Implement directly, or dispatch a single subagent with the issue as its brief;
-either way the TDD and code-review steps below still apply. If mid-work it turns out a trigger
+gate exists to avoid. Dispatch the three task roles below with the issue as their brief; the
+code-review step still applies. If mid-work it turns out a trigger
 applies after all, stop and escalate to the full track rather than improvising a design.
 
 **Full track:** run the high-level flow as drawn. The durable record of intent and decisions belongs
@@ -142,42 +142,95 @@ digraph task-implementation-flow {
 	"read the brief" [shape=box];  // the task plan, or the kata issue on the direct track
 	"get clarification on brief" [shape=box];
 	"does the brief have the information you need?" [shape=diamond];
-	"test-driven-development" [shape=box];
-	"red phase" [shape=box];
-	"implement test" [shape=box];
-	"did test pass? red" [shape=diamond];
-	"test review" [shape=diamond];
-	"green phase" [shape=box];
-	"implement code" [shape=box];
-	"did test pass? green" [shape=diamond];
+	"test author: write failing tests, commit" [shape=box];
+	"red for the right reason?" [shape=diamond];
+	"implementer: make tests pass, commit" [shape=box];
+	"implementer reports a test is wrong?" [shape=diamond];
+	"did tests pass? green" [shape=diamond];
+	"mutation agent: choose and run mutations" [shape=box];
+	"any mutant survived?" [shape=diamond];
+	"test author: revise tests, commit" [shape=box];
 	"code review" [shape=diamond];
-	
+	"route each finding to its role" [shape=box];  // test code: test author; production: implementer
+
 	"start task" -> "read the brief";
 	"read the brief" -> "does the brief have the information you need?";
-	"does the brief have the information you need?" -> "test-driven-development" [label="yes"];
+	"does the brief have the information you need?" -> "test author: write failing tests, commit" [label="yes"];
 	"does the brief have the information you need?" -> "get clarification on brief" [label="no"];
 	"get clarification on brief" -> "does the brief have the information you need?";
-	"test-driven-development" -> "red phase";
-	"red phase" -> "implement test";
-	"implement test" -> "did test pass? red";
-	"did test pass? red" -> "implement test" [label="yes"];
-	"did test pass? red" -> "test review" [label="no"];
-	"test review" -> "implement test" [label="review failed"]; 
-	"test review" -> "green phase" [label="review passed"];
-	"green phase" -> "implement code";
-	"implement code" -> "did test pass? green";
-	"did test pass? green" -> "implement code" [label="no"];
-	"did test pass? green" -> "mutation test the change" [label="yes"];
-	"mutation test the change" -> "did mutation stay green?";
-	"did mutation stay green" -> "implement test" [label="yes"];
-	"did mutation stay green" -> "code review" [label="no"];
+	"test author: write failing tests, commit" -> "red for the right reason?";
+	"red for the right reason?" -> "test author: write failing tests, commit" [label="no"];
+	"red for the right reason?" -> "implementer: make tests pass, commit" [label="yes"];
+	"implementer: make tests pass, commit" -> "implementer reports a test is wrong?";
+	"implementer reports a test is wrong?" -> "test author: revise tests, commit" [label="yes"];
+	"implementer reports a test is wrong?" -> "did tests pass? green" [label="no"];
+	"test author: revise tests, commit" -> "did tests pass? green";
+	"did tests pass? green" -> "implementer: make tests pass, commit" [label="no"];
+	"did tests pass? green" -> "mutation agent: choose and run mutations" [label="yes"];
+	"mutation agent: choose and run mutations" -> "any mutant survived?";
+	"any mutant survived?" -> "test author: revise tests, commit" [label="yes"];
+	"any mutant survived?" -> "code review" [label="no"];
 	"code review" -> "task done" [label="code review passes"];
-	"code review" -> "implement code" [label="code review fails"];
+	"code review" -> "route each finding to its role" [label="code review fails"];
+	"route each finding to its role" -> "did tests pass? green";
 }
+
+## The three task roles
+
+Every task that changes behavior is three separate dispatches: a **test author** writes the tests,
+an **implementer** makes them pass, and a **mutation agent** tries to break the change without the
+tests noticing. The split exists because one agent choosing both the fixture and the mutation lands
+its mutations exactly where its fixture already discriminates. orbweaver-rs 2026-09-24: five vacuous
+tests from symmetric fixtures, and *"Every one survived the implementer's own red-first check,
+because the implementer chose a mutation its fixture happened to catch. Reviewers found them by
+choosing their own mutation."* The same shape recurred that week in rhkmaint-tools and alexandria
+(kata claudes-home `ek3q`, Jerry ruling 2026-09-27).
+
+A task with no testable behavior change (docs, comments, a renamed constant, a message string) skips
+the split. Say so in one line naming what the task changes, then dispatch one implementer and run
+the code review.
+
+**Each role commits its own work, and the commits are the handoff.** `T` is the test author's
+latest commit and `I` the implementer's. Before dispatching the mutation agent, the lead reads
+`git diff T..I` and confirms no hunk edits test code, including inline test modules such as Rust
+`#[cfg(test)]`. A hunk that does goes back to the implementer to remove. The mutation agent works
+from a detached worktree at the latest commit.
+
+- **Test author (Opus).** Input: the brief and its acceptance criteria, plus the files the tests
+  will exercise. On the first pass it gets no implementation. It may add signature-only stubs so
+  the tests compile, but no logic. **Red for the right reason** is the lead's check on that first
+  pass: each new test fails on its assertion, not on a compile error, a missing fixture, or a filter
+  that selected zero tests. For a test of "which source feeds X", the fixture makes every candidate
+  source's value distinct. On a revision (a surviving mutant, a test the implementer reported
+  wrong, or a review finding in test code), the implementation is in the tree. When a revision
+  answers a surviving mutation, the test author shows the revised test fails under it: apply the
+  mutation, run the test red, and undo the mutation with the inverse edit.
+- **Implementer (Sonnet).** Input: the brief, the tests at `T`, and their red run. **It does not
+  edit test code.** If a test looks wrong (a bad oracle, an impossible fixture, a contradiction
+  with the brief), it commits what it has, stops, and reports why, and the test author revises.
+- **Mutation agent (Opus).** Input: the brief, the task's diff, and the tests. It does not see the
+  implementer's report or the test author's reasoning. For each test, it picks a mutation of the
+  production code that the test claims to catch. It aims at the plausible wrong implementation,
+  such as reading the neighbouring source, flipping a branch, or dropping a call, not only at
+  constants. It applies each mutation, runs the test, records the failing assertion line or
+  `SURVIVED`, and undoes the mutation. Its brief copies the containment rules from verify-branch's
+  test-quality auditor brief: where its detached worktree goes and its removal afterward, its own
+  build output, and the cwd assertion. It also states: **undo each mutation with the inverse edit,
+  never `git checkout -- <file>`**.
+
+**Cap each loop in this flow at three passes.** On the fourth, stop and escalate as the code review
+gate describes.
+
+Under the full track, this flow replaces `subagent-driven-development`'s per-task loop
+(implementer, status handling, fix subagent). Its implementer prompt tells the implementer to write
+tests, so the lead replaces that instruction: the tests are provided at `T` and are read-only. Its
+task reviewer prompt serves as the code review, held to the bar below. The branch-level
+test-quality audit in `/verify-branch` still runs. The per-task mutation agent catches weak tests one task earlier, while
+they are cheap to fix. It does not replace the gate.
 
 ## The code review gate
 
-The `code review -> implement code` edge is a loop, so it needs a bar that says which findings
+The `code review` failure edges are a loop, so it needs a bar that says which findings
 send you back, and a cap that says when to stop going around.
 
 **The bar does not move: any finding of severity critical or high fails the review.** Medium and
@@ -193,7 +246,7 @@ scenario is not a finding. This is the fence that stops a review loop from turni
 search for new work (the YAML-validation kata ran six rounds into tag/alias edge cases nobody
 asked about).
 
-**A critical or high finding inside the diff is fixed by the implementer without asking.** The
+**A critical or high finding inside the diff is fixed without asking**, by the implementer, or by the test author when the finding is in test code. The
 bar blocks the *merge*, not the fix. Escalate to Jerry only when the fix requires a design
 ruling between two defensible options. Jerry ruling, 2026-09-02 retro, after three interrupts in
 one session: "every blocking defect was something you could've fixed without waiting for me."
