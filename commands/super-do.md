@@ -202,12 +202,15 @@ from a detached worktree at the latest commit.
   pass: each new test fails on its assertion, not on a compile error, a missing fixture, or a filter
   that selected zero tests. For a test of "which source feeds X", the fixture makes every candidate
   source's value distinct. **The first-pass commit carries a `Red-phase: <issue ref>` trailer** on
-  its own line, beside `Signed-off-by:` and `Assisted-by:`. Any commit that lands tests red with no
-  implementation behind them gets one; nothing else does, revisions included. Projects whose
-  `.roborev.toml` sets `excluded_commit_patterns = ["\nred-phase:"]` skip review of these commits,
-  which otherwise draw an F from every reviewer and an auto-filed issue apiece (rhkmaint-tools
-  `p1kg`). The trailer must start its line: the pattern is anchored on the newline. On a revision (a surviving mutant, a test the implementer reported
-  wrong, or a review finding in test code), the implementation is in the tree. When a revision
+  its own line, beside `Signed-off-by:` and `Assisted-by:`. The test author sees only the brief
+  you write, so **the first-pass brief states that trailer line verbatim**, with the issue ref
+  filled in. Only a commit that lands tests red with no implementation behind them gets it;
+  revisions and implementer commits do not. Projects whose `.roborev.toml` sets
+  `excluded_commit_patterns = ["\nred-phase:"]` skip review of these commits, which otherwise
+  draw an F from every reviewer and an auto-filed issue apiece (rhkmaint-tools `p1kg`). The
+  trailer must start its line: the pattern is anchored on the newline. On a revision (a
+  surviving mutant, a test the implementer reported wrong, or a review finding in test code), the
+  implementation is in the tree. When a revision
   answers a surviving mutation, the test author shows the revised test fails under it: apply the
   mutation, run the test red, and undo the mutation with the inverse edit.
 - **Implementer (Sonnet).** Input: the brief, the tests at `T`, and their red run. **It does not
