@@ -6,6 +6,10 @@ description: loop for working kata issues
 Take the next ready kata issue (`kata next --unowned`) that carries neither a `needsinfo` nor a
 `needs-decision` label.
 
+If it carries `roborev`, prefer the first unowned issue from `kata ready --no-label roborev` that
+passes the same check; a roborev finding is worked only when nothing else is ready (retro
+2026-10-07 C3: roborev files at priority 2, hand-filed issues mostly carry none).
+
 **Skip both.** A `needsinfo` issue is waiting on `triage-issue`; a `needs-decision` issue is
 waiting on Jerry. Neither is waiting on you. Passing over them is the whole point of the labels —
 re-examining one and re-applying the label every cycle is a loop that makes no progress and buries

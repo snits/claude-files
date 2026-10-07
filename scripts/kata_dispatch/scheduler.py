@@ -1,7 +1,10 @@
 """Pure selection: the next dispatchable issue whose surface is disjoint from every running one.
 
-Narrow surfaces are considered before WILDCARD ones, original order preserved within each
-group. A WILDCARD overlaps everything, so it is only ever pickable with no agent running --
+Issues filed by roborev (label `roborev`) are considered after every human-filed one, and within
+each of those groups narrow surfaces come before WILDCARD ones, original order preserved. roborev
+files its findings at priority 2 while hand-filed issues mostly carry none, so a priority-ordered
+ready list hands a dispatch run review findings first; on 2026-09-29 one run spent its whole cap
+closing six of them with no code change while nine simplify issues sat ready (retro 2026-10-07 C3). A WILDCARD overlaps everything, so it is only ever pickable with no agent running --
 taking it while slots are free would idle the whole pool behind one issue that could have
 waited. Deferring it costs the WILDCARD queue time and nothing else.
 """
@@ -39,7 +42,7 @@ def pick(candidates, running_surfaces, exclude):
     skipped = []
     # One stable sort, not two passes: two passes would re-append every narrow candidate's
     # skip reason whenever the first pass found no pick.
-    for c in sorted(candidates, key=lambda c: c.surface == WILDCARD):
+    for c in sorted(candidates, key=lambda c: ("roborev" in c.labels, c.surface == WILDCARD)):
         if c.ref in exclude:
             skipped.append((c.ref, "excluded")); continue
         if c.owner:

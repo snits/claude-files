@@ -226,6 +226,17 @@ from a detached worktree at the latest commit.
   build output, and the cwd assertion. It also states: **undo each mutation with the inverse edit,
   never `git checkout -- <file>`**.
 
+**Every brief in this flow carries two more blocks.** A sweep line: *"Sweep for every changed
+name, flag, or claim across the whole tree — docs/, README, CLAUDE.md, and doc comments included,
+not only the source directory you were pointed at — and report the grep you ran."* A brief that
+names the directories the lead already knows bounds the sweep to those directories: rhkmaint-tools
+`mg53`, `bpsp`, and `c2bt` each went stale on the same `docs/user-guide.md` sentence class because
+each brief scoped the grep to `rhgit/src` (retro 2026-10-07 C6). And a tool contract, four lines:
+the shell tool is `Bash`, capital B; `Read` takes one integer `offset` plus a `limit`, never a
+range; `Edit` needs a unique `old_string` or `replace_all`; reports come back as message text,
+never as files. Those four shapes cost about 70 wasted subagent turns across three projects in
+one two-week window (retro 2026-10-07 C7).
+
 **Cap each loop in this flow at three passes.** On the fourth, stop and escalate as the code review
 gate describes.
 

@@ -10,7 +10,8 @@
 name = "worktree-guard-shape"
 detector = "(?s)^(?!.*working directory resolved to the shared checkout).*isolated in the worktree"
 eligible = "isolated"
-remedies = [{ ref = "8j5h" }, { ref = "jhby" }]
+# 59jn tracks the 2.1.284/.285 false positives (rhgit substring, heredocs, computed operands) — retro 2026-10-07 C1
+remedies = [{ ref = "8j5h" }, { ref = "jhby" }, { ref = "59jn" }]
 
 [[pattern]]
 name = "worktree-cwd-trap"

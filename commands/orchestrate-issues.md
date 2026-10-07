@@ -30,6 +30,12 @@ Then **read the selected issue's labels and skip it yourself** if it carries `ne
 `needs-decision`, or `deferred`. Say in the ledger that you skipped it and which label did it.
 
 The check is redundant with the query on purpose, because the query cannot be trusted to do it.
+
+**roborev findings go last.** If the selected issue carries the `roborev` label, run
+`kata ready --no-label roborev --json` and take the first unowned issue there that passes the
+same label check instead; dispatch a roborev finding only when nothing else is ready. roborev
+files at priority 2 and hand-filed issues mostly carry none, so `kata next` serves review findings
+first (retro 2026-10-07 C3). Use one `--no-label` per query — kata honors only the first.
 **kata honors only the *first* `--no-label`; every later one is accepted without error and
 ignored** (`1ycz` — huma decodes the param non-exploded, so it reads one occurrence and splits
 that one on commas). Three flags filter one label. Do not "simplify" this back into a repeatable

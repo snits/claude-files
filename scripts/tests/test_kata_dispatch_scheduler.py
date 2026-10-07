@@ -59,3 +59,17 @@ def test_candidates_from_ready_reads_both_label_shapes():
     cs = scheduler.candidates_from_ready(ready, surface_fn=lambda t, b: frozenset({"f"}), epic_fn=lambda r: r == "c")
     assert [c.ref for c in cs] == ["a", "b", "c"]
     assert cs[0].labels == frozenset({"deferred"}) and cs[1].owner == "z" and cs[2].is_epic and cs[2].priority == 2
+
+
+def test_roborev_filed_issues_are_picked_after_every_human_filed_one():
+    rr = cand("rr", {"a.py"}, labels=frozenset({"roborev", "review-finding"}))
+    human_wild = cand("hw", WILDCARD)
+    human = cand("h", {"b.py"})
+    picked, _ = scheduler.pick([rr, human_wild, human], running_surfaces=[], exclude=set())
+    assert picked.ref == "h"
+    # a human-filed WILDCARD still outranks a roborev narrow one when the pool is idle
+    picked, _ = scheduler.pick([rr, human_wild], running_surfaces=[], exclude=set())
+    assert picked.ref == "hw"
+    # with an agent running, the WILDCARD cannot be picked and the roborev issue is next
+    picked, _ = scheduler.pick([rr, human_wild], running_surfaces=[frozenset({"z.py"})], exclude=set())
+    assert picked.ref == "rr"
