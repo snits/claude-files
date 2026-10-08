@@ -44,16 +44,16 @@ Four checks, in order, and each one that fails ends the work here:
 4. **Sibling claim.** The issue's owner is you (`kata whoami --as` matches) or unowned. Owned by
    another live actor means move on.
 
-Run each check as its own Bash call, or as its own block inside one call headed by an `echo` line
-naming the check. Check 2 is two commands, the `--grep` and the equivalent-change search, each under
-its own header. Post one PRE-FLIGHT comment on the issue covering the checks run, quoting each
-command with its output directly under it, so the reader sees the artifact and not a summary of it.
-A yes/no reading ("grep empty") comes from the quoted output under that check's header, never from
-the absence of lines in a mixed output and never from an exit code (`git log` exits 0 whether or not
-`--grep` matched). The incident behind this: claudes-home `f6ec`, from m83h (2026-10-08) — one call
-ran the `--grep` and a `git log -5 -- gate.py` with no separator, and two pre-flight claims read off
-the merged list ("grep empty", "last changed in e2f04c7feece") were false; the claim-verifier caught
-both and the gate blocked.
+Run each check as its own Bash call or as its own block inside one call, either way headed by an
+`echo` line naming the check. Check 2 is two commands, the `--grep` and the equivalent-change
+search, each under its own header. Post one PRE-FLIGHT comment on the issue covering the checks run,
+quoting each command with its output directly under it, so the reader sees the artifact and not a
+summary of it. A yes/no reading ("grep empty") comes from the quoted output under that check's
+header, never from the absence of lines in a mixed output and never from an exit code (`git log`
+exits 0 whether or not `--grep` matched). The incident behind this: claudes-home `f6ec`, from m83h
+(2026-10-08) — one call ran the `--grep` and a `git log -5 -- gate.py` with no separator, and two
+pre-flight claims read off the merged list ("grep empty", "last changed in e2f04c7feece") were
+false; the claim-verifier caught both and the gate blocked.
 
 Then report all four results in one line each in chat before the first edit (the full commands and
 output belong in the issue comment, not in chat). The history behind this: a
