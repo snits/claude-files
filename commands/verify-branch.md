@@ -130,7 +130,7 @@ Before dispatch, write the context every auditor shares to one file in the artif
 `<primary-checkout>/.scratchpad/{YYYYMMDD}-vb-common-{branch}.md`. Not `verify-branch-common`:
 `scripts/kata_dispatch/gate.py` counts every `*verify-branch*.md` naming the branch as an artifact.
 
-Line 1 is a token that goes into this file and nowhere else — not a brief, not this conversation.
+Line 1 is a token that is never written into a brief.
 Write it from the shell so it is never printed, then append the contents listed under "The common
 file carries" below:
 
@@ -152,7 +152,8 @@ pasted so a reader can check the judgment, last line exactly `VERDICT: PASS`. Th
 because the headless gate (`scripts/kata_dispatch/gate.py`) counts three artifacts and reads the
 last line of each. The record follows the artifact rules: when the range touches this file
 ("Establish the base first") the `briefed from` line is line 1, `Brief-token:` stays line 2, and
-`SKIPPED BY LEAD` moves to line 3; the `wc -c` / `tail -1` / `sed -n 2p` check ("The write"); the
+`SKIPPED BY LEAD` moves to line 3; the `wc -c` / `tail -1` check ("The write") and
+`[ "$(sed -n 2p <path>)" = "$(head -1 <common file>)" ]`; the
 `-rerun` names on a re-gate ("The verdict"). If tests are touched, dispatch all three.
 Claim-verifier and scope-auditor dispatch on every merge regardless of size (5m96 ruling,
 2026-09-16).
@@ -284,7 +285,7 @@ The auditor cannot see this conversation, so it reads what its brief points it a
   option and record the deviation.
 - The tool contract from `/super-do`: the shell tool is `Bash`, capital B; `Read` takes one
   integer `offset` plus a `limit`, never a range; `Edit` needs a unique `old_string` or
-  `replace_all`. Its fourth line does not apply here: the artifact is a file by design.
+  `replace_all`.
 
 ### 1. claim-verifier — Sonnet
 
@@ -502,7 +503,7 @@ be made to land, returns that table inline for the lead to persist. Either is co
 happening is a real outcome with its own classification below, not an impossibility.
 
 **Line 2 of the artifact file must be exactly line 1 of the common file, `Brief-token: <token>`;
-line 1 is a heading, or the `briefed from` line when the range touches this file. The last line of
+line 1 is the common file's `briefed from` line when it has one, otherwise a heading. The last line of
 the artifact file must be exactly `VERDICT: PASS` or `VERDICT: BLOCK`**, and
 an auditor that wrote a file confirms both with `sed -n 2p` and `tail -1` before returning. The returned report
 ends with the same line. Both, not either: the line was previously specified against the returned
@@ -538,7 +539,7 @@ shapes — do not apply to an agent that has no sandbox to leave.
 **A write is not done when it is attempted. It is done when it is verified.** This survives the
 ladder's removal because it was never about isolation: a `cat > file` heredoc has been recorded
 writing a **zero-byte file at exit 0 with no error**, so an unchecked success is not a success.
-After writing, confirm both:
+After writing, confirm all three:
 
 ```
 wc -c <path>      # non-empty
@@ -546,7 +547,7 @@ tail -1 <path>    # exactly VERDICT: PASS or VERDICT: BLOCK
 sed -n 2p <path>  # Brief-token: matches line 1 of the common file
 ```
 
-**If either check fails, the file is residue — delete it before doing anything else.** A
+**If any check fails, the file is residue — delete it before doing anything else.** A
 half-landed write (zero-byte, or truncated short of its verdict line) is not nothing: the lead
 reads it as an empty or unreadable artifact and blocks, so leaving it behind turns a failed write
 into a block that nothing later can undo, however complete the table you go on to return. `rm -f
@@ -608,8 +609,7 @@ only when the destination holds nothing.** Search for the basename under `.claud
 and do it *before* removing any leftover audit tree, or the removal takes the artifact with it.
 
 **When an auditor returns inline, the lead persists the report verbatim at the expected path
-with a provenance header after its line 2** (an inline report carries the artifact's first two
-lines) naming the auditor, why the write did not land, and that the lead
+with a provenance header after its line 2** naming the auditor, why the write did not land, and that the lead
 transcribed it. That header is the evidentiary distinction the artifact rule exists to preserve:
 it marks the file as a transcription rather than an auditor-written artifact, so a later reader
 is not misled about which it is.
@@ -622,9 +622,11 @@ alongside "unreadable": it is the one shape that looks like delivery from outsid
 whose line 2 does not match line 1 of the common file of the run that wrote it is **BLOCK** under
 the same rule, recorded as "auditor did not read the common file"; the inline report does not
 recover it. Compare without printing the token:
-`[ "$(sed -n 2p <artifact>)" = "$(head -1 <common file>)" ]`.
+`[ "$(sed -n 2p <artifact>)" = "$(head -1 <common file>)" ]`. The headless gate
+(scripts/kata_dispatch/gate.py) does not yet check line 2; kata claudes-home#m83h tracks that.
 
-**One exception, and only one.** A complete table carrying a literal `VERDICT:` line that arrives
+**One exception, and only one.** A complete table carrying `Brief-token:` as its second line and a
+literal `VERDICT:` line (without the token it is BLOCK under the same rule) that arrives
 **inline** because the write could not be made to land, and which the lead persists verbatim with
 a provenance header, counts as delivered. A write that failed is not a dropped report, and reading
 it as one manufactures a BLOCK with nothing to do with the branch under audit. What the rule
@@ -691,8 +693,8 @@ authority.
 **Exception — mechanical BLOCK:** when every blocking finding is a mechanical fix with no
 scope or design choice (pq26 ruling, 2026-09-02; extended from "the sole finding" to "every
 finding" by the my88 ruling, 2026-10-07), fix them on the branch and re-gate once; merge on
-PASS. Re-run with `-rerun` artifact names so both runs survive, and a `-rerun` common file with a
-fresh token; an artifact carried forward from the first run is checked against the first run's
+PASS. Re-run with `-rerun` artifact names so both runs survive, and a `-rerun` common file
+(`{YYYYMMDD}-vb-common-{branch}-rerun.md`) with a fresh token; an artifact carried forward from the first run is checked against the first run's
 common file. The count of findings is not a
 proxy for judgment: two wording-only findings escalate no more than one. Whether each fix is
 genuinely mechanical is the lead's judgment, so paste the fix diff into the gate record where
