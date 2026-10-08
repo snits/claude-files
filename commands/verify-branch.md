@@ -273,7 +273,10 @@ The auditor cannot see this conversation, so it reads what its brief points it a
 - Its own artifact path and its own audit-worktree path.
 - **For the test-quality auditor: the mutation the maintainer already ran**, taken from the
   commit message or the issue, with the instruction to pick a different one — or an explicit
-  statement that none was run, which is the normal case on a branch that adds no tests.
+  statement that none was run, which is the normal case on a branch that adds no tests. On a
+  re-gate, also the previously audited tip, the prior run's artifact path, and the list of
+  tests named in the prior run's blocking findings ("Test-quality re-gate scope" under The
+  verdict).
 - **For the scope auditor: the reference the branch is checked against and a list of its
   elements — or an explicit statement that no reference exists.** Reference parity makes MISSING
   a blocking category, so an auditor handed nothing cannot tell an absent reference from a
