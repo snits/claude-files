@@ -216,10 +216,11 @@ from a detached worktree at the latest commit.
   source's value distinct. A test that pins a validation pattern (a regex, a format check, a
   length-and-alphabet rule) carries, in the first pass, one rejecting case per axis the pattern
   constrains: too short, too long, wrong case, wrong alphabet, leading junk, trailing junk,
-  surrounding whitespace. The author sees only the brief, so **the first-pass brief lists those
-  axes** (claudes-home `bxbd`, m83h 2026-10-08: the TOKEN_RE test took two gate runs to find a
-  missing length case, then a missing alphabet case, under a docstring claiming "exactly 16
-  lowercase hex"). **The first-pass commit carries a `Red-phase: <issue ref>` trailer** on
+  surrounding whitespace; **the first-pass brief names the axes that pattern constrains**, and the
+  author writes no case for an axis it omits (claudes-home `bxbd`, m83h 2026-10-08: the TOKEN_RE
+  test took two gate runs to find a missing length case, then a missing alphabet case, under a
+  docstring claiming "exactly 16 lowercase hex").
+  **The first-pass commit carries a `Red-phase: <issue ref>` trailer** on
   its own line, beside `Signed-off-by:` and `Assisted-by:`. The test author sees only the brief
   you write, so **the first-pass brief states that trailer line verbatim**, with the issue ref
   filled in. Only a commit that lands tests red with no implementation behind them gets it;
