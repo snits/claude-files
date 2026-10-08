@@ -129,9 +129,12 @@ line.
 test function or block. `git diff --name-only <merge-base>..${3}` only tells you which files to
 look inside; a changed test file whose test functions are untouched (a fixture module, a helper)
 still counts as none, and a diff that only *deletes* tests counts as none — there is nothing left
-to mutate. If there are none, do not dispatch the test-quality auditor; record
-`NO-TESTS-IN-DIFF (searched: <what>)` in the gate record with the diff/grep command and its output
-pasted, so a reader can check the judgment. If tests are touched, dispatch all three.
+to mutate. If there are none, do not dispatch the test-quality auditor; write the skip record to
+that auditor's artifact path, `<primary-checkout>/.scratchpad/{YYYYMMDD}-verify-branch-test-quality-auditor-{branch}.md`.
+First line `SKIPPED BY LEAD — NO-TESTS-IN-DIFF (searched: <command>)`, then the command's output
+pasted so a reader can check the judgment, last line exactly `VERDICT: PASS`. The file exists
+because the headless gate (`scripts/kata_dispatch/gate.py`) counts three artifacts and reads the
+last line of each. If tests are touched, dispatch all three.
 Claim-verifier and scope-auditor dispatch on every merge regardless of size (5m96 ruling,
 2026-09-16).
 
@@ -650,7 +653,7 @@ a PASS; report them and merge.
 
 **On PASS:** say so, name the merge base SHA, the dispatched auditors' artifact paths, and any recorded
 non-finding outcome (a skipped test-quality auditor appears as `NO-TESTS-IN-DIFF` with the
-lead's search named, and its skip record counts as that auditor's artifact), and proceed to the merge.
+lead's search named; its artifact is the skip record written at dispatch), and proceed to the merge.
 
 **On BLOCK:** do not merge and do not close the issue. Take `/super-do`'s existing escalation
 path rather than inventing one — comment the numbered defect list on the kata issue, label it
