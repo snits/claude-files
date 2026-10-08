@@ -136,6 +136,8 @@ file carries" below:
 
 ```
 printf 'Brief-token: %s\n' "$(openssl rand -hex 8)" > <common file>
+# append the contents with a quoted heredoc (<<'EOF') or Edit, never Write — Write replaces the token line
+head -1 <common file> | grep -qE '^Brief-token: [0-9a-f]{16}$' || echo "token lost: rewrite the file"
 ```
 
 ## The auditors — dispatch concurrently, one message, one Agent call each
@@ -153,7 +155,7 @@ because the headless gate (`scripts/kata_dispatch/gate.py`) counts three artifac
 last line of each. The record follows the artifact rules: when the range touches this file
 ("Establish the base first") the `briefed from` line is line 1, `Brief-token:` stays line 2, and
 `SKIPPED BY LEAD` moves to line 3; the `wc -c` / `tail -1` check ("The write") and
-`[ "$(sed -n 2p <path>)" = "$(head -1 <common file>)" ]`; the
+`t=$(head -1 <common file>); [ -n "$t" ] && [ "$(sed -n 2p <path>)" = "$t" ]`; the
 `-rerun` names on a re-gate ("The verdict"). If tests are touched, dispatch all three.
 Claim-verifier and scope-auditor dispatch on every merge regardless of size (5m96 ruling,
 2026-09-16).
@@ -219,7 +221,7 @@ The auditor cannot see this conversation, so it reads what its brief points it a
   this file is scoped to `<merge-base>..<branch under audit>`, so the branch is an expanded name,
   never a placeholder: substituting `HEAD` for an unexpanded one empties the range, every auditor
   audits nothing, and every auditor returns PASS.
-- The target branch and the primary checkout path.
+- The primary checkout path.
 - **The blocking / non-blocking bar, pasted in full** (the "what blocks, and what is only
   reported" section). Each auditor's Verdict rule says "apply the bar above" — an auditor that
   never receives it improvises the split, which is precisely the drift the bar was centralised
@@ -239,13 +241,14 @@ The auditor cannot see this conversation, so it reads what its brief points it a
   one before dispatch, and cite the resolved path. Observed 2026-09-07 on rhkmaint-tools `ebbv`,
   where a cited matrix existed only inside the feature worktree and survived only because an
   auditor noticed and read it live.
-- **That an auditor's cwd is the primary checkout and is not on `${3}`; that if it needs to
-  execute or mutate code it creates its own detached worktree at `${3}` under the primary
-  checkout's `.claude/worktrees/` and removes it when done; and that borrowing any other tree —
-  the primary checkout, an implementer's worktree, a sibling auditor's — is prohibited.** Every
+- **The worktree rule, pasted in full: that an auditor's cwd is the primary checkout and is not
+  on `${3}`; that if it needs to execute or mutate code it creates its own detached worktree at
+  `${3}` under the primary checkout's `.claude/worktrees/` and removes it when done; and that
+  borrowing any other tree — the primary checkout, an implementer's worktree, a sibling
+  auditor's — is prohibited.** Every
   auditor gets this, not only the mutation auditor: the one that improvised into a live tree was
   the claim-verifier, which had not been told.
-- **The cwd assertion, for every auditor — not only the mutation auditor.**
+- **The cwd assertion, pasted in full, for every auditor — not only the mutation auditor.**
   Nothing sandboxes these agents — their cwd is the live primary checkout — so the instruction
   not to borrow another tree is the only thing standing between a mis-stepped `cd` and a command
   running against real work. An instruction is not a control; assert it and fail closed:
@@ -270,7 +273,7 @@ The auditor cannot see this conversation, so it reads what its brief points it a
   token.
 - **The auditor's own section from this file — Role, procedure, output-table columns, and
   verdict rule — pasted in full.** The common file is context; this is the task.
-- Its own artifact path and its own audit-worktree name.
+- Its own artifact path and its own audit-worktree path.
 - **For the test-quality auditor: the mutation the maintainer already ran**, taken from the
   commit message or the issue, with the instruction to pick a different one — or an explicit
   statement that none was run, which is the normal case on a branch that adds no tests.
@@ -506,7 +509,7 @@ happening is a real outcome with its own classification below, not an impossibil
 line 1 is the common file's `briefed from` line when it has one, otherwise a heading. The last line of
 the artifact file must be exactly `VERDICT: PASS` or `VERDICT: BLOCK`**, and
 an auditor that wrote a file confirms both with `sed -n 2p` and `tail -1` before returning. The returned report
-ends with the same line. Both, not either: the line was previously specified against the returned
+ends with the same line. Both places, not either: the line was previously specified against the returned
 message and consumed from the file, so an auditor that complied exactly produced a verdict-less
 artifact and the rule below read its own ambiguity as a BLOCK. Measured three times — orbweaver-rs
 `37f3`/`ywpn` (2026-09-02, claim-verifier) and the `g45s` gate (2026-09-07, claim-verifier, where
@@ -622,7 +625,7 @@ alongside "unreadable": it is the one shape that looks like delivery from outsid
 whose line 2 does not match line 1 of the common file of the run that wrote it is **BLOCK** under
 the same rule, recorded as "auditor did not read the common file"; the inline report does not
 recover it. Compare without printing the token:
-`[ "$(sed -n 2p <artifact>)" = "$(head -1 <common file>)" ]`. The headless gate
+`t=$(head -1 <common file>); [ -n "$t" ] && [ "$(sed -n 2p <artifact>)" = "$t" ]`. The headless gate
 (scripts/kata_dispatch/gate.py) does not yet check line 2; kata claudes-home#m83h tracks that.
 
 **One exception, and only one.** A complete table carrying `Brief-token:` as its second line and a
@@ -680,7 +683,7 @@ is a defect, and neither has a `file:line` to cite.
 override, no majority, and no "two of three is close enough." A PASS carrying non-blocking findings is still
 a PASS; report them and merge.
 
-**On PASS:** say so, name the merge base SHA, the common file path, the dispatched auditors' artifact paths, and any recorded
+**On PASS:** say so, name the merge base SHA, the common file path(s), the dispatched auditors' artifact paths, and any recorded
 non-finding outcome (a skipped test-quality auditor appears as `NO-TESTS-IN-DIFF` with the
 lead's search named; its artifact is the skip record written at dispatch), and proceed to the merge.
 
