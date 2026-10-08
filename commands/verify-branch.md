@@ -211,6 +211,8 @@ scratchpad store, so a checkout beneath it is swept in wholesale — the failure
 scratchpad conventions call out, and a git worktree is exactly the shape the type allowlist
 cannot see. `.scratchpad` holds the artifact *file*; `.claude/worktrees/` holds the trees.
 
+The auditor cannot see this conversation, so it reads what its brief points it at.
+
 **The common file carries** (from the branch copy of this file when the range touches it — see
 "Establish the base first"):
 
