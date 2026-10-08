@@ -1,6 +1,6 @@
 ---
 name: verify-branch
-description: Pre-merge gate — three concurrent auditors on claims, test discrimination, and scope. Any BLOCK stops the merge.
+description: Pre-merge gate — claim and scope auditors on every merge, plus a test-quality auditor when the diff touches tests. Any BLOCK stops the merge.
 ---
 
 Verify a branch before it merges. Arguments: `${1}` = target branch (the merge-base side),
@@ -16,8 +16,8 @@ than failing, which silently targets another project.
 places and `HEAD` means different things in each. Under `/super-do` the session sits on the
 feature branch, so `HEAD` would work. Under `/orchestrate-issues` the orchestrator runs from the
 repo root **where the target branch is checked out** — there `git merge-base <target> HEAD`
-returns the target's own tip, the range is empty, every auditor audits nothing, and all three
-return PASS. That is not a degraded gate; it is a gate that silently passes everything, which is
+returns the target's own tip, the range is empty, every auditor audits nothing, and every
+auditor returns PASS. That is not a degraded gate; it is a gate that silently passes everything, which is
 indistinguishable from a gate that never ran.
 
 Measured 2026-08-30 on a fixture with `main` checked out and a 4-file `dirty-branch` pending:
@@ -26,7 +26,7 @@ Measured 2026-08-30 on a fixture with `main` checked out and a 4-file `dirty-bra
 own cwd, which matters because an auditor's cwd is the primary checkout and nothing guarantees
 that is parked on the ref you meant.
 
-Invoking this command IS the user's request to task subagents. Dispatch the three below without
+Invoking this command IS the user's request to task subagents. Dispatch the auditors below without
 stopping to ask.
 
 ## The bar — what blocks, and what is only reported
@@ -84,13 +84,13 @@ git merge-base ${1} ${3}
 git rev-parse --show-toplevel        # the PRIMARY checkout, not a worktree
 ```
 
-Every auditor scopes to `<merge-base>..${3}` — the named branch, never `HEAD`. Compute it once, paste the SHA into all three
-briefs, and never let an auditor recompute it — three auditors deriving their own base is three
-chances to audit a different diff than the one being merged.
+Every auditor scopes to `<merge-base>..${3}` — the named branch, never `HEAD`. Compute it once, paste the SHA into every
+brief, and never let an auditor recompute it — each auditor deriving its own base is another
+chance to audit a different diff than the one being merged.
 
 **Compute the artifact directory here too, as an absolute path in the primary checkout, and
 paste that absolute path into each brief.** Do not write `${PROJECT_ROOT}/.scratchpad/` into a
-brief and leave the agent to expand it. All three auditors work from an audit worktree they create
+brief and leave the agent to expand it. Every auditor works from an audit worktree they create
 themselves, where that variable expands to the *audit tree's* root — so an artifact written
 through it lands inside a tree that is removed when the audit ends, taking the report with it. An
 absolute path in the primary checkout is outside every audit tree and survives their removal.
@@ -115,7 +115,7 @@ git diff --name-only <merge-base>..${3} -- commands/verify-branch.md   # non-emp
 git show ${3}:commands/verify-branch.md                                # brief from THIS text
 ```
 
-Everything you paste into the three briefs from this file comes from the branch copy, not from
+Everything you paste into the briefs from this file comes from the branch copy, not from
 the file you are reading now. Each brief opens with one line naming the source, and each auditor
 writes it as the first line of its artifact: `briefed from <branch>:commands/verify-branch.md at
 <tip SHA>, not the main copy`, with both expanded by you (`git rev-parse ${3}` gives the SHA),
@@ -123,9 +123,19 @@ never left for the auditor. That line is what keeps a branch approving itself
 under its own rules visible to the reader of the artifacts; it never touches the `VERDICT:` last
 line.
 
-## The three auditors — dispatch concurrently, one message, three Agent calls
+## The auditors — dispatch concurrently, one message, one Agent call each
 
-All three run in parallel. **None of them takes `isolation: "worktree"`.** Isolation was removed
+**Decide the dispatch set first.** Establish whether `<merge-base>..${3}` adds or modifies any
+test function or block. `git diff --name-only <merge-base>..${3}` only tells you which files to
+look inside; a changed test file whose test functions are untouched (a fixture module, a helper)
+still counts as none, and a diff that only *deletes* tests counts as none — there is nothing left
+to mutate. If there are none, do not dispatch the test-quality auditor; record
+`NO-TESTS-IN-DIFF (searched: <what>)` in the gate record with the diff/grep command and its output
+pasted, so a reader can check the judgment. If tests are touched, dispatch all three.
+Claim-verifier and scope-auditor dispatch on every merge regardless of size (5m96 ruling,
+2026-09-16).
+
+Every dispatched auditor runs in parallel. **None of them takes `isolation: "worktree"`.** Isolation was removed
 deliberately (kata `claudes-home#jhby`, Jerry ruling 2026-09-08) — it generated the large majority
 of worktree-guard refusals on record while protecting nothing, because since
 e3580619a8eb ("gate: give every verify-branch auditor its own detached worktree") every auditor
@@ -139,7 +149,7 @@ that is the target branch, and the branch under audit is somewhere else entirely
 reads source files from its cwd is therefore reading the wrong tree, and one that tries to *run*
 the code finds the files simply absent. Nothing announces this.
 
-**So every brief states that fact, and all three auditors create a detached worktree at `${3}`
+**So every brief states that fact, and every dispatched auditor creates a detached worktree at `${3}`
 and work from it.** Each has its own reason: the test-quality auditor mutates, the claim-verifier
 runs commands to verify `COMMAND_RESULT` claims, and the scope auditor's `ls-files` check reads
 the index of whatever tree it runs in. An auditor that genuinely only reads the diff loses
@@ -185,7 +195,7 @@ Every brief carries, verbatim (from the branch copy of this file when the range 
   branch as an expanded name — not the target branch, which no auditor command uses, and never
   a placeholder for the agent to expand. A brief that reaches an auditor still holding an
   unexpanded placeholder invites the one recovery this gate forbids by name: substituting
-  `HEAD` empties the range, every auditor audits nothing, and all three return PASS.
+  `HEAD` empties the range, every auditor audits nothing, and every auditor returns PASS.
 - **The auditor's own section from this file — Role, procedure, output-table columns, and
   verdict rule — pasted in full.** Everything else on this list is context; this is the task.
   The agent cannot read this file, so a brief carrying only a bar, a path and an issue body
@@ -218,11 +228,11 @@ Every brief carries, verbatim (from the branch copy of this file when the range 
 - **That its cwd is the primary checkout and is not on `${3}`; that if it needs to execute or
   mutate code it creates its own detached worktree at `${3}` under the primary checkout's
   `.claude/worktrees/` and removes it when done; and that borrowing any other tree — the primary
-  checkout, an implementer's worktree, a sibling auditor's — is prohibited.** All three auditors
-  get this, not only the mutation auditor: the one that improvised into a live tree was the
+  checkout, an implementer's worktree, a sibling auditor's — is prohibited.** Every auditor
+  gets this, not only the mutation auditor: the one that improvised into a live tree was the
   claim-verifier, which had not been told.
 
-- **The cwd assertion, verbatim, in ALL THREE briefs — not only the mutation auditor's.**
+- **The cwd assertion, verbatim, in EVERY brief — not only the mutation auditor's.**
   Nothing sandboxes these agents — their cwd is the live primary checkout — so the instruction
   not to borrow another tree is the only thing standing between a mis-stepped `cd` and a command
   running against real work. An instruction is not a control; assert it and fail closed:
@@ -234,7 +244,7 @@ Every brief carries, verbatim (from the branch copy of this file when the range 
   Run it after `cd`, immediately before the first command that runs or changes anything, and
   abort on mismatch rather than continuing.
 
-  **All three, because all three can run commands.** The claim-verifier follows `verify-claims`,
+  **Every auditor, because each can run commands.** The claim-verifier follows `verify-claims`,
   which categorises claims as `COMMAND_RESULT` and verifies them by running the command — and it
   is the auditor that actually improvised into a live tree on hexweave `enb2`. The scope auditor
   runs `git ls-files` against a working tree. Scoping this to the mutation auditor would leave the
@@ -312,17 +322,13 @@ This is the containment. On hexweave `enb2` an auditor that found its own tree w
 in the implementer's live worktree instead; it reverted correctly, but a dropped revert there
 merges a mutation into the target branch.
 
-**First establish whether the diff adds or modifies any test function or block.** That is the
-deciding question; `git diff --name-only <merge-base>..${3}` only tells you which files to look
-inside, and a changed test file whose test functions are untouched (a fixture module, a helper)
-still counts as none. A diff that only *deletes* tests also counts as none — there is nothing
-left to mutate. Name what you searched. **If there are none, the mutation procedure does not
+**The lead has already answered whether the diff adds or modifies any test function or block
+(see "The auditors").** If you were dispatched and find none, name what you searched. **Then the
+mutation procedure does not
 run — not its numbered steps, not the suite-run and cold-build contingency, not the "Also
 report, without mutating" checks; the Output template and the Verdict rule still apply.** Emit
 the output table with a single row — `NO-TESTS-IN-DIFF (searched: <what>) | — | — | — |
-NO-TESTS-IN-DIFF` — and write it to the artifact as the table. A
-docs-only, config-only, or prose-only branch has no test discrimination to audit, and nothing on
-it can be NON-DISCRIMINATING or UNFALSIFIABLE. The row exists so the verdict line has a table to
+NO-TESTS-IN-DIFF` — and write it to the artifact as the table. The row exists so the verdict line has a table to
 summarize and the artifact says what was looked for: an honest auditor that found nothing must
 not be mistaken, from outside, for one that produced nothing.
 
@@ -631,19 +637,20 @@ hold refs alive, they confuse the next `git worktree list`, and on the next gate
 
 ## The verdict
 
-Aggregate into one PASS or BLOCK and a single numbered defect list across all three auditors,
+Aggregate into one PASS or BLOCK and a single numbered defect list across the dispatched auditors,
 most severe first, each entry naming its auditor, its `file:line`, and whether it is **blocking**
 or **reported**. Non-blocking findings still appear in the list — suppressing them would make
 this gate the only reviewer that saw them. A recorded non-finding outcome — `N/A` on reference
 parity, `NO-TESTS-IN-DIFF` — is named in the PASS or BLOCK statement and not numbered: neither
 is a defect, and neither has a `file:line` to cite.
 
-**PASS requires all three to return PASS.** Any BLOCK is a BLOCK — there is no override, no
-majority, and no "two of three is close enough." A PASS carrying non-blocking findings is still
+**PASS requires every dispatched auditor to return PASS.** Any BLOCK is a BLOCK — there is no
+override, no majority, and no "two of three is close enough." A PASS carrying non-blocking findings is still
 a PASS; report them and merge.
 
-**On PASS:** say so, name the merge base SHA, the three artifact paths, and any recorded
-non-finding outcome, and proceed to the merge.
+**On PASS:** say so, name the merge base SHA, the dispatched auditors' artifact paths, and any recorded
+non-finding outcome (a skipped test-quality auditor appears as `NO-TESTS-IN-DIFF` with the
+lead's search named, and its skip record counts as that auditor's artifact), and proceed to the merge.
 
 **On BLOCK:** do not merge and do not close the issue. Take `/super-do`'s existing escalation
 path rather than inventing one — comment the numbered defect list on the kata issue, label it
@@ -663,7 +670,7 @@ only comments, the test-quality auditor does not re-run by default; the claims a
 auditors still re-run. "Comment-only" is the lead's judgment, not a mechanical proof, so paste
 the diff into the gate record where the judgment can be checked afterward. The lead may run the
 test-quality auditor anyway when warranted, and records why. Any change beyond comments
-re-runs all three. A mechanical comment-only classifier is filed as `hmrh`, for if this
+re-runs every auditor the dispatch rule calls for. A mechanical comment-only classifier is filed as `hmrh`, for if this
 judgment gets abused.
 
 **Test-quality re-gate scope (pgns ruling, 2026-09-25).** When the test-quality auditor re-runs

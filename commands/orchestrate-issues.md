@@ -114,7 +114,7 @@ git -C <repo-root> worktree remove <agent-worktree>
 ```
 
 **This does not make you the reviewer.** Running the gate is not adjudicating it: you dispatch
-three auditors, read their artifacts, and act on the verdict mechanically — PASS lands, BLOCK
+the auditors, read their artifacts, and act on the verdict mechanically — PASS lands, BLOCK
 escalates. You never decide whether a finding is really a defect, never fix one, and never
 re-run the gate hoping for a better answer. That distinction is what keeps "you never implement
 and you never review" true while the gate sits in your half of the flow. If you find yourself

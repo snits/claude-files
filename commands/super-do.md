@@ -366,7 +366,7 @@ behavior, or that you judge a false positive, is noted rather than applied.
 `/verify-branch ${2} ${1} <your-branch>` runs between the last completed task and the merge.
 **Name your branch as the third argument — never let the gate infer it from `HEAD`.**
 **It is mandatory. No branch merges without a PASS.** Invoking
-`/super-do` is the request that authorizes its three subagents, exactly as it authorizes the code
+`/super-do` is the request that authorizes its auditor subagents, exactly as it authorizes the code
 review gate — it is not optional and needs no separate approval.
 
 **When the caller owns the merge, the caller owns the gate.** Under `/orchestrate-issues` the
@@ -384,7 +384,7 @@ fourth review pass would not have found any of them.
 not the path — that is precisely the fourth attempt `/super-do` already refuses.
 
 - **PASS** — merge with the `--ff` procedure this command's opening paragraph states, then name
-  the merge base SHA and the three artifact paths in the outcome comment on the issue.
+  the merge base SHA and the dispatched auditors' artifact paths in the outcome comment on the issue.
   **Do not route the merge through `finishing-a-development-branch`.** That skill presents a
   four-option menu and waits for a choice, which is the opposite instruction to merge-on-PASS; its
   Option 1 then runs `git checkout <base-branch>` and a plain `git merge`, contradicting both the
