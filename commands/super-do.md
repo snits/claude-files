@@ -384,20 +384,21 @@ Three constraints are load-bearing:
   generalize" is a design critique of an implementation that already cleared per-task review.
   File it (with `needs-decision` when two defensible depths exist); do not restructure the
   branch.
-- **Design fence: the approved design's must-keep elements are not simplification candidates.**
-  The simplify brief carries a fence of two lists, written separately. Must exist: every element
-  the approved design requires — its acceptance list at minimum — or, on the direct track, the
-  issue's acceptance criteria. A sentence or rule the design requires is listed as skipped, never
-  cut. Body frozen: functions or sections whose body must not change, listed only when the lead
-  puts them there deliberately; an implementation-phase ruling on how to build something ("add X
-  as a sibling helper rather than changing Y") is not one on its own, since removing
-  cross-duplication inside such a body is what the pass is for. On claudes-home `b731`
-  (2026-10-08) the pass deleted the one sentence the spec required as the replacement for a false
-  mechanism; the lead restored it in 36fc126d3060 ("verify-branch: keep the line stating why the
-  auditor reads the common file"). On `7v3y`, from m83h (2026-10-08), the fence listed an
-  implementation ruling under must-keep, the pass read it as being about the helper's existence
-  and folded the body into a shared helper, and the lead had to record a CHANGED element before
-  the scope auditor would pass it.
+- **Design fence: must-exist elements and frozen bodies are not simplification candidates.** The
+  simplify brief carries the fence as two lists, written separately. Must exist: every element the
+  approved design requires — its acceptance list at minimum — or, on the direct track, the issue's
+  acceptance criteria; the agent keeps each one present with its behavior and may still simplify
+  its body. A sentence or rule the design requires is listed as skipped, never cut. Body frozen:
+  functions or sections the agent does not edit at all, listed only when the lead puts them there
+  deliberately. An implementation-phase ruling on how to build something ("add X as a sibling
+  helper rather than changing Y") makes X a must-exist item, not a frozen body for X or Y, unless
+  the lead says the body itself must not change; folding duplicated logic across such bodies is
+  what the pass is for. On claudes-home `b731` (2026-10-08) the pass deleted the one sentence the
+  spec required as the replacement for a false mechanism; the lead restored it in 36fc126d3060
+  ("verify-branch: keep the line stating why the auditor reads the common file"). On m83h
+  (2026-10-08, ruled in `7v3y`) the fence listed such a ruling under must-keep, the pass folded Y's
+  body into a shared helper, and the lead had to record a CHANGED element before the scope auditor
+  would pass it.
 
 Skipping a finding is fine — same rule as `/simplify`: anything that would change intended
 behavior, or that you judge a false positive, is noted rather than applied.
