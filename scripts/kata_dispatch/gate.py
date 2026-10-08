@@ -1,9 +1,9 @@
 """Run /verify-branch headlessly from the primary checkout and read its artifacts, fail closed.
 
 The skill writes `<primary>/.scratchpad/{YYYYMMDD}-verify-branch-{auditor}-{branch}.md`, each
-ending in `VERDICT: PASS|BLOCK`. Three artifacts; the test-quality one is the lead's
-`SKIPPED BY LEAD — NO-TESTS-IN-DIFF` record when the diff touches no tests. A missing artifact or a missing VERDICT line
-is a BLOCK recorded as "no verdict", never a pass.
+ending in `VERDICT: PASS|BLOCK`. Three artifacts; the test-quality one is the
+lead's `SKIPPED BY LEAD — NO-TESTS-IN-DIFF` record when the diff touches no tests. A missing
+artifact or a missing VERDICT line is a BLOCK recorded as "no verdict", never a pass.
 """
 import re
 import subprocess
@@ -42,7 +42,9 @@ def _artifacts_since(repo: Path, ref: str, branch: str, since: float) -> list[Pa
     return sorted(out)
 
 
-BUDGET_USD = 15.0     # per gate session; up to three auditors run inside it (test-quality may be the lead's NO-TESTS-IN-DIFF skip record)
+# per gate session; up to three auditors run inside it (test-quality may be the lead's
+# NO-TESTS-IN-DIFF skip record)
+BUDGET_USD = 15.0
 
 
 def run_gate(repo, ref: str, branch: str, target: str, model: str, log_path: Path,

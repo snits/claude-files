@@ -134,7 +134,10 @@ that auditor's artifact path, `<primary-checkout>/.scratchpad/{YYYYMMDD}-verify-
 First line `SKIPPED BY LEAD — NO-TESTS-IN-DIFF (searched: <command>)`, then the command's output
 pasted so a reader can check the judgment, last line exactly `VERDICT: PASS`. The file exists
 because the headless gate (`scripts/kata_dispatch/gate.py`) counts three artifacts and reads the
-last line of each. If tests are touched, dispatch all three.
+last line of each. The record follows the artifact rules: the `briefed from` line first and
+`SKIPPED BY LEAD` second when the range touches this file ("Establish the base first"), the
+`wc -c` / `tail -1` check ("The write"), the `-rerun` name on a re-gate ("The verdict"). If tests
+are touched, dispatch all three.
 Claim-verifier and scope-auditor dispatch on every merge regardless of size (5m96 ruling,
 2026-09-16).
 
@@ -325,9 +328,8 @@ This is the containment. On hexweave `enb2` an auditor that found its own tree w
 in the implementer's live worktree instead; it reverted correctly, but a dropped revert there
 merges a mutation into the target branch.
 
-**The lead has already answered whether the diff adds or modifies any test function or block
-(see "The auditors").** If you were dispatched and find none, name what you searched. **Then the
-mutation procedure does not
+**You were dispatched because the lead found test changes in the diff.** If you find none, name
+what you searched. **Then the mutation procedure does not
 run — not its numbered steps, not the suite-run and cold-build contingency, not the "Also
 report, without mutating" checks; the Output template and the Verdict rule still apply.** Emit
 the output table with a single row — `NO-TESTS-IN-DIFF (searched: <what>) | — | — | — |
