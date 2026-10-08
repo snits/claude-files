@@ -21,6 +21,17 @@ V_EVAL = (f"This agent is isolated in the worktree {WT}, but this command runs a
 V_ENV = (f"This agent is isolated in the worktree {WT}, but this command runs python after PYTHONPATH is set "
          f"here to a value that configures what it loads or runs at startup inside a construct too complex to "
          f"verify, so what it runs cannot be shown not to be git.{TAIL}")
+# Verbatim Claude Code 2.1.293 refusal texts (captured 2026-10-07, kata 59jn), with paths substituted.
+TAIL_AGENT = " Refusing to run it — a worktree-isolated agent's git operations must target its own worktree."
+V_COMPUTED_PY = (f"This agent is isolated in the worktree {WT}, but this command runs python with a value computed "
+                 f"at runtime (the variable S) (a computed argument goes after the script or --) where it cannot "
+                 f"tell which operand is the program, next to an operand or input computed at runtime in a plain "
+                 f"command, so what it runs cannot be shown not to be git.{TAIL_AGENT} Run the plain command from {WT}.")
+V_COMPUTED_SED = (f"This agent is isolated in the worktree {WT}, but this command runs sed with a value computed at "
+                  f"runtime (the variable F) where an option may stand (a value that is not double-quoted, or whose "
+                  f"first character is matched or computed rather than spelled out, may begin with -; put -- before "
+                  f"it) in a plain command, so what it runs cannot be shown not to be git.{TAIL_AGENT} Run the plain "
+                  f"command from {WT}.")
 V_CWD = (f"This session is isolated in the worktree {WT}, but this command's working directory resolved to the "
          f"shared checkout ({SHARED}). Refusing to run it there — a worktree-isolated session's commands "
          f"must run inside its worktree.")
@@ -84,6 +95,20 @@ def test_eval():
 def test_env_prefix_substitution():
     text = coach("PYTHONPATH=$(pwd)/src python3 -m pytest -q 2>&1 | tail -3", V_ENV)
     assert "environment prefix is refused" in text
+
+
+def test_computed_operand_python_names_double_dash():
+    text = coach('S=$(pwd); python3 "$S/splice.py" in.md', V_COMPUTED_PY)
+    assert "python -- " in text
+    assert "($S)" in text
+    assert "Allowed: plain git" not in text
+
+
+def test_computed_operand_sed_names_double_dash():
+    text = coach("F=report.md; sed -n '1p' $F", V_COMPUTED_SED)
+    assert "sed -- " in text
+    assert "($F)" in text
+    assert "Allowed: plain git" not in text
 
 
 def test_fallback_lists_shapes():

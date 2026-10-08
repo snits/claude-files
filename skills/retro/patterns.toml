@@ -10,7 +10,9 @@
 name = "worktree-guard-shape"
 detector = "(?s)^(?!.*working directory resolved to the shared checkout).*isolated in the worktree"
 eligible = "isolated"
-# 59jn tracks the 2.1.284/.285 false positives (rhgit substring, heredocs, computed operands) — retro 2026-10-07 C1
+# 59jn (closed 2026-10-07): the 2.1.284/.285 false positives (rhgit substring, heredocs) no longer fire on
+# 2.1.293 (live probe). A computed $VAR operand still refuses by design; the guard text names the fix
+# (-- before it) and the coach now relays it. No changelog entry 2.1.283..2.1.293 explains the split.
 remedies = [{ ref = "8j5h" }, { ref = "jhby" }, { ref = "59jn" }]
 
 [[pattern]]

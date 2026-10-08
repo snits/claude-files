@@ -15,6 +15,7 @@ GIT_C_RE = re.compile(r"\bgit\s+-C\s+(\S+)")
 GIT_SUBST_RE = re.compile(r"\$\(\s*git\b|`\s*git\b")
 EVAL_RE = re.compile(r"(?:^|[\s;&|(])eval\b")
 ENV_PREFIX_SUBST_RE = re.compile(r"^\s*(?:[A-Za-z_]\w*=\S*\s+)*[A-Za-z_]\w*=\S*\$\([^()]*\)[^\s;&|]*\s+[A-Za-z]")
+COMPUTED_OPERAND_RE = re.compile(r"runs (\S+) with a value computed at runtime \(the variable (\w+)\)")
 SEGMENT_SPLIT_RE = re.compile(r"\s*(?:&&|\|\||;|\||\n)\s*")
 CD_RE = re.compile(r"^\(?\s*cd\s+(\S+)")
 
@@ -28,6 +29,10 @@ GIT_SUBST = ("$(git …) inside a string is refused in an isolated worktree. Run
 EVAL = "eval is refused in an isolated worktree. Write the command literally."
 ENV_PREFIX = ("A $(…) inside an environment prefix is refused. Compute the value in its own Bash "
               "call, then pass the literal.")
+COMPUTED_OPERAND = ("{prog} is given a computed operand (${var}) the guard cannot read. Put -- before it, "
+                    "`{prog} -- \"${var}…\"`, or spell the path out literally. Double-quoting alone is not enough "
+                    "for an interpreter's script path (python3 \"$S/x.py\" is still refused); for other commands "
+                    "either quoting or -- satisfies the guard.")
 FALLBACK = ("Refused in an isolated worktree: git -C <other>, cd <other>; git, $(git …), eval, and "
             "$(…) in an env prefix. Allowed: plain git, &&, ;, pipes, heredocs, loops. Run the "
             "command from {wt} without those shapes.")
@@ -80,6 +85,9 @@ def classify(command: str, error: str, wt: str) -> str:
         return ENV_PREFIX
     if "names git in a form too complex" in error:
         return GIT_SUBST
+    m = COMPUTED_OPERAND_RE.search(error)
+    if m:
+        return COMPUTED_OPERAND.format(prog=m.group(1), var=m.group(2))
     # 2. Generic "too complex" text: read the command for the shape.
     m = GIT_C_RE.search(command)
     if m and is_elsewhere(m.group(1), wt):
