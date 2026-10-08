@@ -84,16 +84,17 @@ git merge-base ${1} ${3}
 git rev-parse --show-toplevel        # the PRIMARY checkout, not a worktree
 ```
 
-Every auditor scopes to `<merge-base>..${3}` — the named branch, never `HEAD`. Compute it once, paste the SHA into every
-brief, and never let an auditor recompute it — each auditor deriving its own base is another
-chance to audit a different diff than the one being merged.
+Every auditor scopes to `<merge-base>..${3}` — the named branch, never `HEAD`. Compute it once,
+write the SHA into the common file, and never let an auditor recompute it — each auditor deriving
+its own base is another chance to audit a different diff than the one being merged.
 
 **Compute the artifact directory here too, as an absolute path in the primary checkout, and
-paste that absolute path into each brief.** Do not write `${PROJECT_ROOT}/.scratchpad/` into a
-brief and leave the agent to expand it. Every auditor works from an audit worktree they create
-themselves, where that variable expands to the *audit tree's* root — so an artifact written
-through it lands inside a tree that is removed when the audit ends, taking the report with it. An
-absolute path in the primary checkout is outside every audit tree and survives their removal.
+use that absolute path for the common file and every artifact path.** Do not write
+`${PROJECT_ROOT}/.scratchpad/` into a brief or the common file and leave the agent to expand it.
+Every auditor works from an audit worktree they create themselves, where that variable expands to
+the *audit tree's* root — so an artifact written through it lands inside a tree that is removed
+when the audit ends, taking the report with it. An absolute path in the primary checkout is
+outside every audit tree and survives their removal.
 
 ```
 mkdir -p "$(git rev-parse --show-toplevel)/.scratchpad"
@@ -115,13 +116,27 @@ git diff --name-only <merge-base>..${3} -- commands/verify-branch.md   # non-emp
 git show ${3}:commands/verify-branch.md                                # brief from THIS text
 ```
 
-Everything you paste into the briefs from this file comes from the branch copy, not from
-the file you are reading now. Each brief opens with one line naming the source, and each auditor
-writes it as the first line of its artifact: `briefed from <branch>:commands/verify-branch.md at
-<tip SHA>, not the main copy`, with both expanded by you (`git rev-parse ${3}` gives the SHA),
-never left for the auditor. That line is what keeps a branch approving itself
-under its own rules visible to the reader of the artifacts; it never touches the `VERDICT:` last
-line.
+Everything you paste into the common file and the briefs from this file comes from the branch
+copy, not from the file you are reading now. The common file carries one line naming the source,
+directly after its token line, and each auditor writes it as the first line of its artifact:
+`briefed from <branch>:commands/verify-branch.md at <tip SHA>, not the main copy`, with both
+expanded by you (`git rev-parse ${3}` gives the SHA), never left for the auditor. That line is what
+keeps a branch approving itself under its own rules visible to the reader of the artifacts; it
+never touches the `Brief-token:` second line or the `VERDICT:` last line.
+
+### The common file
+
+Before dispatch, write the context every auditor shares to one file in the artifact directory:
+`<primary-checkout>/.scratchpad/{YYYYMMDD}-vb-common-{branch}.md`. Not `verify-branch-common`:
+`scripts/kata_dispatch/gate.py` counts every `*verify-branch*.md` naming the branch as an artifact.
+
+Line 1 is a token that goes into this file and nowhere else — not a brief, not this conversation.
+Write it from the shell so it is never printed, then append the contents listed under "The common
+file carries" below:
+
+```
+printf 'Brief-token: %s\n' "$(openssl rand -hex 8)" > <common file>
+```
 
 ## The auditors — dispatch concurrently, one message, one Agent call each
 
@@ -131,13 +146,14 @@ look inside; a changed test file whose test functions are untouched (a fixture m
 still counts as none, and a diff that only *deletes* tests counts as none — there is nothing left
 to mutate. If there are none, do not dispatch the test-quality auditor; write the skip record to
 that auditor's artifact path, `<primary-checkout>/.scratchpad/{YYYYMMDD}-verify-branch-test-quality-auditor-{branch}.md`.
-First line `SKIPPED BY LEAD — NO-TESTS-IN-DIFF (searched: <command>)`, then the command's output
+Line 1 `SKIPPED BY LEAD — NO-TESTS-IN-DIFF (searched: <command>)`, line 2 the common file's line 1
+(`head -1 <common file> >> <path>`, so the token is never printed), then the command's output
 pasted so a reader can check the judgment, last line exactly `VERDICT: PASS`. The file exists
 because the headless gate (`scripts/kata_dispatch/gate.py`) counts three artifacts and reads the
-last line of each. The record follows the artifact rules: the `briefed from` line first and
-`SKIPPED BY LEAD` second when the range touches this file ("Establish the base first"), the
-`wc -c` / `tail -1` check ("The write"), the `-rerun` name on a re-gate ("The verdict"). If tests
-are touched, dispatch all three.
+last line of each. The record follows the artifact rules: when the range touches this file
+("Establish the base first") the `briefed from` line is line 1, `Brief-token:` stays line 2, and
+`SKIPPED BY LEAD` moves to line 3; the `wc -c` / `tail -1` / `sed -n 2p` check ("The write"); the
+`-rerun` names on a re-gate ("The verdict"). If tests are touched, dispatch all three.
 Claim-verifier and scope-auditor dispatch on every merge regardless of size (5m96 ruling,
 2026-09-16).
 
@@ -155,7 +171,7 @@ that is the target branch, and the branch under audit is somewhere else entirely
 reads source files from its cwd is therefore reading the wrong tree, and one that tries to *run*
 the code finds the files simply absent. Nothing announces this.
 
-**So every brief states that fact, and every dispatched auditor creates a detached worktree at `${3}`
+**So the common file states that fact, and every dispatched auditor creates a detached worktree at `${3}`
 and work from it.** Each has its own reason: the test-quality auditor mutates, the claim-verifier
 runs commands to verify `COMMAND_RESULT` claims, and the scope auditor's `ls-files` check reads
 the index of whatever tree it runs in. An auditor that genuinely only reads the diff loses
@@ -179,7 +195,7 @@ tree the report is about. The lead still sweeps for leftovers after aggregating,
 an auditor that died before cleaning up; an auditor that cannot remove its tree says so in
 `Deviations` and names the path.
 
-**Borrowing another tree is prohibited — say so in the brief.** Not the primary checkout, not an
+**Borrowing another tree is prohibited — say so in the common file.** Not the primary checkout, not an
 implementer's worktree, not a sibling auditor's. The failure this closes: on hexweave `enb2` the
 claim-verifier needed to run mutations, found its own worktree on `main` without the branch's
 files, and ran them in the **implementer's live worktree** instead. It reverted correctly and the
@@ -193,52 +209,42 @@ scratchpad store, so a checkout beneath it is swept in wholesale — the failure
 scratchpad conventions call out, and a git worktree is exactly the shape the type allowlist
 cannot see. `.scratchpad` holds the artifact *file*; `.claude/worktrees/` holds the trees.
 
-Every brief carries, verbatim (from the branch copy of this file when the range touches it — see
+The auditor cannot see this conversation, so it reads what its brief points it at.
+
+**The common file carries** (from the branch copy of this file when the range touches it — see
 "Establish the base first"):
 
 - **The merge-base SHA, and the branch under audit named literally.** Every auditor command in
-  this file is scoped to `<merge-base>..<branch under audit>`, so the brief must carry that
-  branch as an expanded name — not the target branch, which no auditor command uses, and never
-  a placeholder for the agent to expand. A brief that reaches an auditor still holding an
-  unexpanded placeholder invites the one recovery this gate forbids by name: substituting
-  `HEAD` empties the range, every auditor audits nothing, and every auditor returns PASS.
-- **The auditor's own section from this file — Role, procedure, output-table columns, and
-  verdict rule — pasted in full.** Everything else on this list is context; this is the task.
-  The agent cannot read this file, so a brief carrying only a bar, a path and an issue body
-  hands it no work to do.
-- The kata ref, the issue body text, **and any issue comments that record a scope, design, or
-  verification decision** (paste them — the agent cannot see this conversation, and handing it
-  only a ref invites it to invent the scope it is auditing against). The comments are not
-  optional padding: the scope auditor's verdict rule treats "recorded in the issue" as
-  exonerating for a CHANGED reference element, and the
-  claim-verifier is told below that its extraction sources include the issue's comments. An
-  auditor given only the body cannot check either, and scores a recorded decision as a finding.
-- **The artifact path it must write, the write-and-verify rule, and the verdict-line rule**
-  (all three under "Artifacts" below). Paste them into the brief rather than citing them — the
-  agent cannot read this file. Omitting the verdict-line rule is the specific mistake that
-  reintroduces the defect this gate was fixed for: the auditor never learns the last line must
-  be the literal string, and the aggregator's `tail -1` then finds no verdict and blocks.
-- **For the test-quality auditor: the mutation the maintainer already ran**, taken from the
-  commit message or the issue, with the instruction to pick a different one — or an explicit
-  statement that none was run, which is the normal case on a branch that adds no tests.
-- **Every input path the brief cites, resolved into the primary checkout first.** A brief that
-  points an auditor at a matrix, fixture, or prior report living under a feature worktree cites
-  something that dies when that tree is cleaned. The rule the "Establish the base" step applies
-  to outputs applies to inputs: copy or resolve each one before dispatch, and cite the resolved
-  path. Observed 2026-09-07 on rhkmaint-tools `ebbv`, where a cited matrix existed only inside
-  the feature worktree and survived only because an auditor noticed and read it live.
+  this file is scoped to `<merge-base>..<branch under audit>`, so the branch is an expanded name,
+  never a placeholder: substituting `HEAD` for an unexpanded one empties the range, every auditor
+  audits nothing, and every auditor returns PASS.
+- The target branch and the primary checkout path.
 - **The blocking / non-blocking bar, pasted in full** (the "what blocks, and what is only
   reported" section). Each auditor's Verdict rule says "apply the bar above" — an auditor that
   never receives it improvises the split, which is precisely the drift the bar was centralised
   to prevent.
-- **That its cwd is the primary checkout and is not on `${3}`; that if it needs to execute or
-  mutate code it creates its own detached worktree at `${3}` under the primary checkout's
-  `.claude/worktrees/` and removes it when done; and that borrowing any other tree — the primary
-  checkout, an implementer's worktree, a sibling auditor's — is prohibited.** Every auditor
-  gets this, not only the mutation auditor: the one that improvised into a live tree was the
-  claim-verifier, which had not been told.
-
-- **The cwd assertion, verbatim, in EVERY brief — not only the mutation auditor's.**
+- **The write-and-verify rule and the verdict-line rule, pasted in full** (both under
+  "Artifacts" below). Omitting the verdict-line rule reintroduces the defect this gate was fixed
+  for: the aggregator's `tail -1` finds no verdict and blocks.
+- The kata ref, the issue body text, **and any issue comments that record a scope, design, or
+  verification decision.** Handed only a ref, an auditor invents the scope it is auditing
+  against. The comments are not optional padding: the scope auditor's verdict rule treats
+  "recorded in the issue" as exonerating for a CHANGED reference element, and the
+  claim-verifier is told below that its extraction sources include the issue's comments. An
+  auditor given only the body cannot check either, and scores a recorded decision as a finding.
+- **Every input path an auditor will cite, resolved into the primary checkout first.** A matrix,
+  fixture, or prior report living under a feature worktree dies when that tree is cleaned. The
+  rule the "Establish the base" step applies to outputs applies to inputs: copy or resolve each
+  one before dispatch, and cite the resolved path. Observed 2026-09-07 on rhkmaint-tools `ebbv`,
+  where a cited matrix existed only inside the feature worktree and survived only because an
+  auditor noticed and read it live.
+- **That an auditor's cwd is the primary checkout and is not on `${3}`; that if it needs to
+  execute or mutate code it creates its own detached worktree at `${3}` under the primary
+  checkout's `.claude/worktrees/` and removes it when done; and that borrowing any other tree —
+  the primary checkout, an implementer's worktree, a sibling auditor's — is prohibited.** Every
+  auditor gets this, not only the mutation auditor: the one that improvised into a live tree was
+  the claim-verifier, which had not been told.
+- **The cwd assertion, for every auditor — not only the mutation auditor.**
   Nothing sandboxes these agents — their cwd is the live primary checkout — so the instruction
   not to borrow another tree is the only thing standing between a mis-stepped `cd` and a command
   running against real work. An instruction is not a control; assert it and fail closed:
@@ -248,18 +254,25 @@ Every brief carries, verbatim (from the branch copy of this file when the range 
   ```
 
   Run it after `cd`, immediately before the first command that runs or changes anything, and
-  abort on mismatch rather than continuing.
-
-  **Every auditor, because each can run commands.** The claim-verifier follows `verify-claims`,
-  which categorises claims as `COMMAND_RESULT` and verifies them by running the command — and it
-  is the auditor that actually improvised into a live tree on hexweave `enb2`. The scope auditor
-  runs `git ls-files` against a working tree. Scoping this to the mutation auditor would leave the
-  recorded offender uncovered.
+  abort on mismatch rather than continuing. Every auditor runs commands: the claim-verifier
+  verifies `COMMAND_RESULT` claims by running them, and it is the auditor that improvised into a
+  live tree on hexweave `enb2`.
 
   **This is the containment available without a sandbox — not a replacement for one.** `exit 1`
   ends a shell, not the agent, so it stops an honest mis-`cd` (the `enb2` shape) and does not stop
   an agent that ignores the brief. Isolation was harness-enforced; this is compliance-enforced.
   Do not describe it as equivalent (`jhby`).
+
+**Each brief carries:**
+
+- **The absolute path of the common file, and that reading all of it is step one.** Never the
+  token.
+- **The auditor's own section from this file — Role, procedure, output-table columns, and
+  verdict rule — pasted in full.** The common file is context; this is the task.
+- Its own artifact path and its own audit-worktree name.
+- **For the test-quality auditor: the mutation the maintainer already ran**, taken from the
+  commit message or the issue, with the instruction to pick a different one — or an explicit
+  statement that none was run, which is the normal case on a branch that adds no tests.
 - **For the scope auditor: the reference the branch is checked against and a list of its
   elements — or an explicit statement that no reference exists.** Reference parity makes MISSING
   a blocking category, so an auditor handed nothing cannot tell an absent reference from a
@@ -269,6 +282,9 @@ Every brief carries, verbatim (from the branch copy of this file when the range 
   exception: it has no `file:line`, and none is invented for it.
 - A `Deviations` section: when an edge case forces it off the brief, take the conservative
   option and record the deviation.
+- The tool contract from `/super-do`: the shell tool is `Bash`, capital B; `Read` takes one
+  integer `offset` plus a `limit`, never a range; `Edit` needs a unique `old_string` or
+  `replace_all`. Its fourth line does not apply here: the artifact is a file by design.
 
 ### 1. claim-verifier — Sonnet
 
@@ -282,7 +298,7 @@ procedure. This brief supplies only what is branch-specific:
 - commit messages (`git log <merge-base>..${3}`) — subject and body
 - comments added or changed in the diff (`git diff <merge-base>..${3}`)
 - test names and docstrings for tests added or modified
-- the kata issue body and comments pasted into this brief
+- the kata issue body and comments in the common file
 
 **Overclaim scan.** Flag absolute or guarantee-shaped language wherever it appears in those
 sources — `guaranteed`, `never`, `always`, `impossible`, `compiler-enforced`, `cannot`,
@@ -411,7 +427,7 @@ for.
 
 Against `git diff <merge-base>..${3}`:
 
-1. **Untraceable change.** Every hunk maps to something the pasted issue asks for, or it is
+1. **Untraceable change.** Every hunk maps to something the issue in the common file asks for, or it is
    reported. Incidental refactors, drive-by renames, and reformatting count — they may be fine,
    but they are Jerry's call, not yours. Report; do not judge them harmless.
 
@@ -485,8 +501,10 @@ path resolved above and pasted into its brief — **before** it returns, or, whe
 be made to land, returns that table inline for the lead to persist. Either is compliance. Neither
 happening is a real outcome with its own classification below, not an impossibility.
 
-**The last line of the artifact file must be exactly `VERDICT: PASS` or `VERDICT: BLOCK`**, and
-an auditor that wrote a file confirms it with `tail -1` before returning. The returned report
+**Line 2 of the artifact file must be exactly line 1 of the common file, `Brief-token: <token>`;
+line 1 is a heading, or the `briefed from` line when the range touches this file. The last line of
+the artifact file must be exactly `VERDICT: PASS` or `VERDICT: BLOCK`**, and
+an auditor that wrote a file confirms both with `sed -n 2p` and `tail -1` before returning. The returned report
 ends with the same line. Both, not either: the line was previously specified against the returned
 message and consumed from the file, so an auditor that complied exactly produced a verdict-less
 artifact and the rule below read its own ambiguity as a BLOCK. Measured three times — orbweaver-rs
@@ -507,9 +525,10 @@ artifact with no verdict line blocks; the lead does not recover it by consulting
 rule below. You are never penalised for a write that could not be made to land, only for a table
 or a verdict you did not produce.
 
-### The write — paste this rule into every brief
+### The write
 
-The auditor writes the artifact directly to the pasted absolute path. There is no ladder and no
+This rule reaches the auditors through the common file. The auditor writes the artifact directly
+to the absolute path in its brief. There is no ladder and no
 fallback sequence: the write ladder was deleted with the isolation that caused it (kata
 `claudes-home#jhby`). A non-isolated auditor's `Write` to a path in the primary checkout is an
 ordinary write, and the two guards that used to refuse it — the Write tool's canonical-path check
@@ -524,6 +543,7 @@ After writing, confirm both:
 ```
 wc -c <path>      # non-empty
 tail -1 <path>    # exactly VERDICT: PASS or VERDICT: BLOCK
+sed -n 2p <path>  # Brief-token: matches line 1 of the common file
 ```
 
 **If either check fails, the file is residue — delete it before doing anything else.** A
@@ -538,7 +558,7 @@ the lead is told below to treat a path you named as residue as no artifact at al
 it is what keeps a file you could not delete from being scored as your report.
 
 **If the write still cannot be made to land, return the complete table inline with the
-`VERDICT:` line last, and say so in `Deviations`.** This is a legitimate terminus, not a failure;
+`Brief-token:` line second and the `VERDICT:` line last, and say so in `Deviations`.** This is a legitimate terminus, not a failure;
 the lead persists it. It should now be rare rather than routine — under isolation it was the
 common outcome, which is what `jhby` fixed. **An auditor that reaches it after clearing its
 residue has complied with the brief.**
@@ -588,7 +608,8 @@ only when the destination holds nothing.** Search for the basename under `.claud
 and do it *before* removing any leftover audit tree, or the removal takes the artifact with it.
 
 **When an auditor returns inline, the lead persists the report verbatim at the expected path
-under a provenance header** naming the auditor, why the write did not land, and that the lead
+with a provenance header after its line 2** (an inline report carries the artifact's first two
+lines) naming the auditor, why the write did not land, and that the lead
 transcribed it. That header is the evidentiary distinction the artifact rule exists to preserve:
 it marks the file as a transcription rather than an auditor-written artifact, so a later reader
 is not misled about which it is.
@@ -597,10 +618,14 @@ is not misled about which it is.
 line is **BLOCK** — recorded as "auditor did not return a verdict", never as a pass. An auditor
 that crashed and one that found nothing are indistinguishable from silence, and only one of them
 is safe. A zero-byte file at exit 0 is a recorded failure mode, which is why "empty" is named
-alongside "unreadable": it is the one shape that looks like delivery from outside.
+alongside "unreadable": it is the one shape that looks like delivery from outside. An artifact
+whose line 2 does not match line 1 of the common file of the run that wrote it is **BLOCK** under
+the same rule, recorded as "auditor did not read the common file"; the inline report does not
+recover it. Compare without printing the token:
+`[ "$(sed -n 2p <artifact>)" = "$(head -1 <common file>)" ]`.
 
 **One exception, and only one.** A complete table carrying a literal `VERDICT:` line that arrives
-**inline** because the write could not be made to land, and which the lead persists verbatim under
+**inline** because the write could not be made to land, and which the lead persists verbatim with
 a provenance header, counts as delivered. A write that failed is not a dropped report, and reading
 it as one manufactures a BLOCK with nothing to do with the branch under audit. What the rule
 targets is a report that never arrived — not one that could not be written to disk.
@@ -653,7 +678,7 @@ is a defect, and neither has a `file:line` to cite.
 override, no majority, and no "two of three is close enough." A PASS carrying non-blocking findings is still
 a PASS; report them and merge.
 
-**On PASS:** say so, name the merge base SHA, the dispatched auditors' artifact paths, and any recorded
+**On PASS:** say so, name the merge base SHA, the common file path, the dispatched auditors' artifact paths, and any recorded
 non-finding outcome (a skipped test-quality auditor appears as `NO-TESTS-IN-DIFF` with the
 lead's search named; its artifact is the skip record written at dispatch), and proceed to the merge.
 
@@ -666,7 +691,9 @@ authority.
 **Exception — mechanical BLOCK:** when every blocking finding is a mechanical fix with no
 scope or design choice (pq26 ruling, 2026-09-02; extended from "the sole finding" to "every
 finding" by the my88 ruling, 2026-10-07), fix them on the branch and re-gate once; merge on
-PASS. Re-run with `-rerun` artifact names so both runs survive. The count of findings is not a
+PASS. Re-run with `-rerun` artifact names so both runs survive, and a `-rerun` common file with a
+fresh token; an artifact carried forward from the first run is checked against the first run's
+common file. The count of findings is not a
 proxy for judgment: two wording-only findings escalate no more than one. Whether each fix is
 genuinely mechanical is the lead's judgment, so paste the fix diff into the gate record where
 the judgment can be checked afterward — rewriting stale user docs can hide a choice about what
