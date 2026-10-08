@@ -280,12 +280,12 @@ hardened at three additions and found four lines away, a GIT_DIR leak fixed and 
 still failing under the repro (orbweaver-rs), and one defect dispatched for fixing twice in
 the same plan (claudes-home kata-dispatch).
 
-**A fix that changes a design or reference element is recorded on the kata issue when it lands,
-not only in the commit body.** The verify-branch scope auditor checks the branch against the
+**A fix that changes a design or reference element is recorded on the kata issue by the lead, as a
+`kata comment`, when the fix lands, not only in the commit body.** The verify-branch scope auditor checks the branch against the
 named reference and reads the issue, not `git log`; a change recorded only in a commit body is a
 CHANGED element with no record, and it blocks. claudes-home `b731` round 2 changed "audit-worktree
-name" to "path" in a commit body only, and the gate blocked on it until a comment was added
-(cleared under the `w69c` issue-body exemption).
+name" to "path" in a commit body only, and the gate blocked on it until a comment recorded it;
+the gate then merged the unchanged SHA under the `w69c` exemption.
 
 Medium findings from the *first* review get resolved in that cycle anyway — either fixed, or
 declined in one line saying why. They are cheapest to address before the code is revised around
@@ -338,7 +338,7 @@ facts that are not rulings.
 After the last task completes (either track), and before the verify-branch gate, run one
 simplify pass over the whole branch diff (`git diff ${2}...HEAD`): the built-in `/simplify`
 angles — reuse, simplification, efficiency, altitude — applied by a fresh dispatch that sees the
-diff and nothing else. Apply the fixes, re-run the tests, and proceed only on green. This sits
+diff and its brief, nothing else. Apply the fixes, re-run the tests, and proceed only on green. This sits
 here rather than per-task because it is the only point that can see **cross-task duplication** —
 task N re-implementing a helper task 1 wrote is the signature failure of fresh-context
 subagents — and because it must sit *upstream* of the mandatory gate so no fix merges unaudited.
@@ -365,8 +365,9 @@ Three constraints are load-bearing:
   File it (with `needs-decision` when two defensible depths exist); do not restructure the
   branch.
 - **Design fence: the approved design's must-keep elements are not simplification candidates.**
-  The simplify brief carries them as a fence, the way the scope fence names files: the spec's
-  acceptance list, or on the direct track the issue's acceptance criteria. A sentence or rule the
+  The simplify brief carries them as a fence, the way the scope fence names files: every element
+  the approved design requires — its acceptance list at minimum — or, on the direct track, the
+  issue's acceptance criteria. A sentence or rule the
   design requires is listed as skipped, never cut. On claudes-home `b731` (2026-10-08) the pass
   deleted the one sentence the spec required as the replacement for a false mechanism; the lead
   restored it in 36fc126d3060 ("verify-branch: keep the line stating why the auditor reads the
