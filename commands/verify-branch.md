@@ -663,9 +663,14 @@ path rather than inventing one — comment the numbered defect list on the kata 
 pass, and an auditor's finding is input to a decision, not a work item you clear on your own
 authority.
 
-**Exception — mechanical BLOCK:** when the sole blocking finding is a mechanical fix with no
-scope or design choice (pq26 ruling, 2026-09-02), fix it on the branch and re-gate once; merge
-on PASS. Re-run with `-rerun` artifact names so both runs survive. **Byte-identical exemption
+**Exception — mechanical BLOCK:** when every blocking finding is a mechanical fix with no
+scope or design choice (pq26 ruling, 2026-09-02; extended from "the sole finding" to "every
+finding" by the my88 ruling, 2026-10-07), fix them on the branch and re-gate once; merge on
+PASS. Re-run with `-rerun` artifact names so both runs survive. The count of findings is not a
+proxy for judgment: two wording-only findings escalate no more than one. Whether each fix is
+genuinely mechanical is the lead's judgment, so paste the fix diff into the gate record where
+the judgment can be checked afterward — rewriting stale user docs can hide a choice about what
+the docs should say, and the pasted diff is the check on that. **Byte-identical exemption
 (srcx ruling, 2026-09-04):** when the fix provably touched no code — an empty
 `git diff <anchor> <branch>` where the anchor ref was created before the fix and the diff
 output is pasted into the gate record — the test-quality auditor is exempt; the claims and
