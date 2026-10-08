@@ -127,21 +127,68 @@ print(json.dumps({"type": "result", "subtype": "success", "total_cost_usd": 0.3,
                             "but I hit a blocker instead.\nOUTCOME: escalated needs-decision\n"}))
 '''
 
+# Must equal the default token hard-coded in FAKE_CLAUDE_GATE_PASS below: tests that pre-write a
+# common file the fake is expected to echo depend on it.
+FAKE_GATE_TOKEN = "0123456789abcdef"
+
 FAKE_CLAUDE_GATE_PASS = r'''#!/usr/bin/env python3
-"""Fake gate: writes three PASS artifacts into <cwd>/.scratchpad, named per /verify-branch, and
-dumps its own argv into the first artifact's directory so tests can assert on the invocation
-(e.g. that --max-budget-usd was passed with the module's default budget)."""
+"""Fake gate, shaped like a /verify-branch session in <cwd>/.scratchpad.
+
+By default it writes the common file `<YYYYMMDD>-vb-common-<branch>.md` (line 1
+`Brief-token: <16 hex>`, then a heading) and three artifacts
+`<YYYYMMDD>-verify-branch-<auditor>-<branch>.md` for auditors claims, tests, scope, each
+`# audit` / the common file's line 1 / a body line / `VERDICT: <X>` as its last line.
+
+Knobs (env, all off by default):
+  FAKE_GATE_VERDICT=PASS|BLOCK   verdict written on every artifact's last line (default PASS)
+  FAKE_GATE_COUNT=N              write only the first N artifacts (default 3)
+  FAKE_GATE_ARGV_DUMP=<path>     dump this process's argv (JSON) to <path>
+  FAKE_GATE_TOKEN=<hex>          token for the common file and the artifacts' echo
+                                 (default 0123456789abcdef)
+  FAKE_GATE_NO_COMMON=1          write no common file (artifacts still echo FAKE_GATE_TOKEN)
+  FAKE_GATE_COMMON_BRANCH=<b>    name the common file for branch <b> instead of this one
+  FAKE_GATE_WRONG_TOKEN=<aud>    auditor <aud>'s artifact echoes deadbeefdeadbeef on line 2
+  FAKE_GATE_TRAILING=<aud>       auditor <aud>'s artifact has one more line after its VERDICT
+                                 line; its text is FAKE_GATE_TRAILING_TEXT (default: blank)
+  FAKE_GATE_QUOTED_BLOCK=1       every artifact quotes a `VERDICT: BLOCK` line in its body
+                                 before its final VERDICT line
+  FAKE_GATE_RERUN=1              also write `<YYYYMMDD>-vb-common-<branch>-rerun.md` with token
+                                 fedcba9876543210; the claims artifact echoes the first token,
+                                 tests and scope echo the rerun token
+"""
 import json, os, sys, time
+env = os.environ.get
 prompt = sys.argv[sys.argv.index("-p") + 1]
 branch = prompt.split()[-1].replace("/", "-")
 d = os.path.join(os.getcwd(), ".scratchpad"); os.makedirs(d, exist_ok=True)
-verdict = os.environ.get("FAKE_GATE_VERDICT", "PASS")
-n = int(os.environ.get("FAKE_GATE_COUNT", "3"))
-argv_dump = os.environ.get("FAKE_GATE_ARGV_DUMP")
+day = time.strftime("%Y%m%d")
+verdict = env("FAKE_GATE_VERDICT", "PASS")
+n = int(env("FAKE_GATE_COUNT", "3"))
+argv_dump = env("FAKE_GATE_ARGV_DUMP")
 if argv_dump:
     open(argv_dump, "w").write(json.dumps(sys.argv[1:]))
+token = env("FAKE_GATE_TOKEN", "0123456789abcdef")
+rerun_token = "fedcba9876543210"
+common_branch = env("FAKE_GATE_COMMON_BRANCH", branch).replace("/", "-")
+if not env("FAKE_GATE_NO_COMMON"):
+    open(os.path.join(d, day + "-vb-common-" + common_branch + ".md"), "w").write(
+        "Brief-token: " + token + "\n# common context\n")
+    if env("FAKE_GATE_RERUN"):
+        open(os.path.join(d, day + "-vb-common-" + common_branch + "-rerun.md"), "w").write(
+            "Brief-token: " + rerun_token + "\n# common context (rerun)\n")
 for a in ["claims", "tests", "scope"][:n]:
-    open(os.path.join(d, time.strftime("%Y%m%d") + "-verify-branch-" + a + "-" + branch + ".md"), "w").write("# audit\nVERDICT: " + verdict + "\n")
+    t = token
+    if env("FAKE_GATE_RERUN") and a != "claims":
+        t = rerun_token
+    if env("FAKE_GATE_WRONG_TOKEN") == a:
+        t = "deadbeefdeadbeef"
+    body = "| finding | evidence |\n"
+    if env("FAKE_GATE_QUOTED_BLOCK"):
+        body += "Quoted from a prior run as evidence:\nVERDICT: BLOCK\n"
+    text = "# audit\nBrief-token: " + t + "\n" + body + "VERDICT: " + verdict + "\n"
+    if env("FAKE_GATE_TRAILING") == a:
+        text += env("FAKE_GATE_TRAILING_TEXT", "") + "\n"
+    open(os.path.join(d, day + "-verify-branch-" + a + "-" + branch + ".md"), "w").write(text)
 print(json.dumps({"type": "result", "subtype": "success", "total_cost_usd": 1.0, "is_error": False, "session_id": "fake-gate", "result": verdict}))
 '''
 
