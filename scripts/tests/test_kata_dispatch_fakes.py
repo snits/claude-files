@@ -155,6 +155,10 @@ Knobs (env, all off by default):
   FAKE_GATE_RERUN=1              also write `<YYYYMMDD>-vb-common-<branch>-rerun.md` with token
                                  fedcba9876543210; the claims artifact echoes the first token,
                                  tests and scope echo the rerun token
+  FAKE_GATE_LINE2_SUFFIX=<aud>   auditor <aud>'s line 2 is the right token line followed by
+                                 FAKE_GATE_LINE2_SUFFIX_TEXT (default: one space)
+  FAKE_GATE_ONE_LINE=<aud>       auditor <aud>'s artifact is the single line `VERDICT: <X>`
+                                 with no trailing newline (no line 2 at all)
 """
 import json, os, sys, time
 env = os.environ.get
@@ -185,9 +189,14 @@ for a in ["claims", "tests", "scope"][:n]:
     body = "| finding | evidence |\n"
     if env("FAKE_GATE_QUOTED_BLOCK"):
         body += "Quoted from a prior run as evidence:\nVERDICT: BLOCK\n"
-    text = "# audit\nBrief-token: " + t + "\n" + body + "VERDICT: " + verdict + "\n"
+    line2 = "Brief-token: " + t
+    if env("FAKE_GATE_LINE2_SUFFIX") == a:
+        line2 += env("FAKE_GATE_LINE2_SUFFIX_TEXT", " ")
+    text = "# audit\n" + line2 + "\n" + body + "VERDICT: " + verdict + "\n"
     if env("FAKE_GATE_TRAILING") == a:
         text += env("FAKE_GATE_TRAILING_TEXT", "") + "\n"
+    if env("FAKE_GATE_ONE_LINE") == a:
+        text = "VERDICT: " + verdict
     open(os.path.join(d, day + "-verify-branch-" + a + "-" + branch + ".md"), "w").write(text)
 print(json.dumps({"type": "result", "subtype": "success", "total_cost_usd": 1.0, "is_error": False, "session_id": "fake-gate", "result": verdict}))
 '''

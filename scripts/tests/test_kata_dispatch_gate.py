@@ -9,6 +9,8 @@ import sys
 import time
 from pathlib import Path
 
+import pytest
+
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from test_kata_dispatch_fakes import (FAKE_CLAUDE_GATE_PASS, FAKE_GATE_TOKEN,  # noqa: E402
                                       install_fake_claude, make_repo)
@@ -38,15 +40,43 @@ def test_matching_token_and_final_verdict_passes(tmp_path, monkeypatch):
     assert not any("vb-common" in a for a in v.artifacts)
 
 
-def test_common_file_line1_must_be_exact_token_format(tmp_path, monkeypatch):
-    """(a) A token line is exactly `Brief-token: <16 lowercase hex>`. Here the common file's line 1
-    is `Brief-token: 0123456789ABCDEF` (uppercase) and every artifact echoes it byte-for-byte, so a
-    plain line-2 == line-1 comparison would pass. Catches accepting any common-file line 1
-    without validating the token format. The spec does not say whether a malformed line 1 reads
-    as "no usable common file" or as a token mismatch, so detail may name either."""
-    _, v = _gate(tmp_path, monkeypatch, FAKE_GATE_TOKEN="0123456789ABCDEF")
+@pytest.mark.parametrize("bad_token", [
+    "0123456789ABCDEF",        # uppercase hex
+    "0123456789abcdefjunk",    # junk suffix after 16 hex (regex without its closing anchor)
+    "0123456789abcdef ",       # trailing space (stripping line 1 before matching)
+])
+def test_common_file_line1_must_be_exact_token_format(tmp_path, monkeypatch, bad_token):
+    """(a) A token line is exactly `Brief-token: <16 lowercase hex>`, byte for byte. Here the
+    common file's line 1 is a malformed token line and every artifact echoes it byte-for-byte, so
+    a plain line-2 == line-1 comparison would pass. A malformed line 1 contributes no token, so
+    the session has no usable common file -> BLOCK naming the common file. Catches accepting any
+    common-file line 1 without validating the format, a TOKEN_RE missing its `$`, and stripping
+    line 1 before matching (which would surface as a token mismatch instead)."""
+    _, v = _gate(tmp_path, monkeypatch, FAKE_GATE_TOKEN=bad_token)
     assert v.passed is False
-    assert "token" in v.detail.lower() or "common file" in v.detail.lower(), v.detail
+    assert "common file" in v.detail.lower(), v.detail
+
+
+@pytest.mark.parametrize("suffix", [" ", "\t"], ids=["space", "tab"])
+def test_line2_with_trailing_whitespace_is_token_mismatch(tmp_path, monkeypatch, suffix):
+    """(b) The tests artifact's line 2 is the right token line plus a trailing space or tab. Line 2
+    must be byte-equal to a token line, so that artifact is scored as no verdict -> BLOCK naming a
+    token mismatch. Catches stripping line 2 before the comparison. (A CR is not a usable probe:
+    the artifact is read with universal newlines, so a CR before the newline never reaches the
+    comparison.)"""
+    _, v = _gate(tmp_path, monkeypatch, FAKE_GATE_LINE2_SUFFIX="tests",
+                 FAKE_GATE_LINE2_SUFFIX_TEXT=suffix)
+    assert v.passed is False
+    assert "token" in v.detail.lower(), v.detail
+
+
+def test_single_line_artifact_fails_closed_without_raising(tmp_path, monkeypatch):
+    """(b) The scope artifact is the single line `VERDICT: PASS` with no newline: it has no line 2,
+    so it is a token mismatch -> run_gate returns a BLOCK rather than raising. Catches a length
+    guard that cannot fire (IndexError on lines[1] escaping run_gate)."""
+    _, v = _gate(tmp_path, monkeypatch, FAKE_GATE_ONE_LINE="scope")
+    assert v.passed is False
+    assert "token" in v.detail.lower(), v.detail
 
 
 def test_wrong_token_on_one_artifact_blocks_with_token_mismatch(tmp_path, monkeypatch):
