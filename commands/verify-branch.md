@@ -154,9 +154,8 @@ pasted so a reader can check the judgment, last line exactly `VERDICT: PASS`. Th
 because the headless gate (`scripts/kata_dispatch/gate.py`) counts three artifacts and reads the
 last line of each. The record follows the artifact rules: when the range touches this file
 ("Establish the base first") the `briefed from` line is line 1, `Brief-token:` stays line 2, and
-`SKIPPED BY LEAD` moves to line 3; the `wc -c` / `tail -1` check ("The write") and
-`t=$(head -1 <common file>); [ -n "$t" ] && [ "$(sed -n 2p <path>)" = "$t" ]`; the
-`-rerun` names on a re-gate ("The verdict"). If tests are touched, dispatch all three.
+`SKIPPED BY LEAD` moves to line 3; the `wc -c` / `tail -1` check ("The write") and the line-2
+comparison ("Fail closed"); the `-rerun` names on a re-gate ("The verdict"). If tests are touched, dispatch all three.
 Claim-verifier and scope-auditor dispatch on every merge regardless of size (5m96 ruling,
 2026-09-16).
 
@@ -212,8 +211,6 @@ scratchpad store, so a checkout beneath it is swept in wholesale — the failure
 scratchpad conventions call out, and a git worktree is exactly the shape the type allowlist
 cannot see. `.scratchpad` holds the artifact *file*; `.claude/worktrees/` holds the trees.
 
-The auditor cannot see this conversation, so it reads what its brief points it at.
-
 **The common file carries** (from the branch copy of this file when the range touches it — see
 "Establish the base first"):
 
@@ -258,9 +255,7 @@ The auditor cannot see this conversation, so it reads what its brief points it a
   ```
 
   Run it after `cd`, immediately before the first command that runs or changes anything, and
-  abort on mismatch rather than continuing. Every auditor runs commands: the claim-verifier
-  verifies `COMMAND_RESULT` claims by running them, and it is the auditor that improvised into a
-  live tree on hexweave `enb2`.
+  abort on mismatch rather than continuing.
 
   **This is the containment available without a sandbox — not a replacement for one.** `exit 1`
   ends a shell, not the agent, so it stops an honest mis-`cd` (the `enb2` shape) and does not stop
@@ -531,9 +526,8 @@ or a verdict you did not produce.
 
 ### The write
 
-This rule reaches the auditors through the common file. The auditor writes the artifact directly
-to the absolute path in its brief. There is no ladder and no
-fallback sequence: the write ladder was deleted with the isolation that caused it (kata
+The auditor writes the artifact directly to the absolute path in its brief. There is no ladder
+and no fallback sequence: the write ladder was deleted with the isolation that caused it (kata
 `claudes-home#jhby`). A non-isolated auditor's `Write` to a path in the primary checkout is an
 ordinary write, and the two guards that used to refuse it — the Write tool's canonical-path check
 against a sandbox, and the worktree command-shape guard on a Bash body quoting version-control
@@ -697,8 +691,7 @@ authority.
 scope or design choice (pq26 ruling, 2026-09-02; extended from "the sole finding" to "every
 finding" by the my88 ruling, 2026-10-07), fix them on the branch and re-gate once; merge on
 PASS. Re-run with `-rerun` artifact names so both runs survive, and a `-rerun` common file
-(`{YYYYMMDD}-vb-common-{branch}-rerun.md`) with a fresh token; an artifact carried forward from the first run is checked against the first run's
-common file. The count of findings is not a
+(`{YYYYMMDD}-vb-common-{branch}-rerun.md`) with a fresh token. The count of findings is not a
 proxy for judgment: two wording-only findings escalate no more than one. Whether each fix is
 genuinely mechanical is the lead's judgment, so paste the fix diff into the gate record where
 the judgment can be checked afterward — rewriting stale user docs can hide a choice about what
