@@ -270,9 +270,8 @@ The auditor cannot see this conversation, so it reads what its brief points it a
   never quoted: not in the brief, not in prose, and not in the returned report**, except as line 2
   of an inline table that stands in for an artifact whose write could not land ("The write" below).
   In the artifact it is a shell copy of the common file's line 1 (`head -1`), never typed there.
-  `rq4g`: at the rjp6 gate (2026-10-08) "never print the token" was read as "never write it except
-  on artifact line 2" and an inline hand-back quoted the value; the m83h briefs added "including
-  your returned report" and all six auditors complied.
+  `rq4g`: at the rjp6 gate (2026-10-08) an auditor's artifact was correct and its inline hand-back
+  quoted the token value.
 - **The auditor's own section from this file — Role, procedure, output-table columns, and
   verdict rule — pasted in full.** The common file is context; this is the task.
 - Its own artifact path and its own audit-worktree path.
