@@ -280,6 +280,13 @@ hardened at three additions and found four lines away, a GIT_DIR leak fixed and 
 still failing under the repro (orbweaver-rs), and one defect dispatched for fixing twice in
 the same plan (claudes-home kata-dispatch).
 
+**A fix that changes a design or reference element is recorded on the kata issue when it lands,
+not only in the commit body.** The verify-branch scope auditor checks the branch against the
+named reference and reads the issue, not `git log`; a change recorded only in a commit body is a
+CHANGED element with no record, and it blocks. claudes-home `b731` round 2 changed "audit-worktree
+name" to "path" in a commit body only, and the gate blocked on it until a comment was added
+(cleared under the `w69c` issue-body exemption).
+
 Medium findings from the *first* review get resolved in that cycle anyway — either fixed, or
 declined in one line saying why. They are cheapest to address before the code is revised around
 them, and this keeps the record honest without giving them blocking power they don't deserve.
@@ -346,7 +353,7 @@ size and shape. Superseded on 2026-09-19 (Jerry, rhkmaint-tools `pwav` session):
 "two or fewer files" skip excused a one-file change adding a stderr reader thread and two test
 helpers, which is precisely what a simplify pass should see.
 
-Two constraints are load-bearing:
+Three constraints are load-bearing:
 
 - **Scope fence: fixes stay within files the branch already touched.** The verify-branch scope
   auditor checks that the diff is traceable to the issue; edits wandering into untouched files
@@ -357,6 +364,13 @@ Two constraints are load-bearing:
   generalize" is a design critique of an implementation that already cleared per-task review.
   File it (with `needs-decision` when two defensible depths exist); do not restructure the
   branch.
+- **Design fence: the approved design's must-keep elements are not simplification candidates.**
+  The simplify brief carries them as a fence, the way the scope fence names files: the spec's
+  acceptance list, or on the direct track the issue's acceptance criteria. A sentence or rule the
+  design requires is listed as skipped, never cut. On claudes-home `b731` (2026-10-08) the pass
+  deleted the one sentence the spec required as the replacement for a false mechanism; the lead
+  restored it in 36fc126d3060 ("verify-branch: keep the line stating why the auditor reads the
+  common file").
 
 Skipping a finding is fine — same rule as `/simplify`: anything that would change intended
 behavior, or that you judge a false positive, is noted rather than applied.
