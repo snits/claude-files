@@ -282,8 +282,8 @@ the same plan (claudes-home kata-dispatch).
 
 **A fix that changes a design or reference element is recorded on the kata issue by the lead, as a
 `kata comment`, when the fix lands, not only in the commit body.** The verify-branch scope auditor checks the branch against the
-named reference and reads the issue, not `git log`; a change recorded only in a commit body is a
-CHANGED element with no record, and it blocks. claudes-home `b731` round 2 changed "audit-worktree
+named reference, and for a CHANGED element it counts only a record on the issue; a change recorded
+only in a commit body is a CHANGED element with no record, and it blocks. claudes-home `b731` round 2 changed "audit-worktree
 name" to "path" in a commit body only, and the gate blocked on it until a comment recorded it;
 the gate then merged the unchanged SHA under the `w69c` exemption.
 
