@@ -222,10 +222,10 @@ from a detached worktree at the latest commit.
   such as reading the neighbouring source, flipping a branch, or dropping a call, not only at
   constants. It applies each mutation, runs the test, records the failing assertion line or
   `SURVIVED`, and undoes the mutation. Its brief copies the containment rules from verify-branch's
-  common-file list (the worktree rule and the cwd assertion: where its detached worktree goes and
-  its removal afterward, and the assertion run before the first mutating command) and the
-  test-quality auditor's own-build-output rule. It also states: **undo each mutation with the
-  inverse edit, never `git checkout -- <file>`**.
+  common-file list (the worktree rule and the cwd assertion: where its detached worktree goes,
+  its removal afterward, and the assertion run immediately before the first command that runs or
+  changes anything) and the test-quality auditor's own-build-output rule. It also states: **undo
+  each mutation with the inverse edit, never `git checkout -- <file>`**.
 
 **Every brief in this flow carries two more blocks.** A sweep line: *"Sweep for every changed
 name, flag, or claim across the whole tree — docs/, README, CLAUDE.md, and doc comments included,
