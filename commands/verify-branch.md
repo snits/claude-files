@@ -266,8 +266,12 @@ The auditor cannot see this conversation, so it reads what its brief points it a
 
 **Each brief carries:**
 
-- **The absolute path of the common file, and that reading all of it is step one.** Never the
-  token.
+- **The absolute path of the common file, that reading all of it is step one, and that the token is
+  never printed, never quoted, and never included in the returned report.** It reaches the artifact
+  only as a shell copy of the common file's line 1 (`head -1 <common file>` redirected into the
+  artifact), never typed. `rq4g`: at the rjp6 gate (2026-10-08) "never print the token" was read as
+  "never write it except on artifact line 2" and an inline hand-back quoted the value; the m83h
+  briefs added "including your returned report" and all six auditors complied.
 - **The auditor's own section from this file — Role, procedure, output-table columns, and
   verdict rule — pasted in full.** The common file is context; this is the task.
 - Its own artifact path and its own audit-worktree path.
