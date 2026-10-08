@@ -625,8 +625,9 @@ whose line 2 does not match line 1 of the common file of the run that wrote it i
 the same rule, recorded as "auditor did not read the common file"; the inline report does not
 recover it. Compare without printing the token:
 `t=$(head -1 <common file>); [ -n "$t" ] && [ "$(sed -n 2p <artifact>)" = "$t" ]`. The headless gate
-(scripts/kata_dispatch/gate.py) applies the same line-2 comparison and reads the last line of
-each artifact.
+(scripts/kata_dispatch/gate.py) makes a line-2 check of its own — any token from a common file
+written in that gate session counts, and it reads with universal newlines — and reads the last
+line of each artifact.
 
 **One exception, and only one.** A complete table carrying `Brief-token:` as its second line and a
 literal `VERDICT:` line (without the token it is BLOCK under the same rule) that arrives
