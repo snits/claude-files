@@ -33,43 +33,35 @@ def NO_GATE(*args, **kwargs) -> Verdict:
     return Verdict(True, "gate disabled", [])
 
 
-def _artifacts_since(repo: Path, ref: str, branch: str, since: float) -> list[Path]:
+def _session_files(repo: Path, pattern: str, branch: str, since: float) -> list[Path]:
+    """Files in <repo>/.scratchpad matching `pattern`, named for the branch, written at or after
+    `since`."""
     d = repo / ".scratchpad"
     if not d.is_dir():
         return []
     keys = {branch, branch.replace("/", "-")}
-    out = []
-    for p in d.glob("*verify-branch*.md"):
-        # No slop on the mtime window: mtime resolution here is sub-millisecond (measured),
-        # so no buffer is needed, and any widening would admit a prior run's overwritten
-        # artifact for the same branch. Fail closed instead — a borderline timestamp reads
-        # as missing, not as a stale pass.
-        if p.stat().st_mtime >= since and any(k in p.name for k in keys):
-            out.append(p)
-    return sorted(out)
+    # No slop on the mtime window: mtime resolution here is sub-millisecond (measured),
+    # so no buffer is needed, and any widening would admit a prior run's overwritten
+    # artifact for the same branch. Fail closed instead — a borderline timestamp reads
+    # as missing, not as a stale pass.
+    return [p for p in d.glob(pattern)
+            if p.stat().st_mtime >= since and any(k in p.name for k in keys)]
+
+
+def _artifacts_since(repo: Path, ref: str, branch: str, since: float) -> list[Path]:
+    return sorted(_session_files(repo, "*verify-branch*.md", branch, since))
 
 
 def _common_tokens_since(repo: Path, branch: str, since: float) -> set[str]:
     """Brief-token lines from the `*vb-common*` files this gate session wrote for the branch.
-    Same branch-key and no-slop mtime window as _artifacts_since; a file whose line 1 is not an
-    exact token line contributes nothing."""
-    d = repo / ".scratchpad"
-    if not d.is_dir():
-        return set()
-    keys = {branch, branch.replace("/", "-")}
-    tokens = set()
-    for p in d.glob("*vb-common*"):
-        if p.stat().st_mtime >= since and any(k in p.name for k in keys):
-            first = p.read_text(errors="replace").split("\n", 1)[0]
-            if TOKEN_RE.match(first):
-                tokens.add(first)
-    return tokens
+    A file whose line 1 is not an exact token line contributes nothing."""
+    firsts = (p.read_text(errors="replace").split("\n", 1)[0]
+              for p in _session_files(repo, "*vb-common*", branch, since))
+    return {first for first in firsts if TOKEN_RE.match(first)}
 
 
 def _last_line_verdict(text: str):
-    if text.endswith("\n"):
-        text = text[:-1]
-    m = VERDICT_RE.match(text.rsplit("\n", 1)[-1])
+    m = VERDICT_RE.match(text.removesuffix("\n").rpartition("\n")[2])
     return m.group(1) if m else None
 
 
@@ -93,6 +85,7 @@ def run_gate(repo, ref: str, branch: str, target: str, model: str, log_path: Pat
                            cwd=str(repo), stdin=subprocess.DEVNULL, stdout=logf, stderr=subprocess.STDOUT, timeout=timeout)
     arts = _artifacts_since(repo, ref, branch, started)
     tokens = _common_tokens_since(repo, branch, started)
+    paths = [str(a) for a in arts]
     verdicts = {}
     bad_token = []
     for a in arts:
@@ -105,14 +98,14 @@ def run_gate(repo, ref: str, branch: str, target: str, model: str, log_path: Pat
             verdicts[a.name] = _last_line_verdict(text)
     missing = [n for n, v in verdicts.items() if v is None]
     if p.returncode != 0:
-        return Verdict(False, f"gate session exited {p.returncode}: no verdict", [str(a) for a in arts])
+        return Verdict(False, f"gate session exited {p.returncode}: no verdict", paths)
     if not tokens:
-        return Verdict(False, f"gate returned no verdict: no common file (vb-common) for {branch} written this session ({len(arts)}/{AUDITORS} artifacts)", [str(a) for a in arts])
+        return Verdict(False, f"gate returned no verdict: no common file (vb-common) for {branch} written this session ({len(arts)}/{AUDITORS} artifacts)", paths)
     if bad_token:
-        return Verdict(False, f"gate returned no verdict: line-2 token mismatch in {', '.join(bad_token)} ({len(arts)}/{AUDITORS} artifacts)", [str(a) for a in arts])
+        return Verdict(False, f"gate returned no verdict: line-2 token mismatch in {', '.join(bad_token)} ({len(arts)}/{AUDITORS} artifacts)", paths)
     if len(arts) < AUDITORS or missing:
-        return Verdict(False, f"gate returned no verdict ({len(arts)}/{AUDITORS} artifacts, {len(missing)} without VERDICT)", [str(a) for a in arts])
+        return Verdict(False, f"gate returned no verdict ({len(arts)}/{AUDITORS} artifacts, {len(missing)} without VERDICT)", paths)
     blocks = [n for n, v in verdicts.items() if v == "BLOCK"]
     if blocks:
-        return Verdict(False, "BLOCK from " + ", ".join(blocks), [str(a) for a in arts])
-    return Verdict(True, "PASS from all auditors", [str(a) for a in arts])
+        return Verdict(False, "BLOCK from " + ", ".join(blocks), paths)
+    return Verdict(True, "PASS from all auditors", paths)
