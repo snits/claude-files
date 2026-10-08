@@ -44,7 +44,19 @@ Four checks, in order, and each one that fails ends the work here:
 4. **Sibling claim.** The issue's owner is you (`kata whoami --as` matches) or unowned. Owned by
    another live actor means move on.
 
-Report all four results in one line each before the first edit. The history behind this: a
+Run each check as its own Bash call, or as its own block inside one call headed by an `echo` line
+naming the check; never put two checks' commands in one call with no header between them. The
+PRE-FLIGHT comment on the issue quotes each command with its output directly under it, so the reader
+sees the artifact and not a summary of it. Take a yes/no reading ("grep empty", "no hits") from a
+count or an exit code, never from the absence of lines in a mixed output; `git log` exits 0 whether
+or not `--grep` matched, so for check 2 the artifact is `| wc -l`. The incident behind this:
+claudes-home `f6ec`, from m83h (2026-10-08) — one call ran `git log main --grep=m83h; git log -5 --
+gate.py` with no separator, the lead read the output as one list, and two pre-flight claims ("grep
+empty", "last changed in e2f04c7feece") were false; the claim-verifier caught both, the gate
+blocked, and a second three-auditor run followed.
+
+Then report all four results in one line each in chat before the first edit (the full commands and
+output belong in the issue comment, not in chat). The history behind this: a
 full implementation, regenerated goldens, and two review agents on work a sibling session had
 already merged under a different issue (kata vvhj, rust-port).
 
