@@ -4,6 +4,12 @@ The skill writes `<primary>/.scratchpad/{YYYYMMDD}-verify-branch-{auditor}-{bran
 ending in `VERDICT: PASS|BLOCK`. Three artifacts; the test-quality one is the
 lead's `SKIPPED BY LEAD — NO-TESTS-IN-DIFF` record when the diff touches no tests. A missing
 artifact or a missing VERDICT line is a BLOCK recorded as "no verdict", never a pass.
+
+The verdict is read from the artifact's literal last line (as `tail -1` would), so a VERDICT line
+quoted earlier in the body, or followed by any further line, does not count. The skill also writes
+a common file `*vb-common*` whose line 1 is `Brief-token: <16 hex>`; every artifact must echo that
+line on its line 2. An artifact whose line 2 matches no token from a common file written in this
+gate session is scored as no verdict, and no usable common file at all is a BLOCK.
 """
 import re
 import subprocess
@@ -12,7 +18,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 AUDITORS = 3
-VERDICT_RE = re.compile(r"^VERDICT:\s*(PASS|BLOCK)\s*$", re.M)
+VERDICT_RE = re.compile(r"^VERDICT:\s*(PASS|BLOCK)\s*$")
+TOKEN_RE = re.compile(r"^Brief-token: [0-9a-f]{16}$")
 
 
 @dataclass
@@ -42,6 +49,30 @@ def _artifacts_since(repo: Path, ref: str, branch: str, since: float) -> list[Pa
     return sorted(out)
 
 
+def _common_tokens_since(repo: Path, branch: str, since: float) -> set[str]:
+    """Brief-token lines from the `*vb-common*` files this gate session wrote for the branch.
+    Same branch-key and no-slop mtime window as _artifacts_since; a file whose line 1 is not an
+    exact token line contributes nothing."""
+    d = repo / ".scratchpad"
+    if not d.is_dir():
+        return set()
+    keys = {branch, branch.replace("/", "-")}
+    tokens = set()
+    for p in d.glob("*vb-common*"):
+        if p.stat().st_mtime >= since and any(k in p.name for k in keys):
+            first = p.read_text(errors="replace").split("\n", 1)[0]
+            if TOKEN_RE.match(first):
+                tokens.add(first)
+    return tokens
+
+
+def _last_line_verdict(text: str):
+    if text.endswith("\n"):
+        text = text[:-1]
+    m = VERDICT_RE.match(text.rsplit("\n", 1)[-1])
+    return m.group(1) if m else None
+
+
 # per gate session; up to three auditors run inside it (test-quality may be the lead's
 # NO-TESTS-IN-DIFF skip record)
 BUDGET_USD = 15.0
@@ -61,13 +92,24 @@ def run_gate(repo, ref: str, branch: str, target: str, model: str, log_path: Pat
                             "--output-format", "stream-json", "--verbose", "--name", f"gate-{ref}"],
                            cwd=str(repo), stdin=subprocess.DEVNULL, stdout=logf, stderr=subprocess.STDOUT, timeout=timeout)
     arts = _artifacts_since(repo, ref, branch, started)
+    tokens = _common_tokens_since(repo, branch, started)
     verdicts = {}
+    bad_token = []
     for a in arts:
-        m = VERDICT_RE.findall(a.read_text(errors="replace"))
-        verdicts[a.name] = m[-1] if m else None
+        text = a.read_text(errors="replace")
+        lines = text.split("\n", 2)
+        if len(lines) < 2 or lines[1] not in tokens:
+            bad_token.append(a.name)
+            verdicts[a.name] = None
+        else:
+            verdicts[a.name] = _last_line_verdict(text)
     missing = [n for n, v in verdicts.items() if v is None]
     if p.returncode != 0:
         return Verdict(False, f"gate session exited {p.returncode}: no verdict", [str(a) for a in arts])
+    if not tokens:
+        return Verdict(False, f"gate returned no verdict: no common file (vb-common) for {branch} written this session ({len(arts)}/{AUDITORS} artifacts)", [str(a) for a in arts])
+    if bad_token:
+        return Verdict(False, f"gate returned no verdict: line-2 token mismatch in {', '.join(bad_token)} ({len(arts)}/{AUDITORS} artifacts)", [str(a) for a in arts])
     if len(arts) < AUDITORS or missing:
         return Verdict(False, f"gate returned no verdict ({len(arts)}/{AUDITORS} artifacts, {len(missing)} without VERDICT)", [str(a) for a in arts])
     blocks = [n for n, v in verdicts.items() if v == "BLOCK"]
