@@ -46,6 +46,7 @@ def test_matching_token_and_final_verdict_passes(tmp_path, monkeypatch):
     "0123456789abcdef ",       # trailing space (stripping line 1 before matching)
     "0123456789abcdef0",       # 17 hex (regex with an open upper bound)
     "0123456789abcde",         # 15 hex (regex with a loose lower bound)
+    "0123456789abcdeg",        # 16 chars, one outside a-f (regex with a wider alphabet)
 ])
 def test_common_file_line1_must_be_exact_token_format(tmp_path, monkeypatch, bad_token):
     """(a) A token line is exactly `Brief-token: <16 lowercase hex>`, byte for byte. Here the
@@ -53,8 +54,8 @@ def test_common_file_line1_must_be_exact_token_format(tmp_path, monkeypatch, bad
     a plain line-2 == line-1 comparison would pass. A malformed line 1 contributes no token, so
     the session has no usable common file -> BLOCK naming the common file. Catches accepting any
     common-file line 1 without validating the format, a TOKEN_RE missing its `$`, a TOKEN_RE whose
-    hex count is not exactly 16, and stripping line 1 before matching (which would surface as a
-    token mismatch instead)."""
+    hex count is not exactly 16, a TOKEN_RE whose alphabet is wider than a-f, and stripping line 1
+    before matching (which would surface as a token mismatch instead)."""
     _, v = _gate(tmp_path, monkeypatch, FAKE_GATE_TOKEN=bad_token)
     assert v.passed is False
     assert "common file" in v.detail.lower(), v.detail
