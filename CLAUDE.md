@@ -113,7 +113,7 @@ Your journal (mnemosyne) and the skills system are how we build on what we've le
 - Domain expertise
 - Quality review
 
-**Cheap exploration fan-out: roll your own, don't use built-in Explore on an opus/fable lead.** Since CC v2.1.198 the built-in `Explore` agent inherits the session model (capped at opus), so every Explore fan-out from an opus lead is opus-priced. When you want the Explore *behavior* (broad read-only search, return conclusions not file dumps) at a lower tier, dispatch a `general-purpose` agent with `model: sonnet` and a "sweep X, keep only what's relevant, report back" task. Explore isn't magic — it's a read-only agent with a search-tuned prompt.
+**Cheap exploration fan-out: roll your own, don't use built-in Explore on an opus/fable lead.** Since CC v2.1.198 the built-in `Explore` agent inherits the session model (capped at opus), so every Explore fan-out from an opus lead is opus-priced. When you want the Explore *behavior* (broad read-only search, return conclusions not file dumps) at a lower tier, dispatch a `general-purpose` agent with `model: haiku` (Haiku 5.5; Sonnet when the sweep must also weigh what it finds) and a "sweep X, keep only what's relevant, report back" task. Explore isn't magic — it's a read-only agent with a search-tuned prompt.
 
 **Delegate implementation to subagents for tasks when:**
 - Task is independent and well-scoped
@@ -186,7 +186,7 @@ Without these, agents faithfully report what domain literature says at the sophi
 
 ### Model Routing
 
-Guideline, not law — for session models spawning subagents AND for Jerry choosing the model when launching `claude agents` sessions. Written down because model lineup and pricing are post-cutoff facts: a session model left to its own judgment doesn't know what's available and defaults to spawning at its own tier. Express choices as tiers so this survives lineup changes; "highest available" currently means Fable > Opus > Sonnet.
+Guideline, not law — for session models spawning subagents AND for Jerry choosing the model when launching `claude agents` sessions. Written down because model lineup and pricing are post-cutoff facts: a session model left to its own judgment doesn't know what's available and defaults to spawning at its own tier. Express choices as tiers so this survives lineup changes; the ladder is currently Fable > Opus > Sonnet > Haiku, and "Haiku" means Haiku 5.5 — the rows below were re-cut on 2026-10-09 for it, because the earlier "Haiku only for mechanical sweeps" rule was written against Haiku 4.5, which is noticeably weaker.
 
 | Task | Default | Adjust when |
 |------|---------|-------------|
@@ -194,9 +194,9 @@ Guideline, not law — for session models spawning subagents AND for Jerry choos
 | Claude Design (UX/UI flow) | Opus | |
 | Orchestration (session lead) | Fable/Opus | Orchestration is judgment-dense — decomposition, brief-writing, reviewing agent output. Cheap orchestrator → cheap briefs → downstream rework inherits the damage |
 | Planning | Opus | Up to Fable for architecture-level plans; flat-rate external planner (GPT-5.5) to keep bulk work off the metered budget |
-| Implementation | Sonnet | Up to Opus when the task likely involves ambiguity or judgment — see below; down to Haiku only for fully-spec'd mechanical sweeps |
-| Exploration / discovery fan-out | Sonnet `general-purpose` | See "Cheap exploration fan-out" above — never built-in Explore from an opus/fable lead |
-| Quality review / verification | Sonnet | Opus for complex implementations, architectural boundaries |
+| Implementation | Sonnet | Up to Opus when the task likely involves ambiguity or judgment — see below; down to Haiku (5.5) for fully-spec'd work with pinned acceptance criteria — mechanical sweeps, single-file fixes with a named test, doc/citation repairs — never for anything whose brief leaves a reading open |
+| Exploration / discovery fan-out | Haiku `general-purpose` (trial since 2026-10-09, measured against Sonnet in claudes-home#chhp) | Sonnet when the sweep must also weigh what it finds (rank candidates, judge relevance of a mechanism); see "Cheap exploration fan-out" above — never built-in Explore from an opus/fable lead |
+| Quality review / verification | Sonnet | Opus for complex implementations, architectural boundaries; Haiku for purely mechanical checks (fmt/clippy/grep-confirms-absence), never for a review that judges a claim |
 
 **The implementation tier splits on ambiguity and judgment, not code difficulty.** Sonnet
 executes complex-but-pinned work well (big refactors, intricate multi-file features with clear
