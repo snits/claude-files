@@ -10,6 +10,15 @@ whether it still describes something real.
 code as it stands and is not stale — a freshly filed issue that reads as redundant means you are
 missing context the author had, not that the issue is obsolete.
 
+**Exception: automated review findings (label `roborev` / `from-review`) are in scope at any age.**
+They carry no author context: each is a machine review of one commit, and a later commit on the
+same branch often already fixed it, or the commit was a red-phase stub, a pre-rebase copy, or spike
+code that never merged. Judge each finding against current code (match a rebased commit by subject
+with `git log main --fixed-strings --grep='<subject>'`); the closing bar is unchanged — close only on
+shown evidence (fixing commit, deleted code, demonstrably false premise), never for age. A
+`review-failed` issue whose error is the agent's own failure (e.g. a usage limit) is not a finding.
+Jerry ruling, 2026-10-16.
+
 **Skip issues labelled `needs-decision`.** They are waiting on a ruling from Jerry, which is a
 pending state rather than a stale one, and age is not evidence about them: an unmade decision is
 exactly as valid at 90 days as at 9. Updating drifted paths and line numbers on one is still fine
