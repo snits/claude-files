@@ -280,6 +280,19 @@ shared-checkout hazards (retro 2026-10-24 C2, C8).
 exits 141 when `head` closes the pipe, and a close that landed reads as a failure. 298 such events
 appeared in one window, many of them on closes and comments (retro 2026-10-24 C1).
 
+**Implementer, test-author and simplify briefs carry a prose-rules block**, for every commit
+body and kata comment the agent writes. Three lines: *"State no count you did not take from the
+diff or a grep. When you describe old behavior, name the branch or commit it belongs to. Name
+every rule, doc line or invariant comment you delete in the commit body, with why."* The lead
+keeps the matching rule for its own briefs. An incident narrative handed to an agent to cite in
+shipped prose is cut to the clauses a durable record holds (kata comment, gate record, commit
+message), and the brief names that record. A fact only the transcript holds goes on the issue
+as a `CONTEXT` comment, not into the file. Each rule answers a verify-branch block on prose
+alone: a miscounted "six copies" and a "main's verifier" ambiguous between versions
+(stellarconquest w8vj, `39ax`); a deletion whose rationale lived only in the brief (`6f3x`);
+and a lead's transcript narrative copied into a shipped bullet (rq4g, `6ggn`). Retro 2026-10-24
+C3.
+
 **The lead owns every long run.** Implementer, test-author and auditor briefs say: *"Run only
 crate-scoped foreground commands. The lead runs the workspace suite, the gates and mutation runs
 in its own background calls."* A background run that finishes does not re-invoke the subagent
