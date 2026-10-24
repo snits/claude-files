@@ -15,6 +15,9 @@ Blocked, when the word is in command position (so `echo pkill` and `grep pkill f
 Each also when hidden in `bash -c '...'`. Safe practice: trace the PID from your own
 task's process tree (`ps -o pid,ppid,cmd`), then `kill <literal-pid>`.
 
+Documented limit: a PID list built in an earlier statement (`pids=$(pgrep foo); kill $pids`)
+or from `ps | grep | awk` is not caught.
+
 This is a workstation guard, not a security boundary: when unsure it lets the command
 through, because a false block costs a real command and a miss costs only what the hook
 would have caught.
@@ -40,8 +43,21 @@ from claim_gate import (
     _without_heredoc_bodies,
 )
 
-PREFIXES = {"sudo", "command", "env", "nohup", "time", "nice", "doas",
-            "do", "then", "else", "!", "(", "{", "$"}
+SYNTAX_PREFIXES = {"do", "then", "else", "!", "(", "{", "$"}
+# Wrapper words that run the rest of the line, mapped to the flags that consume a value.
+WRAPPERS = {
+    "sudo": {"-u", "-g", "-h", "-C", "-p", "-r", "-t", "-T", "-D", "-U"},
+    "doas": {"-u", "-C"},
+    "env": {"-u", "-C", "-S"},
+    "nice": {"-n"},
+    "timeout": {"-s", "-k"},
+    "time": {"-f", "-o"},
+    "nohup": set(),
+    "command": set(),
+    "exec": {"-a"},
+}
+# Flags after which the wrapper only inspects or lists instead of running the command.
+NON_RUNNING_FLAGS = {"command": {"-v", "-V"}, "sudo": {"-l", "-ll", "-V", "-v"}}
 NAME_KILLERS = {"pkill", "killall"}
 PID_LOOKUPS = {"pgrep", "pidof"}
 LOOKUP_SUBSTITUTION = re.compile(r"(?:\$\s*\(|`)\s*(?:\S*/)?(?:pgrep|pidof)\b")
@@ -50,13 +66,35 @@ MAX_DEPTH = 3
 
 
 def _command_index(tokens: list[str]) -> int | None:
-    """Index of the command being run, skipping `VAR=val` and wrapper words."""
-    for i, tok in enumerate(tokens):
+    """Index of the command being run, skipping `VAR=val` and wrapper words.
+
+    A wrapper's own flags are skipped, including the value word of those that take one
+    (`sudo -u root`, `nice -n 5`), and `timeout` also skips its duration operand. A
+    wrapper invoked only to inspect (`command -v`, `sudo -l`) runs nothing, so None.
+    """
+    wrapper = None
+    need_duration = False
+    i = 0
+    while i < len(tokens):
+        tok = tokens[i]
+        name = tok.rsplit("/", 1)[-1]
         if "=" in tok and not tok.startswith("-") and tok.split("=", 1)[0].isidentifier():
-            continue
-        if tok in PREFIXES or tok.rsplit("/", 1)[-1] in PREFIXES or tok.startswith("-"):
-            continue
-        return i
+            i += 1
+        elif tok in SYNTAX_PREFIXES:
+            i += 1
+        elif name in WRAPPERS:
+            wrapper = name
+            need_duration = name == "timeout"
+            i += 1
+        elif tok.startswith("-"):
+            if wrapper is None or tok in NON_RUNNING_FLAGS.get(wrapper, ()):
+                return None
+            i += 2 if tok in WRAPPERS[wrapper] else 1
+        elif need_duration:
+            need_duration = False
+            i += 1
+        else:
+            return i
     return None
 
 

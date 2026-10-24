@@ -30,6 +30,14 @@ BLOCKED = [
     "bash -c 'kill $(pgrep foo)'",
     "bash -c 'pgrep foo | xargs kill'",
     "for p in a b; do pkill $p; done",
+    "sudo -u root pkill foo",
+    "nice -n 5 pkill foo",
+    "timeout 5 pkill foo",
+    "timeout -s KILL 5 killall foo",
+    "timeout -k 2 5 pkill foo",
+    "exec pkill foo",
+    "env -u HOME pkill foo",
+    "sudo -E nice -n 5 pkill foo",
 ]
 
 ALLOWED = [
@@ -55,6 +63,13 @@ ALLOWED = [
     "cat <<'EOF'\npkill -f foo\nEOF",
     "cat > f <<EOF\nkill $(pgrep x)\nEOF",
     "",
+    "command -v pkill",
+    "command -v killall >/dev/null && echo yes",
+    "command -V pkill",
+    "sudo -l pkill",
+    "env -u pkill ls",
+    "nice -n 5 ls pkill",
+    "timeout 5 sleep 1",
 ]
 
 
@@ -90,6 +105,16 @@ def test_main_blocks_with_exit_2():
 
 def test_main_allows_plain_kill():
     assert run_main(json.dumps({"tool_input": {"command": "kill 12345"}, "cwd": "/tmp"})) == (0, "")
+
+
+def test_main_fails_open_when_verdict_raises(monkeypatch):
+    import kill_guard
+
+    def boom(command, cwd):
+        raise RuntimeError("internal bug")
+
+    monkeypatch.setattr(kill_guard, "verdict", boom)
+    assert run_main(json.dumps({"tool_input": {"command": "pkill x"}, "cwd": "/tmp"})) == (0, "")
 
 
 @pytest.mark.parametrize("payload", ["not json", "{}", '{"tool_input":{"command":5}}', "[]"])
