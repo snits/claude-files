@@ -10,9 +10,11 @@ If it carries `roborev`, prefer the first unowned issue from `kata ready --no-la
 passes the same check; a roborev finding is worked only when nothing else is ready (retro
 2026-10-07 C3: roborev files at priority 2, hand-filed issues mostly carry none).
 
-When you do work a roborev finding, check its commit first. If the commit is not an ancestor of
-main (`git merge-base --is-ancestor <sha> main`) and no commit on main has its subject, the reviewed
-code never landed: close it `wontfix` and say so. Otherwise fix the medium-and-above findings and
+When you do work a roborev finding, check its commit first. The reviewed code never landed only when
+all three hold: the commit is not an ancestor of main (`git merge-base --is-ancestor <sha> main`),
+no local branch contains it (`git for-each-ref --contains <sha> refs/heads` prints nothing), and no
+commit on main has its subject. Then close it `wontfix` and say so. A commit that a branch still
+contains is work in flight, not dead code. Otherwise fix the medium-and-above findings and
 list the low ones in the close message unworked. A roborev issue whose findings are all low is not
 selected (retro 2026-10-24 C11: Jerry narrowed two triage passes by hand to "the mediums and
 higher").

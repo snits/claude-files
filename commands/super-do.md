@@ -271,9 +271,10 @@ Six lines: paths are literal, never computed; `--` goes before any operand that 
 variable; one git call per Bash call; no `find -exec sh` or `xargs sh`; kata bodies go through
 `--body-stdin` with a heredoc, never inline text that mentions git; `cd` runs alone, never chained
 in front of another command. The shell is zsh: there is no `PIPESTATUS` (use `pipestatus`), and
-`$VAR:word` is a history modifier, so brace it as `${VAR}:word`. One kernel-tests fan-out took 657
-guard refusals across 339 agents, and about 10 of them were real shared-checkout hazards (retro
-2026-10-24 C2, C8).
+`$VAR:word` is a history modifier, so brace it as `${VAR}:word`. In one kernel-tests fan-out, 341
+subagent transcripts carried the guard's refusal text (1028 matching lines). In the retro's sampled
+slice of those refusals, only the `git -C` and computed-`cd` shapes, 10 of 657, were real
+shared-checkout hazards (retro 2026-10-24 C2, C8).
 
 **Kata mutations run alone, never piped.** Claude sessions set `PIPE_FAIL`, so `kata close … | head`
 exits 141 when `head` closes the pipe, and a close that landed reads as a failure. 298 such events
