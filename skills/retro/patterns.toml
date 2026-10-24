@@ -13,7 +13,7 @@ eligible = "isolated"
 # 59jn (closed 2026-10-07): the 2.1.284/.285 false positives (rhgit substring, heredocs) no longer fire on
 # 2.1.293 (live probe). A computed $VAR operand still refuses by design; the guard text names the fix
 # (-- before it) and the coach now relays it. No changelog entry 2.1.283..2.1.293 explains the split.
-remedies = [{ ref = "8j5h" }, { ref = "jhby" }, { ref = "59jn" }]
+remedies = [{ ref = "8j5h" }, { ref = "jhby" }, { ref = "59jn" }, { ref = "super-do@retro-2026-10-24-C2", landed = "2026-10-24" }]
 
 [[pattern]]
 name = "worktree-cwd-trap"
@@ -47,3 +47,11 @@ detector = "denied by the Claude Code auto mode classifier"
 eligible = "any"
 # self-matches sessions that read this file (retro 2026-09-08 C3, kata kt3x)
 remedies = [{ ref = "kt3x" }]
+
+[[pattern]]
+name = "sigpipe-141"
+detector = "^Exit code 141\\b"
+eligible = "ran_bash"
+# PIPE_FAIL (retro 2026-10-07 C5) makes `cmd | head` exit 141; the output is complete but reads as a failure.
+# Remedy: talktomegoose and super-do say never trim with head/tail, never pipe kata mutations (retro 2026-10-24 C1).
+remedies = [{ ref = "talktomegoose@retro-2026-10-24-C1", landed = "2026-10-24" }]

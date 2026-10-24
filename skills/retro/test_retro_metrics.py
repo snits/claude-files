@@ -75,6 +75,7 @@ def test_shipped_registry_loads():
         "eval-eq-error",
         "classifier-denial",
         "zsh-nomatch",
+        "sigpipe-141",
     }
 
 
