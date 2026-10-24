@@ -61,6 +61,19 @@ function, not for the concept" (project/2026-10-02/21-59-11-384078.md), five pro
 project/2026-10-01/19-03-46-087342.md). Also: a reviewer hallucinating a mid-merge tree state
 (project/2026-09-30/18-04-36-489616.md); the handoff stale by one minute (user/2026-10-07/17-20-36-512683.md).
 
+Pass 2026-10-24 (window 10-07T17:20..10-24T11:17, 262 entries, 10 projects; all Claude-authored by model_id):
+no amendment this pass; the window's instances were routed to the sibling pearls. Unrouted, for a
+later pass: "a locality claim needs the whole-map artifact, not the window you were staring at"
+(project/2026-10-10/13-32-39-070120.md); a counterfactual on one world generalized to all, "One
+measured case is one case" (user/2026-10-09/18-04-03-014799.md, user/2026-10-09/18-06-11-640122.md);
+the reference column, "A fix that overshoots to zero is indistinguishable from success without it"
+(user/2026-10-10/11-28-00-791905.md); "Waiting for X" is a timestamped claim, an implementer idle six
+hours on a finished green run (user/2026-10-10/09-01-43-387897.md); distinct binary hashes prove the
+old build happened (project/2026-10-12/20-38-44-811520.md); "Count before characterising"
+(user/2026-10-16/03-42-52-970451.md); a list query with a row limit hid closes, per-ref verification
+(user/2026-10-24/10-01-51-957036.md); the WebFetch summary that dropped the two sentences that
+mattered (user/2026-10-13/13-51-05-683274.md).
+
 ## prose about a system is not under test
 
 status: pearled — PROMOTED AND INTEGRATED. Lives at
@@ -102,6 +115,18 @@ comment is a claim reviewers read for plausibility (project/2026-10-06/13-08-58-
 docstring justifying a deleted test was false (user/2026-10-06/14-31-28-869340.md); "accepts
 exactly X" on an intersection (user/2026-10-05/21-21-50-255842.md); CORRECTION without amending
 the body blocked a gate (project/2026-10-06/18-24-21-462077.md).
+
+Pass 2026-10-24 (window 10-07T17:20..10-24T11:17, 262 entries, 10 projects; all Claude-authored by model_id):
+amendment proposed `_inbox/dream/pearl-prose-amendment-20261024.md`: status is not a constant
+(user/2026-10-07/17-59-22-753818.md, user/2026-10-07/17-55-19-985582.md, w5z4); the universal fails
+first on the empty input (project/2026-10-07/22-38-07-179137.md, 87ps); the quantified summary
+sentence (user/2026-10-07/19-13-03-942971.md); state-machine freshness walked every transition
+(project/2026-10-10/20-40-09-285150.md); the count replaced by a rule whose glob over-matched
+(project/2026-10-07/19-56-48-553601.md); prose stale between Task 6 and Task 8
+(project/2026-10-11/01-23-59-835290.md); write the feature record last (user/2026-10-12/22-18-12-418079.md);
+diagnostic parity rots (project/2026-10-24/11-09-58-524676.md); narrative provenance as its own axis
+(user/2026-10-08/16-36-59-962460.md, rq4g); the brief as a claim surface
+(user/2026-10-08/13-26-05-301308.md, project/2026-10-07/23-56-07-819536.md).
 
 ## compound-shell-commands are their own failure domain
 
@@ -153,6 +178,21 @@ project/2026-09-27/12-37-41-936200.md); `env $1` one variable (project/2026-09-3
 (project/2026-10-07/16-40-04-594472.md; kata 59jn); `cargo test` across --test binaries stops at the
 first failing binary, `--no-fail-fast` for mutant runs (project/2026-10-06/17-29-29-873980.md).
 
+Pass 2026-10-24 (window 10-07T17:20..10-24T11:17, 262 entries, 10 projects; all Claude-authored by model_id):
+amendment proposed `_inbox/dream/pearl-shell-amendment-20261024.md`: the pearl's deferred PIPE_FAIL
+measurement answered, it moved the failure (a skipped kata close, project/2026-10-08/13-17-14-595284.md;
+`| head` exit 141 as the window's top tool-error source, user/2026-10-24/11-09-29-622093.md) and
+PIPESTATUS kept being typed (user/2026-10-08/00-31-16-310745.md, user/2026-10-08/16-15-36-683320.md,
+project/2026-10-07/21-47-45-383793.md); word-split five more times in orbweaver-rs and kernel-tests,
+then SH_WORD_SPLIT (my-env 1f4c95609dba, 2026-10-24); parallel Bash calls racing on one cwd
+(user/2026-10-10/22-17-48-963516.md); `git branch --merged` `+` prefix defeating `grep -x`, four
+sessions (user/2026-10-08/10-09-29-916200.md, user/2026-10-10/17-15-26-541520.md,
+project/2026-10-15/00-45-20-570232.md, user/2026-10-18/09-48-03-511403.md); concatenated output read
+as one list (project/2026-10-08/14-59-13-731632.md); echoed precondition (user/2026-10-11/19-51-42-314122.md);
+mutations that never landed or never reverted (user/2026-10-10/13-38-16-383445.md,
+user/2026-10-11/01-04-18-455155.md); `read -t` not a sleep; `cargo clean -p` "Removed 0 files"
+(user/2026-10-19/13-10-48-760043.md); `pkill -f` killing its own shell (user/2026-10-11/22-07-36-717484.md).
+
 ## worktree/environment artifact borrowing
 
 status: watching (still mostly rhkmaint-tools + alexandria; the conceptual core was
@@ -185,6 +225,18 @@ the primary or vanish with the tree (user/2026-09-29/18-02-36-244646.md, project
 user/2026-10-03/03-13-37-224742.md); spike worktrees accumulate ~10 GB of oracle worlds each
 (user/2026-10-03/03-13-37-224742.md). The conceptual core stays folded in the verification pearl.
 
+Pass 2026-10-24 (window 10-07T17:20..10-24T11:17, 262 entries, 10 projects; all Claude-authored by model_id):
+fresh worktrees without node_modules again, verify-merge exit 127 (project/2026-10-13/07-58-22-671958.md,
+user/2026-10-11/19-51-42-314122.md); a worktree-bound lead's PreToolUse hook refusing an auditor's
+edits in its own audit tree (project/2026-10-09/21-04-54-592971.md, user/2026-10-12/00-33-32-184740.md,
+alpha-prime); `.scratchpad/` in a worktree as a separate real directory whose evidence dies at
+`worktree remove` (project/2026-10-11/17-22-49-388587.md); a shared CARGO_TARGET_DIR baking
+CARGO_MANIFEST_DIR from a deleted worktree (user/2026-10-10/20-40-09-285144.md); a pre-push hook run
+from a linked worktree passing an absolute GIT_DIR that re-initialized the real repo as bare
+(project/2026-10-18/09-24-16-412310.md, 2rxn); a sandbox fence hiding a /tmp worktree so pytest saw
+zero failures (project/2026-10-22/16-35-45-412911.md, kernel-tests). Now four projects plus
+kernel-tests; still mostly harness hygiene rather than a pearl.
+
 ## review-cycle convergence: finding identity over finding count
 
 status: watching (rhkmaint-tools dominant; alexandria earlier)
@@ -216,6 +268,15 @@ stale comment per-task code review missed (project/2026-10-01/14-30-33-506240.md
 with alexandria; the convergence claim ("fixes that add clauses create new claims; cut") is in memory
 `feedback_spec_review_loops_converge_on_deletion` and the prose pearl; watching whether it needs its
 own arc.
+
+Pass 2026-10-24 (window 10-07T17:20..10-24T11:17, 262 entries, 10 projects; all Claude-authored by model_id):
+round-2 mediums sitting entirely in round-1 fix text, three times in a day, cleared by cutting
+(user/2026-10-08/16-36-59-962460.md); a regex test gated three times, each re-gate a new axis
+(project/2026-10-08/14-59-13-731632.md, routed to the fixture amendment as "the axis the last mutant
+named"); a big branch converging slowly because each fix round introduced a new small claim
+(user/2026-10-12/22-18-12-418079.md); the fix for one unbacked claim leaving its sibling in the same
+comment (user/2026-10-16/09-14-48-820244.md). The memory "spec review loops converge on deletion"
+holds; the fixture-side version is new.
 
 ## how Jerry steers: terse mid-turn course-corrections
 
@@ -277,6 +338,19 @@ the observation promoted to a target, twice (user/2026-09-28/20-58-36-084281.md)
 becoming the ruling text verbatim (project/2026-10-06/13-08-58-799435.md). The measured menu,
 "every option carried a measured number", recorded as a complement to the perturbed menu
 (project/2026-09-30/20-37-47-795639.md, user/2026-10-01/13-45-35-592946.md).
+
+Pass 2026-10-24 (window 10-07T17:20..10-24T11:17, 262 entries, 10 projects; all Claude-authored by model_id):
+amendment proposed `_inbox/dream/pearl-menu-amendment-20261024.md`: the weak-candidate experiment
+run unplanned twice, both approved (retro C10, user/2026-10-24/11-09-29-622093.md,
+user/2026-10-24/11-17-54-251177.md; alpha-prime 7bma, project/2026-10-10/23-19-27-744808.md); his
+questions after twelve hours inside the frame (user/2026-10-09/23-24-49-093367.md); the Worldographer
+NO-GO tied to the project's origin (project/2026-10-10/09-41-21-719730.md); "that scale is completely
+off" (user/2026-10-12/23-55-30-816402.md); a fourth axis in two messages
+(user/2026-10-08/01-41-12-186759.md); the ruling written in his voice, five instances
+(user/2026-10-09/01-08-55-167786.md, user/2026-10-09/23-24-49-093367.md, user/2026-10-10/09-58-50-929315.md,
+user/2026-10-15/00-47-39-218864.md, user/2026-10-12/23-55-30-816402.md). Also his own mid-turn
+self-correction on a hedged premise (user/2026-10-13/13-51-05-683274.md) and his premise "config broke"
+that was a binary swap (user/2026-10-12/19-05-43-048856.md): the pearl's third register again.
 
 ## issue bodies go stale faster than their comments
 
@@ -386,6 +460,18 @@ contains literal tool-call residue (`</project_notes>` and `<parameter name=...>
 project/2026-10-02/19-22-14-537185.md): a corpus-hygiene defect, not a reader fault; the entry's
 own text is intact.
 
+Pass 2026-10-24 (window 10-07T17:20..10-24T11:17, 262 entries, 10 projects; all Claude-authored by model_id):
+**the theme's own title is half superseded.** Culling proposal
+`_inbox/dream/cull-subagent-report-relay-memory-20261024.md`: Haiku 5.5 refused report files in two
+projects (project/2026-10-09/22-23-07-491588.md, project/2026-10-12/02-31-35-780911.md), long replies
+skip the file (project/2026-10-12/22-06-15-860419.md), replies truncate at ~3-5k chars
+(user/2026-10-10/09-01-43-387897.md, project/2026-10-12/02-31-35-780911.md), and the verified recovery
+is the SubagentHandback tool_use in the subagent jsonl (project/2026-10-07/17-50-03-380449.md,
+project/2026-10-16/09-14-48-820825.md, user/2026-10-16/15-28-59-766579.md). The deliverable is the
+transcript, not a file the agent may decline to write. Related: a finished background run does not
+wake the agent that launched it (user/2026-10-11/17-22-49-388885.md, user/2026-10-10/09-01-43-387897.md),
+and idle-with-no-artifact is not no-verdict (project/2026-10-22/16-35-40-426366.md, kernel-tests).
+
 ## merge/rebase silently corrupts derived artifacts
 
 status: watching (rhkmaint-tools only, 3 sightings)
@@ -405,6 +491,14 @@ pre-rebase SHA that is an ancestor of nothing, matched by `git patch-id --stable
 (project/2026-10-01/17-18-12-996971.md), spike SHAs rebased so fixes matched by subject and `git
 cherry` (project/2026-09-30/16-10-57-971921.md, orbweaver-rs). The arc's end for the figures: the
 derived artifact was deleted by ruling (06rg, 5170fbb71aef) rather than re-derived. Two projects.
+
+Pass 2026-10-24 (window 10-07T17:20..10-24T11:17, 262 entries, 10 projects; all Claude-authored by model_id):
+a message-only `--amend` orphaning the provenance stamp in generated worlds
+(project/2026-10-10/11-28-00-791074.md, project/2026-10-10/13-32-39-070120.md); main rebased mid-flight
+rewriting 22 SHA citations, ruled --no-ff (project/2026-10-12/22-06-15-860419.md); counts "at this
+commit" going stale on the second of two branches sharing a base (project/2026-10-22/17-13-11-713858.md,
+kernel-tests); patch-id identity as proof of landing, and where it is not available
+(project/2026-10-22/17-13-11-713858.md). Now orbweaver-rs + kernel-tests + rhkmaint-tools.
 
 ## a PASS is a worse moment for scrutiny than a BLOCK
 
@@ -612,6 +706,18 @@ user/2026-09-27/12-37-41-936486.md, vault); the vault loop pushes ~/vault on its
 (user/2026-10-05/19-53-47-420530.md); the auto-mode classifier refused a subagent's commit in its
 own feature worktree once, then its reads (project/2026-10-06/19-59-36-213203.md). Three projects.
 
+Pass 2026-10-24 (window 10-07T17:20..10-24T11:17, 262 entries, 10 projects; all Claude-authored by model_id):
+**status: ripe** (claudes-home, orbweaver-rs, vault, alpha-prime; 2 months). Another session owned the
+vault while this one assembled a packet (user/2026-10-07/19-10-30-233080.md, filed a4wp); Jerry pushes
+the vault between firings (project/2026-10-07/22-49-57-023482.md); main moved under a merge chain that
+echoed its precondition (project/2026-10-11/19-51-42-314172.md), rebased by his pull mid-session
+(user/2026-10-12/02-14-33-492542.md), rebased and pushed mid-flight (project/2026-10-12/22-06-15-860419.md);
+"18 ahead" that was 1 because he had pushed (user/2026-10-11/19-57-31-452072.md); he had already
+re-vendored hexwalker himself (user/2026-10-15/00-45-20-570221.md); a live cargo that was his pre-push
+hook (user/2026-10-10/09-58-50-929315.md); someone else's close surfacing in a limited list
+(user/2026-10-24/10-01-51-957036.md). Remedies already mechanized in kata (c6cr, 6j4k, a4wp).
+DEFERRED to next pass for drafting: a full-corpus hunt was not run this pass.
+
 ## reading a rule is not applying it
 
 status: watching (carried; new instances 2026-09-05 — now rhkmaint-tools + claudes-home +
@@ -669,6 +775,17 @@ applying it to yourself are different things" (user/2026-09-28/12-05-45-132492.m
 in the role description only the lead reads (project/2026-10-01/17-56-33-240948.md); a green-commit
 hook vs a red-first commit rule, adjudicated by Jerry (user/2026-09-30/15-05-48-641624.md).
 
+Pass 2026-10-24 (window 10-07T17:20..10-24T11:17, 262 entries, 10 projects; all Claude-authored by model_id):
+amendment proposed `_inbox/dream/pearl-where-the-rule-lives-amendment-20261024.md`: the third data
+point. The kata-daemon kill with the sandbox rule in context (user/2026-10-10/21-37-56-904587.md)
+became kill_guard.py (~/.claude d1aa349a4353, 2026-10-24); word-split recurring with the memory
+loaded became SH_WORD_SPLIT (my-env 1f4c95609dba, 2026-10-24); PIPE_FAIL's own bill
+(user/2026-10-24/11-09-29-622093.md); six gates PASS first time once the rules travelled in the brief
+(project/2026-10-22/16-35-40-426366.md, kernel-tests); the classifier firing where the rule did not
+(user/2026-10-18/23-31-02-854397.md); `git checkout --` by reflex (user/2026-10-19/17-05-35-299816.md);
+three restatements of the pearl's sentence (user/2026-10-17/11-15-50-230999.md,
+user/2026-10-10/20-46-14-521663.md, user/2026-10-08/15-44-11-576184.md).
+
 ## claims about one's own conduct skip verification (the earned green)
 
 status: **ripe → DRAFTED** as `_inbox/dream/pearl-the-earned-green.md` (2026-09-13).
@@ -702,6 +819,16 @@ project/2026-10-02/16-58-00-040722.md); the lead's brief as the commonest counte
 (project/2026-09-29/14-57-14-315618.md, user/2026-09-29/15-07-16-561465.md,
 user/2026-09-27/21-41-55-802514.md, user/2026-10-05/19-58-20-597181.md). Species 5 for the record:
 the SHA typed at "wrap it up" (user/2026-10-05/22-38-40-190961.md).
+
+Pass 2026-10-24 (window 10-07T17:20..10-24T11:17, 262 entries, 10 projects; all Claude-authored by model_id):
+amendment proposed `_inbox/dream/pearl-earned-green-amendment-20261024.md`: where the counterfeit moved,
+"the gate protects against the lead" (user/2026-10-11/19-57-31-452072.md), the lead's durable prose as
+the highest-defect artifact (user/2026-10-16/16-55-29-219272.md), the synthesis
+(user/2026-10-08/16-52-35-371923.md), the finished state (user/2026-10-15/00-45-20-570221.md), the
+correction (user/2026-10-16/15-28-59-766579.md, project/2026-10-22/17-13-11-713858.md,
+project/2026-10-17/11-15-50-230966.md), the instrument validated on its own probes
+(project/2026-10-10/23-19-27-744808.md), f6ec recursion (project/2026-10-08/16-36-59-962316.md), and
+the vault loop's audit of this pass's own 10-07 stubs (user/2026-10-07/21-34-57-067566.md).
 
 ## implausibly cheap success / probes must carry their own provenance
 
@@ -789,6 +916,13 @@ three fresh ones (project/2026-09-29/14-05-13-357948.md); a fresh reviewer told 
 itself, not to trust either side, got it right where two agreeing reviewers were wrong
 (project/2026-09-29/17-17-36-155067.md).
 
+Pass 2026-10-24 (window 10-07T17:20..10-24T11:17, 262 entries, 10 projects; all Claude-authored by model_id):
+reviewers inherit the brief's frame, eleven flaws inside and zero outside
+(user/2026-10-09/23-24-49-093367.md); an advisor's mechanism claim plausible and wrong, checked by
+reading 30 lines (user/2026-10-12/15-00-35-948759.md); a reviewer's hypothesized mechanism adopted as a
+comment and refuted by the agent's own earlier counts (user/2026-10-11/17-30-41-583197.md); a re-gate
+auditor partly wrong, "auditor reports are claims too" (user/2026-10-08/14-11-41-059168.md).
+
 ## environment-dependent tests lie about the human's run
 
 status: watching (new 2026-09-13; rhkmaint-tools, 2 entries same session, reader-cited)
@@ -804,6 +938,14 @@ window with a memory naming it (user/2026-09-22/00-48-47-748963.md,
 user/2026-09-26/19-25-56-581858.md, orbweaver-rs; user/2026-09-25/14-30-55-624934.md,
 alexandria). Routed to the shell pearl's species 4 and to where-the-rule-lives, not here; this
 theme stays about test outcomes that differ between the agent's run and the human's.
+
+Pass 2026-10-24 (window 10-07T17:20..10-24T11:17, 262 entries, 10 projects; all Claude-authored by model_id):
+a wall-clock perf test failing deterministically in one checkout path and passing in another at the
+same commit (project/2026-10-12/02-26-58-606068.md, alpha-prime); a snapshot golden mislabelled
+"flaky" for two months, actually stale since a UI commit (project/2026-10-12/20-40-31-973649.md);
+pinned f64 digests failing on Darwin 27/Xcode 27 (project/2026-10-19/17-05-35-299161.md); a tolerant
+snapshot passing against a stale golden (project/2026-10-08/16-01-18-284712.md). Now alpha-prime +
+orbweaver-rs + rhkmaint-tools; status: watching, close to ripe.
 
 ## premise-testing before implementation
 
@@ -840,6 +982,15 @@ new, dense: "The premise check is the cheapest high-value step in /super-do"
 disguise (project/2026-10-05/22-38-40-190180.md); re-running a filed surviving mutant as a 2-minute
 premise check (project/2026-10-06/17-36-52-635752.md); a filed headline on the wrong metric
 (project/2026-09-30/18-04-36-489616.md). The three shapes routed on 09-27 stand; no new shape.
+
+Pass 2026-10-24 (window 10-07T17:20..10-24T11:17, 262 entries, 10 projects; all Claude-authored by model_id):
+(routed theme; instances only) an evidence-gated defer mooted by an unrelated refactor
+(user/2026-10-07/19-13-03-942971.md, alexandria); a simplify issue encoding its own deferral condition
+(project/2026-10-08/10-21-34-227475.md); git log -S on a quoted phrase as a 10-second premise check
+(project/2026-10-11/17-30-41-583390.md); a filed issue's harmless direction hiding the harmful one
+(project/2026-10-08/14-02-49-236140.md); "Probe the neighbouring encodings, not just the reported literal."
+(project/2026-10-11/18-11-30-418435.md); a new false premise found on rerun that everyone had accepted
+(project/2026-10-22/17-13-11-713858.md, kernel-tests); retro C10 (user/2026-10-24/11-09-29-622093.md).
 
 ## a pre-committed verdict rule must be shown able to fire
 
@@ -883,6 +1034,17 @@ normalized, 93 wrong-path recovered, 12 NOQUOTE, 2 MISSING-PATH), 934 distinct e
 (user/2025-08-06/09-36-01-115400.md, user/2026-03-23/22-33-45-093802.md). Eight shapes, the
 rhkmaint "three grades" (user/2026-08-11/06-23-00-122511.md) as the spine, nine forward rules.
 Package: ~/claudes-home/.scratchpad/dream/20261007/ (brief, slices, reports, reverify-all.tsv).
+
+Pass 2026-10-24 (window 10-07T17:20..10-24T11:17, 262 entries, 10 projects; all Claude-authored by model_id):
+(pearled as the-fixture-decides) amendment proposed `_inbox/dream/pearl-fixture-amendment-20261024.md`:
+candidate shapes "the fixture in the old unit" (project/2026-10-10/14-27-39-520388.md) and "the fake
+that is the author's model" (project/2026-10-23/15-33-50-346263.md); the axis the last mutant named
+(project/2026-10-11/01-23-59-835290.md and three more); named-fault review prompts
+(project/2026-10-12/02-31-35-780911.md). Verdict-rule instances proper: a pre-registered metric dead
+at baseline (project/2026-10-10/21-37-56-904401.md), a +-10% band below a 76-cell count's noise
+(project/2026-10-10/22-17-48-963573.md), a stripe metric failing its own known positive
+(user/2026-10-07/23-10-56-982979.md), a clip fixture that could never fire at retention 0.8
+(project/2026-10-08/10-09-29-916859.md).
 
 ## a diagnostic entry point is a frozen snapshot of a past production call
 
@@ -946,6 +1108,14 @@ roborev files at p2, so an autonomous consumer of `kata next` inherits the bias
 (user/2026-10-07/16-40-04-594588.md). Kin to "merge/rebase silently corrupts derived artifacts"
 (the reviewed SHA is a derived artifact of the branch) and to the fail-closed-rule theme.
 
+Pass 2026-10-24 (window 10-07T17:20..10-24T11:17, 262 entries, 10 projects; all Claude-authored by model_id):
+roborev findings against pre-rebase SHAs and spike branches: orbweaver-rs 181 open to 11, two thirds on
+spike code or pre-rebase SHAs (project/2026-10-16/03-42-52-970141.md), condensed digests carrying
+findings about an unmerged spike (project/2026-10-24/11-09-58-524676.md); rhkmaint-tools patch-id for
+dead-SHA findings (project/2026-10-08/16-15-36-683624.md); alpha-prime findings discharged by later
+commits (project/2026-10-11/18-11-30-418435.md). Three projects now, which meets the ripeness rule, but
+the remedy is tooling (kata j0gc, e826, 3y7h) rather than a pearl: marked ripe, routed, not drafted.
+
 ## a carve-out stands in for a missing mechanism
 
 status: watching (new 2026-10-07; orbweaver-rs only, but it is Jerry's framing and it moved the
@@ -969,6 +1139,13 @@ coordinate but should respond oppositely (project/2026-10-02/16-49-49-803572.md)
 eight instances in nine days and a Jerry CONTEXT on orbweaver 0h1n that may redirect ten months of
 work. Watch for a second project.
 
+Pass 2026-10-24 (window 10-07T17:20..10-24T11:17, 262 entries, 10 projects; all Claude-authored by model_id):
+one more orbweaver-rs instance, the inverse direction: a wrong rule removed as a bug reappeared as a
+zero, "A wrong rule that exists for a reason reappears as a zero when you remove it"
+(project/2026-10-10/11-28-00-791074.md); and a carve-out chosen to keep a render path alive that turned
+polar interiors into desert slabs (project/2026-10-09/22-23-07-491588.md,
+user/2026-10-09/22-23-07-491251.md). Still one project.
+
 ## an aggregate can rise while the floor it summarizes is crossed
 
 status: watching (new 2026-10-07; orbweaver-rs, 6 instances)
@@ -984,6 +1161,12 @@ set and the denominator grew (project/2026-10-05/23-10-19-435982.md); an Af/Am r
 orbweaver-rs ("aggregate-hides-rebucketing"); listed here to see whether it leaves the project.
 Related to the count theme (a number without its method) and to the verification pearl's
 "prefer an identity to a score" proposed this pass.
+
+Pass 2026-10-24 (window 10-07T17:20..10-24T11:17, 262 entries, 10 projects; all Claude-authored by model_id):
+pooled percentiles read as per-row uniformity (user/2026-10-07/23-10-56-982979.md); "a classic
+aggregate-masks-local trap in reverse" (project/2026-10-10/13-32-39-070120.md); clump metrics that
+answer speckle-or-not but not area-or-line (user/2026-10-15/14-44-20-925650.md); Jerry discounting a
+good aggregate on a speckled map (user/2026-10-10/09-41-21-719526.md). Still orbweaver-rs only.
 
 ## measure before the menu
 
@@ -1002,6 +1185,38 @@ issue quotes a derived number as its motivation, evaluate the function before as
 adopted (project/2026-10-06/14-27-42-088125.md). Recorded in the menu amendment as the measured
 menu, a complement to the perturbed menu. Watching whether it is a pearl of its own ("the spike is
 the brainstorm") or a line in the menu pearl.
+
+Pass 2026-10-24 (window 10-07T17:20..10-24T11:17, 262 entries, 10 projects; all Claude-authored by model_id):
+**status: ripe → FOLDED** into `_inbox/dream/pearl-menu-amendment-20261024.md` section 4. Now four
+projects: rhkmaint-tools (project/2026-10-07/23-56-07-819536.md, user/2026-10-08/15-43-59-845375.md),
+orbweaver-rs (project/2026-10-12/02-14-33-492433.md), alpha-prime (user/2026-10-11/16-48-18-504252.md),
+claudes-home (user/2026-10-24/11-09-29-622093.md). Folded as a line, not drafted as a pearl.
+
+
+## the reproduction is the damage again
+
+status: watching (new 2026-10-24; orbweaver-rs 2, kernel-tests 1)
+
+A failure that smells like an environment leak gets reproduced by re-running the thing that leaked,
+and the reproduction repeats the damage. "when a test fails in a way that smells like env leakage,
+check for side effects BEFORE re-running it to reproduce — my repro run repeated the damage"
+(user/2026-10-18/09-24-16-412868.md, 2rxn; and user/2026-10-18/23-31-02-854397.md); a mutant widened
+a cleanup to rmtree(parent) while a bare -k selection also ran a test that hands cleanup the real
+Path("/") behind narrow mocks, "a loaded gun for every mutation run" (project/2026-10-22/16-35-40-426366.md,
+kernel-tests, event 2026-10-21); the kata-daemon kill under debugging pressure
+(user/2026-10-10/21-37-56-904587.md) is kin. Remedy recorded: ask what the code under test writes,
+point the environment at a decoy (project/2026-10-18/23-31-02-854596.md).
+
+## a fix names its root property and fixes one consumer
+
+status: watching (new 2026-10-24; orbweaver-rs 2, alpha-prime 1)
+
+A commit message states the cause in general terms and the diff repairs one site. "bxmn named it
+perfectly and still fixed only one consumer" (user/2026-10-12/14-06-00-242024.md, claudes-home row
+about orbweaver-rs 1mfd); "I wrote "fix these cited spots" when the rule I'd just read says "close the
+class"" (user/2026-10-10/20-46-14-521663.md, alpha-prime); the first fix addressed only the instance
+the auditor named and the re-gate found the sibling in the same comment (user/2026-10-16/09-14-48-820244.md).
+Remedy recorded: grep for other readers of the same unbounded value at fix time.
 
 ---
 
@@ -1323,3 +1538,60 @@ shows it; "measure before the menu" as a possible menu-pearl line; the review-un
 stays in use. The three-role split's own failure modes (two-role collapse on test-only and
 refactor issues, user/2026-10-06/19-21-49-051144.md area; the lead-run per-site probe as the
 mutation agent's substitute, project/2026-10-07/15-51-02-578667.md) are not yet a theme.
+
+## Pass note 2026-10-24
+
+**Window:** 10-07T17:20:36.513 → 10-24T11:17:54.251, 262 entries (orbweaver-rs 123, alpha-prime 47,
+rhkmaint-tools 39, claudes-home 28, hexwalker 7, vault 5, kernel-tests 5, alexandria 3,
+stellarconquest 3, kata 2). By `model_id`, all Claude: claude-opus-5-5 136, claude-sonnet-4 82,
+claude-fable-5-1 44. Read raw by the editor in five ~65 KB chunks; no window readers. Coverage
+note: no journal rows for 10-20 and 10-21; mnemosyne was down on the desktop, and both
+`~/.private-journal/2026-10/` files were re-entered on 10-22 (their row timestamps are the re-entry
+time, so cite the event date from the content). Nothing else in `~/.private-journal/2026-10/`.
+
+**Job A, amendments proposed (6) + culling (1)**, all in `~/vault/_inbox/dream/`. Sources mechanically
+verified with `dream_corpus.py reverify` after calibrating on a fabricated fragment (NOQUOTE) and a
+known quote (OK): 159 rows, 157 OK on first run, 2 WRONG-PATH (user/project sibling) corrected, then
+159/159 OK. Every quoted span in every body checked against its stub's verified rows (161 spans; the 6
+not in the rows are the pearls' own text, checked against the atlas files; the cull's one quote of
+the memory file was checked against that file). Scope-note
+model lists come from a `model_id` query over exactly the cited paths (vzhh), not from the editor.
+
+- `pearl-shell-amendment-20261024.md`: answers the pearl's deferred PIPE_FAIL measurement (it moved
+  the failure: a skipped kata close; `| head` exit 141 as the window's top tool-error source); word-split
+  ×5 then SH_WORD_SPLIT; parallel cwd race; `git branch --merged` `+`; concatenated output; echoed
+  precondition; mutations that never landed; `read -t`; `cargo clean -p`.
+- `pearl-where-the-rule-lives-amendment-20261024.md`: the third data point (kata-daemon kill →
+  kill_guard; word-split → SH_WORD_SPLIT; PIPE_FAIL's bill); the brief as point of action measured
+  (six gates PASS first time, kernel-tests); the classifier firing where the rule did not.
+- `pearl-menu-amendment-20261024.md`: the weak-candidate experiment run unplanned twice and both
+  approved (retro C10, alpha-prime 7bma); his questions after twelve hours inside the frame; the ruling
+  written in his voice (five instances); measure-before-the-menu folded in.
+- `pearl-earned-green-amendment-20261024.md`: where the counterfeit moved, "the gate protects against the
+  lead"; synthesis, finished state, correction, self-validated instrument; f6ec recursion; the vault
+  loop's audit of the 10-07 dream stubs.
+- `pearl-fixture-amendment-20261024.md`: candidate shapes 9 (fixture in the old unit) and 10 (the fake
+  that is the author's model); the axis the last mutant named; named-fault review prompts; pin one
+  exact value; one-line instances of shapes 1, 2, 3, 5, 6.
+- `pearl-prose-amendment-20261024.md`: status is not a constant; the universal fails first on the empty
+  input; prose stale within one branch; narrative provenance as its own axis.
+- `cull-subagent-report-relay-memory-20261024.md`: the claudes-home memory's "the file survives the
+  drop" superseded by tier-dependent observations; the jsonl hand-back is the verified recovery.
+
+**Job B:** deltas appended to 19 sections; two new watching themes ("the reproduction is the damage
+again", "a fix names its root property and fixes one consumer"). "measure before the menu" ripe → folded
+into the menu amendment. "the review unit is not the landing unit" meets the ripeness rule on
+projects but is routed to tooling (j0gc, e826, 3y7h), not drafted. **"the human is a concurrent writer"
+is ripe and DEFERRED**: drafting it needs the full-corpus hunt, which this pass did not run. The
+verification pearl got no amendment; its window instances are listed unrouted in its section.
+
+**No new pearl drafted.** Editor's call: seven proposals from one window is already a heavy fold for
+the vault loop, and the ripe theme deserves the full hunt rather than a window-only draft.
+
+**Cursor:** stamped at 2026-10-24T11:17:54.252, one millisecond past the last fetched entry
+(user/2026-10-24/11-17-54-251177.md, DB timestamp 11:17:54.251-07).
+
+**Candidates for next pass:** draft "the human is a concurrent writer" with the full hunt (d36r's
+muse-spark readers are still unrun; decide or drop); measure SH_WORD_SPLIT and kill_guard against the
+next window's tool errors, not only their target counts; "environment-dependent tests" is one project
+short of a clean three-project spread.
