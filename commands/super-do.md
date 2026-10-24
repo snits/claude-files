@@ -290,8 +290,10 @@ lead's results file, not the command.
 **Briefs give absolute paths and take inline reports.** Every brief, report or scratch path in a
 brief is absolute and resolved from the lead's checkout, never a relative `.superpowers/` or
 `.scratchpad/` path, since the agent's cwd is its own worktree. The report comes back inline,
-issues first, at most 45 lines. Longer replies truncate in transit, and on truncation the lead
-asks for the tail after the cut point, not a full resend (retro 2026-10-24 C6).
+issues first, at most 45 lines, and is also written to the brief's absolute report path. Longer
+replies truncate in transit, and on truncation the lead asks for the tail after the cut point,
+not a full resend. If only an idle notification arrives, the lead reads the report file, since
+the harness intermittently drops the final report (retro 2026-10-24 C6).
 
 **Cap each loop in this flow at three passes.** On the fourth, stop and escalate as the code review
 gate describes.
