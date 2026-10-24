@@ -17,6 +17,15 @@ ruling 2026-08-11); architecture recorded on kata p48f.
   proposal. The spike showed reader misattribution and paraphrase-as-quote: the pool
   selects, the raw row cites. A quote you cannot re-find verbatim is a paraphrase — mark
   it as one or drop it.
+- The editor's own prose around the quotes is checked too. Quote verification cannot see
+  these errors, and in both audits so far (2026-10-07, 2026-10-24) every one rounded toward
+  the tidier claim.
+  - Every count, tally or trend word in a proposal body ("three projects", "increasingly",
+    "at the rate X predicts") is backed by a number you can point to, or it is cut.
+  - Every project label and model list comes from the database for the cited rows, not
+    from memory.
+  - Every negative claim ("nobody did X", "no entry mentions Y") gets the authoritative
+    search over the full corpus or record, not the window you read.
 
 ## Procedure
 
