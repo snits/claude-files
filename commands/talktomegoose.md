@@ -104,7 +104,9 @@ all of its input (retro 2026-10-24 C1).
      true for this project and silent about every other one.
      It reads projstat's `--json` roll-up rather than sweeping kata itself, so its project
      set is projstat's tracked set. If it reports `unqueryable=N`, those projects are gaps,
-     not zeroes.
+     not zeroes. `untracked=N(projects)` is open `needs-decision` in kata projects outside
+     that set (kernel-tests, deliberately) — not in the count, but still waiting on Jerry;
+     name them in the proposal. `untracked=?` means that check could not run.
      The count is `waiting_on_you` — `needs-decision` plus `needs-review`, counted once per
      item, with the split shown. `needsinfo` is deliberately **not** on this line: a triage
      loop clears it without Jerry, and a persistent count of it here would read as his own

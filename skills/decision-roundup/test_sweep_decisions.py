@@ -45,14 +45,19 @@ def project(name, *, blocked=(), tasks_null=False, binding="bound", tasks_unknow
     }
 
 
-def run(monkeypatch, capsys, projects, argv=(), labeled=None):
+def run(monkeypatch, capsys, projects, argv=(), labeled=None, kata_decisions=()):
     """Drive main() against a synthetic feed.
 
     `labeled` maps (project, label) -> {short_id: iso timestamp}, standing in for kata's
     event log. Absent entries make the sweep fall back to the feed's created-based age.
+    `kata_decisions` stands in for kata's own cross-project needs-decision listing, as
+    (project, short_id, labels) rows; None models a listing that could not be read.
     """
     labeled = labeled or {}
     monkeypatch.setattr(sd, "feed", lambda: {"projects": list(projects)})
+    monkeypatch.setattr(
+        sd, "kata_decisions",
+        lambda: None if kata_decisions is None else list(kata_decisions))
     monkeypatch.setattr(sd, "labeled_at", lambda p, l: labeled.get((p, l), {}))
     monkeypatch.setattr(sd.dt, "datetime", _FrozenDatetime)
     monkeypatch.setattr(sd.sys, "argv", ["sweep_decisions.py", *argv])
@@ -363,6 +368,77 @@ class TestBriefLine:
         monkeypatch.setattr(sd, "STAMP", str(stamp))
         out = run(monkeypatch, capsys, [project("p", blocked=[item("a")])], argv=["--brief"])
         assert "days_ago=?" in out
+
+
+class TestUntrackedProjects:
+    """Ruling (Jerry, 2026-10-24, claudes-home#6n5j): warn, don't re-include.
+
+    kernel-tests is outside projstat's tracked set on purpose (a work repo), and on
+    2026-10-24 the startup line read decision=8 while it alone held 27 open needs-decision.
+    """
+
+    def test_needs_decision_outside_the_tracked_set_is_warned_in_the_brief(
+            self, monkeypatch, capsys):
+        out = run(
+            monkeypatch,
+            capsys,
+            [project("alexandria", blocked=[item("qxq2")])],
+            argv=["--brief"],
+            kata_decisions=[("kernel-tests", "d8hn", ["needs-decision"]),
+                            ("kernel-tests", "eczb", ["needs-decision"]),
+                            ("alexandria", "qxq2", ["needs-decision"])],
+        )
+        assert "untracked=2(kernel-tests)" in out
+        assert "waiting_on_you=1" in out, "untracked issues are warned, never counted"
+
+    def test_tracked_projects_raise_no_warning(self, monkeypatch, capsys):
+        out = run(
+            monkeypatch,
+            capsys,
+            [project("alexandria", blocked=[item("qxq2")])],
+            argv=["--brief"],
+            kata_decisions=[("alexandria", "qxq2", ["needs-decision"])],
+        )
+        assert "untracked" not in out
+
+    def test_unbound_feed_record_does_not_count_as_tracked(self, monkeypatch, capsys):
+        """An unbound record was never asked, so its name covers nothing in kata."""
+        out = run(
+            monkeypatch,
+            capsys,
+            [project("pi-chudnovsky", tasks_null=True, binding="unbound")],
+            argv=["--brief"],
+            kata_decisions=[("pi-chudnovsky", "aaaa", ["needs-decision"])],
+        )
+        assert "untracked=1(pi-chudnovsky)" in out
+
+    def test_deferred_untracked_issue_is_not_warned(self, monkeypatch, capsys):
+        out = run(
+            monkeypatch,
+            capsys,
+            [project("p", blocked=[])],
+            argv=["--brief"],
+            kata_decisions=[("kernel-tests", "d8hn", ["needs-decision", "deferred"])],
+        )
+        assert "untracked" not in out
+
+    def test_unreadable_kata_listing_reads_as_unknown_not_zero(self, monkeypatch, capsys):
+        out = run(monkeypatch, capsys, [project("p", blocked=[])], argv=["--brief"],
+                  kata_decisions=None)
+        assert "untracked=?" in out
+
+    def test_full_report_lists_untracked_refs_apart_from_the_standing_table(
+            self, monkeypatch, capsys):
+        out = run(
+            monkeypatch,
+            capsys,
+            [project("alexandria", blocked=[item("qxq2")])],
+            kata_decisions=[("kernel-tests", "d8hn", ["needs-decision"])],
+        )
+        standing, untracked = out.split("## Outside projstat's tracked set")
+        assert "d8hn" not in standing
+        assert "kernel-tests" in untracked and "`d8hn`" in untracked
+        assert "Awaiting a ruling (1)" in standing
 
 
 class TestFeedFailure:

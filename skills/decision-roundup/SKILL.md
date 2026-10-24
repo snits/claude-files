@@ -142,9 +142,13 @@ Age alone is not evidence of neglect. Check for `deferred` before calling anythi
 
 - The sweep covers the projects **projstat tracks** (`include = true` in
   `~/.config/projstat/config.toml`), not every kata-registered project. A project registered in
-  kata after the last config edit is invisible here. Re-run the set difference before treating
-  a zero as complete; on 2026-08-16 the only kata projects outside the tracked set were
-  `kata-probe` and `kata-probe2`, both empty.
+  kata after the last config edit, or one excluded on purpose (kernel-tests, a work repo), is
+  outside the counts. The script now does the set difference itself: open `needs-decision`
+  in any kata project the feed does not track is **warned, never counted** — `untracked=N(…)`
+  on the brief line and an "Outside projstat's tracked set" section in the full report;
+  `untracked=?` means kata's listing could not be read, not that it is empty (Jerry ruling,
+  2026-10-24, claudes-home#6n5j). It checks `needs-decision` only. When a round-up includes
+  an untracked project, sweep it by hand with `kata list --label needs-decision --project <name>`.
   `agentsview`, `forge` and the upstream `kata` checkout are out of scope by ruling (Jerry,
   2026-08-15, on `projstat#hgd6`) — they are not our development projects. Their absence is
   not config drift and needs no fix.

@@ -18,6 +18,11 @@ if a consumer flattens it:
     asked. That is a gap, never a zero.
   * An empty `blocked` array means asked-and-holds-none, which is a different fact.
   * `deferred` items are parked, not standing. Reported separately with their `defer_until`.
+
+The feed only sees projstat's tracked set, so a project left out of it — deliberately, like
+the kernel-tests work repo — would hold decisions nothing here reports. kata's own listing is
+checked against that set and anything outside it is warned, never counted (Jerry ruling,
+2026-10-24, claudes-home#6n5j: warn rather than re-include).
 """
 
 from __future__ import annotations
@@ -164,6 +169,66 @@ def enrich_ages(standing: list, labels: tuple[str, ...], now: dt.datetime) -> No
             item["_age_basis"] = "labeled"
 
 
+def kata_decisions() -> list[tuple[str, str, list[str]]] | None:
+    """Every open needs-decision issue kata holds, as (project, short_id, labels).
+
+    Read from kata directly rather than the feed, because the point is to see projects the
+    feed does not track. None means the listing could not be read — unknown, not empty.
+    """
+    code, out, _ = run(["kata", "projects", "list", "--json"])
+    if code != 0:
+        return None
+    try:
+        names = {p["id"]: p["name"] for p in json.loads(out).get("projects", [])}
+    except (json.JSONDecodeError, KeyError):
+        return None
+    # --all defaults to no row limit; `complete` says whether the daemon returned everything.
+    code, out, _ = run(["kata", "list", "--all", "--label", "needs-decision", "--json"])
+    if code != 0:
+        return None
+    try:
+        payload = json.loads(out)
+    except json.JSONDecodeError:
+        return None
+    if not payload.get("complete", False):
+        return None
+    return [
+        (names.get(i.get("project_id"), f"project-{i.get('project_id')}"),
+         i["short_id"], i.get("labels") or [])
+        for i in payload.get("issues", [])
+    ]
+
+
+def untracked(report: dict) -> dict[str, list[str]] | None:
+    """Standing needs-decision refs in kata projects the feed does not track, by project.
+
+    A feed record's name is its kata binding name when it is bound (projstat
+    internal/collect/collect.go), so the join is by name. An unbound record was never asked
+    and covers nothing. Deferred issues are dropped client-side: only the first kata
+    --label/--no-label flag applies, so the exclusion cannot go on the command line.
+    """
+    rows = kata_decisions()
+    if rows is None:
+        return None
+    tracked = {r.get("name") for r in report.get("projects", [])
+               if r.get("kata_binding") == "bound"}
+    found: dict[str, list[str]] = {}
+    for project, short_id, labels in rows:
+        if project in tracked or "deferred" in labels:
+            continue
+        found.setdefault(project, []).append(short_id)
+    return found
+
+
+def untracked_field(outside: dict[str, list[str]] | None) -> str:
+    if outside is None:
+        return "untracked=?"
+    if not outside:
+        return ""
+    count = sum(len(refs) for refs in outside.values())
+    return f"untracked={count}({','.join(sorted(outside))})"
+
+
 STAMP = "~/.claude/decisions/last-roundup"
 
 
@@ -180,7 +245,7 @@ def last_roundup(now: dt.datetime) -> str:
     return f"last={raw} days_ago={(now - ran).days}"
 
 
-def brief_line(standing: list, gaps: list, now: dt.datetime) -> str:
+def brief_line(standing: list, gaps: list, outside: dict | None, now: dt.datetime) -> str:
     """One line for a startup check.
 
     Reports what is waiting on Jerry — needs-decision plus needs-review, counted once per
@@ -202,6 +267,8 @@ def brief_line(standing: list, gaps: list, now: dt.datetime) -> str:
     parts.append(last_roundup(now))
     if gaps:
         parts.append(f"unqueryable={len(gaps)}")
+    if field := untracked_field(outside):
+        parts.append(field)
     return " ".join(parts)
 
 
@@ -231,6 +298,7 @@ def main() -> int:
     report = feed()
 
     standing, deferred, gaps = collect(report, labels)
+    outside = untracked(report)
     # Fold before enriching: a folded item must get a label-applied age like any other.
     if args.include_deferred:
         for due, project, item in deferred:
@@ -243,7 +311,7 @@ def main() -> int:
     deferred.sort(key=lambda r: r[0])
 
     if args.brief:
-        print(brief_line(standing, gaps, now))
+        print(brief_line(standing, gaps, outside, now))
         return 0
 
     print(f"# Standing `{args.label}` — cross-project sweep, {now:%Y-%m-%d}")
@@ -278,6 +346,23 @@ def main() -> int:
             print(f"- **{proj}** — {err}")
         print()
         print("A project that fails to resolve is not a project with nothing in it.")
+        print()
+
+    if outside is None:
+        print("## Outside projstat's tracked set — UNKNOWN")
+        print()
+        print("kata's cross-project needs-decision listing could not be read, so decisions")
+        print("in untracked projects (e.g. kernel-tests) are unchecked, not absent.")
+    elif outside:
+        count = sum(len(refs) for refs in outside.values())
+        print(f"## Outside projstat's tracked set ({count}) — needs-decision, not counted above")
+        print()
+        for proj in sorted(outside):
+            refs = ", ".join(f"`{r}`" for r in outside[proj])
+            print(f"- **{proj}** — {refs}")
+        print()
+        print("The exclusion may be deliberate (kernel-tests is a work repo); these still")
+        print("wait on a ruling. Sweep them with `kata list --label needs-decision --project <name>`.")
 
     return 0
 
