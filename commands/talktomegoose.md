@@ -7,6 +7,11 @@ We have started a new session. Please go through the following steps:
 
 **Session Startup Protocol:**
 
+When batching these checks into shell calls, don't trim output with `| head` or `| tail`. Claude
+sessions set `PIPE_FAIL`, so a pipe that `head` closes early exits 141 and the whole startup
+block reads as a failed tool call. If output must be trimmed, use `sed -n '1,40p'`, which reads
+all of its input (retro 2026-10-24 C1).
+
 1. **Read Current Project Status:**
    - Read session-handoff.md if it exists to get the current project status
    - Look to see if there are any worktrees currently beyond the main repo location.

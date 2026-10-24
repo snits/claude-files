@@ -36,6 +36,9 @@ The check is redundant with the query on purpose, because the query cannot be tr
 same label check instead; dispatch a roborev finding only when nothing else is ready. roborev
 files at priority 2 and hand-filed issues mostly carry none, so `kata next` serves review findings
 first (retro 2026-10-07 C3). Use one `--no-label` per query — kata honors only the first.
+A roborev brief carries `/work-issue`'s roborev rules: close `wontfix` when the reviewed commit
+never reached main, fix medium-and-above findings, list the lows unworked, and skip an issue whose
+findings are all low (retro 2026-10-24 C11).
 **kata honors only the *first* `--no-label`; every later one is accepted without error and
 ignored** (`1ycz` — huma decodes the param non-exploded, so it reads one occurrence and splits
 that one on commas). Three flags filter one label. Do not "simplify" this back into a repeatable

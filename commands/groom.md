@@ -17,7 +17,9 @@ code that never merged. Judge each finding against current code (match a rebased
 with `git log main --fixed-strings --grep='<subject>'`); the closing bar is unchanged — close only on
 shown evidence (fixing commit, deleted code, demonstrably false premise), never for age. A
 `review-failed` issue whose error is the agent's own failure (e.g. a usage limit) is not a finding.
-Jerry ruling, 2026-10-16.
+Jerry ruling, 2026-10-16. A reviewed commit that is not an ancestor of main
+(`git merge-base --is-ancestor <sha> main`) and has no subject match on main never landed. That is
+shown evidence: close it `wontfix` and name the check (retro 2026-10-24 C11).
 
 **Skip issues labelled `needs-decision`.** They are waiting on a ruling from Jerry, which is a
 pending state rather than a stale one, and age is not evidence about them: an unmade decision is

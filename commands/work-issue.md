@@ -10,6 +10,13 @@ If it carries `roborev`, prefer the first unowned issue from `kata ready --no-la
 passes the same check; a roborev finding is worked only when nothing else is ready (retro
 2026-10-07 C3: roborev files at priority 2, hand-filed issues mostly carry none).
 
+When you do work a roborev finding, check its commit first. If the commit is not an ancestor of
+main (`git merge-base --is-ancestor <sha> main`) and no commit on main has its subject, the reviewed
+code never landed: close it `wontfix` and say so. Otherwise fix the medium-and-above findings and
+list the low ones in the close message unworked. A roborev issue whose findings are all low is not
+selected (retro 2026-10-24 C11: Jerry narrowed two triage passes by hand to "the mediums and
+higher").
+
 **Skip both.** A `needsinfo` issue is waiting on `triage-issue`; a `needs-decision` issue is
 waiting on Jerry. Neither is waiting on you. Passing over them is the whole point of the labels —
 re-examining one and re-applying the label every cycle is a loop that makes no progress and buries

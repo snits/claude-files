@@ -63,6 +63,14 @@ already merged under a different issue (kata vvhj, rust-port).
 When writing plans and task briefs, specify the goal, constraints, and acceptance criteria for each
 task; don't enumerate implementation steps unless the ordering is genuinely load-bearing.
 
+**Two kinds of work get Jerry's eye before the gates, not after.** A spike's first checkpoint is a
+one-paragraph restatement of what it actually tests and which system it changes, plus one rendered
+sample, sent to Jerry before the full plan is written. orbweaver `cgsv` ran seven tasks, two
+plan-review rounds and a final review before he saw it was bolted onto the wrong system. A GUI task
+is not done on a green suite: done means running the real binary, or a headless interaction test,
+on the interaction that changed, and reporting what was observed. Three alpha-prime GUI defects
+reached Jerry after every gate had passed (retro 2026-10-24 C7).
+
 ## Size gate — decide the track before invoking any skill
 
 Not every issue earns a design phase. `brainstorming` and `writing-plans` produce a spec and a
@@ -256,6 +264,33 @@ the shell tool is `Bash`, capital B; `Read` takes one integer `offset` plus a `l
 range; `Edit` needs a unique `old_string` or `replace_all`; reports come back as message text,
 never as files. Those four shapes cost about 70 wasted subagent turns across three projects in
 one two-week window (retro 2026-10-07 C7).
+
+**Worktree-isolated briefs carry a shell-shapes block**, because the subagent never reads the
+memory that names them and the refusal coach only explains a shape after the guard has refused it.
+Six lines: paths are literal, never computed; `--` goes before any operand that comes from a
+variable; one git call per Bash call; no `find -exec sh` or `xargs sh`; kata bodies go through
+`--body-stdin` with a heredoc, never inline text that mentions git; `cd` runs alone, never chained
+in front of another command. The shell is zsh: there is no `PIPESTATUS` (use `pipestatus`), and
+`$VAR:word` is a history modifier, so brace it as `${VAR}:word`. One kernel-tests fan-out took 657
+guard refusals across 339 agents, and about 10 of them were real shared-checkout hazards (retro
+2026-10-24 C2, C8).
+
+**Kata mutations run alone, never piped.** Claude sessions set `PIPE_FAIL`, so `kata close … | head`
+exits 141 when `head` closes the pipe, and a close that landed reads as a failure. 298 such events
+appeared in one window, many of them on closes and comments (retro 2026-10-24 C1).
+
+**The lead owns every long run.** Implementer, test-author and auditor briefs say: *"Run only
+crate-scoped foreground commands. The lead runs the workspace suite, the gates and mutation runs
+in its own background calls."* A background run that finishes does not re-invoke the subagent
+that launched it. Agents sat idle for 6 h, 2 h and 10 h with their work uncommitted, and the briefs
+that removed the long run removed the stalls (retro 2026-10-24 C5). A mutation auditor gets the
+lead's results file, not the command.
+
+**Briefs give absolute paths and take inline reports.** Every brief, report or scratch path in a
+brief is absolute and resolved from the lead's checkout, never a relative `.superpowers/` or
+`.scratchpad/` path, since the agent's cwd is its own worktree. The report comes back inline,
+issues first, at most 45 lines. Longer replies truncate in transit, and on truncation the lead
+asks for the tail after the cut point, not a full resend (retro 2026-10-24 C6).
 
 **Cap each loop in this flow at three passes.** On the fourth, stop and escalate as the code review
 gate describes.
