@@ -69,5 +69,8 @@ chrome/
 session-env/
 state/
 
+bridge-spawn/
+uploads/
+
 # Weekly dream-pass state (skills/dream); local only.
 dream/
