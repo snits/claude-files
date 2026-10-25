@@ -54,9 +54,10 @@ This session is ending so do the following:
   the same whether or not the claim is true is not evidence — so the running state has to be
   written down while it is still knowable.
 - **Close out any SDD ledger this session wrote** (`<checkout>/.superpowers/sdd/progress.md`). If
-  every commit it names passes `git merge-base --is-ancestor <sha> <default-branch>`, replace it
-  with `Epic complete: <branch> merged as <%h ("%s")>`. Otherwise leave it and name it in the
-  handoff as in flight. Never stub a ledger this session did not write: a concurrent session can
+  it shows every task of its plan complete and `git branch --merged <default-branch>` lists the
+  epic's branch, replace it with `Epic complete: <branch> merged as <%h ("%s")>`, citing the branch
+  tip as merged via `git show -s --format='%h ("%s")' <branch-tip>`. Otherwise leave it and name it
+  in the handoff as in flight. Never stub a ledger this session did not write: a concurrent session can
   hold a live one in the same checkout.
 - **Rewrite `session-handoff.md` — do not prepend a section to it.** The handoff answers one
   question for the next session: *what is in flight, and where do I look.* It is a pointer, not

@@ -69,7 +69,8 @@ sample, sent to Jerry before the full plan is written. orbweaver `cgsv` ran seve
 plan-review rounds and a final review before he saw it was bolted onto the wrong system. Any task
 that produces a runnable artifact is not done on a green suite: before the final whole-branch review
 (on the full track, SDD's own final code reviewer; on the direct track, the verify-branch gate), the
-lead runs the artifact against real data and reads the output for any statement that is not true.
+lead runs the artifact against real data and reads the output for any statement that is not true,
+after the last code-changing step and again after any later fix that changes code.
 For a GUI, that means the real binary, or a headless interaction test, on the interaction that
 changed, reporting what was observed. When the design's central claim is a signal (flag, count,
 status), check its distribution on real data, not only the predicate: `complete: false` on every run
@@ -503,10 +504,10 @@ not the path — that is precisely the fourth attempt `/super-do` already refuse
   them.
 
   After the merge has landed and before removal, if the SDD ledger lives in the main checkout
-  (`<main checkout>/.superpowers/sdd/progress.md` naming this branch), replace it with the one line
-  `Epic complete: <branch> merged as <%h ("%s")>`, the citation from `git show -s --format='%h ("%s")'
-  <sha>`; the next session is told to trust a ledger, so a finished epic's must not read as in
-  flight. A ledger inside the feature worktree needs nothing: it goes with the worktree.
+  (`<main checkout>/.superpowers/sdd/progress.md`, its header naming this plan and branch), replace
+  it with the one line `Epic complete: <branch> merged as <%h ("%s")>`, the citation from
+  `git show -s --format='%h ("%s")' <branch-tip>` for the tip as merged; the next session is told
+  to trust a ledger, so a finished epic's must not read as in flight. A ledger inside the feature worktree needs nothing: it goes with the worktree.
 
   Only then remove the worktree and delete the branch, always with raw git from the main
   checkout: `git worktree remove <worktree-path>`, `git worktree prune`, `git branch -d
