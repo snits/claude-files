@@ -63,13 +63,19 @@ already merged under a different issue (kata vvhj, rust-port).
 When writing plans and task briefs, specify the goal, constraints, and acceptance criteria for each
 task; don't enumerate implementation steps unless the ordering is genuinely load-bearing.
 
-**Two kinds of work get Jerry's eye before the gates, not after.** A spike's first checkpoint is a
+**Two kinds of work get a real look before the gates, not after.** A spike's first checkpoint is a
 one-paragraph restatement of what it actually tests and which system it changes, plus one rendered
 sample, sent to Jerry before the full plan is written. orbweaver `cgsv` ran seven tasks, two
-plan-review rounds and a final review before he saw it was bolted onto the wrong system. A GUI task
-is not done on a green suite: done means running the real binary, or a headless interaction test,
-on the interaction that changed, and reporting what was observed. Three alpha-prime GUI defects
-reached Jerry after every gate had passed (retro 2026-10-24 C7).
+plan-review rounds and a final review before he saw it was bolted onto the wrong system. Any task
+that produces a runnable artifact is not done on a green suite: before the final whole-branch review
+(on the full track, SDD's own final code reviewer; on the direct track, the verify-branch gate), the
+lead runs the artifact against real data and reads the output for any statement that is not true.
+For a GUI, that means the real binary, or a headless interaction test, on the interaction that
+changed, reporting what was observed. When the design's central claim is a signal (flag, count,
+status), check its distribution on real data, not only the predicate: `complete: false` on every run
+is decoration that looks like a guard. Projstat `hgd6`, 2026-08-15: three defects, none diff-visible,
+all visible on the first run; three alpha-prime GUI defects reached Jerry after every gate had passed
+(retro 2026-10-24 C7).
 
 ## Size gate — decide the track before invoking any skill
 
@@ -495,6 +501,12 @@ not the path — that is precisely the fourth attempt `/super-do` already refuse
   harness's own guard is no substitute for these two checks; the checks are restated here rather
   than referenced because a standalone `/super-do` must not have to follow a pointer to find
   them.
+
+  After the merge has landed and before removal, if the SDD ledger lives in the main checkout
+  (`<main checkout>/.superpowers/sdd/progress.md` naming this branch), replace it with the one line
+  `Epic complete: <branch> merged as <%h ("%s")>`, the citation from `git show -s --format='%h ("%s")'
+  <sha>`; the next session is told to trust a ledger, so a finished epic's must not read as in
+  flight. A ledger inside the feature worktree needs nothing: it goes with the worktree.
 
   Only then remove the worktree and delete the branch, always with raw git from the main
   checkout: `git worktree remove <worktree-path>`, `git worktree prune`, `git branch -d
