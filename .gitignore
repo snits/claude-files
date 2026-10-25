@@ -38,13 +38,13 @@ daemon*
 # Secrets and machine-local runtime state.
 #
 # These are ALSO in .git/info/exclude. The duplication is deliberate: this repo is
-# public (github.com/snits/claude-files) and holds credentials, so the ignore rules
-# should not depend on one untracked file. .git/info/exclude is not versioned, so an
+# public (github.com/snits/claude-files) and ~/.claude holds untracked credentials, so the
+# ignore rules should not depend on one untracked file. .git/info/exclude is not versioned, so an
 # editor accident that flattens it leaves no diff to notice — which happened
 # 2026-08-15 and briefly un-ignored every path below. This file is tracked, so the
 # same accident here shows up in `git status`.
 #
-# Backstop beyond both: .git/hooks/pre-commit refuses a commit that stages any of them.
+# Backstop beyond both: .githooks/pre-commit refuses a commit that stages any of them.
 .credentials.json
 security/
 mcp-needs-auth-cache.json
@@ -68,3 +68,6 @@ skills/synced/
 chrome/
 session-env/
 state/
+
+# Weekly dream-pass state (skills/dream); local only.
+dream/
