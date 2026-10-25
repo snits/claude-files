@@ -14,8 +14,8 @@ all of its input (retro 2026-10-24 C1).
 
 1. **Read Current Project Status:**
    - Read session-handoff.md if it exists to get the current project status
-   - List any `session-handoff-*.md` beside `session-handoff.md` in the project root; each is
-     another workstream's handoff.
+   - List any `session-handoff-*.md` beside `session-handoff.md` in the project root, each with
+     its mtime date; each is another workstream's handoff.
    - Look to see if there are any worktrees currently beyond the main repo location.
 
 2. **Check Development Context:**
@@ -179,8 +179,9 @@ all of its input (retro 2026-10-24 C1).
    - If any deferred issues came due, name them in the proposal too — a defer that arrives
      and goes unmentioned is the same lost reminder that deferring was meant to prevent.
    - If Step 1 found any `session-handoff-*.md` side files, name them in the proposal so Jerry
-     can say whether this session picks up that workstream. The session that does deletes the
-     side file once its content is absorbed (into kata or the main handoff), and says so.
+     can say whether this session picks up that workstream. The session that does states in chat
+     where each piece of the side file went (kata refs), and deletes it only after
+     Jerry confirms.
    - If the retro check reports never-run or more than 7 days ago, offer a retro (`/retro`)
      as an option in the proposal. Offer it; don't start one unasked.
    - If the dream check reports never-run or more than 7 days ago, offer a dream pass
