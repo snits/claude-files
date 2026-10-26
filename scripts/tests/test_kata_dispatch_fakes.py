@@ -172,7 +172,7 @@ argv_dump = env("FAKE_GATE_ARGV_DUMP")
 if argv_dump:
     open(argv_dump, "w").write(json.dumps(sys.argv[1:]))
 token = env("FAKE_GATE_TOKEN", "0123456789abcdef")
-rerun_token = "fedcba9876543210"
+rerun_token = "fedcba9876543210" # notsecret
 common_branch = env("FAKE_GATE_COMMON_BRANCH", branch).replace("/", "-")
 if not env("FAKE_GATE_NO_COMMON"):
     open(os.path.join(d, day + "-vb-common-" + common_branch + ".md"), "w").write(
