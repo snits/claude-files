@@ -161,8 +161,7 @@ For an ingest (A), before claiming done, show:
   together — the receipt is easy to leave behind, and a commit without it loses the audit
   trail for the fold it records.
 
-Then `git -C ~/vault commit -s` staging all of them, with `Assisted-by: Claude:<your model id>`
-in the trailer. **Do not push.**
+Then `git -C ~/vault commit -s` staging all of them. **Do not push.**
 
 **In a background session the isolation guard refuses edits to the shared checkout.** Call
 `EnterWorktree` before the first Write, do the whole ingest inside the worktree (the gate and

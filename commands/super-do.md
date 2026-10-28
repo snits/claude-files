@@ -236,7 +236,7 @@ from a detached worktree at the latest commit.
   test took two gate runs to find a missing length case, then a missing alphabet case, under a
   docstring claiming "exactly 16 lowercase hex").
   **The first-pass commit carries a `Red-phase: <issue ref>` trailer** on
-  its own line, beside `Signed-off-by:` and `Assisted-by:`. The test author sees only the brief
+  its own line, beside `Signed-off-by:`. The test author sees only the brief
   you write, so **the first-pass brief states that trailer line verbatim**, with the issue ref
   filled in. Only a commit that lands tests red with no implementation behind them gets it;
   revisions and implementer commits do not. Projects whose `.roborev.toml` sets
