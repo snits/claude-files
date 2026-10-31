@@ -17,7 +17,8 @@ This body is one pass of a `/loop` run. The run follows these rules, whichever b
   for inbox prep, its packet's issue).
 - **At the first compaction, stop.** Compaction shows as a context that opens with a summary of the
   earlier conversation. Finish the current item's checkpoint, start nothing new, write
-  `session-handoff.md` in the repo you are working in, and end the loop. A handoff already there
+  `session-handoff.md` in the main checkout of the repo you are working in (after any worktree
+  teardown, never inside a worktree), and end the loop. A handoff already there
   for another workstream stays; write yours under a separate name. Relaunching is Jerry's call.
 
 You are working in `~/vault`. Each firing you advance **at most one** item of vault work.
@@ -40,7 +41,8 @@ restate it.
 Jerry's gate. You never promote it.
 **C. Nothing** — both empty. This is the expected case; see below.
 
-Do exactly one item of work, then stop. Do not chain A into B in the same firing.
+Do exactly one item of work, then end this firing (the `/loop` run continues until its stop
+conditions). Do not chain A into B in the same firing.
 
 ## A. Ingest one backlog item
 

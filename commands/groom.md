@@ -17,7 +17,8 @@ This body is one pass of a `/loop` run. The run follows these rules, whichever b
   for inbox prep, its packet's issue).
 - **At the first compaction, stop.** Compaction shows as a context that opens with a summary of the
   earlier conversation. Finish the current item's checkpoint, start nothing new, write
-  `session-handoff.md` in the repo you are working in, and end the loop. A handoff already there
+  `session-handoff.md` in the main checkout of the repo you are working in (after any worktree
+  teardown, never inside a worktree), and end the loop. A handoff already there
   for another workstream stays; write yours under a separate name. Relaunching is Jerry's call.
 
 Work the open kata issues oldest first, checking each against the current state of the code to see
