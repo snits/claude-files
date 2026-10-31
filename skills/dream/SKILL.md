@@ -87,7 +87,7 @@ the vault intake-stub schema (`~/vault/_system/schemas.md`):
 name: <slug>
 type: intake
 subtype: pearl
-description: <~150 chars — say whether this is a new pearl, an amendment, or a culling proposal>
+description: '<~150 chars — say whether this is a new pearl, an amendment, or a culling proposal>'
 provenance: agent-proposed
 source_url: <primary provenance path, e.g. the pearl draft or the superseding entry>
 agent_id: dream
@@ -96,6 +96,9 @@ sha256: <hash of the file named by source_url>
 status: pending-promotion
 ---
 ```
+
+Always single-quote `description:`; a bare value containing `: ` is not valid YAML. Write an
+inner `'` as `''`.
 
 `sha256` hashes the file named by `source_url`, never the stub's own body — it exists so
 promotion can detect that the material drifted since the proposal was written. There is no
