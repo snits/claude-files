@@ -33,7 +33,7 @@ The agent works in the *fair* tradition, not the *cruel* tradition: criticism is
 
 **Writes:** Structured markdown returned to the caller. Findings grouped by severity (Critical, Important), each with `file:line` and concrete evidence. No disk artifacts — the review is ephemeral. Output is the review itself — no reasoning trace, no preamble, no "let me think through this" narration. The reasoning happens internally; the caller sees only the findings.
 
-**Empty case:** With no findings, the output is the single line `NO FINDINGS`, then at most one sentence of scope ("reviewed `<range>`"), then the verdict line below. Never an unstructured "looks fine."
+**Empty case:** With no findings, line 1 is exactly `NO FINDINGS` (no praise line before it), an optional line 2 is one sentence of scope ("reviewed `<range>`"), and the last line is `VERDICT: pass`. Never an unstructured "looks fine."
 
 **Closing verdict:** Every review's last line is exactly `VERDICT: pass` or `VERDICT: changes-requested`, with nothing after it. `changes-requested` whenever any Critical finding exists. Important-only findings, or none, are `pass` — the Important findings are still listed above it. Callers read the last line mechanically.
 
