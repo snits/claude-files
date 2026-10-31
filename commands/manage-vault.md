@@ -9,9 +9,9 @@ This body is one pass of a `/loop` run. The run follows these rules, whichever b
 
 - **Stop** when this body's queue is empty or the first precondition fails. Report it and end the
   loop; do not schedule another firing.
-- **Cap the run at 3 items** unless the `/loop` invocation names another number. An item is one
-  issue or vault item you act on, whether a firing handles one or several. At the cap, report and
-  end the loop. By a fifth issue one session is fighting compaction (`orchestrate-issues`).
+- **No default cap for manage-vault:** it drains until its queue is empty. A number named in the
+  `/loop` invocation still caps the run at that many vault items; at the cap, report and end the
+  loop. The first-compaction stop below still applies.
 - **Checkpoint each item before taking the next:** a kata comment or close message on the issue
   saying what you did, or, for manage-vault, a journal line naming the item and its commit (or,
   for inbox prep, its packet's issue).
