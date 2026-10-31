@@ -13,7 +13,8 @@ This body is one pass of a `/loop` run. The run follows these rules, whichever b
   issue or vault item you act on, whether a firing handles one or several. At the cap, report and
   end the loop. By a fifth issue one session is fighting compaction (`orchestrate-issues`).
 - **Checkpoint each item before taking the next:** a kata comment or close message on the issue
-  saying what you did, or, for manage-vault, a journal line naming the item and its commit.
+  saying what you did, or, for manage-vault, a journal line naming the item and its commit (or,
+  for inbox prep, its packet's issue).
 - **At the first compaction, stop.** Compaction shows as a context that opens with a summary of the
   earlier conversation. Finish the current item's checkpoint, start nothing new, write
   `session-handoff.md` in the repo you are working in, and end the loop. A handoff already there
