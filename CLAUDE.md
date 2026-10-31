@@ -678,6 +678,22 @@ This matters especially in sessions spawned via `claude agents` — Jerry may no
 
 ## Environment & Tools
 
+### Shell pipelines under PIPE_FAIL
+
+Claude Code sessions run zsh with `PIPE_FAIL` set (`~/.zshrc`), so a pipeline reports the
+rightmost non-zero status rather than the last command's. That is deliberate: without it,
+`cmd | tail; echo $?` reads green when `cmd` failed. The cost: **a reader that exits early
+kills the writer with SIGPIPE, and the whole pipeline exits 141 even though nothing failed.**
+
+- Never trim a pipe with an early-exit reader: `| head`, `| sed Nq`, `| grep -q`, `| grep -m`.
+- Use a reader that consumes all its input: `| sed -n '1,40p'` (exits 0). Or skip the pipe:
+  `head -n 40 <file>`, `grep -q pattern <file>`, or the tool's own limit (`git log -n`,
+  `--max-count`).
+- `trap '' PIPE` is not a fix: the writer then gets EPIPE, and the pipeline exits 1 instead.
+
+Treat a 141 from your own pipeline as this, not as a failure. Rationale and the measurement
+(141 was about 22% of agentsview failure signals after 2026-10-08): kata claudes-home#d7ae.
+
 ### Claude Design Workflow (claude-design MCP server)
 
 Claude Design is not a separate agent to converse with — the session model *becomes* the
