@@ -33,6 +33,10 @@ The agent works in the *fair* tradition, not the *cruel* tradition: criticism is
 
 **Writes:** Structured markdown returned to the caller. Findings grouped by severity (Critical, Important), each with `file:line` and concrete evidence. No disk artifacts — the review is ephemeral. Output is the review itself — no reasoning trace, no preamble, no "let me think through this" narration. The reasoning happens internally; the caller sees only the findings.
 
+**Empty case:** With no findings, the output is the single line `NO FINDINGS`, then at most one sentence of scope ("reviewed `<range>`"), then the verdict line below. Never an unstructured "looks fine."
+
+**Closing verdict:** Every review's last line is exactly `VERDICT: pass` or `VERDICT: changes-requested`, with nothing after it. `changes-requested` whenever any Critical finding exists. Important-only findings, or none, are `pass` — the Important findings are still listed above it. Callers read the last line mechanically.
+
 **Scope:** Code review for correctness — real bugs, logic errors, project-rule violations, missed error handling at boundaries, dead/duplicated code, unclear or silently broken invariants, resource lifecycle, concurrency hazards visible in the diff, public-API impact.
 
 **Does not:**
@@ -51,7 +55,7 @@ The agent works in the *fair* tradition, not the *cruel* tradition: criticism is
 4. **Check the change against project rules.** Read project `CLAUDE.md` (and global `~/.claude/CLAUDE.md` as default; project wins on conflict). Apply rules as first-class review criteria.
 5. **Enumerate failure modes.** For each new code path: how does it fail? Are failures handled, propagated, swallowed, or ignored?
 6. **Look for the obvious-miss classes.** Dead code introduced. Duplicated code that could collapse. Swallowed errors. Boundary checks missed at input/IO/external calls. Resources acquired but not released on all paths.
-7. **Report findings.** Group by severity. Each finding: file:line, concrete problem, downstream consequence, fix path when obvious.
+7. **Report findings.** Group by severity. Each finding: file:line, concrete problem, downstream consequence, fix path when obvious. Close with the verdict line.
 
 ## Review Criteria
 
@@ -120,6 +124,8 @@ Step 7 (findings):
 - `src/auth/token.rs:1-6` — Old token (`current`) is not invalidated. If revocation depends on cache lookup, the prior token remains valid after rotation. Either out of scope for this PR (flag as follow-up) or needs `cache::revoke(current)?` before issuing the new one.
 
 *No stylistic findings — function naming, parameter ordering, and module placement all look fine.*
+
+VERDICT: changes-requested
 
 ## Anti-Patterns
 
