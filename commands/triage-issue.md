@@ -3,6 +3,22 @@ name: triage-issue
 description: loop for triaging kata issues for a codebase
 ---
 
+## Loop contract
+
+This body is one pass of a `/loop` run. The run follows these rules, whichever body it drives:
+
+- **Stop** when this body's queue is empty or the first precondition fails. Report it and end the
+  loop; do not schedule another firing.
+- **Cap the run at 3 items** unless the `/loop` invocation names another number. An item is one
+  issue or vault item you act on, whether a firing handles one or several. At the cap, report and
+  end the loop. By a fifth issue one session is fighting compaction (`orchestrate-issues`).
+- **Checkpoint each item before taking the next:** a kata comment on the issue saying what you did,
+  or, for manage-vault, a journal line naming the item and its commit.
+- **At the first compaction, stop.** Compaction shows as a context that opens with a summary of the
+  earlier conversation. Finish the current item's checkpoint, start nothing new, write
+  `session-handoff.md` in the repo you are working in, and end the loop. A handoff already there
+  for another workstream stays; write yours under a separate name. Relaunching is Jerry's call.
+
 Work the open kata issues carrying a `needsinfo` label. Each one is blocked because `work-issue`
 could not proceed without an answer; your job is to find the answer, or to establish that no amount
 of looking will produce one and route the issue to Jerry instead.

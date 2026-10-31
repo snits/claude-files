@@ -351,6 +351,9 @@ Run `kata quickstart` at the start of a session for the full agent contract. Iss
 
 See AGENTS.md in project repositories for project-specific kata workflow.
 
+**Routing:** project work runs through `/orchestrate-issues`. Queue draining runs as `/loop` plus a
+body (`/manage-vault`, `/groom`, `/triage-issue`). Each body carries its own Loop contract.
+
 ### Workspaces & Worktrees
 
 Project resolution walks up from the current directory to find a committed `.kata.toml`, which binds that tree to a project name. Two consequences:
