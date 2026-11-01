@@ -395,3 +395,44 @@ class TestHeadlessToolErrors:
         mt.main(["--projects-dir", str(tmp_path), "--days", "7"])
         out = capsys.readouterr().out
         assert "2 headless (1 no human turns, 1 sdk-cli)" in out
+
+
+class TestSigpipeNoise:
+    """Retro 2026-11-01 C10: exit 141 under PIPE_FAIL is complete output, not friction."""
+
+    def test_exit_141_is_not_a_tool_error_but_is_counted(self, tmp_path):
+        path = write_session(
+            tmp_path,
+            "s.jsonl",
+            [
+                tool_result("Exit code 141\nOK comment 0v58", is_error=True),
+                tool_result("Exit code 1\nreal failure", is_error=True),
+            ],
+        )
+        facts = mt.scan_session(path)
+        assert [e["text"] for e in facts.tool_errors] == ["Exit code 1\nreal failure"]
+        assert facts.sigpipe_noise == 1
+
+    def test_other_exit_codes_starting_141_are_kept(self, tmp_path):
+        path = write_session(tmp_path, "s.jsonl", [tool_result("Exit code 1410", is_error=True)])
+        assert len(mt.scan_session(path).tool_errors) == 1
+
+    def test_subagent_and_headless_scans_drop_exit_141(self, tmp_path):
+        path = write_session(
+            tmp_path,
+            "agent.jsonl",
+            [tool_result("Exit code 141", is_error=True), tool_result("boom", is_error=True)],
+        )
+        assert [e["text"] for e in mt.scan_tool_errors(path)] == ["boom"]
+
+    def test_header_reports_skipped_sigpipe_count(self, tmp_path, capsys, monkeypatch):
+        project = tmp_path / "-home-x-proj"
+        project.mkdir()
+        write_session(
+            project, "a.jsonl", [human("hi"), tool_result("Exit code 141", is_error=True)]
+        )
+        monkeypatch.setattr(mt, "PROJECTS_DIR", tmp_path)
+        mt.main(["--days", "1", "--projects-dir", str(tmp_path)])
+        out = capsys.readouterr().out
+        assert "1 exit-141 (SIGPIPE) results skipped as noise" in out
+        assert "Exit code 141" not in out

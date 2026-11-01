@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 import time
 from dataclasses import dataclass, field
@@ -70,6 +71,7 @@ class SessionFacts:
     human_turns: list[dict] = field(default_factory=list)
     tool_errors: list[dict] = field(default_factory=list)
     sdk_cli_turns: int = 0
+    sigpipe_noise: int = 0
 
     @property
     def is_interactive(self) -> bool:
@@ -89,6 +91,18 @@ def _text_of(content) -> str:
             if isinstance(block, dict) and block.get("type") == "text"
         )
     return ""
+
+
+SIGPIPE_NOISE = re.compile(r"^Exit code 141\b")
+
+
+def is_sigpipe_noise(error: str) -> bool:
+    """Exit 141 under PIPE_FAIL: an early-exit reader (`| head`) killed the writer.
+
+    The output is complete; the status is an artifact. Counted, never mined
+    (retro 2026-11-01 C10). retro_metrics keeps its own sigpipe-141 trend.
+    """
+    return bool(SIGPIPE_NOISE.match(error))
 
 
 def _tool_error_of(content) -> str | None:
@@ -130,6 +144,9 @@ def scan_session(path: Path) -> SessionFacts:
             content = entry.get("message", {}).get("content")
 
             error = _tool_error_of(content)
+            if error is not None and is_sigpipe_noise(error):
+                facts.sigpipe_noise += 1
+                continue
             if error is not None:
                 facts.tool_errors.append(
                     {"line": lineno, "text": error[:400], "ts": entry.get("timestamp")}
@@ -205,7 +222,7 @@ def scan_tool_errors(path: Path) -> list[dict]:
                 continue
             content = entry.get("message", {}).get("content")
             error = _tool_error_of(content)
-            if error is not None:
+            if error is not None and not is_sigpipe_noise(error):
                 errors.append({"line": lineno, "text": error[:400], "ts": entry.get("timestamp")})
     return errors
 
@@ -373,6 +390,12 @@ def _emit_markdown(
         f"({no_turns} no human turns, {sdk_cli} sdk-cli)"
     )
     print(f"# {turns} human turns, {errors} tool errors")
+    sigpipe = sum(s.sigpipe_noise for s in interactive)
+    if sigpipe:
+        print(
+            f"# {sigpipe} exit-141 (SIGPIPE) results skipped as noise in top-level "
+            f"interactive sessions (subagent/headless ones are dropped uncounted)"
+        )
     if templates:
         print(
             f"# {len(templates)} templated opener(s) seen in "
