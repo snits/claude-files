@@ -98,7 +98,7 @@ def _print_by_project(issues, line):
 def cmd_due_all(today):
     listing = load_listing(all_projects=True)
     r = report(listing["issues"], today)
-    if not listing.get("complete", True) or listing.get("truncated", False):
+    if listing.get("complete") is not True or listing.get("truncated") is not False:
         print(
             "WARNING: kata listing is incomplete "
             f"(complete={listing.get('complete')}, truncated={listing.get('truncated')}); "
@@ -153,6 +153,8 @@ def main(argv=None):
     args = parser.parse_args(argv)
     if args.all and args.project:
         parser.error("--all and --project are mutually exclusive")
+    if args.all and not args.due:
+        parser.error("--all requires --due")
 
     today = date.today()
     if args.set:
