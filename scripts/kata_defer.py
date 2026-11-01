@@ -153,8 +153,8 @@ def main(argv=None):
     args = parser.parse_args(argv)
     if args.all and args.project:
         parser.error("--all and --project are mutually exclusive")
-    if args.all and not args.due:
-        parser.error("--all requires --due")
+    if args.all and (not args.due or args.set):
+        parser.error("--all requires --due and cannot be combined with --set")
 
     today = date.today()
     if args.set:
