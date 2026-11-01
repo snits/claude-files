@@ -374,11 +374,17 @@ def test_due_all_with_nothing_due_counts_pending_issues(fake_kata, capsys):
     assert out == f"DEFERRED DUE 0 of {len(pending)} deferred (as of 2026-11-01)\n"
 
 
-# --all only modifies --due. On its own, or with --set, it is a usage error and
-# nothing reaches kata.
+# --all is only valid as `--due --all`. Bare, with --set, or with --set and --due,
+# it exits 2, nothing reaches kata, and the error text after "error:" names --all.
+# The usage line printed before "error:" also contains "[--all]", so only the text
+# after it is checked.
 
-@pytest.mark.parametrize("argv", [["--all"], ["--set", "abcd", "--all"]], ids=["bare", "with-set"])
-def test_all_without_due_is_a_usage_error(monkeypatch, capsys, argv):
+@pytest.mark.parametrize(
+    "argv",
+    [["--all"], ["--set", "abcd", "--all"], ["--due", "--all", "--set", "abcd"]],
+    ids=["bare", "with-set", "with-due-and-set"],
+)
+def test_all_outside_due_only_is_a_usage_error_naming_all(monkeypatch, capsys, argv):
     calls = []
     monkeypatch.setattr(kata_defer, "_kata", lambda *a: calls.append(list(a)) or json.dumps(envelope([])))
     monkeypatch.setattr(kata_defer, "date", FakeDate)
@@ -386,3 +392,7 @@ def test_all_without_due_is_a_usage_error(monkeypatch, capsys, argv):
         kata_defer.main(argv)
     assert exc.value.code == 2
     assert calls == [], "nothing should reach kata for a rejected command line"
+    err = capsys.readouterr().err
+    assert "error:" in err, err
+    message = err.split("error:", 1)[1]
+    assert "--all" in message, f"usage error does not name --all: {message.strip()!r}"
