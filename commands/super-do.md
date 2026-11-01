@@ -399,6 +399,12 @@ Do not merge, and do not close the issue.** Comment the surviving findings on th
 label it `needs-review`, and report to Jerry. An implementation that three reviews could not clear
 is a design question surfacing as a review failure, and it needs a person, not a fourth attempt.
 
+**Every option you put to Jerry carries a `Reverses:` line** — the prior ruling it would
+overturn (issue ref plus the ruling's words), or `Reverses: nothing`. An option without the line
+is not ready to present. He rules in one word on the headline, so a reversal the option text
+leaves implicit is one he never saw: on 2026-10-26 "1. A" removed the lake-shore contours his
+r0xy ruling had kept, and it surfaced only after merge (retro 2026-11-01 C8).
+
 If Jerry then rules on how to proceed and you record that ruling in kata, write it under a
 distinct actor:
 

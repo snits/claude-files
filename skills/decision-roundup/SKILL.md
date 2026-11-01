@@ -73,7 +73,12 @@ maintenance queue, not a blocked state, and must never gate anything.
 comments and returns a brief with:
 
 - **The decision, in one sentence** — what changes depending on the answer
-- **Options**, each argued to a conclusion, not merely listed
+- **Options**, each argued to a conclusion, not merely listed. Every option carries a
+  `Reverses:` line naming the prior ruling it would overturn (issue ref plus the ruling's
+  words), or `Reverses: nothing`. A missing line is a malformed brief: send it back, do not
+  present it. Jerry rules in one word on the headline, so a reversal the option does not name
+  is a reversal he never saw (lake-shore contours vs the r0xy ruling, 2026-10-26, caught only
+  after merge).
 - **A recommendation**, with the reason
 - **What it blocks** — who is waiting, what stalls while it stands
 - **Whether it is actually a decision** (see triage below)

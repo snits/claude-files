@@ -520,7 +520,7 @@ propagated through six artifacts before anyone asked him. Corollary when reading
 body narrating an incident involving Jerry is a model's account unless a `jerry-*` actor signs
 it** — check the actor before quoting the narrative. Do not retro-attribute existing comments.
 
-**Close: which `--reason` accepts which evidence.** Verified with `kata close --dry-run`, not
+**Close: which `--reason` accepts which evidence.** Verified with `kata close --dry`, not
 from memory:
 
 | `--reason` | evidence required |
