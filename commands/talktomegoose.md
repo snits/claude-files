@@ -71,10 +71,11 @@ all of its input (retro 2026-10-24 C1).
      bytes. The fix is `python3 ~/vault/_surface/generate.py` and committing the surface with
      whatever change caused the drift, not a silent rebuild here.
    - Surface deferred kata issues whose defer date has arrived:
-     `python3 ~/.claude/scripts/kata_defer.py --due`
-     Deferred issues are hidden from `kata ready` by the `deferred` label, so this is the only
+     `python3 ~/.claude/scripts/kata_defer.py --due --all`
+     This covers every project, not just this one, grouped by project. Deferred issues are hidden from `kata ready` by the `deferred` label, so this is the only
      thing that brings them back. Report any `DEFERRED UNDATED` line too — a `deferred` label
-     with no `defer_until` never resurfaces on its own.
+     with no `defer_until` never resurfaces on its own. Report a `WARNING: kata listing is incomplete`
+     line too — it means some deferred issues may be missing from the output.
    - Refresh understanding of kata use:
      `kata quickstart`
    - Surface kata issues waiting on a ruling from Jerry:

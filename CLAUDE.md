@@ -631,7 +631,7 @@ metadata key holding an ISO date.
 
 ```bash
 python3 ~/.claude/scripts/kata_defer.py --set <ref> --days 60   # or --until 2026-09-21
-python3 ~/.claude/scripts/kata_defer.py --due                   # what has come due (run by /talktomegoose)
+python3 ~/.claude/scripts/kata_defer.py --due --all             # what has come due, all projects (run by /talktomegoose)
 ```
 
 Always defer through the script — it writes the label and the date together. A `deferred`
