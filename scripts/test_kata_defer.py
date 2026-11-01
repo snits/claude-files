@@ -309,3 +309,80 @@ def test_due_all_on_a_clean_listing_has_no_incomplete_marker(fake_kata, capsys):
     out = run_main(["--due", "--all"], capsys)
     assert HEX_DUE_HI["short_id"] in out
     assert not has_incomplete_marker(out), out
+
+
+# A listing envelope that lacks `complete` or `truncated` cannot confirm the
+# listing is whole, so it must be reported the same way as an incomplete one.
+
+@pytest.mark.parametrize("missing", ["complete", "truncated"])
+def test_due_all_reports_a_listing_missing_a_completeness_key(fake_kata, capsys, missing):
+    listing = envelope(ALL_ISSUES)
+    del listing[missing]
+    fake_kata.all_listing = listing
+    out = run_main(["--due", "--all"], capsys)
+    assert has_incomplete_marker(out), out
+
+
+# The --all kata call: one `--label deferred` (kata honours only one --label),
+# and no --limit, since --all has no default row cap.
+
+def test_due_all_asks_kata_for_deferred_issues_only_without_a_limit(fake_kata, capsys):
+    run_main(["--due", "--all"], capsys)
+    all_calls = [call for call in fake_kata.calls if "--all" in call]
+    assert len(all_calls) == 1, fake_kata.calls
+    call = all_calls[0]
+    assert call.count("--label") == 1, call
+    assert call[call.index("--label") + 1] == DEFER_LABEL, call
+    assert "--limit" not in call, call
+
+
+# The whole --due --all report for ALL_ISSUES. report() returns due issues as
+# hexwalker, claudes-home, orbweaver, hexwalker and undated ones as orbweaver,
+# claudes-home, so neither insertion order matches the sorted project order.
+
+PINNED_ALL_OUTPUT = (
+    "DEFERRED DUE 4 (as of 2026-11-01)\n"
+    "claudes-home\n"
+    "  m5nd p2 refresh cache — due 2026-10-01\n"
+    "hexwalker\n"
+    "  j23m p1 hex route — due 2026-10-09\n"
+    "  x4ra p3 hex biome — due 2026-09-01\n"
+    "orbweaver\n"
+    "  k7qp p2 orb mesh — due 2026-10-05\n"
+    "DEFERRED UNDATED 2 — labelled but no defer_until, will never resurface\n"
+    "claudes-home\n"
+    "  r2ux p3 lost date\n"
+    "orbweaver\n"
+    "  w9tb p3 orb shader\n"
+)
+
+
+def test_due_all_output_is_pinned(fake_kata, capsys):
+    out = run_main(["--due", "--all"], capsys)
+    assert out == PINNED_ALL_OUTPUT
+
+
+# Nothing due across projects: the zero line counts the pending issues.
+
+HEX_PENDING = kissue("hexwalker", "v3ln", defer_until="2027-02-01", priority=2, title="hex later")
+
+
+def test_due_all_with_nothing_due_counts_pending_issues(fake_kata, capsys):
+    pending = [CWD_PENDING, ORB_PENDING, HEX_PENDING]
+    fake_kata.all_listing = envelope(pending)
+    out = run_main(["--due", "--all"], capsys)
+    assert out == f"DEFERRED DUE 0 of {len(pending)} deferred (as of 2026-11-01)\n"
+
+
+# --all only modifies --due. On its own, or with --set, it is a usage error and
+# nothing reaches kata.
+
+@pytest.mark.parametrize("argv", [["--all"], ["--set", "abcd", "--all"]], ids=["bare", "with-set"])
+def test_all_without_due_is_a_usage_error(monkeypatch, capsys, argv):
+    calls = []
+    monkeypatch.setattr(kata_defer, "_kata", lambda *a: calls.append(list(a)) or json.dumps(envelope([])))
+    monkeypatch.setattr(kata_defer, "date", FakeDate)
+    with pytest.raises(SystemExit) as exc:
+        kata_defer.main(argv)
+    assert exc.value.code == 2
+    assert calls == [], "nothing should reach kata for a rejected command line"
