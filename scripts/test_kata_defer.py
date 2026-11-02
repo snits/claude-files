@@ -227,6 +227,37 @@ def test_due_with_project_output_is_unchanged(fake_kata, capsys):
         assert call[call.index("--project") + 1] == "orbweaver"
 
 
+# Without --all, an incomplete cwd listing is also reported (Jerry ruling "A"):
+# the WARNING line comes before the DEFERRED DUE header, as it does with --all.
+# A listing missing `complete` or `truncated` counts as incomplete.
+
+def _without_key(key):
+    listing = envelope(CWD_ISSUES)
+    del listing[key]
+    return listing
+
+
+CWD_INCOMPLETE_LISTINGS = {
+    "truncated-true": lambda: envelope(CWD_ISSUES, truncated=True),
+    "complete-false": lambda: envelope(CWD_ISSUES, complete=False),
+    "missing-complete": lambda: _without_key("complete"),
+    "missing-truncated": lambda: _without_key("truncated"),
+}
+
+
+@pytest.mark.parametrize("argv", [["--due"], ["--due", "--project", "orbweaver"]], ids=["cwd", "project"])
+@pytest.mark.parametrize("listing", sorted(CWD_INCOMPLETE_LISTINGS))
+def test_due_without_all_reports_an_incomplete_listing_before_the_due_header(fake_kata, capsys, argv, listing):
+    fake_kata.cwd_listing = CWD_INCOMPLETE_LISTINGS[listing]()
+    out = run_main(argv, capsys)
+    lines = out.splitlines()
+    warnings = [k for k, line in enumerate(lines) if line.startswith("WARNING") and has_incomplete_marker(line)]
+    headers = [k for k, line in enumerate(lines) if line.startswith("DEFERRED DUE")]
+    assert len(warnings) == 1, out
+    assert len(headers) == 1, out
+    assert warnings[0] < headers[0], out
+
+
 # Criterion 5: the foreign due issue appears with --all and not without it.
 
 def test_foreign_due_issue_appears_only_with_all(fake_kata, capsys):
@@ -285,6 +316,9 @@ def test_all_with_project_is_a_usage_error(fake_kata, capsys):
     assert exc.value.code == 2
     err = capsys.readouterr().err
     assert "unrecognized arguments" not in err
+    assert "error:" in err, err
+    message = err.split("error:", 1)[1]
+    assert "--all" in message and "--project" in message, f"usage error does not name both --all and --project: {message.strip()!r}"
     assert fake_kata.calls == [], "nothing should be loaded for a rejected command line"
 
 
@@ -323,8 +357,8 @@ def test_due_all_reports_a_listing_missing_a_completeness_key(fake_kata, capsys,
     assert has_incomplete_marker(out), out
 
 
-# The --all kata call: one `--label deferred` (kata honours only one --label),
-# and no --limit, since --all has no default row cap.
+# The --all kata call carries exactly one `--label deferred` and no --limit,
+# since --all has no default row cap.
 
 def test_due_all_asks_kata_for_deferred_issues_only_without_a_limit(fake_kata, capsys):
     run_main(["--due", "--all"], capsys)
@@ -362,16 +396,22 @@ def test_due_all_output_is_pinned(fake_kata, capsys):
     assert out == PINNED_ALL_OUTPUT
 
 
-# Nothing due across projects: the zero line counts the pending issues.
+# Nothing due across projects: the zero line counts the pending issues only,
+# not the undated one also in the listing.
 
 HEX_PENDING = kissue("hexwalker", "v3ln", defer_until="2027-02-01", priority=2, title="hex later")
 
 
 def test_due_all_with_nothing_due_counts_pending_issues(fake_kata, capsys):
     pending = [CWD_PENDING, ORB_PENDING, HEX_PENDING]
-    fake_kata.all_listing = envelope(pending)
+    fake_kata.all_listing = envelope(pending + [ORB_UNDATED])
     out = run_main(["--due", "--all"], capsys)
-    assert out == f"DEFERRED DUE 0 of {len(pending)} deferred (as of 2026-11-01)\n"
+    assert out == (
+        "DEFERRED DUE 0 of 3 deferred (as of 2026-11-01)\n"
+        "DEFERRED UNDATED 1 — labelled but no defer_until, will never resurface\n"
+        "orbweaver\n"
+        "  w9tb p3 orb shader\n"
+    )
 
 
 # --all is only valid as `--due --all`. Bare, with --set, or with --set and --due,
