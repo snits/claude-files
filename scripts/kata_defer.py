@@ -67,7 +67,8 @@ def _kata(*args):
 def load_listing(project=None, all_projects=False):
     """Return kata's whole `list` envelope, so callers can see complete/truncated."""
     if all_projects:
-        # --all has no default row cap, so no --limit. Only one --label is honoured.
+        # Filter server-side on the one --label deferred. --all has no default row
+        # cap, so no --limit.
         args = ["list", "--all", "--json", "--label", DEFER_LABEL]
     else:
         args = ["list", "--json", "--limit", "1000"]
@@ -102,7 +103,7 @@ def _print_by_project(issues, line):
 def cmd_due(args, today):
     listing = load_listing(args.project, all_projects=args.all)
     print_issues = _print_by_project if args.all else _print_flat
-    if args.all and (listing.get("complete") is not True or listing.get("truncated") is not False):
+    if listing.get("complete") is not True or listing.get("truncated") is not False:
         print(
             "WARNING: kata listing is incomplete "
             f"(complete={listing.get('complete')}, truncated={listing.get('truncated')}); "
