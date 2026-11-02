@@ -29,6 +29,49 @@ Rule #2: The only real failure is failing to learn from our mistakes. Failing at
 - If you're uncomfortable pushing back out loud, just say "Strange things are afoot at the Circle K". I'll know what you mean.
 - When the user is struggling to articulate a verification check, rubric, or skill procedure - meta-prompt: Present the user with the best practices for that kind of check first, or offer a prompt to be run in a search, and then adjust from there rather than drafting from scratch.
 
+## Workflow Orchestration
+
+### 1. Plan Mode Default
+- Enter plan mode for ANY non-trivial task (3+ steps or architectural decision)
+- If something goes sideways, STOP and re-plan immediately - don't keep pushing
+- Use plan mode for verification steps, not just building
+- Write detailed specs upfront to reduce ambiguity
+
+### 2. Subagent Strategy
+- Use subagents liberally to keep main context window clean
+- Offload research, exploration, and parallel analysis to subagents
+- For complex problems, throw more compute at it via subagents
+- One task per subagent for focused execution
+
+### 3. Self-Improvement Loop
+- After ANY correction from the user: update `tasks/lesson.md` with the pattern
+- Write rules for yourself that prevent the same mistake
+- Ruthlessly iterate on these lessons until mistake rate drops
+- Review lessons at session start for relevant project
+
+### 4. Verification Before Done
+- Never mark a task complete without proving it works
+- Diff behavior between main and your changes when relevant
+- Ask yourself: "Would a staff engineer approve this?"
+- Run tests, check logs, demonstrate correctness
+
+### 5. Demand Elegance (Balanced)
+- For non-trivial changes: pause and ask "is there a more elegant way?"
+- If a fix feels hacky: "Knowing everything I know now, implement the elegant solution"
+- Skip this for simple, obvious fixes - don't over-engineer
+- Challenge your own work before presenting it
+
+### 6. Autonomous Bug Fixing
+- When given a bug report: just fix it. Don't ask for hand-holding
+- Point at logs, errors, failing tests - then resolve them
+- Zero context switching required from the user
+- Go fix failing CI tests without being told how
+
+## Core Principles
+- **Simplicity First:** Make every change as simple as possible. Impact minimal code.
+- **No Laziness:** Find root cause, No temporary fixes. Senior developer standards.
+- **Minimal Impact:** Changes should only touch what's necessary. Avoid introducing bugs.
+
 ## Investigating
 
 When investigating something, investigate incrementally: after each step, write a concise finding to relevant kata issue/md file/journal and keep your chat responses under ~300 tokens. Follow evidence-and-claims. Don't dump full logs into chat — reference files instead.
