@@ -76,12 +76,17 @@ def load_listing(project=None, all_projects=False):
     return json.loads(_kata(*args))
 
 
-def load_issues(project=None):
-    return load_listing(project)["issues"]
-
-
 def _describe(issue):
     return f"  {issue['short_id']} p{issue.get('priority', '?')} {issue['title']}"
+
+
+def _describe_due(issue):
+    return f"{_describe(issue)} — due {issue['metadata'][DEFER_KEY]}"
+
+
+def _print_flat(issues, line):
+    for issue in issues:
+        print(line(issue))
 
 
 def _print_by_project(issues, line):
@@ -91,44 +96,27 @@ def _print_by_project(issues, line):
         by_project.setdefault(issue.get("project_name", "?"), []).append(issue)
     for name in sorted(by_project):
         print(name)
-        for issue in by_project[name]:
-            print(line(issue))
+        _print_flat(by_project[name], line)
 
 
-def cmd_due_all(today):
-    listing = load_listing(all_projects=True)
-    r = report(listing["issues"], today)
-    if listing.get("complete") is not True or listing.get("truncated") is not False:
+def cmd_due(args, today):
+    listing = load_listing(args.project, all_projects=args.all)
+    print_issues = _print_by_project if args.all else _print_flat
+    if args.all and (listing.get("complete") is not True or listing.get("truncated") is not False):
         print(
             "WARNING: kata listing is incomplete "
             f"(complete={listing.get('complete')}, truncated={listing.get('truncated')}); "
             "deferred issues may be missing below"
         )
+    r = report(listing["issues"], today)
     if r.due:
         print(f"DEFERRED DUE {len(r.due)} (as of {today.isoformat()})")
-        _print_by_project(r.due, lambda i: f"{_describe(i)} — due {i['metadata'][DEFER_KEY]}")
+        print_issues(r.due, _describe_due)
     else:
         print(f"DEFERRED DUE 0 of {len(r.pending)} deferred (as of {today.isoformat()})")
     if r.undated:
         print(f"DEFERRED UNDATED {len(r.undated)} — labelled but no {DEFER_KEY}, will never resurface")
-        _print_by_project(r.undated, _describe)
-    return 0
-
-
-def cmd_due(args, today):
-    if args.all:
-        return cmd_due_all(today)
-    r = report(load_issues(args.project), today)
-    if r.due:
-        print(f"DEFERRED DUE {len(r.due)} (as of {today.isoformat()})")
-        for issue in r.due:
-            print(f"{_describe(issue)} — due {issue['metadata'][DEFER_KEY]}")
-    else:
-        print(f"DEFERRED DUE 0 of {len(r.pending)} deferred (as of {today.isoformat()})")
-    if r.undated:
-        print(f"DEFERRED UNDATED {len(r.undated)} — labelled but no {DEFER_KEY}, will never resurface")
-        for issue in r.undated:
-            print(_describe(issue))
+        print_issues(r.undated, _describe)
     return 0
 
 
