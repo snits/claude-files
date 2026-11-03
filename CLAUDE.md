@@ -189,10 +189,11 @@ Without these, agents faithfully report what domain literature says at the sophi
 - Every brief, report or scratch path in a brief is absolute and resolved from the lead's
   checkout. The agent's cwd is its own worktree, so a relative `.superpowers/` or
   `.scratchpad/` path lands in the wrong tree.
-- The report comes back inline, issues first, at most 45 lines, and is also written to an
-  absolute report path. Longer replies truncate in transit: ask for the tail after the cut,
-  not a resend. If only an idle notification arrives, read the file — the harness
-  intermittently drops the final report (retro 2026-10-24 C6).
+- The report comes back inline, issues first, at most 45 lines. The inline report is the
+  deliverable, and the lead persists it. Longer replies truncate in transit: ask for the tail
+  after the cut, not a resend. If only an idle notification arrives, recover the report from
+  the agent's transcript hand-back first, and read a file only if one was written — the
+  harness intermittently drops the final report (retro 2026-10-24 C6).
 - Read the target file yourself before your first Edit/Write on it, even when the brief or a
   teammate report quotes its contents. Your own tool history is what the harness checks.
 - To wait for anything, use Monitor with an until-loop or `run_in_background`. Never
