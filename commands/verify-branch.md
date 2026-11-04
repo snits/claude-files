@@ -257,7 +257,10 @@ The auditor cannot see this conversation, so it reads what its brief points it a
   ```
 
   Run it after `cd`, immediately before the first command that runs or changes anything, and
-  abort on mismatch rather than continuing.
+  abort on mismatch rather than continuing. **`cd` does not carry between an auditor's Bash calls**,
+  so the `cd`, this assertion and the command it guards share one Bash call. Otherwise name the
+  tree by absolute path in every command (`git -C <path>`, `cargo test --manifest-path
+  <path>/Cargo.toml`), after checking `git -C <path> rev-parse --show-toplevel`.
 
   **This is the containment available without a sandbox — not a replacement for one.** `exit 1`
   ends a shell, not the agent, so it stops an honest mis-`cd` (the `enb2` shape) and does not stop
@@ -341,8 +344,9 @@ fail.
 
 **Before any mutation, prove you are in your own tree.** You are not sandboxed: your cwd is the
 live primary checkout, and a mutation applied there lands in someone else's work. Create your
-detached audit worktree, `cd` into it, and assert it — abort on mismatch, do not proceed and
-report it later:
+detached audit worktree, `cd` into it, and assert it, in the same Bash call as the command it
+guards, as the common file's cwd assertion says — abort on mismatch, do not proceed and report it
+later:
 
 ```
 test "$(git rev-parse --show-toplevel)" = "<your audit worktree path>" || { echo ABORT; exit 1; }

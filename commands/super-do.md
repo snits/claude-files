@@ -259,7 +259,12 @@ from a detached worktree at the latest commit.
   common-file list (the worktree rule and the cwd assertion: where its detached worktree goes,
   its removal afterward, and the assertion run immediately before the first command that runs or
   changes anything) and the test-quality auditor's own-build-output rule. It also states: **undo
-  each mutation with the inverse edit, never `git checkout -- <file>`**.
+  each mutation with the inverse edit, never `git checkout -- <file>`**. The same brief, and any
+  test-author brief that applies a mutation, adds: **check the undo's `old_string` is unique before
+  applying the mutation; a scripted undo restores saved bytes and confirms the file matches them,
+  and never opens a file for writing in the expression that reads it.** On h8pb (2026-11-03) three
+  undos aborted on a non-unique replacement and left the mutant applied, and a fourth emptied
+  `display.rs`, because `open(p, "w")` truncates before the inner read.
 
 **Every brief in this flow carries two more blocks.** A sweep line: *"Sweep for every changed
 name, flag, or claim across the whole tree — docs/, README, CLAUDE.md, and doc comments included,
