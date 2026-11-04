@@ -283,6 +283,14 @@ subagent transcripts carried the guard's refusal text (1028 matching lines). In 
 slice of those refusals, only the `git -C` and computed-`cd` shapes, 10 of 657, were real
 shared-checkout hazards (retro 2026-10-24 C2, C8).
 
+**A brief aimed at a lead-made worktree, with no `isolation`, takes the opposite shape.** `cd` does
+not carry between a subagent's Bash calls, so its cwd stays the shared checkout, and a lone `cd`
+followed by a check reads the wrong tree. Name the tree by absolute path in every command:
+`git -C <path>`, `cargo test --manifest-path <path>/Cargo.toml`. The step-zero check prints
+`--show-toplevel` as well as `HEAD`, because a tree cut from the target's tip shares its SHA. This
+never goes in an isolated brief, where `git -C` is a refused shape. On h8pb (2026-11-03) a lone
+`cd` left `--show-toplevel` printing the shared checkout, while `HEAD` matched regardless.
+
 **Kata mutations run alone, never piped.** Claude sessions set `PIPE_FAIL`, so `kata close … | head`
 exits 141 when `head` closes the pipe, and a close that landed reads as a failure. 298 such events
 appeared in one window, many of them on closes and comments (retro 2026-10-24 C1).
